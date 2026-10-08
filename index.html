@@ -147,16 +147,15 @@
     line-height: 1.85;
   }
 
-  /* ---------- DUAL NAV — absolute centered divider ---------- */
+  /* ---------- DUAL NAV — balanced grid, single center divider ---------- */
   .dual-nav {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
+    column-gap: 60px;
     margin: 0 auto 80px;
     width: 100%;
-    max-width: 720px;
-    padding: 0 20px;
+    max-width: 820px;
   }
 
   .dual-nav a {
@@ -173,22 +172,26 @@
     transition: color 0.3s ease;
   }
 
+  .dual-nav a:first-child {
+    justify-self: end;
+  }
+
+  .dual-nav a:last-child {
+    justify-self: start;
+  }
+
   .dual-nav a:hover {
     color: #FCFCF7;
   }
 
-  /* Divider — absolutely positioned at exact page center */
+  /* SINGLE vertical divider — centered by the grid's middle auto column */
   .dual-nav .divider {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 8px;
+    width: 1px;
     height: 32px;
-    background: none;
-    border-left: 1.5px solid var(--gold);
-    border-right: 1.5px solid var(--gold);
-    opacity: 0.85;
+    background: var(--gold);
+    opacity: 0.9;
+    justify-self: center;
+    align-self: center;
   }
 
   /* ---------- ICONS (3 remaining) ---------- */
@@ -266,13 +269,14 @@
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 20px 50px; }
     .dual-nav {
-      flex-direction: column;
-      gap: 20px;
-      padding: 0;
+      grid-template-columns: 1fr;
+      row-gap: 20px;
+      max-width: 100%;
     }
     .dual-nav a {
       font-size: 1.2em;
       letter-spacing: 0.22em;
+      justify-self: center !important;
     }
     .dual-nav .divider { display: none; }
     .icons { gap: 25px; }
@@ -300,14 +304,14 @@
     Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
   </p>
 
-  <!-- DUAL NAV -->
+  <!-- DUAL NAV — single-line divider, no overlap -->
   <div class="dual-nav">
     <a href="artist.html">Artist&nbsp;&nbsp;→</a>
     <div class="divider"></div>
     <a href="film-composer.html">Film Composer&nbsp;&nbsp;→</a>
   </div>
 
-  <!-- ICONS — 3 remaining: YouTube, Spotify, Apple Music -->
+  <!-- ICONS — 3 icons -->
   <div class="icons">
 
     <!-- YouTube -->
