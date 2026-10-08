@@ -147,15 +147,16 @@
     line-height: 1.85;
   }
 
-  /* ---------- DUAL NAV ---------- */
+  /* ---------- DUAL NAV — absolute centered divider ---------- */
   .dual-nav {
+    position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    gap: 50px;
     margin: 0 auto 80px;
     width: 100%;
-    flex-wrap: nowrap;
+    max-width: 720px;
+    padding: 0 20px;
   }
 
   .dual-nav a {
@@ -166,8 +167,7 @@
     text-transform: uppercase;
     color: #E8D5B5;
     line-height: 1;
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
     white-space: nowrap;
     padding: 8px 0;
     transition: color 0.3s ease;
@@ -177,18 +177,21 @@
     color: #FCFCF7;
   }
 
-  /* DOUBLE vertical divider */
+  /* Divider — absolutely positioned at exact page center */
   .dual-nav .divider {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
     width: 8px;
     height: 32px;
     background: none;
     border-left: 1.5px solid var(--gold);
     border-right: 1.5px solid var(--gold);
     opacity: 0.85;
-    flex-shrink: 0;
   }
 
-  /* ---------- ICONS ---------- */
+  /* ---------- ICONS (3 remaining) ---------- */
   .icons {
     display: flex;
     justify-content: center;
@@ -265,7 +268,7 @@
     .dual-nav {
       flex-direction: column;
       gap: 20px;
-      margin-bottom: 60px;
+      padding: 0;
     }
     .dual-nav a {
       font-size: 1.2em;
@@ -297,22 +300,15 @@
     Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
   </p>
 
-  <!-- DUAL NAV — Artist now on left, Film Composer on right, links correct -->
+  <!-- DUAL NAV -->
   <div class="dual-nav">
     <a href="artist.html">Artist&nbsp;&nbsp;→</a>
     <div class="divider"></div>
     <a href="film-composer.html">Film Composer&nbsp;&nbsp;→</a>
   </div>
 
-  <!-- ICONS -->
+  <!-- ICONS — 3 remaining: YouTube, Spotify, Apple Music -->
   <div class="icons">
-
-    <!-- Bandcamp -->
-    <a href="https://noelgrass.bandcamp.com/" title="Bandcamp" target="_blank" rel="noopener" aria-label="Noel Grass on Bandcamp">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/>
-      </svg>
-    </a>
 
     <!-- YouTube -->
     <a href="https://www.youtube.com/@NoelGrass" title="YouTube" target="_blank" rel="noopener" aria-label="Noel Grass on YouTube">
@@ -332,13 +328,6 @@
     <a href="https://music.apple.com/us/artist/noel-grass/1451933028" title="Apple Music" target="_blank" rel="noopener" aria-label="Noel Grass on Apple Music">
       <svg viewBox="0 0 24 24" fill="currentColor">
         <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
-      </svg>
-    </a>
-
-    <!-- SoundCloud -->
-    <a href="https://soundcloud.com/noel-grass" title="SoundCloud" target="_blank" rel="noopener" aria-label="Noel Grass on SoundCloud">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M1.2 13.5c-.2 0-.4.2-.4.4l-.3 2.2.3 2.2c0 .2.2.4.4.4s.4-.2.4-.4l.4-2.2-.4-2.2c0-.2-.2-.4-.4-.4zm1.8-1.3c-.2 0-.4.2-.4.5l-.4 3.5.4 3.4c0 .2.2.4.4.4s.4-.2.4-.4l.4-3.4-.4-3.5c0-.3-.2-.5-.4-.5zm1.9-.7c-.3 0-.5.2-.5.5l-.4 4.2.4 4.1c0 .3.2.5.5.5s.5-.2.5-.5l.4-4.1-.4-4.2c0-.3-.2-.5-.5-.5zm2-.2c-.3 0-.5.2-.5.6l-.3 4.4.3 4.3c0 .3.2.5.5.5s.5-.2.5-.5l.4-4.3-.4-4.4c0-.4-.2-.6-.5-.6zm2.1 0c-.3 0-.5.3-.5.6l-.3 4.4.3 4.3c0 .3.2.6.5.6s.5-.3.5-.6l.3-4.3-.3-4.4c0-.3-.2-.6-.5-.6zm2.1 0c-.3 0-.6.3-.6.7l-.2 4.3.2 4.3c0 .4.3.6.6.6s.6-.3.6-.6l.3-4.3-.3-4.3c0-.4-.3-.7-.6-.7zm2.2-.1c-.4 0-.6.3-.6.7l-.2 4.4.2 4.3c0 .4.3.7.6.7.4 0 .6-.3.7-.7l.2-4.3-.2-4.4c0-.4-.3-.7-.7-.7zm4.5-3.4c-.9 0-1.8.3-2.5.8-.3.2-.4.4-.4.7v10.9c0 .3.2.6.5.6h7.4c2.2 0 4-1.8 4-4s-1.8-4-4-4c-.3 0-.5 0-.8.1-.3-3-2.8-5.1-5.8-5.1z"/>
       </svg>
     </a>
 
