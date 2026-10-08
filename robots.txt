@@ -40,4 +40,4 @@ Allow: /
 User-agent: DeepSeekBot
 Allow: /
 
-Sitemap: https://noelgrass.github.io/sitemap.xml
+Sitemap: https://noelgrass.pages.dev/sitemap.xml
