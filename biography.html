@@ -144,6 +144,7 @@
   :root {
     --bg: #000000;
     --gold: #C5A880;
+    --gold-soft: #B9975C;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -163,6 +164,54 @@
     font-size: 17px;
     line-height: 1.85;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------- TOP NAV ---------- */
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 28px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .topnav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 34px;
+    margin: 0;
+    padding: 0;
+  }
+
+  .topnav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #E8D5B5;
+    border-bottom: none;
+  }
+
+  .topnav a:hover { color: #FBFAFC; }
+
+  .topnav li { position: relative; list-style: none; padding: 0; border: none; }
+
+  .topnav li + li::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 14px;
+    background: var(--gold-soft);
+    opacity: 0.6;
   }
 
   .page {
@@ -236,21 +285,21 @@
     letter-spacing: 0.02em;
   }
 
-  ul {
+  .page > ul {
     list-style: none;
     padding: 0;
     margin: 0 0 24px;
   }
 
-  ul li {
+  .page > ul li {
     padding: 10px 0 10px 22px;
     position: relative;
     border-bottom: 1px solid var(--rule);
   }
 
-  ul li:last-child { border-bottom: none; }
+  .page > ul li:last-child { border-bottom: none; }
 
-  ul li::before {
+  .page > ul li::before {
     content: "—";
     color: var(--gold);
     position: absolute;
@@ -258,14 +307,14 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
 
-  a {
+  .page a {
     color: var(--gold);
     text-decoration: none;
     border-bottom: 1px solid rgba(197, 168, 128, 0.35);
     transition: border-color 0.2s ease, color 0.2s ease;
   }
 
-  a:hover { border-bottom-color: var(--gold); }
+  .page a:hover { border-bottom-color: var(--gold); }
 
   hr {
     border: none;
@@ -302,6 +351,13 @@
     opacity: 0.95;
   }
 
+  @media (max-width: 700px) {
+    .topnav { padding: 20px 14px; }
+    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
+    .topnav ul { gap: 10px 22px; }
+    .topnav li + li::before { left: -12px; height: 10px; }
+  }
+
   @media (max-width: 600px) {
     .page { padding: 48px 20px 80px; }
     h1 { font-size: 2.4em; }
@@ -312,6 +368,16 @@
 </style>
 </head>
 <body>
+
+<nav class="topnav">
+  <ul>
+    <li><a href="biography.html">Biography</a></li>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="film-composer.html">Film Composer</a></li>
+    <li><a href="artist.html">Artist</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+</nav>
 
 <div class="page">
 
