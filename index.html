@@ -147,37 +147,52 @@
     line-height: 1.85;
   }
 
-  /* ---------- DUAL NAV — centered divider ---------- */
+  /* ---------- DUAL NAV — artistic + centered divider ---------- */
   .dual-nav {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    gap: 80px;
-    margin-bottom: 80px;
-    flex-wrap: wrap;
+    gap: 0;
+    margin: 0 auto 80px;
+    width: 100%;
+    max-width: 680px;
   }
 
   .dual-nav a {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 0.95em;
-    letter-spacing: 0.2em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: #E8D5B5;
     line-height: 1;
-    display: inline-flex;
-    align-items: center;
+    display: block;
+    padding: 6px 0;
+    transition: color 0.3s ease, letter-spacing 0.3s ease;
   }
 
-  .dual-nav a:hover { color: #FBFAFC; }
+  .dual-nav a:first-child {
+    text-align: right;
+    padding-right: 34px;
+  }
+
+  .dual-nav a:last-child {
+    text-align: left;
+    padding-left: 34px;
+  }
+
+  .dual-nav a:hover {
+    color: #FCFCF7;
+    letter-spacing: 0.32em;
+  }
 
   .dual-nav .divider {
     width: 1px;
-    height: 40px;
+    height: 44px;
     background: var(--gold);
-    opacity: 0.5;
-    flex-shrink: 0;
+    opacity: 0.55;
     align-self: center;
+    justify-self: center;
   }
 
   .icons {
@@ -222,8 +237,8 @@
     gap: 12px 30px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.7em;
-    letter-spacing: 0.15em;
+    font-size: 0.75em;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: #4E4E4E;
     margin-bottom: 50px;
@@ -253,11 +268,25 @@
   @media (max-width: 700px) {
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 20px 50px; }
-    .dual-nav { gap: 30px; margin-bottom: 60px; }
+    .dual-nav {
+      grid-template-columns: 1fr;
+      max-width: 100%;
+      margin-bottom: 60px;
+      gap: 20px;
+    }
+    .dual-nav a {
+      font-size: 1.2em;
+      letter-spacing: 0.22em;
+    }
+    .dual-nav a:first-child,
+    .dual-nav a:last-child {
+      text-align: center;
+      padding: 0;
+    }
     .dual-nav .divider { display: none; }
     .icons { gap: 25px; }
     .intro, .intro-body { font-size: 1em; }
-    .footer-links { font-size: 0.6em; gap: 8px 16px; }
+    .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
   }
 </style>
@@ -280,11 +309,11 @@
     Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
   </p>
 
-  <!-- DUAL NAV — Divider now perfectly centered -->
+  <!-- DUAL NAV — Artistic Cormorant treatment -->
   <div class="dual-nav">
-    <a href="film-composer.html">Film Composer →</a>
+    <a href="film-composer.html">Film Composer &nbsp;→</a>
     <div class="divider"></div>
-    <a href="artist.html">Artist →</a>
+    <a href="artist.html">Artist &nbsp;→</a>
   </div>
 
   <div class="icons">
@@ -307,20 +336,20 @@
 
   <div class="rule-full"></div>
 
-  <!-- FOOTER LINKS — SEO-optimized anchor text -->
+  <!-- FOOTER LINKS — simplified labels -->
   <ul class="footer-links">
-    <li><a href="https://www.wikidata.org/wiki/Q141263210" target="_blank" rel="noopener">Noel Grass on Wikidata</a></li>
-    <li><a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener">Noel Grass Press Kit</a></li>
-    <li><a href="https://ke.linkedin.com/in/noel-grass-82329119b" target="_blank" rel="noopener">Noel Grass on LinkedIn</a></li>
-    <li><a href="https://www.imdb.com/name/nm14289703/" target="_blank" rel="noopener">Noel Grass on IMDb</a></li>
-    <li><a href="https://musicinafrica.net/directory/noel-grass/" target="_blank" rel="noopener">Noel Grass on Music In Africa</a></li>
-    <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Noel Grass on Google Business</a></li>
-    <li><a href="https://facebook.com/noelgrassmusic" target="_blank" rel="noopener">Noel Grass on Facebook</a></li>
-    <li><a href="https://en.everybodywiki.com/Noel_grass" target="_blank" rel="noopener">Noel Grass on Everybody Wiki</a></li>
-    <li><a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">Noel Grass on YouTube</a></li>
-    <li><a href="https://noelgrass.bandcamp.com/" target="_blank" rel="noopener">Noel Grass on Bandcamp</a></li>
-    <li><a href="https://sites.google.com/view/noelgrass" target="_blank" rel="noopener">Noel Grass on Google Sites</a></li>
-    <li><a href="https://www.instagram.com/noelgrass/" target="_blank" rel="noopener">Noel Grass on Instagram</a></li>
+    <li><a href="https://www.wikidata.org/wiki/Q141263210" target="_blank" rel="noopener">Wikidata</a></li>
+    <li><a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener">Profile</a></li>
+    <li><a href="https://ke.linkedin.com/in/noel-grass-82329119b" target="_blank" rel="noopener">LinkedIn</a></li>
+    <li><a href="https://www.imdb.com/name/nm14289703/" target="_blank" rel="noopener">IMDb</a></li>
+    <li><a href="https://musicinafrica.net/directory/noel-grass/" target="_blank" rel="noopener">Music In Africa</a></li>
+    <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Google Business</a></li>
+    <li><a href="https://facebook.com/noelgrassmusic" target="_blank" rel="noopener">Facebook</a></li>
+    <li><a href="https://en.everybodywiki.com/Noel_grass" target="_blank" rel="noopener">Everybody Wiki</a></li>
+    <li><a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">YouTube</a></li>
+    <li><a href="https://noelgrass.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a></li>
+    <li><a href="https://sites.google.com/view/noelgrass" target="_blank" rel="noopener">Google Sites</a></li>
+    <li><a href="https://www.instagram.com/noelgrass/" target="_blank" rel="noopener">Instagram</a></li>
   </ul>
 
   <div class="signature">
