@@ -40,4 +40,60 @@ Allow: /
 User-agent: DeepSeekBot
 Allow: /
 
+# ——— ADDITIONAL AI CRAWLERS ———
+
+User-agent: meta-externalfetcher
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: PhindBot
+Allow: /
+
+User-agent: TavilyBot
+Allow: /
+
+User-agent: ExaBot
+Allow: /
+
+User-agent: FirecrawlAgent
+Allow: /
+
+User-agent: Crawl4AI
+Allow: /
+
+User-agent: Manus-User
+Allow: /
+
+User-agent: Kimi-User
+Allow: /
+
+User-agent: ChatGLM-Spider
+Allow: /
+
+User-agent: QwenBot
+Allow: /
+
+User-agent: MistralAI-User
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: Gemini-Deep-Research
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
 Sitemap: https://noelgrass.pages.dev/sitemap.xml
