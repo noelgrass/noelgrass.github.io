@@ -96,4 +96,4 @@ Allow: /
 User-agent: Perplexity-User
 Allow: /
 
-Sitemap: https://noelgrass.pages.dev/sitemap.xml
+Sitemap: https://noelgrass.github.io/sitemap.xml
