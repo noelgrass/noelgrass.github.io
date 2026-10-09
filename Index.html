@@ -6,10 +6,14 @@
 <meta name="google-site-verification" content="FcDy2m-aaxSSYqanIJ2n6LngP4Vux40iyxW5jH1fj_4" />
 <meta name="msvalidate.01" content="3D414B4A81731849DEB911EC052469A0" />
 
-<!-- SMART ROUTING FILTER SCRIPT -->
 <script type="text/javascript">
-    if (window.location.hostname.includes("https://noelgrass.github.io")) {
-        window.location.href = "https://noelgrass.pages.dev" + window.location.pathname + window.location.search;
+    if (window.location.hostname === "noelgrass.github.io") {
+        window.location.replace(
+            "https://noelgrass.pages.dev" +
+            window.location.pathname +
+            window.location.search +
+            window.location.hash
+        );
     }
 </script>
   
