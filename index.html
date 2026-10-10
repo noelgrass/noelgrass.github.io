@@ -123,6 +123,25 @@
     border: 0;
   }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes portraitIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
   /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
@@ -133,6 +152,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -150,9 +170,22 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #E8D5B5;
+    position: relative;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -174,12 +207,32 @@
     margin: 0 auto;
     padding: 100px 40px 80px;
     text-align: center;
+    position: relative;
   }
 
-  /* ---------- TITLE BLOCK (centered) ---------- */
+  /* ---------- SPOTLIGHT DIM ---------- */
+  /* When hovering either role link, all other sections dim */
+  .page:has(.role-links a:hover) .title-block,
+  .page:has(.role-links a:hover) .editorial,
+  .page:has(.role-links a:hover) .icons,
+  .page:has(.role-links a:hover) .rule-full,
+  .page:has(.role-links a:hover) .footer-links,
+  .page:has(.role-links a:hover) .signature {
+    opacity: 0.2;
+    transition: opacity 0.6s ease;
+  }
+
+  /* Non-hovered role link also dims slightly */
+  .page:has(.role-links a:hover) .role-links a:not(:hover) {
+    opacity: 0.3;
+    transition: opacity 0.6s ease;
+  }
+
+  /* ---------- TITLE BLOCK ---------- */
   .title-block {
     text-align: center;
     margin-bottom: 70px;
+    transition: opacity 0.6s ease;
   }
 
   .eyebrow {
@@ -191,6 +244,8 @@
     color: #E8D5B5;
     margin-bottom: 40px;
     line-height: 1.6;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.1s;
   }
 
   h1 {
@@ -203,6 +258,8 @@
     text-transform: uppercase;
     text-shadow: 0 11px 15px rgba(0,0,0,0.27);
     margin-bottom: 30px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.25s;
   }
 
   .rule-small {
@@ -211,6 +268,8 @@
     border-top: 1px solid var(--gold-soft);
     border-bottom: 1px solid var(--gold-soft);
     margin: 0 auto;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
   }
 
   /* ---------- EDITORIAL SPLIT ---------- */
@@ -221,11 +280,14 @@
     align-items: start;
     text-align: left;
     margin-bottom: 70px;
+    transition: opacity 0.6s ease;
   }
 
   .portrait {
     position: sticky;
     top: 120px;
+    animation: portraitIn 1.4s ease-out both;
+    animation-delay: 0.4s;
   }
 
   .portrait img {
@@ -236,11 +298,12 @@
     object-fit: cover;
     border: 1px solid var(--rule);
     filter: grayscale(100%) contrast(1.05) brightness(0.95);
-    transition: filter 0.6s ease;
+    transition: filter 0.6s ease, transform 0.6s ease;
   }
 
   .portrait img:hover {
     filter: grayscale(0%) contrast(1) brightness(1);
+    transform: scale(1.015);
   }
 
   .portrait .caption {
@@ -264,6 +327,8 @@
     color: var(--offwhite);
     line-height: 1.75;
     margin-bottom: 30px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
   }
 
   .intro-body {
@@ -271,25 +336,32 @@
     color: var(--offwhite);
     line-height: 1.85;
     margin-bottom: 36px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.85s;
   }
 
   .bio-link {
     text-align: left;
     font-style: italic;
     margin-bottom: 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
   }
 
   .bio-link a {
+    display: inline-block;
     border-bottom: 1px solid rgba(197, 168, 128, 0.5);
     padding-bottom: 2px;
     font-size: 1.05em;
+    transition: transform 0.3s ease, border-color 0.3s ease;
   }
 
   .bio-link a:hover {
+    transform: translateX(4px);
     border-bottom-color: var(--gold);
   }
 
-  /* ---------- ROLE LINKS (bottom-right) ---------- */
+  /* ---------- ROLE LINKS ---------- */
   .role-links {
     display: flex;
     justify-content: flex-end;
@@ -297,6 +369,10 @@
     gap: 24px;
     margin: 0 0 70px;
     flex-wrap: wrap;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.15s;
+    position: relative;
+    z-index: 2;
   }
 
   .role-links a {
@@ -306,11 +382,28 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: #E8D5B5;
-    transition: color 0.3s ease;
+    transition: color 0.4s ease, opacity 0.6s ease;
+    position: relative;
+    padding-bottom: 4px;
+  }
+
+  .role-links a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
   }
 
   .role-links a:hover {
     color: #FCFCF7;
+  }
+
+  .role-links a:hover::after {
+    width: 100%;
   }
 
   .role-links .diamond {
@@ -320,6 +413,11 @@
     background: var(--gold);
     transform: rotate(45deg);
     opacity: 0.9;
+    transition: opacity 0.6s ease;
+  }
+
+  .page:has(.role-links a:hover) .role-links .diamond {
+    opacity: 0.2;
   }
 
   /* ---------- STREAMING ICONS ---------- */
@@ -330,6 +428,9 @@
     gap: 44px;
     margin-bottom: 60px;
     flex-wrap: wrap;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.3s;
+    transition: opacity 0.6s ease;
   }
 
   .icons a {
@@ -357,6 +458,9 @@
     background: var(--gold-soft);
     margin: 20px auto 50px;
     opacity: 0.6;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.4s;
+    transition: opacity 0.6s ease;
   }
 
   /* ---------- FOOTER ---------- */
@@ -372,11 +476,15 @@
     text-transform: uppercase;
     color: #4E4E4E;
     margin-bottom: 50px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.5s;
+    transition: opacity 0.6s ease;
   }
 
   .footer-links a {
     color: #4E4E4E;
     padding: 6px 0;
+    transition: color 0.3s ease;
   }
 
   .footer-links a:hover { color: #FBFAFC; }
@@ -386,6 +494,9 @@
   .signature {
     text-align: center;
     margin-top: 40px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.6s;
+    transition: opacity 0.6s ease;
   }
 
   .signature-logo {
@@ -418,6 +529,9 @@
     }
     .bio-link {
       text-align: center;
+    }
+    .bio-link a:hover {
+      transform: translateX(0);
     }
     .role-links {
       justify-content: center;
