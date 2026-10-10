@@ -241,7 +241,7 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM ---------- */
+  /* ---------- SPOTLIGHT DIM (role links) ---------- */
   .page:has(.role-links a:hover) .title-block,
   .page:has(.role-links a:hover) .editorial,
   .page:has(.role-links a:hover) .icons,
@@ -256,6 +256,30 @@
   .page:has(.role-links a:hover) .role-links a:not(:hover) {
     opacity: 0.3;
     transition: opacity 0.6s ease;
+  }
+
+  /* ---------- SPOTLIGHT DIM (icons) ---------- */
+  /* When hovering a streaming icon, dim everything else */
+  .page:has(.icons a:hover) .title-block,
+  .page:has(.icons a:hover) .editorial,
+  .page:has(.icons a:hover) .role-links,
+  .page:has(.icons a:hover) .scroll-cue,
+  .page:has(.icons a:hover) .rule-full,
+  .page:has(.icons a:hover) .footer-links,
+  .page:has(.icons a:hover) .signature {
+    opacity: 0.15;
+    transition: opacity 0.6s ease;
+  }
+
+  /* Other icons in the group dim to 30% */
+  .page:has(.icons a:hover) .icons a:not(:hover) {
+    opacity: 0.3;
+    transition: opacity 0.6s ease;
+  }
+
+  /* The icon group itself stays at full brightness */
+  .page:has(.icons a:hover) .icons {
+    opacity: 1;
   }
 
   /* ---------- TITLE BLOCK ---------- */
@@ -395,6 +419,7 @@
     animation-delay: 1.15s;
     position: relative;
     z-index: 2;
+    transition: opacity 0.6s ease;
   }
 
   .role-links a {
@@ -485,21 +510,46 @@
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.3s;
     transition: opacity 0.6s ease;
+    position: relative;
+    z-index: 2;
   }
 
   .icons a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: 50px;
+    height: 50px;
     color: var(--gold-soft);
-    transition: color 0.3s ease, transform 0.3s ease;
+    border-radius: 50%;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease, opacity 0.6s ease;
+  }
+
+  /* Spotlight glow behind each icon */
+  .icons a::before {
+    content: '';
+    position: absolute;
+    inset: -22px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(197, 168, 128, 0.32) 0%,
+      rgba(197, 168, 128, 0.10) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.7s ease;
   }
 
   .icons a:hover {
     color: #FCFCF7;
-    transform: scale(1.1);
+    transform: scale(1.15);
+  }
+
+  .icons a:hover::before {
+    opacity: 1;
   }
 
   .icons svg { width: 32px; height: 32px; fill: currentColor; }
