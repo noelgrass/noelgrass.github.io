@@ -181,33 +181,29 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM (25%) ---------- */
-  /* Hover album cover: dim label, both headings, both icon groups, signature */
+  /* ---------- SPOTLIGHT DIM ---------- */
+  /* Hover any CTA pair (heading + its icon group) — dim everything else */
+  .page:has(.cta-pair:hover) .release-label,
+  .page:has(.cta-pair:hover) .album-cover,
+  .page:has(.cta-pair:hover) .signature,
+  .page:has(.cta-pair:hover) .cta-pair:not(:hover) {
+    opacity: 0.25;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.cta-pair:hover) .cta-pair:hover {
+    opacity: 1;
+  }
+
+  /* Hover the album cover — dim everything else */
   .page:has(.album-cover:hover) .release-label,
-  .page:has(.album-cover:hover) .cta-heading,
-  .page:has(.album-cover:hover) .icons,
+  .page:has(.album-cover:hover) .cta-pair,
   .page:has(.album-cover:hover) .signature {
     opacity: 0.25;
     transition: opacity 0.7s ease;
   }
 
-  /* Hover any icon: dim label, album cover, ALL headings, signature, and the OTHER icon group */
-  .page:has(.icons a:hover) .release-label,
-  .page:has(.icons a:hover) .album-cover,
-  .page:has(.icons a:hover) .cta-heading,
-  .page:has(.icons a:hover) .signature,
-  .page:has(.icons a:hover) .icons:not(:has(a:hover)) {
-    opacity: 0.25;
-    transition: opacity 0.7s ease;
-  }
-
-  /* Keep album cover bright while hovering it */
   .page:has(.album-cover:hover) .album-cover {
-    opacity: 1;
-  }
-
-  /* Keep the hovered icon's group fully bright */
-  .page:has(.icons a:hover) .icons:has(a:hover) {
     opacity: 1;
   }
 
@@ -238,7 +234,6 @@
     transition: opacity 0.7s ease;
   }
 
-  /* Spotlight glow */
   .album-cover::before {
     content: '';
     position: absolute;
@@ -278,7 +273,13 @@
     opacity: 1;
   }
 
-  /* ---------- CTA HEADINGS ---------- */
+  /* ---------- CTA PAIRS (heading + icon group) ---------- */
+  .cta-pair {
+    display: block;
+    margin-top: 70px;
+    transition: opacity 0.7s ease;
+  }
+
   .cta-heading {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -287,17 +288,16 @@
     text-decoration: underline;
     text-underline-offset: 6px;
     text-decoration-thickness: 1px;
-    margin: 70px 0 30px;
+    margin: 0 0 30px;
     display: block;
-    transition: opacity 0.7s ease;
   }
 
-  .cta-heading:nth-of-type(1) {
+  .cta-pair:nth-of-type(1) {
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.9s;
   }
 
-  .cta-heading:nth-of-type(2) {
+  .cta-pair:nth-of-type(2) {
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.2s;
   }
@@ -308,14 +308,8 @@
     justify-content: center;
     align-items: center;
     gap: 44px;
-    margin-bottom: 20px;
     flex-wrap: wrap;
-    animation: fadeUp 1s ease-out both;
-    transition: opacity 0.7s ease;
   }
-
-  .icons.group-1 { animation-delay: 1.05s; }
-  .icons.group-2 { animation-delay: 1.35s; }
 
   .icons a {
     display: inline-flex;
@@ -384,7 +378,8 @@
       filter: brightness(0.85) contrast(1.05);
       transform: none;
     }
-    .cta-heading { font-size: 1.1em; margin: 50px 0 20px; }
+    .cta-pair { margin-top: 50px; }
+    .cta-heading { font-size: 1.1em; margin: 0 0 20px; }
     .topnav { padding: 20px 14px; }
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
@@ -415,36 +410,38 @@
     <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
   </a>
 
-  <span class="cta-heading">Buy and Support</span>
-
-  <div class="icons group-1">
-    <a href="https://noelgrass.bandcamp.com/album/into-a-stillness-that-answers" title="Bandcamp" target="_blank" rel="noopener" aria-label="Buy Into A Stillness That Answers on Bandcamp">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/>
-      </svg>
-    </a>
+  <div class="cta-pair">
+    <span class="cta-heading">Buy and Support</span>
+    <div class="icons group-1">
+      <a href="https://noelgrass.bandcamp.com/album/into-a-stillness-that-answers" title="Bandcamp" target="_blank" rel="noopener" aria-label="Buy Into A Stillness That Answers on Bandcamp">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M0 18.75l7.437-13.5H24l-7.438 13.5H0z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 
-  <span class="cta-heading">Stream, Follow &amp; Subscribe</span>
+  <div class="cta-pair">
+    <span class="cta-heading">Stream, Follow &amp; Subscribe</span>
+    <div class="icons group-2">
+      <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" title="YouTube" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
+        </svg>
+      </a>
 
-  <div class="icons group-2">
-    <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" title="YouTube" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on YouTube">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
-      </svg>
-    </a>
+      <a href="https://music.apple.com/us/album/into-a-stillness-that-answers-ep/6773708812" title="Apple Music" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on Apple Music">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
+        </svg>
+      </a>
 
-    <a href="https://music.apple.com/us/album/into-a-stillness-that-answers-ep/6773708812" title="Apple Music" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on Apple Music">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
-      </svg>
-    </a>
-
-    <a href="https://open.spotify.com/album/5dglJq4fALStu3S6Jm46J4" title="Spotify" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on Spotify">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
-      </svg>
-    </a>
+      <a href="https://open.spotify.com/album/5dglJq4fALStu3S6Jm46J4" title="Spotify" target="_blank" rel="noopener" aria-label="Stream Into A Stillness That Answers on Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
+        </svg>
+      </a>
+    </div>
   </div>
 
   <div class="signature">
