@@ -201,7 +201,6 @@
   }
 
   /* ---------- SPOTLIGHT DIM ---------- */
-  /* When hovering a CTA link, everything else fades */
   .page:has(.cta-link:hover) h1,
   .page:has(.cta-link:hover) .subhead,
   .page:has(.cta-link:hover) .intro-text,
@@ -211,13 +210,11 @@
     transition: opacity 0.6s ease;
   }
 
-  /* The other CTA link dims, but stays visible */
   .page:has(.cta-link:hover) .cta-link:not(:hover) {
     opacity: 0.3;
     transition: opacity 0.6s ease;
   }
 
-  /* The CTA row itself stays at full brightness */
   .page:has(.cta-link:hover) .cta-row {
     opacity: 1;
   }
@@ -293,7 +290,7 @@
     font-size: 1.6em;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: #E8D5B5;
+    color: #EDEAE3;
     padding: 8px 0 6px;
     border-bottom: none;
     transition: color 0.4s ease, opacity 0.6s ease;
@@ -318,7 +315,6 @@
 
   .cta-link:hover::after { width: 100%; }
 
-  /* Diamond separator between the two CTA links */
   .cta-row .diamond {
     display: inline-block;
     width: 8px;
