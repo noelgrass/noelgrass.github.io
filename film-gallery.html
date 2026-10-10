@@ -143,6 +143,21 @@
 
   a:hover { color: #FCFCF7; }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -152,6 +167,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -169,9 +185,26 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -187,13 +220,24 @@
     opacity: 0.6;
   }
 
+  /* ---------- PAGE ---------- */
   .page {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 30px 80px;
+    padding: 100px 40px 80px;
     text-align: center;
   }
 
+  /* ---------- INTRO BLOCK ---------- */
+  .intro-block {
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .intro-block {
+    opacity: 0.28;
+  }
+
+  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -202,6 +246,8 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
   .subhead {
@@ -214,6 +260,13 @@
     text-decoration-thickness: 1px;
     margin: 50px 0 24px;
     display: block;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
+  .subhead + .subhead,
+  .subhead:nth-of-type(2) {
+    animation-delay: 0.85s;
   }
 
   p {
@@ -225,42 +278,85 @@
     margin-right: auto;
   }
 
+  .intro-text {
+    animation: fadeUp 1s ease-out both;
+  }
+
+  .intro-text:nth-of-type(1) { animation-delay: 0.55s; }
+  .intro-text:nth-of-type(2) { animation-delay: 0.7s; }
+  .intro-text:nth-of-type(3) { animation-delay: 1s; }
+  .intro-text:nth-of-type(4) { animation-delay: 1.15s; }
+
   .click-hint {
     font-style: italic;
-    color: var(--gold-pale);
-    margin: 40px auto 60px;
+    color: var(--muted);
+    margin: 40px auto 70px;
     text-align: center;
     display: block;
     width: 100%;
     max-width: 780px;
+    font-size: 0.95em;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.3s;
   }
 
+  /* ---------- GALLERY SECTION ---------- */
+  .gallery-section {
+    position: relative;
+  }
+
+  /* ---------- GALLERY (3-column flex with centered last row) ---------- */
   .gallery {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 90px 60px;
     margin: 0 auto 40px;
-    max-width: 1000px;
-    justify-items: center;
+    max-width: 1100px;
   }
 
   .gallery-item {
     display: block;
     text-align: center;
-    width: 100%;
+    width: calc((100% - 120px) / 3);
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+
+  .gallery-item.lit {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .gallery-item .poster {
+    position: relative;
     width: 100%;
-    max-width: 280px;
     aspect-ratio: 1 / 1;
     background: #1a1a1a;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid #1f1f1f;
+    transition: border-color 0.7s ease, box-shadow 0.7s ease;
+  }
+
+  /* Spotlight glow behind the tile */
+  .gallery-item .poster::before {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    background: radial-gradient(
+      circle at 50% 30%,
+      rgba(197, 168, 128, 0.14) 0%,
+      rgba(197, 168, 128, 0.04) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
 
   .gallery-item .poster img {
@@ -268,11 +364,23 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    filter: brightness(0.68) contrast(1.05);
+    transition: filter 0.8s ease, transform 0.8s ease;
   }
 
+  /* Hover state — tile lights up */
   .gallery-item:hover .poster {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(197, 168, 128, 0.18);
+    border-color: var(--gold-soft);
+    box-shadow: 0 20px 60px rgba(197, 168, 128, 0.12);
+  }
+
+  .gallery-item:hover .poster::before {
+    opacity: 1;
+  }
+
+  .gallery-item:hover .poster img {
+    filter: brightness(1) contrast(1);
+    transform: scale(1.02);
   }
 
   .gallery-item .caption {
@@ -280,13 +388,26 @@
     font-size: 1.1em;
     letter-spacing: 0.08em;
     color: var(--gold-pale);
-    margin-top: 18px;
+    margin-top: 24px;
     text-transform: uppercase;
+    transition: color 0.5s ease;
   }
 
+  .gallery-item:hover .caption {
+    color: #FCFCF7;
+  }
+
+  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 100px;
     text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .signature {
+    opacity: 0.28;
   }
 
   .signature-logo {
@@ -296,8 +417,14 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
-    .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px 30px; }
+    .gallery {
+      gap: 60px 40px;
+    }
+    .gallery-item {
+      width: calc((100% - 40px) / 2);
+    }
   }
 
   @media (max-width: 700px) {
@@ -309,8 +436,20 @@
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
-    .gallery { grid-template-columns: 1fr; gap: 40px; }
-    .gallery-item .poster { max-width: 260px; }
+    .gallery {
+      gap: 60px;
+      max-width: 400px;
+    }
+    .gallery-item {
+      width: 100%;
+    }
+    .gallery-item .poster img {
+      filter: brightness(0.85) contrast(1.05);
+    }
+    .gallery-item:hover .poster img {
+      filter: brightness(0.85) contrast(1.05);
+      transform: none;
+    }
     .gallery-item .caption { font-size: 1em; }
     .signature-logo { height: 55px; }
   }
@@ -331,70 +470,78 @@
 
 <div class="page">
 
-  <h1>Gallery</h1>
+  <div class="intro-block">
 
-  <span class="subhead">Original Film Composition &amp; Soundscapes for Media</span>
+    <h1>Gallery</h1>
 
-  <p>This work exists to serve visual narrative as an original film composer and music scorer. It is an act of shared vision, translating the emotional core of films into intentional sound design.</p>
+    <span class="subhead">Original Film Composition &amp; Soundscapes for Media</span>
 
-  <p>My goal is absolute clarity for the motion picture soundtrack to function as an unseen character within the frame, driving the narrative forward through musical arrangement and orchestral themes.</p>
+    <p class="intro-text">This work exists to serve visual narrative as an original film composer and music scorer. It is an act of shared vision, translating the emotional core of films into intentional sound design.</p>
 
-  <span class="subhead">Commercial Audio &amp; Sound Design</span>
+    <p class="intro-text">My goal is absolute clarity for the motion picture soundtrack to function as an unseen character within the frame, driving the narrative forward through musical arrangement and orchestral themes.</p>
 
-  <p>Beyond cinematic features, I compose instrumental music, background audio tracks, and atmospheric scores for independent directors, creative agencies, and visual media production houses.</p>
+    <span class="subhead">Commercial Audio &amp; Sound Design</span>
 
-  <p class="click-hint">(Click on the Image to Explore the Sounds)</p>
+    <p class="intro-text">Beyond cinematic features, I compose instrumental music, background audio tracks, and atmospheric scores for independent directors, creative agencies, and visual media production houses.</p>
 
-  <div class="gallery">
+    <p class="click-hint">(Click on the Image to Explore the Sounds)</p>
 
-    <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/thief.jpg" alt="Thief — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Thief</div>
-    </a>
+  </div>
 
-    <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/on-air.jpg" alt="On Air — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">On Air</div>
-    </a>
+  <div class="gallery-section" id="gallery-section">
 
-    <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/nyumba-ya-mburi.jpg" alt="Nyumba Ya Mburi — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">NYUMBA YA MBURI</div>
-    </a>
+    <div class="gallery">
 
-    <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/ziwa.jpg" alt="Ziwa — Original Motion Picture Soundtrack by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Ziwa</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/thief.jpg" alt="Thief — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Thief</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/kutu.jpg" alt="Kutu — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Kutu</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/on-air.jpg" alt="On Air — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">On Air</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/lost-in-time.jpg" alt="Lost in Time — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Lost in Time</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/nyumba-ya-mburi.jpg" alt="Nyumba Ya Mburi — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">NYUMBA YA MBURI</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/parliament-of-owls.jpg" alt="The Parliament of Owls — Original Motion Picture Score by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">The Parliament of Owls</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/ziwa.jpg" alt="Ziwa — Original Motion Picture Soundtrack by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Ziwa</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/kutu.jpg" alt="Kutu — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Kutu</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/lost-in-time.jpg" alt="Lost in Time — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Lost in Time</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/parliament-of-owls.jpg" alt="The Parliament of Owls — Original Motion Picture Score by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">The Parliament of Owls</div>
+      </a>
+
+    </div>
 
   </div>
 
@@ -403,6 +550,49 @@
   </div>
 
 </div>
+
+<script>
+  (function() {
+    /* Reveal tiles on scroll */
+    if ('IntersectionObserver' in window) {
+      var tileObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('lit');
+            tileObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.gallery-item').forEach(function(el, i) {
+        el.style.transitionDelay = ((i % 3) * 0.12) + 's';
+        tileObserver.observe(el);
+      });
+    } else {
+      document.querySelectorAll('.gallery-item').forEach(function(el) {
+        el.classList.add('lit');
+      });
+    }
+
+    /* Dim intro + signature when gallery is in view */
+    var page = document.querySelector('.page');
+    var gallerySection = document.getElementById('gallery-section');
+
+    if (page && gallerySection && 'IntersectionObserver' in window) {
+      var galleryObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            page.classList.add('gallery-active');
+          } else {
+            page.classList.remove('gallery-active');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      galleryObserver.observe(gallerySection);
+    }
+  })();
+</script>
 
 </body>
 </html>
