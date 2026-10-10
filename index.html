@@ -134,6 +134,12 @@
     to   { opacity: 1; transform: scale(1); }
   }
 
+  @keyframes scrollPulse {
+    0%   { opacity: 0.4; transform: translateY(0); }
+    50%  { opacity: 1;   transform: translateY(4px); }
+    100% { opacity: 0.4; transform: translateY(0); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -210,14 +216,36 @@
     position: relative;
   }
 
+  /* ---------- VERTICAL EST MARK ---------- */
+  .est-mark {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.6em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    opacity: 0.55;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
+    pointer-events: none;
+    user-select: none;
+  }
+
   /* ---------- SPOTLIGHT DIM ---------- */
   .page:has(.role-links a:hover) .title-block,
   .page:has(.role-links a:hover) .editorial,
   .page:has(.role-links a:hover) .icons,
   .page:has(.role-links a:hover) .rule-full,
   .page:has(.role-links a:hover) .footer-links,
-  .page:has(.role-links a:hover) .signature {
-    opacity: 0.2;
+  .page:has(.role-links a:hover) .signature,
+  .page:has(.role-links a:hover) .scroll-cue,
+  .page:has(.role-links a:hover) .est-mark {
+    opacity: 0.15;
     transition: opacity 0.6s ease;
   }
 
@@ -258,6 +286,20 @@
     margin-bottom: 30px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.25s;
+    display: inline-block;
+  }
+
+  /* Name dash */
+  .name-dash {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-soft);
+    vertical-align: middle;
+    margin-left: 20px;
+    opacity: 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
   }
 
   .rule-small {
@@ -418,6 +460,38 @@
     opacity: 0.2;
   }
 
+  /* ---------- SCROLL CUE ---------- */
+  .scroll-cue {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.45s;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .scroll-cue .label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.6em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.7;
+  }
+
+  .scroll-cue .line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold-soft) 0%, transparent 100%);
+    opacity: 0.5;
+    animation: scrollPulse 3s ease-in-out infinite;
+  }
+
   /* ---------- STREAMING ICONS ---------- */
   .icons {
     display: flex;
@@ -506,6 +580,9 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
+    .est-mark {
+      display: none;
+    }
     .editorial {
       grid-template-columns: 1fr;
       gap: 40px;
@@ -545,6 +622,7 @@
 
   @media (max-width: 700px) {
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
+    .name-dash { width: 24px; margin-left: 12px; }
     .page { padding: 60px 22px 50px; }
     .topnav { padding: 20px 14px; }
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
@@ -560,6 +638,7 @@
     .intro-body { font-size: 1em; }
     .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
+    .scroll-cue .line { height: 30px; }
   }
 </style>
 </head>
@@ -577,10 +656,13 @@
 
 <div class="page">
 
+  <!-- Vertical "est." mark -->
+  <div class="est-mark" aria-hidden="true">Est. Nairobi</div>
+
   <!-- Title block: centered -->
   <div class="title-block">
     <p class="eyebrow">Film Composer &nbsp;|&nbsp; Pianist &nbsp;|&nbsp; Music Producer</p>
-    <h1>Noel Grass<span class="visually-hidden"> — Film Composer, Neoclassical Pianist &amp; Music Producer in Nairobi, Kenya</span></h1>
+    <h1>Noel Grass<span class="visually-hidden"> — Film Composer, Neoclassical Pianist &amp; Music Producer in Nairobi, Kenya</span></h1><span class="name-dash" aria-hidden="true"></span>
     <div class="rule-small"></div>
   </div>
 
@@ -611,6 +693,12 @@
     <a href="artist">Artist</a>
     <span class="diamond"></span>
     <a href="film-composer">Film Composer</a>
+  </div>
+
+  <!-- Scroll cue -->
+  <div class="scroll-cue" aria-hidden="true">
+    <span class="label">Explore</span>
+    <span class="line"></span>
   </div>
 
   <!-- Streaming icons -->
