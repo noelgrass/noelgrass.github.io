@@ -140,25 +140,28 @@
     100% { opacity: 0.4; transform: translateY(0); }
   }
 
-  /* Name glow — slow, breathing halo */
+  /* Name glow — stronger breathing halo */
   @keyframes nameGlow {
     0% {
       text-shadow:
         0 11px 15px rgba(0,0,0,0.27),
-        0 0 20px rgba(197, 168, 128, 0.15),
-        0 0 40px rgba(197, 168, 128, 0.08);
+        0 0 25px rgba(197, 168, 128, 0.25),
+        0 0 55px rgba(197, 168, 128, 0.12),
+        0 0 90px rgba(197, 168, 128, 0.05);
     }
     50% {
       text-shadow:
         0 11px 15px rgba(0,0,0,0.27),
-        0 0 30px rgba(197, 168, 128, 0.35),
-        0 0 60px rgba(197, 168, 128, 0.18);
+        0 0 35px rgba(197, 168, 128, 0.55),
+        0 0 80px rgba(197, 168, 128, 0.28),
+        0 0 120px rgba(197, 168, 128, 0.12);
     }
     100% {
       text-shadow:
         0 11px 15px rgba(0,0,0,0.27),
-        0 0 20px rgba(197, 168, 128, 0.15),
-        0 0 40px rgba(197, 168, 128, 0.08);
+        0 0 25px rgba(197, 168, 128, 0.25),
+        0 0 55px rgba(197, 168, 128, 0.12),
+        0 0 90px rgba(197, 168, 128, 0.05);
     }
   }
 
