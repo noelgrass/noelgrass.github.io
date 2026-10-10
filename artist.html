@@ -183,6 +183,15 @@
     text-align: center;
   }
 
+  /* ---------- INTRO BLOCK (dims when gallery in view) ---------- */
+  .intro-block {
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .intro-block {
+    opacity: 0.28;
+  }
+
   /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -253,20 +262,25 @@
     animation-delay: 1s;
   }
 
-  /* ---------- GALLERY ---------- */
+  /* ---------- GALLERY SECTION ---------- */
+  .gallery-section {
+    position: relative;
+  }
+
+  /* ---------- GALLERY (3-column flex with centered rows) ---------- */
   .gallery {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 90px 80px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 90px 60px;
     margin: 0 auto 40px;
-    max-width: 900px;
-    justify-items: center;
+    max-width: 1100px;
   }
 
   .gallery-item {
     display: block;
     text-align: center;
-    width: 100%;
+    width: calc((100% - 120px) / 3);
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 1.2s ease, transform 1.2s ease;
@@ -280,7 +294,6 @@
   .gallery-item .poster {
     position: relative;
     width: 100%;
-    max-width: 380px;
     aspect-ratio: 1 / 1;
     background: #1a1a1a;
     overflow: hidden;
@@ -352,6 +365,11 @@
     text-align: center;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.4s;
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .signature {
+    opacity: 0.28;
   }
 
   .signature-logo {
@@ -364,10 +382,11 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .gallery {
-      grid-template-columns: repeat(2, 1fr);
       gap: 60px 40px;
     }
-    .gallery-item .poster { max-width: 300px; }
+    .gallery-item {
+      width: calc((100% - 40px) / 2);
+    }
   }
 
   @media (max-width: 700px) {
@@ -379,8 +398,13 @@
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
-    .gallery { grid-template-columns: 1fr; gap: 60px; }
-    .gallery-item .poster { max-width: 320px; }
+    .gallery {
+      gap: 60px;
+      max-width: 400px;
+    }
+    .gallery-item {
+      width: 100%;
+    }
     .gallery-item .poster img {
       filter: brightness(0.85) contrast(1.05);
     }
@@ -407,89 +431,97 @@
 
 <div class="page">
 
-  <h1>About &amp; Gallery</h1>
+  <div class="intro-block">
 
-  <span class="subhead">Solo Works: Cinematic Compositions</span>
+    <h1>About &amp; Gallery</h1>
 
-  <p class="intro-text">This is a curated archive for deep listening. Through standalone cinematic compositions, neoclassical arrangements, and multi-layered soundscapes, I construct felt environments for introspection and memory. Think of it as a space to daydream.</p>
+    <span class="subhead">Solo Works: Cinematic Compositions</span>
 
-  <p class="intro-text">These are expansive instrumental pieces written not to fit a specific visual scene, but to define an internal state of being.</p>
+    <p class="intro-text">This is a curated archive for deep listening. Through standalone cinematic compositions, neoclassical arrangements, and multi-layered soundscapes, I construct felt environments for introspection and memory. Think of it as a space to daydream.</p>
 
-  <p class="featured-label">Featured Independent Releases</p>
+    <p class="intro-text">These are expansive instrumental pieces written not to fit a specific visual scene, but to define an internal state of being.</p>
 
-  <p class="click-hint">(Click on the Image to Explore the Sounds)</p>
+    <p class="featured-label">Featured Independent Releases</p>
 
-  <div class="gallery">
+    <p class="click-hint">(Click on the Image to Explore the Sounds)</p>
 
-    <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Into A Stillness That Answers</div>
-    </a>
+  </div>
 
-    <a href="https://www.youtube.com/watch?v=zNHjyFSfxuc&list=OLAK5uy_l3spwn3ikdN9Ydatj8YH4aBC2MPgsGHZE" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/when-stars-align.jpg" alt="When Stars Align — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">When Stars Align</div>
-    </a>
+  <div class="gallery-section" id="gallery-section">
 
-    <a href="https://www.youtube.com/watch?v=dgQjOQKJwnw&list=OLAK5uy_l_R-8HxUqoACTBwX1M0vwGQnoh_SkGJN4" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Where I Begin Again</div>
-    </a>
+    <div class="gallery">
 
-    <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAK5uy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/agent-254.jpg" alt="Agent 254 — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Agent 254</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Into A Stillness That Answers</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=hQsG4VxJSws&list=OLAK5uy_mC6gmQ6HKFaMIWtxNXyDZjIKX03mrRstU" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/the-impressionist.jpg" alt="The Impressionist — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">The Impressionist</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=zNHjyFSfxuc&list=OLAK5uy_l3spwn3ikdN9Ydatj8YH4aBC2MPgsGHZE" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/when-stars-align.jpg" alt="When Stars Align — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">When Stars Align</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=f9vpu1eTEYE&list=OLAK5uy_n2m1iRVcZ9j-JP8wmV7g2Ykoz_fbRp3Ag" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">The Impressionist II</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=dgQjOQKJwnw&list=OLAK5uy_l_R-8HxUqoACTBwX1M0vwGQnoh_SkGJN4" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Where I Begin Again</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAK5uy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/the-impressionist-3.jpg" alt="The Impressionist III — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">The Impressionist III</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAK5uy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/agent-254.jpg" alt="Agent 254 — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Agent 254</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=E0eGU9DLp8U&list=OLAK5uy_lICimu-olurvd6qJdxk5Fu82iFVS9Ji0c" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/frames-in-sound.png" alt="Frames in Sound — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Frames in Sound</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=hQsG4VxJSws&list=OLAK5uy_mC6gmQ6HKFaMIWtxNXyDZjIKX03mrRstU" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/the-impressionist.jpg" alt="The Impressionist — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">The Impressionist</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=N6GS8OGD2GY&list=OLAK5uy_lXKMU1d8-oeLghKj8oGc_pZ0xBWoYpm0g" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/introspect.jpg" alt="Introspect — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Introspect</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=f9vpu1eTEYE&list=OLAK5uy_n2m1iRVcZ9j-JP8wmV7g2Ykoz_fbRp3Ag" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">The Impressionist II</div>
+      </a>
 
-    <a href="https://www.youtube.com/watch?v=Ksw5e9IyGzs&list=OLAK5uy_kFkSLceGcqu6UZe288YzObKiU0eVm4FNs" target="_blank" rel="noopener" class="gallery-item">
-      <div class="poster">
-        <img src="images/seven-deadly-sins.jpg" alt="Seven Deadly Sins — Album by Noel Grass" loading="lazy">
-      </div>
-      <div class="caption">Seven Deadly Sins</div>
-    </a>
+      <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAK5uy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/the-impressionist-3.jpg" alt="The Impressionist III — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">The Impressionist III</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=E0eGU9DLp8U&list=OLAK5uy_lICimu-olurvd6qJdxk5Fu82iFVS9Ji0c" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/frames-in-sound.png" alt="Frames in Sound — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Frames in Sound</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=N6GS8OGD2GY&list=OLAK5uy_lXKMU1d8-oeLghKj8oGc_pZ0xBWoYpm0g" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/introspect.jpg" alt="Introspect — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Introspect</div>
+      </a>
+
+      <a href="https://www.youtube.com/watch?v=Ksw5e9IyGzs&list=OLAK5uy_kFkSLceGcqu6UZe288YzObKiU0eVm4FNs" target="_blank" rel="noopener" class="gallery-item">
+        <div class="poster">
+          <img src="images/seven-deadly-sins.jpg" alt="Seven Deadly Sins — Album by Noel Grass" loading="lazy">
+        </div>
+        <div class="caption">Seven Deadly Sins</div>
+      </a>
+
+    </div>
 
   </div>
 
@@ -501,24 +533,44 @@
 
 <script>
   (function() {
-    if (!('IntersectionObserver' in window)) {
+    /* Reveal tiles on scroll */
+    if ('IntersectionObserver' in window) {
+      var tileObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('lit');
+            tileObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.gallery-item').forEach(function(el, i) {
+        el.style.transitionDelay = ((i % 3) * 0.12) + 's';
+        tileObserver.observe(el);
+      });
+    } else {
       document.querySelectorAll('.gallery-item').forEach(function(el) {
         el.classList.add('lit');
       });
-      return;
     }
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('lit');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.gallery-item').forEach(function(el, i) {
-      el.style.transitionDelay = ((i % 4) * 0.12) + 's';
-      observer.observe(el);
-    });
+
+    /* Dim intro + signature when gallery is in view */
+    var page = document.querySelector('.page');
+    var gallerySection = document.getElementById('gallery-section');
+
+    if (page && gallerySection && 'IntersectionObserver' in window) {
+      var galleryObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            page.classList.add('gallery-active');
+          } else {
+            page.classList.remove('gallery-active');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      galleryObserver.observe(gallerySection);
+    }
   })();
 </script>
 
