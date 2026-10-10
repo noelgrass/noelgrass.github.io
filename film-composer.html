@@ -200,25 +200,6 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM ---------- */
-  .page:has(.cta-link:hover) h1,
-  .page:has(.cta-link:hover) .subhead,
-  .page:has(.cta-link:hover) .intro-text,
-  .page:has(.cta-link:hover) .reveal,
-  .page:has(.cta-link:hover) .signature {
-    opacity: 0.15;
-    transition: opacity 0.6s ease;
-  }
-
-  .page:has(.cta-link:hover) .cta-link:not(:hover) {
-    opacity: 0.3;
-    transition: opacity 0.6s ease;
-  }
-
-  .page:has(.cta-link:hover) .cta-row {
-    opacity: 1;
-  }
-
   /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -230,7 +211,6 @@
     margin-bottom: 60px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.2s;
-    transition: opacity 0.6s ease;
   }
 
   .subhead {
@@ -243,7 +223,6 @@
     text-decoration-thickness: 1px;
     margin: 50px 0 24px;
     display: block;
-    transition: opacity 0.6s ease;
   }
 
   .subhead:first-of-type {
@@ -255,7 +234,6 @@
     font-size: 1.05em;
     line-height: 1.85;
     margin: 0 0 22px;
-    transition: opacity 0.6s ease;
   }
 
   .intro-text {
@@ -272,7 +250,7 @@
 
   em { font-style: italic; }
 
-  /* ---------- CTA ROW (homepage-style role links) ---------- */
+  /* ---------- CTA ROW ---------- */
   .cta-row {
     display: flex;
     justify-content: center;
@@ -281,7 +259,6 @@
     margin: 80px 0 40px;
     flex-wrap: wrap;
     position: relative;
-    z-index: 2;
   }
 
   .cta-link {
@@ -293,7 +270,7 @@
     color: #EDEAE3;
     padding: 8px 0 6px;
     border-bottom: none;
-    transition: color 0.4s ease, opacity 0.6s ease;
+    transition: color 0.4s ease;
     position: relative;
     display: inline-block;
   }
@@ -322,11 +299,6 @@
     background: var(--gold);
     transform: rotate(45deg);
     opacity: 0.9;
-    transition: opacity 0.6s ease;
-  }
-
-  .page:has(.cta-link:hover) .cta-row .diamond {
-    opacity: 0.2;
   }
 
   /* ---------- SIGNATURE ---------- */
@@ -335,7 +307,6 @@
     text-align: center;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.5s;
-    transition: opacity 0.6s ease;
   }
 
   .signature-logo {
