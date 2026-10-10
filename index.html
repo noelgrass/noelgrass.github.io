@@ -211,7 +211,6 @@
   }
 
   /* ---------- SPOTLIGHT DIM ---------- */
-  /* When hovering either role link, all other sections dim */
   .page:has(.role-links a:hover) .title-block,
   .page:has(.role-links a:hover) .editorial,
   .page:has(.role-links a:hover) .icons,
@@ -222,7 +221,6 @@
     transition: opacity 0.6s ease;
   }
 
-  /* Non-hovered role link also dims slightly */
   .page:has(.role-links a:hover) .role-links a:not(:hover) {
     opacity: 0.3;
     transition: opacity 0.6s ease;
@@ -297,8 +295,8 @@
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border: 1px solid var(--rule);
-    filter: grayscale(100%) contrast(1.05) brightness(0.95);
-    transition: filter 0.6s ease, transform 0.6s ease;
+    filter: grayscale(100%) contrast(1.05) brightness(0.65);
+    transition: filter 0.7s ease, transform 0.6s ease;
   }
 
   .portrait img:hover {
@@ -517,6 +515,13 @@
       position: static;
       max-width: 320px;
       margin: 0 auto;
+    }
+    .portrait img {
+      filter: grayscale(100%) contrast(1.05) brightness(0.85);
+    }
+    .portrait img:hover {
+      filter: grayscale(100%) contrast(1.05) brightness(0.85);
+      transform: none;
     }
     .portrait .caption {
       text-align: center;
