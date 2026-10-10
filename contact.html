@@ -88,6 +88,21 @@
 
   a:hover { color: #FCFCF7; }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -97,6 +112,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -114,9 +130,26 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -132,6 +165,7 @@
     opacity: 0.6;
   }
 
+  /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -139,6 +173,7 @@
     text-align: center;
   }
 
+  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -147,8 +182,11 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
+  /* ---------- LABELS & VALUES ---------- */
   .label {
     display: block;
     font-family: 'Playfair Display', Georgia, serif;
@@ -159,26 +197,51 @@
     text-underline-offset: 6px;
     text-decoration-thickness: 1px;
     margin: 40px 0 12px;
+    animation: fadeUp 1s ease-out both;
   }
+
+  .label:nth-of-type(1) { animation-delay: 0.4s; }
+  .label:nth-of-type(2) { animation-delay: 0.7s; }
 
   .value {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.15em;
     color: var(--offwhite);
     line-height: 1.6;
+    animation: fadeUp 1s ease-out both;
   }
+
+  .value:nth-of-type(1) { animation-delay: 0.5s; }
+  .value:nth-of-type(2) { animation-delay: 0.8s; }
 
   .value a {
     color: var(--offwhite);
     text-decoration: none;
-    transition: color 0.25s ease;
+    transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+
+  .value a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
   }
 
   .value a:hover { color: var(--gold); }
+  .value a:hover::after { width: 100%; }
 
+  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 90px;
     text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
   }
 
   .signature-logo {
@@ -188,6 +251,7 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
