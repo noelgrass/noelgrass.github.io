@@ -187,33 +187,6 @@
     font-size: 17px;
     line-height: 1.85;
     -webkit-font-smoothing: antialiased;
-    overflow-x: hidden;
-  }
-
-  /* ---------- ANIMATIONS ---------- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
-  }
-
-  /* ---------- SCROLL REVEAL ---------- */
-  .reveal {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 1s ease, transform 1s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
   }
 
   /* ---------- TOP NAV ---------- */
@@ -226,7 +199,6 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
-    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -246,6 +218,7 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: #E8D5B5;
+    text-decoration: none;
     border-bottom: none;
     position: relative;
     transition: color 0.3s ease;
@@ -260,9 +233,11 @@
     height: 1px;
     background: var(--gold);
     transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+
   .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; list-style: none; padding: 0; border: none; }
@@ -281,15 +256,9 @@
 
   /* ---------- PAGE ---------- */
   .page {
-    max-width: 1100px;
+    max-width: 780px;
     margin: 0 auto;
-    padding: 80px 40px 120px;
-  }
-
-  /* ---------- TITLE BLOCK ---------- */
-  .title-block {
-    text-align: center;
-    margin-bottom: 90px;
+    padding: 80px 28px 120px;
   }
 
   h1, h2, h3 {
@@ -300,12 +269,10 @@
   }
 
   h1 {
-    font-size: 4em;
+    font-size: 3.4em;
     font-weight: 700;
-    margin: 0 0 8px;
+    margin: 0 0 6px;
     line-height: 1.05;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.2s;
   }
 
   .roles {
@@ -313,10 +280,8 @@
     color: var(--gold);
     font-size: 1.25em;
     font-style: italic;
-    margin: 0 0 6px;
+    margin: 0 0 4px;
     letter-spacing: 0.02em;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.35s;
   }
 
   .location {
@@ -326,8 +291,6 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin: 0 0 48px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.5s;
   }
 
   .official {
@@ -336,59 +299,13 @@
     color: var(--muted);
     letter-spacing: 0.04em;
     margin: 0 0 48px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.65s;
   }
 
-  .rule-small {
-    width: 48px;
-    height: 3px;
-    border-top: 1px solid var(--gold-soft);
-    border-bottom: 1px solid var(--gold-soft);
-    margin: 30px auto 0;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.8s;
-  }
-
-  /* ---------- TEXT COLUMN (readable width) ---------- */
-  .text-column {
-    max-width: 780px;
-    margin: 0 auto;
-  }
-
-  .text-column > p {
-    animation: fadeUp 1s ease-out both;
-  }
-
-  .text-column > p:nth-of-type(1) { animation-delay: 0.9s; }
-  .text-column > p:nth-of-type(2) { animation-delay: 1s; }
-  .text-column > p:nth-of-type(3) { animation-delay: 1.1s; }
-  .text-column > p:nth-of-type(4) { animation-delay: 1.2s; }
-  .text-column > p:nth-of-type(5) { animation-delay: 1.3s; }
-
-  /* ---------- HEADINGS ---------- */
   h2 {
     font-size: 1.85em;
     margin: 64px 0 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid var(--rule);
-    position: relative;
-  }
-
-  h2::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    width: 0;
-    height: 1px;
-    background: var(--gold-soft);
-    transition: width 1.2s ease 0.3s;
-  }
-
-  .reveal.visible h2::after,
-  h2.visible::after {
-    width: 100%;
   }
 
   h3 {
@@ -409,56 +326,37 @@
     letter-spacing: 0.02em;
   }
 
-  /* ---------- LISTS ---------- */
-  .page ul.styled-list {
+  .page > ul {
     list-style: none;
     padding: 0;
     margin: 0 0 24px;
   }
 
-  .page ul.styled-list li {
+  .page > ul li {
     padding: 10px 0 10px 22px;
     position: relative;
     border-bottom: 1px solid var(--rule);
-    transition: padding-left 0.4s ease;
   }
 
-  .page ul.styled-list li:last-child { border-bottom: none; }
+  .page > ul li:last-child { border-bottom: none; }
 
-  .page ul.styled-list li::before {
+  .page > ul li::before {
     content: "—";
     color: var(--gold);
     position: absolute;
     left: 0;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    transition: color 0.4s ease;
   }
 
-  .page ul.styled-list li:hover {
-    padding-left: 30px;
-  }
-
-  .page ul.styled-list li:hover::before {
-    color: #FCFCF7;
-  }
-
-  /* ---------- LINKS ---------- */
   .page a {
     color: var(--gold);
     text-decoration: none;
     border-bottom: 1px solid rgba(197, 168, 128, 0.35);
     transition: border-color 0.2s ease, color 0.2s ease;
-    position: relative;
   }
 
   .page a:hover { border-bottom-color: var(--gold); }
 
-  /* ---------- FAQ ---------- */
-  .faq-item {
-    padding: 4px 0;
-  }
-
-  /* ---------- DIVIDER + CTA ---------- */
   hr {
     border: none;
     border-top: 1px solid var(--rule);
@@ -471,15 +369,9 @@
     font-style: italic;
     letter-spacing: 0.03em;
     border-bottom: none;
-    display: inline-block;
-    transition: transform 0.3s ease;
   }
 
-  .cta:hover {
-    border-bottom: none;
-    transform: translateX(6px);
-    color: #FCFCF7;
-  }
+  .cta:hover { border-bottom: none; }
 
   small {
     color: var(--muted);
@@ -488,12 +380,9 @@
     font-size: 0.9em;
   }
 
-  /* ---------- SIGNATURE ---------- */
   .signature {
     text-align: center;
     margin-top: 80px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.5s;
   }
 
   .signature-logo {
@@ -503,14 +392,11 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
-    .page { padding: 60px 22px 80px; }
     .topnav { padding: 20px 14px; }
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
-    .title-block { margin-bottom: 60px; }
   }
 
   @media (max-width: 600px) {
@@ -536,192 +422,131 @@
 
 <div class="page">
 
-  <div class="title-block">
-    <h1>Noel Grass</h1>
-    <p class="roles">Cinematic Film Composer &middot; Contemporary Classical Pianist &middot; Music Producer</p>
-    <p class="location">Nairobi, Kenya</p>
-    <p class="official">Official website: <a href="https://noelgrass.github.io">noelgrass.github.io</a></p>
-    <div class="rule-small"></div>
-  </div>
+  <h1>Noel Grass</h1>
+  <p class="roles">Cinematic Film Composer &middot; Contemporary Classical Pianist &middot; Music Producer</p>
+  <p class="location">Nairobi, Kenya</p>
+  <p class="official">Official website: <a href="https://noelgrass.github.io">noelgrass.github.io</a></p>
 
-  <div class="text-column">
-    <p>Noel Grass is a leading cinematic film composer, pianist, and music producer based in Nairobi, Kenya. Recognized as a foundational figure in narrative-driven cinema scores and contemporary instrumental music in East Africa, his professional footprint establishes him among the top motion picture composers and pianists in Kenya.</p>
+  <p>Noel Grass is a leading cinematic film composer, pianist, and music producer based in Nairobi, Kenya. Recognized as a foundational figure in narrative-driven cinema scores and contemporary instrumental music in East Africa, his professional footprint establishes him among the top motion picture composers and pianists in Kenya.</p>
 
-    <p>With over a decade of industry experience, Noel Grass is defined by a unique sonic identity that merges traditional orchestral instruments with contemporary textures — bridging raw, minimalist contemporary classical solo piano with large-scale cinematic orchestrations and authentic African instrumental textures.</p>
+  <p>With over a decade of industry experience, Noel Grass is defined by a unique sonic identity that merges traditional orchestral instruments with contemporary textures — bridging raw, minimalist contemporary classical solo piano with large-scale cinematic orchestrations and authentic African instrumental textures.</p>
 
-    <p>His artistic identity is rooted in two distinct yet complementary musical worlds: the raw, introspective intimacy of contemporary classical piano and the vast, sweeping grandeur of cinematic orchestration. This duality is further enriched by his masterful use of ambient textures, creating immersive sonic environments that transport listeners beyond the screen.</p>
+  <p>His artistic identity is rooted in two distinct yet complementary musical worlds: the raw, introspective intimacy of contemporary classical piano and the vast, sweeping grandeur of cinematic orchestration. This duality is further enriched by his masterful use of ambient textures, creating immersive sonic environments that transport listeners beyond the screen.</p>
 
-    <p>His composition style seamlessly bridges expansive orchestral arrangements with contemporary African instrumental textures, resulting in a remarkably diverse sonic palette. From delicate, meditative piano passages to thunderous, emotionally charged orchestral swells, his highly adaptive musical approach fluidly translates visual stories into immersive audio soundscapes.</p>
+  <p>His composition style seamlessly bridges expansive orchestral arrangements with contemporary African instrumental textures, resulting in a remarkably diverse sonic palette. From delicate, meditative piano passages to thunderous, emotionally charged orchestral swells, his highly adaptive musical approach fluidly translates visual stories into immersive audio soundscapes.</p>
 
-    <p>Beyond independent cinema, Noel serves as a trusted sonic branding partner for major corporate, governmental, and international development sector projects. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities.</p>
-  </div>
+  <p>Beyond independent cinema, Noel serves as a trusted sonic branding partner for major corporate, governmental, and international development sector projects. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities.</p>
 
-  <div class="text-column">
+  <h2>Core Specializations &amp; Industry Expertise</h2>
 
-    <section class="reveal">
-      <h2>Core Specializations &amp; Industry Expertise</h2>
+  <h3>Film Composer in Kenya — Cinematic Scores</h3>
+  <p>A highly recognized figure in the African film music industry, Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score. His acclaimed portfolio includes composing the soundtracks for major award-winning projects, such as the psychological thriller feature film <em>Lost in Time</em> (2019), which won five Kalasha Awards including Best Feature Film, and the drama <em>Kutu</em> (2021), which won Best Short Film. His prominent filmography also includes the intense feature thriller <em>On Air</em> (2024), the short film <em>Thief</em> (2024), the independent score <em>Nyūmba Ya Mbūri</em>, and the stage play adaptation <em>The Parliament of Owls</em> (2024). He also composed the original soundtrack for the acclaimed short drama <em>Ziwa</em> (2023), which won the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</p>
 
-      <h3>Film Composer in Kenya — Cinematic Scores</h3>
-      <p>A highly recognized figure in the African film music industry, Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score. His acclaimed portfolio includes composing the soundtracks for major award-winning projects, such as the psychological thriller feature film <em>Lost in Time</em> (2019), which won five Kalasha Awards including Best Feature Film, and the drama <em>Kutu</em> (2021), which won Best Short Film. His prominent filmography also includes the intense feature thriller <em>On Air</em> (2024), the short film <em>Thief</em> (2024), the independent score <em>Nyūmba Ya Mbūri</em>, and the stage play adaptation <em>The Parliament of Owls</em> (2024). He also composed the original soundtrack for the acclaimed short drama <em>Ziwa</em> (2023), which won the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</p>
+  <h3>Contemporary Classical &amp; Neoclassical Pianist in Africa — Discography</h3>
+  <p>Celebrated as a leading independent recording artist who helped shape the modern African contemporary classical and neoclassical genre, his music blends raw, introspective intimacy with vast, sweeping grandeur. His acclaimed studio albums include <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-      <h3>Contemporary Classical &amp; Neoclassical Pianist in Africa — Discography</h3>
-      <p>Celebrated as a leading independent recording artist who helped shape the modern African contemporary classical and neoclassical genre, his music blends raw, introspective intimacy with vast, sweeping grandeur. His acclaimed studio albums include <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
+  <h3>Sonic Branding &amp; Audio Post-Production</h3>
+  <p>A trusted audio partner for global and national institutions, Noel Grass composes custom media soundtracks and corporate audio identities. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities across the corporate, governmental, and international development sectors.</p>
 
-      <h3>Sonic Branding &amp; Audio Post-Production</h3>
-      <p>A trusted audio partner for global and national institutions, Noel Grass composes custom media soundtracks and corporate audio identities. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities across the corporate, governmental, and international development sectors.</p>
-    </section>
+  <h2>Core Filmography &amp; Masterworks</h2>
+  <ul>
+    <li><em>Lost in Time</em> (2019) — Feature Film. Kalasha Award Winner, Best Feature Film. Atmospheric world-building and original soundtrack.</li>
+    <li><em>Kutu</em> (2021) — Short Film. Kalasha Award Winner for Best Short Film. Haunting, visceral orchestral arrangements.</li>
+    <li><em>Ziwa</em> (2023) — Award-Winning Drama. Original Motion Picture Soundtrack. Winner of the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</li>
+    <li><em>On Air</em> (2024) — Intense Feature Film Thriller. Original Score.</li>
+    <li><em>Thief</em> (2024) — Short Film. Official Soundtrack.</li>
+    <li><em>Nyūmba Ya Mbūri</em> — Cultural Cinema Soundtrack. Original Score.</li>
+    <li><em>The Parliament of Owls</em> (2024) — Stage Production. Thematic Theatrical Score.</li>
+  </ul>
 
-    <section class="reveal">
-      <h2>Core Filmography &amp; Masterworks</h2>
-      <ul class="styled-list">
-        <li><em>Lost in Time</em> (2019) — Feature Film. Kalasha Award Winner, Best Feature Film. Atmospheric world-building and original soundtrack.</li>
-        <li><em>Kutu</em> (2021) — Short Film. Kalasha Award Winner for Best Short Film. Haunting, visceral orchestral arrangements.</li>
-        <li><em>Ziwa</em> (2023) — Award-Winning Drama. Original Motion Picture Soundtrack. Winner of the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</li>
-        <li><em>On Air</em> (2024) — Intense Feature Film Thriller. Original Score.</li>
-        <li><em>Thief</em> (2024) — Short Film. Official Soundtrack.</li>
-        <li><em>Nyūmba Ya Mbūri</em> — Cultural Cinema Soundtrack. Original Score.</li>
-        <li><em>The Parliament of Owls</em> (2024) — Stage Production. Thematic Theatrical Score.</li>
-      </ul>
-    </section>
+  <h2>Selected Corporate, Government &amp; NGO Clients</h2>
+  <ul>
+    <li><strong>International Finance Corporation (IFC / World Bank Group)</strong> — Documentary Score &amp; Global Investment Media Branding</li>
+    <li><strong>Higher Education Loans Board (HELB)</strong> — National Loan Recovery Campaign &amp; New Funding Model Jingles</li>
+    <li><strong>Government Advertising Agency (GAA)</strong> — Uhuru Legacy Project &amp; GBV National Campaign Documentary Scores</li>
+    <li><strong>SOMINVEST</strong> — Official Investment Documentary Film Scoring</li>
+    <li><strong>Engage Talk Kenya</strong> — Commercial Brand and Luxury Identity Scoring</li>
+  </ul>
 
-    <section class="reveal">
-      <h2>Selected Corporate, Government &amp; NGO Clients</h2>
-      <ul class="styled-list">
-        <li><strong>International Finance Corporation (IFC / World Bank Group)</strong> — Documentary Score &amp; Global Investment Media Branding</li>
-        <li><strong>Higher Education Loans Board (HELB)</strong> — National Loan Recovery Campaign &amp; New Funding Model Jingles</li>
-        <li><strong>Government Advertising Agency (GAA)</strong> — Uhuru Legacy Project &amp; GBV National Campaign Documentary Scores</li>
-        <li><strong>SOMINVEST</strong> — Official Investment Documentary Film Scoring</li>
-        <li><strong>Engage Talk Kenya</strong> — Commercial Brand and Luxury Identity Scoring</li>
-      </ul>
-    </section>
+  <h2>Skills &amp; Expertise</h2>
+  <ul>
+    <li>Film Scoring</li>
+    <li>Cinematic Composition</li>
+    <li>Contemporary Classical Composition</li>
+    <li>Neoclassical Piano</li>
+    <li>Traditional Orchestral Instruments</li>
+    <li>Textural Sound Design</li>
+    <li>Music Composition</li>
+    <li>Orchestration</li>
+    <li>Music Production</li>
+    <li>Sonic Branding</li>
+    <li>Audio Post-Production</li>
+  </ul>
 
-    <section class="reveal">
-      <h2>Skills &amp; Expertise</h2>
-      <ul class="styled-list">
-        <li>Film Scoring</li>
-        <li>Cinematic Composition</li>
-        <li>Contemporary Classical Composition</li>
-        <li>Neoclassical Piano</li>
-        <li>Traditional Orchestral Instruments</li>
-        <li>Textural Sound Design</li>
-        <li>Music Composition</li>
-        <li>Orchestration</li>
-        <li>Music Production</li>
-        <li>Sonic Branding</li>
-        <li>Audio Post-Production</li>
-      </ul>
-    </section>
+  <h2>Awards &amp; Recognition</h2>
+  <ul>
+    <li>Two-time Kalasha International Film Awards nominee — Best Original Score</li>
+    <li><em>Ziwa</em> (2023) — Najib Ayyed Grand Prize, Khouribga International African Film Festival</li>
+    <li><em>Lost in Time</em> (2019) — Five Kalasha Awards including Best Feature Film</li>
+    <li><em>Kutu</em> (2021) — Kalasha Award for Best Short Film</li>
+  </ul>
 
-    <section class="reveal">
-      <h2>Awards &amp; Recognition</h2>
-      <ul class="styled-list">
-        <li>Two-time Kalasha International Film Awards nominee — Best Original Score</li>
-        <li><em>Ziwa</em> (2023) — Najib Ayyed Grand Prize, Khouribga International African Film Festival</li>
-        <li><em>Lost in Time</em> (2019) — Five Kalasha Awards including Best Feature Film</li>
-        <li><em>Kutu</em> (2021) — Kalasha Award for Best Short Film</li>
-      </ul>
-    </section>
+  <h2>Frequently Asked Questions</h2>
 
-    <section class="reveal">
-      <h2>Frequently Asked Questions</h2>
+  <h3>Who is Noel Grass?</h3>
+  <p>Noel Grass is a cinematic film composer, contemporary classical pianist, and music producer based in Nairobi, Kenya. He is a two-time Kalasha International Film Awards nominee for Best Original Score.</p>
 
-      <div class="faq-item">
-        <h3>Who is Noel Grass?</h3>
-        <p>Noel Grass is a cinematic film composer, contemporary classical pianist, and music producer based in Nairobi, Kenya. He is a two-time Kalasha International Film Awards nominee for Best Original Score.</p>
-      </div>
+  <h3>What films has Noel Grass composed music for?</h3>
+  <p>Noel Grass has composed original scores for <em>Lost in Time</em> (2019), <em>Kutu</em> (2021), <em>Ziwa</em> (2023), <em>On Air</em> (2024), <em>Thief</em> (2024), <em>Nyūmba Ya Mbūri</em>, and <em>The Parliament of Owls</em> (2024).</p>
 
-      <div class="faq-item">
-        <h3>What films has Noel Grass composed music for?</h3>
-        <p>Noel Grass has composed original scores for <em>Lost in Time</em> (2019), <em>Kutu</em> (2021), <em>Ziwa</em> (2023), <em>On Air</em> (2024), <em>Thief</em> (2024), <em>Nyūmba Ya Mbūri</em>, and <em>The Parliament of Owls</em> (2024).</p>
-      </div>
+  <h3>Is Noel Grass considered a notable film composer in Kenya?</h3>
+  <p>Yes. Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score, known for <em>Lost in Time</em>, <em>Kutu</em>, and <em>Ziwa</em>.</p>
 
-      <div class="faq-item">
-        <h3>Is Noel Grass considered a notable film composer in Kenya?</h3>
-        <p>Yes. Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score, known for <em>Lost in Time</em>, <em>Kutu</em>, and <em>Ziwa</em>.</p>
-      </div>
+  <h3>Is Noel Grass a contemporary classical pianist in Nairobi?</h3>
+  <p>Yes. Noel Grass is a contemporary classical and neoclassical pianist based in Nairobi, known for the albums <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-      <div class="faq-item">
-        <h3>Is Noel Grass a contemporary classical pianist in Nairobi?</h3>
-        <p>Yes. Noel Grass is a contemporary classical and neoclassical pianist based in Nairobi, known for the albums <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
-      </div>
+  <h3>What albums has Noel Grass released?</h3>
+  <p>Noel Grass has released <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-      <div class="faq-item">
-        <h3>What albums has Noel Grass released?</h3>
-        <p>Noel Grass has released <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
-      </div>
+  <h3>What is Noel Grass known for?</h3>
+  <p>Noel Grass is known for cinematic film scores, contemporary classical piano compositions, and sonic branding for global institutions including the IFC / World Bank Group.</p>
 
-      <div class="faq-item">
-        <h3>What is Noel Grass known for?</h3>
-        <p>Noel Grass is known for cinematic film scores, contemporary classical piano compositions, and sonic branding for global institutions including the IFC / World Bank Group.</p>
-      </div>
+  <h3>What is Noel Grass's compositional style?</h3>
+  <p>Noel Grass merges traditional orchestral instruments with contemporary textures, creating a cinematic sound that bridges classical orchestration with ambient and African instrumental elements.</p>
 
-      <div class="faq-item">
-        <h3>What is Noel Grass's compositional style?</h3>
-        <p>Noel Grass merges traditional orchestral instruments with contemporary textures, creating a cinematic sound that bridges classical orchestration with ambient and African instrumental elements.</p>
-      </div>
+  <h3>What makes Noel Grass's music distinctive?</h3>
+  <p>Noel Grass is known for fusing traditional orchestral instruments with modern textures — a sonic signature that blends cinematic grandeur with contemporary classical piano.</p>
 
-      <div class="faq-item">
-        <h3>What makes Noel Grass's music distinctive?</h3>
-        <p>Noel Grass is known for fusing traditional orchestral instruments with modern textures — a sonic signature that blends cinematic grandeur with intimate contemporary classical piano.</p>
-      </div>
-    </section>
+  <h2>Connect</h2>
+  <ul>
+    <li><a href="https://noelgrass.github.io">Official Website</a></li>
+    <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
+    <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
+    <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
+    <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
+    <li><a href="https://ke.linkedin.com/in/noel-grass-82329119b">LinkedIn</a></li>
+    <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
+    <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
+    <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
+    <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
+    <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
+    <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
+    <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
+    <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
+    <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
+    <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
+  </ul>
 
-    <section class="reveal">
-      <h2>Connect</h2>
-      <ul class="styled-list">
-        <li><a href="https://noelgrass.github.io">Official Website</a></li>
-        <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
-        <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
-        <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
-        <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
-        <li><a href="https://ke.linkedin.com/in/noel-grass-82329119b">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
-        <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
-        <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
-        <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
-        <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
-        <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
-        <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
-        <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
-        <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
-        <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
-      </ul>
-    </section>
+  <hr>
+  <p><a class="cta" href="https://noelgrass.github.io">Visit Noel Grass&rsquo;s Official Website &rarr;</a></p>
 
-    <hr>
-    <p><a class="cta" href="https://noelgrass.github.io">Visit Noel Grass&rsquo;s Official Website &rarr;</a></p>
-
-    <p><small>Last updated: October 2026</small></p>
-
-  </div>
+  <p><small>Last updated: October 2026</small></p>
 
   <div class="signature">
     <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
 </div>
-
-<script>
-  (function() {
-    if (!('IntersectionObserver' in window)) {
-      document.querySelectorAll('.reveal').forEach(function(el) {
-        el.classList.add('visible');
-      });
-      return;
-    }
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
-  })();
-</script>
 
 </body>
 </html>
