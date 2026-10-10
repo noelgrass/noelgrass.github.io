@@ -197,6 +197,35 @@
     margin: 0 auto;
     padding: 100px 30px 80px;
     text-align: center;
+    position: relative;
+  }
+
+  /* ---------- SPOTLIGHT DIM ---------- */
+  /* When hovering a CTA link, everything else fades */
+  .page:has(.cta-link:hover) h1,
+  .page:has(.cta-link:hover) .subhead,
+  .page:has(.cta-link:hover) p,
+  .page:has(.cta-link:hover) .signature {
+    opacity: 0.15;
+    transition: opacity 0.6s ease;
+  }
+
+  /* The other CTA link dims, but less */
+  .page:has(.cta-link:hover) .cta-link:not(:hover) {
+    opacity: 0.3;
+    transition: opacity 0.6s ease;
+  }
+
+  /* Sections are also dimmed while one is hovered */
+  .page:has(.cta-link:hover) .reveal {
+    opacity: 0.15;
+    transition: opacity 0.6s ease;
+  }
+
+  /* Ensure the CTA row itself doesn't dim */
+  .page:has(.cta-link:hover) .cta-row {
+    opacity: 1;
+    transition: opacity 0.6s ease;
   }
 
   /* ---------- TITLE ---------- */
@@ -210,6 +239,7 @@
     margin-bottom: 60px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.2s;
+    transition: opacity 0.6s ease;
   }
 
   .subhead {
@@ -222,6 +252,7 @@
     text-decoration-thickness: 1px;
     margin: 50px 0 24px;
     display: block;
+    transition: opacity 0.6s ease;
   }
 
   /* First subhead fades on load */
@@ -234,6 +265,7 @@
     font-size: 1.05em;
     line-height: 1.85;
     margin: 0 0 22px;
+    transition: opacity 0.6s ease;
   }
 
   /* Intro paragraphs stagger on load */
@@ -259,6 +291,8 @@
     gap: 60px;
     margin: 70px 0 40px;
     flex-wrap: wrap;
+    position: relative;
+    z-index: 2;
   }
 
   .cta-link {
@@ -270,7 +304,7 @@
     color: var(--gold-pale);
     padding: 8px 0;
     border-bottom: 1px solid transparent;
-    transition: color 0.3s ease, border-color 0.3s ease;
+    transition: color 0.3s ease, border-color 0.3s ease, opacity 0.6s ease;
     position: relative;
     display: inline-block;
   }
@@ -299,6 +333,7 @@
     text-align: center;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.5s;
+    transition: opacity 0.6s ease;
   }
 
   .signature-logo {
@@ -372,7 +407,7 @@
 
     <div class="cta-row">
       <a href="film-gallery" class="cta-link">Gallery</a>
-      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
+      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDsnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
     </div>
   </section>
 
