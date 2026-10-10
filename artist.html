@@ -102,6 +102,21 @@
 
   a:hover { color: #FCFCF7; }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -111,6 +126,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -128,9 +144,22 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    position: relative;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -146,13 +175,15 @@
     opacity: 0.6;
   }
 
+  /* ---------- PAGE ---------- */
   .page {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 100px 30px 80px;
+    padding: 100px 40px 80px;
     text-align: center;
   }
 
+  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -161,6 +192,8 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
   .subhead {
@@ -173,6 +206,8 @@
     text-decoration-thickness: 1px;
     margin: 50px 0 24px;
     display: block;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
   }
 
   p {
@@ -184,22 +219,47 @@
     margin-right: auto;
   }
 
+  .intro-text {
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.55s;
+  }
+
+  .intro-text + .intro-text {
+    animation-delay: 0.7s;
+  }
+
+  .featured-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    color: var(--gold-pale);
+    font-size: 1.15em;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    margin-top: 50px;
+    margin-bottom: 12px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.85s;
+  }
+
   .click-hint {
     font-style: italic;
-    color: var(--gold-pale);
-    margin: 40px auto 60px;
+    color: var(--muted);
+    margin: 0 auto 70px;
     text-align: center;
     display: block;
     width: 100%;
     max-width: 780px;
+    font-size: 0.95em;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
   }
 
+  /* ---------- GALLERY ---------- */
   .gallery {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 50px 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 90px 80px;
     margin: 0 auto 40px;
-    max-width: 1000px;
+    max-width: 900px;
     justify-items: center;
   }
 
@@ -207,19 +267,45 @@
     display: block;
     text-align: center;
     width: 100%;
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 1.2s ease, transform 1.2s ease;
+  }
+
+  .gallery-item.lit {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .gallery-item .poster {
+    position: relative;
     width: 100%;
-    max-width: 280px;
+    max-width: 380px;
     aspect-ratio: 1 / 1;
     background: #1a1a1a;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
     border: 1px solid #1f1f1f;
+    transition: border-color 0.7s ease, box-shadow 0.7s ease;
+  }
+
+  /* Spotlight glow behind the tile */
+  .gallery-item .poster::before {
+    content: '';
+    position: absolute;
+    inset: -60px;
+    background: radial-gradient(
+      circle at 50% 30%,
+      rgba(197, 168, 128, 0.14) 0%,
+      rgba(197, 168, 128, 0.04) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
 
   .gallery-item .poster img {
@@ -227,11 +313,23 @@
     height: 100%;
     object-fit: cover;
     display: block;
+    filter: brightness(0.68) contrast(1.05);
+    transition: filter 0.8s ease, transform 0.8s ease;
   }
 
+  /* Hover state — tile lights up */
   .gallery-item:hover .poster {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(197, 168, 128, 0.18);
+    border-color: var(--gold-soft);
+    box-shadow: 0 20px 60px rgba(197, 168, 128, 0.12);
+  }
+
+  .gallery-item:hover .poster::before {
+    opacity: 1;
+  }
+
+  .gallery-item:hover .poster img {
+    filter: brightness(1) contrast(1);
+    transform: scale(1.02);
   }
 
   .gallery-item .caption {
@@ -239,13 +337,21 @@
     font-size: 1.1em;
     letter-spacing: 0.08em;
     color: var(--gold-pale);
-    margin-top: 18px;
+    margin-top: 24px;
     text-transform: uppercase;
+    transition: color 0.5s ease;
   }
 
+  .gallery-item:hover .caption {
+    color: #FCFCF7;
+  }
+
+  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 100px;
     text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
   }
 
   .signature-logo {
@@ -255,8 +361,13 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
-    .gallery { grid-template-columns: repeat(2, 1fr); gap: 40px 30px; }
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 60px 40px;
+    }
+    .gallery-item .poster { max-width: 300px; }
   }
 
   @media (max-width: 700px) {
@@ -268,8 +379,15 @@
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
-    .gallery { grid-template-columns: 1fr; gap: 40px; }
-    .gallery-item .poster { max-width: 260px; }
+    .gallery { grid-template-columns: 1fr; gap: 60px; }
+    .gallery-item .poster { max-width: 320px; }
+    .gallery-item .poster img {
+      filter: brightness(0.85) contrast(1.05);
+    }
+    .gallery-item:hover .poster img {
+      filter: brightness(0.85) contrast(1.05);
+      transform: none;
+    }
     .gallery-item .caption { font-size: 1em; }
     .signature-logo { height: 55px; }
   }
@@ -293,11 +411,11 @@
 
   <span class="subhead">Solo Works: Cinematic Compositions</span>
 
-  <p>This is a curated archive for deep listening. Through standalone cinematic compositions, neoclassical arrangements, and multi-layered soundscapes, I construct felt environments for introspection and memory. Think of it as a space to daydream.</p>
+  <p class="intro-text">This is a curated archive for deep listening. Through standalone cinematic compositions, neoclassical arrangements, and multi-layered soundscapes, I construct felt environments for introspection and memory. Think of it as a space to daydream.</p>
 
-  <p>These are expansive instrumental pieces written not to fit a specific visual scene, but to define an internal state of being.</p>
+  <p class="intro-text">These are expansive instrumental pieces written not to fit a specific visual scene, but to define an internal state of being.</p>
 
-  <p><strong>Featured Independent Releases</strong></p>
+  <p class="featured-label">Featured Independent Releases</p>
 
   <p class="click-hint">(Click on the Image to Explore the Sounds)</p>
 
@@ -380,6 +498,29 @@
   </div>
 
 </div>
+
+<script>
+  (function() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.gallery-item').forEach(function(el) {
+        el.classList.add('lit');
+      });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('lit');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.gallery-item').forEach(function(el, i) {
+      el.style.transitionDelay = ((i % 4) * 0.12) + 's';
+      observer.observe(el);
+    });
+  })();
+</script>
 
 </body>
 </html>
