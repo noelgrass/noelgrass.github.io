@@ -181,25 +181,32 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM ---------- */
-  /* Hover any CTA pair (heading + its icon group) — dim everything else */
-  .page:has(.cta-pair:hover) .release-label,
-  .page:has(.cta-pair:hover) .album-cover,
-  .page:has(.cta-pair:hover) .signature,
-  .page:has(.cta-pair:hover) .cta-pair:not(:hover) {
-    opacity: 0.25;
+  /* ---------- SPOTLIGHT DIM (icons) ---------- */
+  /* Hover any icon — dim everything else to 10% */
+  .page:has(.icons a:hover) .release-label,
+  .page:has(.icons a:hover) .album-cover,
+  .page:has(.icons a:hover) .cta-pair,
+  .page:has(.icons a:hover) .signature {
+    opacity: 0.1;
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.cta-pair:hover) .cta-pair:hover {
+  /* Other icons in the group dim too */
+  .page:has(.icons a:hover) .icons a:not(:hover) {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  /* The icon group stays bright */
+  .page:has(.icons a:hover) .icons {
     opacity: 1;
   }
 
-  /* Hover the album cover — dim everything else */
+  /* ---------- SPOTLIGHT DIM (album cover) ---------- */
   .page:has(.album-cover:hover) .release-label,
   .page:has(.album-cover:hover) .cta-pair,
   .page:has(.album-cover:hover) .signature {
-    opacity: 0.25;
+    opacity: 0.1;
     transition: opacity 0.7s ease;
   }
 
@@ -309,6 +316,7 @@
     align-items: center;
     gap: 44px;
     flex-wrap: wrap;
+    transition: opacity 0.7s ease;
   }
 
   .icons a {
@@ -320,23 +328,33 @@
     color: var(--gold-soft);
     border-radius: 50%;
     position: relative;
-    transition: color 0.4s ease, transform 0.4s ease;
+    transition: color 0.4s ease, transform 0.4s ease, opacity 0.7s ease;
   }
 
   .icons a::before {
     content: '';
     position: absolute;
-    inset: -25px;
+    inset: -35px;
     background: radial-gradient(
       circle at 50% 50%,
-      rgba(197, 168, 128, 0.42) 0%,
-      rgba(197, 168, 128, 0.15) 40%,
-      transparent 70%
+      rgba(185, 151, 92, 0.48) 0%,
+      rgba(185, 151, 92, 0.18) 35%,
+      transparent 65%
     );
     pointer-events: none;
     z-index: -1;
     opacity: 0;
-    transition: opacity 0.7s ease;
+    transition: opacity 0.8s ease;
+  }
+
+  .icons a::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    box-shadow: 0 0 40px 8px rgba(185, 151, 92, 0);
+    transition: box-shadow 0.8s ease;
+    pointer-events: none;
   }
 
   .icons a:hover {
@@ -346,6 +364,10 @@
 
   .icons a:hover::before {
     opacity: 1;
+  }
+
+  .icons a:hover::after {
+    box-shadow: 0 0 45px 10px rgba(185, 151, 92, 0.22);
   }
 
   .icons svg { width: 36px; height: 36px; fill: currentColor; }
