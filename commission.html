@@ -94,6 +94,33 @@
     border: 0;
   }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -103,6 +130,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -120,9 +148,26 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    text-decoration: none;
+    border-bottom: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -138,6 +183,7 @@
     opacity: 0.6;
   }
 
+  /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -145,6 +191,7 @@
     text-align: center;
   }
 
+  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -153,6 +200,8 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
   .subhead {
@@ -167,11 +216,24 @@
     display: block;
   }
 
+  /* Intro subheads — stagger on load */
+  .subhead.animate {
+    animation: fadeUp 1s ease-out both;
+  }
+
   p {
     font-size: 1.05em;
     line-height: 1.85;
     margin: 0 0 22px;
   }
+
+  /* Intro paragraphs — stagger on load */
+  .intro-text {
+    animation: fadeUp 1s ease-out both;
+  }
+
+  .intro-text:nth-of-type(1) { animation-delay: 0.4s; }
+  .intro-text:nth-of-type(2) { animation-delay: 0.55s; }
 
   strong {
     color: var(--gold-pale);
@@ -180,6 +242,7 @@
 
   em { font-style: italic; }
 
+  /* ---------- STEPS ---------- */
   .steps {
     text-align: left;
     margin: 30px auto 40px;
@@ -191,13 +254,27 @@
     font-size: 1.05em;
     line-height: 1.85;
     padding-left: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
   }
+
+  .steps.visible .step {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .steps.visible .step:nth-child(1) { transition-delay: 0s; }
+  .steps.visible .step:nth-child(2) { transition-delay: 0.15s; }
+  .steps.visible .step:nth-child(3) { transition-delay: 0.3s; }
+  .steps.visible .step:nth-child(4) { transition-delay: 0.45s; }
 
   .steps .step strong {
     color: var(--gold-pale);
     font-weight: 600;
   }
 
+  /* ---------- CONTACT BLOCK ---------- */
   .contact-block {
     margin-top: 40px;
   }
@@ -220,14 +297,31 @@
     font-size: 1.1em;
     color: var(--offwhite);
     text-decoration: none;
-    transition: color 0.25s ease;
+    transition: color 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+
+  .contact-block a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
   }
 
   .contact-block a:hover { color: var(--gold); }
+  .contact-block a:hover::after { width: 100%; }
 
+  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 90px;
     text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
   }
 
   .signature-logo {
@@ -237,6 +331,7 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
@@ -267,48 +362,93 @@
 
   <h1>Commission a Scene<span class="visually-hidden"> — Original Film Scoring in Kenya and Worldwide</span></h1>
 
-  <p>The process for commissioning an original music project for film, media, or a custom sonic space.</p>
+  <p class="intro-text">The process for commissioning an original music project for film, media, or a custom sonic space.</p>
 
-  <p>Based in Nairobi, Kenya, I work with filmmakers, production houses, and agencies across East Africa and internationally  from feature films and documentaries to commercial campaigns and sonic branding.</p>
+  <p class="intro-text">Based in Nairobi, Kenya, I work with filmmakers, production houses, and agencies across East Africa and internationally — from feature films and documentaries to commercial campaigns and sonic branding.</p>
 
-  <span class="subhead">Philosophy</span>
+  <span class="subhead animate" style="animation-delay: 0.7s;">Philosophy</span>
 
-  <p>My work starts with your story. The core rule is simple: the emotion of the scene decides the music. The score isn't just an addition; it's a foundational layer built from the emotional needs of your project.</p>
+  <section class="reveal">
+    <p>My work starts with your story. The core rule is simple: the emotion of the scene decides the music. The score isn't just an addition; it's a foundational layer built from the emotional needs of your project.</p>
+  </section>
 
-  <span class="subhead">The Process</span>
+  <span class="subhead animate" style="animation-delay: 0.9s;">The Process</span>
 
-  <p>To protect the creative vision, I follow a clear, four-step path:</p>
+  <p class="intro-text" style="animation-delay: 1s;">To protect the creative vision, I follow a clear, four-step path:</p>
 
-  <div class="steps">
+  <div class="steps" id="steps">
     <div class="step">1. <strong>The Brief</strong>: We define the core feeling, the story's mood, and the project's practical boundaries.</div>
     <div class="step">2. <strong>The Agreement</strong>: We formalize the brief, deliverables, timeline, and terms in writing. No creative work starts without this step.</div>
     <div class="step">3. <strong>The Creation</strong>: I compose and produce the score privately, following our brief.</div>
     <div class="step">4. <strong>The Delivery</strong>: You receive the final piece as a polished, intentional work, ready for its purpose.</div>
   </div>
 
-  <span class="subhead">The Foundation</span>
+  <section class="reveal">
+    <span class="subhead">The Foundation</span>
+    <p>Every commission follows a non-negotiable standard to ensure the music has clarity, intentional pacing, and fits seamlessly into its world. This is a collaboration built on trust and a shared vision.</p>
+  </section>
 
-  <p>Every commission follows a non-negotiable standard to ensure the music has clarity, intentional pacing, and fits seamlessly into its world. This is a collaboration built on trust and a shared vision.</p>
+  <section class="reveal">
+    <span class="subhead">Start a Conversation</span>
+    <p>To discuss your project, please contact:</p>
 
-  <span class="subhead">Start a Conversation</span>
+    <div class="contact-block">
 
-  <p>To discuss your project, please contact:</p>
+      <span class="label">Email</span>
+      <a href="mailto:noelgrassartist@gmail.com">noelgrassartist@gmail.com</a>
 
-  <div class="contact-block">
+      <span class="label">WhatsApp</span>
+      <a href="https://wa.me/254705872970" target="_blank" rel="noopener">+254 705 872 970</a>
 
-    <span class="label">Email</span>
-    <a href="mailto:noelgrassartist@gmail.com">noelgrassartist@gmail.com</a>
-
-    <span class="label">WhatsApp</span>
-    <a href="https://wa.me/254705872970" target="_blank" rel="noopener">+254 705 872 970</a>
-
-  </div>
+    </div>
+  </section>
 
   <div class="signature">
     <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
 </div>
+
+<script>
+  (function() {
+    /* Section reveals on scroll */
+    if ('IntersectionObserver' in window) {
+      var revealObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        revealObserver.observe(el);
+      });
+
+      /* Steps fade in sequentially */
+      var stepsObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            stepsObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+
+      var stepsEl = document.getElementById('steps');
+      if (stepsEl) {
+        stepsObserver.observe(stepsEl);
+      }
+    } else {
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        el.classList.add('visible');
+      });
+      var stepsFallback = document.getElementById('steps');
+      if (stepsFallback) stepsFallback.classList.add('visible');
+    }
+  })();
+</script>
 
 </body>
 </html>
