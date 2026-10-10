@@ -108,6 +108,47 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  /* Resting halo — gentle breathing gold glow */
+  @keyframes tileRestGlow {
+    0% {
+      box-shadow:
+        0 0 20px 2px rgba(185, 151, 92, 0.28),
+        0 0 45px 6px rgba(185, 151, 92, 0.10);
+    }
+    50% {
+      box-shadow:
+        0 0 30px 5px rgba(185, 151, 92, 0.50),
+        0 0 65px 12px rgba(185, 151, 92, 0.20);
+    }
+    100% {
+      box-shadow:
+        0 0 20px 2px rgba(185, 151, 92, 0.28),
+        0 0 45px 6px rgba(185, 151, 92, 0.10);
+    }
+  }
+
+  /* Hover halo — expanded, wide ring of gold light */
+  @keyframes tileHoverGlow {
+    0% {
+      box-shadow:
+        0 0 35px 6px rgba(197, 168, 128, 0.55),
+        0 0 80px 20px rgba(197, 168, 128, 0.28),
+        0 0 130px 40px rgba(197, 168, 128, 0.10);
+    }
+    50% {
+      box-shadow:
+        0 0 50px 12px rgba(197, 168, 128, 0.75),
+        0 0 110px 35px rgba(197, 168, 128, 0.40),
+        0 0 170px 60px rgba(197, 168, 128, 0.16);
+    }
+    100% {
+      box-shadow:
+        0 0 35px 6px rgba(197, 168, 128, 0.55),
+        0 0 80px 20px rgba(197, 168, 128, 0.28),
+        0 0 130px 40px rgba(197, 168, 128, 0.10);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -144,7 +185,10 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    text-decoration: none;
+    border-bottom: none;
     position: relative;
+    transition: color 0.3s ease;
   }
 
   .topnav a::after {
@@ -156,6 +200,7 @@
     height: 1px;
     background: var(--gold);
     transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
@@ -183,7 +228,7 @@
     text-align: center;
   }
 
-  /* ---------- INTRO BLOCK (dims when gallery in view) ---------- */
+  /* ---------- INTRO BLOCK ---------- */
   .intro-block {
     transition: opacity 0.9s ease;
   }
@@ -262,12 +307,11 @@
     animation-delay: 1s;
   }
 
-  /* ---------- GALLERY SECTION ---------- */
+  /* ---------- GALLERY ---------- */
   .gallery-section {
     position: relative;
   }
 
-  /* ---------- GALLERY (3-column flex with centered rows) ---------- */
   .gallery {
     display: flex;
     flex-wrap: wrap;
@@ -296,29 +340,14 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     background: #1a1a1a;
-    overflow: hidden;
+    overflow: visible;
     display: flex;
     align-items: center;
     justify-content: center;
     border: 1px solid #1f1f1f;
-    transition: border-color 0.7s ease, box-shadow 0.7s ease;
-  }
-
-  /* Spotlight glow behind the tile */
-  .gallery-item .poster::before {
-    content: '';
-    position: absolute;
-    inset: -60px;
-    background: radial-gradient(
-      circle at 50% 30%,
-      rgba(197, 168, 128, 0.14) 0%,
-      rgba(197, 168, 128, 0.04) 40%,
-      transparent 70%
-    );
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.8s ease;
+    transition: border-color 0.7s ease;
+    animation: tileRestGlow 7s ease-in-out infinite;
+    animation-delay: 1.4s;
   }
 
   .gallery-item .poster img {
@@ -326,23 +355,19 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: brightness(0.68) contrast(1.05);
+    filter: brightness(0.72) contrast(1.05);
     transition: filter 0.8s ease, transform 0.8s ease;
   }
 
-  /* Hover state — tile lights up */
+  /* Hover: halo expands outward */
   .gallery-item:hover .poster {
     border-color: var(--gold-soft);
-    box-shadow: 0 20px 60px rgba(197, 168, 128, 0.12);
-  }
-
-  .gallery-item:hover .poster::before {
-    opacity: 1;
+    animation: tileHoverGlow 4s ease-in-out infinite;
   }
 
   .gallery-item:hover .poster img {
-    filter: brightness(1) contrast(1);
-    transform: scale(1.02);
+    filter: brightness(0.82) contrast(1.10);
+    transform: scale(1.015);
   }
 
   .gallery-item .caption {
@@ -357,6 +382,37 @@
 
   .gallery-item:hover .caption {
     color: #FCFCF7;
+  }
+
+  /* ---------- FREEZE GLOW ON SIBLINGS ---------- */
+  /* When any tile is hovered, every tile's breathing animation stops */
+  .gallery:has(.gallery-item:hover) .gallery-item .poster {
+    animation: none;
+  }
+
+  /* Non-hovered tiles fade to a quiet dim state */
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster {
+    box-shadow:
+      0 0 15px 2px rgba(185, 151, 92, 0.08),
+      0 0 30px 4px rgba(185, 151, 92, 0.03);
+    border-color: #1a1a1a;
+    transition: box-shadow 0.7s ease, border-color 0.7s ease;
+  }
+
+  /* Non-hovered images get dimmer */
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster img {
+    filter: brightness(0.55) contrast(0.95);
+    transform: none;
+  }
+
+  /* Non-hovered captions fade */
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .caption {
+    color: rgba(232, 213, 181, 0.3);
+  }
+
+  /* Hovered tile resumes its breathing animation */
+  .gallery:has(.gallery-item:hover) .gallery-item:hover .poster {
+    animation: tileHoverGlow 4s ease-in-out infinite;
   }
 
   /* ---------- SIGNATURE ---------- */
