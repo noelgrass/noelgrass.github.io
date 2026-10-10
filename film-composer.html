@@ -102,6 +102,33 @@
 
   a:hover { color: #FCFCF7; }
 
+  /* ---------- ANIMATIONS ---------- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -111,6 +138,7 @@
     padding: 28px 20px;
     text-align: center;
     border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
   }
 
   .topnav ul {
@@ -128,10 +156,26 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--gold-pale);
+    text-decoration: none;
+    border-bottom: none;
     position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
   }
 
   .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
 
   .topnav li { position: relative; }
 
@@ -147,6 +191,7 @@
     opacity: 0.6;
   }
 
+  /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -154,6 +199,7 @@
     text-align: center;
   }
 
+  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -162,6 +208,8 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
   .subhead {
@@ -176,11 +224,25 @@
     display: block;
   }
 
+  /* First subhead fades on load */
+  .subhead:first-of-type {
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
   p {
     font-size: 1.05em;
     line-height: 1.85;
     margin: 0 0 22px;
   }
+
+  /* Intro paragraphs stagger on load */
+  .intro-text {
+    animation: fadeUp 1s ease-out both;
+  }
+
+  .intro-text:nth-of-type(1) { animation-delay: 0.55s; }
+  .intro-text:nth-of-type(2) { animation-delay: 0.7s; }
 
   strong {
     color: var(--gold-pale);
@@ -189,6 +251,7 @@
 
   em { font-style: italic; }
 
+  /* ---------- CTA ROW ---------- */
   .cta-row {
     display: flex;
     justify-content: center;
@@ -208,16 +271,34 @@
     padding: 8px 0;
     border-bottom: 1px solid transparent;
     transition: color 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+
+  .cta-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: #FBFAFC;
+    transition: width 0.4s ease;
   }
 
   .cta-link:hover {
     color: #FBFAFC;
-    border-bottom-color: #FBFAFC;
+    border-bottom-color: transparent;
   }
 
+  .cta-link:hover::after { width: 100%; }
+
+  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 90px;
     text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
   }
 
   .signature-logo {
@@ -227,6 +308,7 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
@@ -261,38 +343,66 @@
 
   <span class="subhead">Cinematic Music Composition &amp; Audio Production</span>
 
-  <p>I am Noel Grass, an Architect of Sound. I translate cinematic stories into sound and human feeling into sonic space. With two decades at the piano and over ten years in the industry, my practice as a professional film composer, pianist, and music producer based in Nairobi, Kenya is built on a single law: emotion directs the architecture.</p>
+  <p class="intro-text">I am Noel Grass, an Architect of Sound. I translate cinematic stories into sound and human feeling into sonic space. With two decades at the piano and over ten years in the industry, my practice as a professional film composer, pianist, and music producer based in Nairobi, Kenya is built on a single law: emotion directs the architecture.</p>
 
-  <p>This isn't about style it's about necessity. Some stories require restrained stillness; others demand expressive movement. My role is to build the precise sonic space that the visual narrative requires.</p>
+  <p class="intro-text">This isn't about style — it's about necessity. Some stories require restrained stillness; others demand expressive movement. My role is to build the precise sonic space that the visual narrative requires.</p>
 
-  <span class="subhead">Gallery: The Scored Scene</span>
+  <section class="reveal">
+    <span class="subhead">Gallery: The Scored Scene</span>
 
-  <p>This work exists to serve visual narrative as an original film composer. It is an act of shared vision, translating the emotional core of independent films, feature lengths, and documentaries into intentional sound. The goal is clarity for the motion picture soundtrack to function as an unseen character within the frame.</p>
+    <p>This work exists to serve visual narrative as an original film composer. It is an act of shared vision, translating the emotional core of independent films, feature lengths, and documentaries into intentional sound. The goal is clarity for the motion picture soundtrack to function as an unseen character within the frame.</p>
 
-  <p><strong>Notable Filmography &amp; Soundtracks</strong> — <em>Lost in Time</em> (2019) Feature Film (Award Winner for Best Feature Film) — Atmospheric World-Building &amp; OST. <em>Kutu</em> — Short Film (Kalasha Award Winner for Best Short Film). The goal is clarity: for the motion picture soundtrack to function as an unseen character within the frame.</p>
+    <p><strong>Notable Filmography &amp; Soundtracks</strong> — <em>Lost in Time</em> (2019) Feature Film (Award Winner for Best Feature Film) — Atmospheric World-Building &amp; OST. <em>Kutu</em> — Short Film (Kalasha Award Winner for Best Short Film). The goal is clarity: for the motion picture soundtrack to function as an unseen character within the frame.</p>
+  </section>
 
-  <span class="subhead">Commercial Sonic Branding &amp; Partnerships</span>
+  <section class="reveal">
+    <span class="subhead">Commercial Sonic Branding &amp; Partnerships</span>
 
-  <p>Commercial Sonic Branding &amp; Partnerships  operating with an agile, mobile workflow, I deliver custom soundtracks and audio post-production for corporate, governmental, and international development campaigns. Trusted brand scoring partnerships include — <strong>International Finance Corporation (IFC / World Bank Group)</strong>, <strong>Higher Education Loans Board (HELB)</strong>, <strong>Government Advertising Agency (GAA)</strong>, <strong>SOMINVEST</strong>.</p>
+    <p>Commercial Sonic Branding &amp; Partnerships — operating with an agile, mobile workflow, I deliver custom soundtracks and audio post-production for corporate, governmental, and international development campaigns. Trusted brand scoring partnerships include — <strong>International Finance Corporation (IFC / World Bank Group)</strong>, <strong>Higher Education Loans Board (HELB)</strong>, <strong>Government Advertising Agency (GAA)</strong>, <strong>SOMINVEST</strong>.</p>
+  </section>
 
-  <span class="subhead">The Consistent Method</span>
+  <section class="reveal">
+    <span class="subhead">The Consistent Method</span>
 
-  <p>Whether for screen or speaker, the method is consistent: to design with such intentionality that you don't just hear the piece  you locate yourself within its emotional geography.</p>
+    <p>Whether for screen or speaker, the method is consistent: to design with such intentionality that you don't just hear the piece — you locate yourself within its emotional geography.</p>
 
-  <p>My tools are logic and intuition. My collaborators are trust and vision. My output is architecture.</p>
+    <p>My tools are logic and intuition. My collaborators are trust and vision. My output is architecture.</p>
 
-  <p><em>Click to view my profile and explore the gallery:</em></p>
+    <p><em>Click to view my profile and explore the gallery:</em></p>
 
-  <div class="cta-row">
-    <a href="film-gallery" class="cta-link">Gallery</a>
-    <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
-  </div>
+    <div class="cta-row">
+      <a href="film-gallery" class="cta-link">Gallery</a>
+      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
+    </div>
+  </section>
 
   <div class="signature">
     <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
 </div>
+
+<script>
+  (function() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        el.classList.add('visible');
+      });
+      return;
+    }
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      observer.observe(el);
+    });
+  })();
+</script>
 
 </body>
 </html>
