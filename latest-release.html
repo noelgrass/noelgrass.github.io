@@ -182,23 +182,32 @@
   }
 
   /* ---------- SPOTLIGHT DIM (25%) ---------- */
+  /* Hover album cover: dim label, both headings, both icon groups, signature */
   .page:has(.album-cover:hover) .release-label,
   .page:has(.album-cover:hover) .cta-heading,
   .page:has(.album-cover:hover) .icons,
-  .page:has(.album-cover:hover) .signature,
-  .page:has(.icons a:hover) .release-label,
-  .page:has(.icons a:hover) .album-cover,
-  .page:has(.icons a:hover) .cta-heading,
-  .page:has(.icons a:hover) .signature {
+  .page:has(.album-cover:hover) .signature {
     opacity: 0.25;
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.icons a:hover) .icons {
+  /* Hover any icon: dim label, album cover, ALL headings, signature, and the OTHER icon group */
+  .page:has(.icons a:hover) .release-label,
+  .page:has(.icons a:hover) .album-cover,
+  .page:has(.icons a:hover) .cta-heading,
+  .page:has(.icons a:hover) .signature,
+  .page:has(.icons a:hover) .icons:not(:has(a:hover)) {
+    opacity: 0.25;
+    transition: opacity 0.7s ease;
+  }
+
+  /* Keep album cover bright while hovering it */
+  .page:has(.album-cover:hover) .album-cover {
     opacity: 1;
   }
 
-  .page:has(.album-cover:hover) .album-cover {
+  /* Keep the hovered icon's group fully bright */
+  .page:has(.icons a:hover) .icons:has(a:hover) {
     opacity: 1;
   }
 
