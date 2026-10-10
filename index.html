@@ -140,6 +140,28 @@
     100% { opacity: 0.4; transform: translateY(0); }
   }
 
+  /* Name glow — slow, breathing halo */
+  @keyframes nameGlow {
+    0% {
+      text-shadow:
+        0 11px 15px rgba(0,0,0,0.27),
+        0 0 20px rgba(197, 168, 128, 0.15),
+        0 0 40px rgba(197, 168, 128, 0.08);
+    }
+    50% {
+      text-shadow:
+        0 11px 15px rgba(0,0,0,0.27),
+        0 0 30px rgba(197, 168, 128, 0.35),
+        0 0 60px rgba(197, 168, 128, 0.18);
+    }
+    100% {
+      text-shadow:
+        0 11px 15px rgba(0,0,0,0.27),
+        0 0 20px rgba(197, 168, 128, 0.15),
+        0 0 40px rgba(197, 168, 128, 0.08);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -261,11 +283,12 @@
     line-height: 1.1;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    text-shadow: 0 11px 15px rgba(0,0,0,0.27);
     margin-bottom: 30px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.25s;
     display: inline-block;
+    animation:
+      fadeUp 1s ease-out both,
+      nameGlow 6s ease-in-out infinite;
+    animation-delay: 0.25s, 1.3s;
   }
 
   .rule-small {
