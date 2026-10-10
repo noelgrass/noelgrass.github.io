@@ -204,28 +204,22 @@
   /* When hovering a CTA link, everything else fades */
   .page:has(.cta-link:hover) h1,
   .page:has(.cta-link:hover) .subhead,
-  .page:has(.cta-link:hover) p,
+  .page:has(.cta-link:hover) .intro-text,
+  .page:has(.cta-link:hover) .reveal,
   .page:has(.cta-link:hover) .signature {
     opacity: 0.15;
     transition: opacity 0.6s ease;
   }
 
-  /* The other CTA link dims, but less */
+  /* The other CTA link dims, but stays visible */
   .page:has(.cta-link:hover) .cta-link:not(:hover) {
     opacity: 0.3;
     transition: opacity 0.6s ease;
   }
 
-  /* Sections are also dimmed while one is hovered */
-  .page:has(.cta-link:hover) .reveal {
-    opacity: 0.15;
-    transition: opacity 0.6s ease;
-  }
-
-  /* Ensure the CTA row itself doesn't dim */
+  /* The CTA row itself stays at full brightness */
   .page:has(.cta-link:hover) .cta-row {
     opacity: 1;
-    transition: opacity 0.6s ease;
   }
 
   /* ---------- TITLE ---------- */
@@ -255,7 +249,6 @@
     transition: opacity 0.6s ease;
   }
 
-  /* First subhead fades on load */
   .subhead:first-of-type {
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.4s;
@@ -268,7 +261,6 @@
     transition: opacity 0.6s ease;
   }
 
-  /* Intro paragraphs stagger on load */
   .intro-text {
     animation: fadeUp 1s ease-out both;
   }
@@ -283,28 +275,28 @@
 
   em { font-style: italic; }
 
-  /* ---------- CTA ROW ---------- */
+  /* ---------- CTA ROW (homepage-style role links) ---------- */
   .cta-row {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 60px;
-    margin: 70px 0 40px;
+    gap: 28px;
+    margin: 80px 0 40px;
     flex-wrap: wrap;
     position: relative;
     z-index: 2;
   }
 
   .cta-link {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 1em;
-    letter-spacing: 0.25em;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.6em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--gold-pale);
-    padding: 8px 0;
-    border-bottom: 1px solid transparent;
-    transition: color 0.3s ease, border-color 0.3s ease, opacity 0.6s ease;
+    color: #E8D5B5;
+    padding: 8px 0 6px;
+    border-bottom: none;
+    transition: color 0.4s ease, opacity 0.6s ease;
     position: relative;
     display: inline-block;
   }
@@ -316,16 +308,30 @@
     bottom: 0;
     width: 0;
     height: 1px;
-    background: #FBFAFC;
+    background: var(--gold);
     transition: width 0.4s ease;
   }
 
   .cta-link:hover {
-    color: #FBFAFC;
-    border-bottom-color: transparent;
+    color: #FCFCF7;
   }
 
   .cta-link:hover::after { width: 100%; }
+
+  /* Diamond separator between the two CTA links */
+  .cta-row .diamond {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.9;
+    transition: opacity 0.6s ease;
+  }
+
+  .page:has(.cta-link:hover) .cta-row .diamond {
+    opacity: 0.2;
+  }
 
   /* ---------- SIGNATURE ---------- */
   .signature {
@@ -353,8 +359,8 @@
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
-    .cta-row { gap: 30px; margin: 50px 0 30px; }
-    .cta-link { font-size: 0.85em; }
+    .cta-row { gap: 20px; margin: 60px 0 30px; }
+    .cta-link { font-size: 1.15em; letter-spacing: 0.25em; }
     .signature-logo { height: 55px; }
   }
 </style>
@@ -407,7 +413,8 @@
 
     <div class="cta-row">
       <a href="film-gallery" class="cta-link">Gallery</a>
-      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDsnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
+      <span class="diamond"></span>
+      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
     </div>
   </section>
 
