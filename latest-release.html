@@ -101,19 +101,44 @@
     to   { opacity: 1; transform: scale(1); }
   }
 
-  /* Gentle breathing halo on the artwork — always on */
-  @keyframes artworkHalo {
+  /* Resting halo — gentle breathing, same as homepage portrait */
+  @keyframes artworkRestGlow {
     0% {
-      opacity: 0.55;
-      transform: scale(1);
+      box-shadow:
+        0 0 25px 3px rgba(185, 151, 92, 0.30),
+        0 0 55px 8px rgba(185, 151, 92, 0.12);
     }
     50% {
-      opacity: 0.85;
-      transform: scale(1.04);
+      box-shadow:
+        0 0 35px 6px rgba(185, 151, 92, 0.55),
+        0 0 75px 14px rgba(185, 151, 92, 0.22);
     }
     100% {
-      opacity: 0.55;
-      transform: scale(1);
+      box-shadow:
+        0 0 25px 3px rgba(185, 151, 92, 0.30),
+        0 0 55px 8px rgba(185, 151, 92, 0.12);
+    }
+  }
+
+  /* Hover halo — expanded, wide ring of gold light */
+  @keyframes artworkHoverGlow {
+    0% {
+      box-shadow:
+        0 0 45px 8px rgba(197, 168, 128, 0.55),
+        0 0 100px 25px rgba(197, 168, 128, 0.30),
+        0 0 160px 50px rgba(197, 168, 128, 0.12);
+    }
+    50% {
+      box-shadow:
+        0 0 60px 14px rgba(197, 168, 128, 0.75),
+        0 0 130px 40px rgba(197, 168, 128, 0.42),
+        0 0 200px 70px rgba(197, 168, 128, 0.18);
+    }
+    100% {
+      box-shadow:
+        0 0 45px 8px rgba(197, 168, 128, 0.55),
+        0 0 100px 25px rgba(197, 168, 128, 0.30),
+        0 0 160px 50px rgba(197, 168, 128, 0.12);
     }
   }
 
@@ -260,38 +285,7 @@
     transition: opacity 0.7s ease;
   }
 
-  /* Permanent soft gold halo behind the artwork */
-  .album-cover::before {
-    content: '';
-    position: absolute;
-    inset: -50px;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(197, 168, 128, 0.38) 0%,
-      rgba(197, 168, 128, 0.15) 45%,
-      transparent 75%
-    );
-    pointer-events: none;
-    z-index: -1;
-    opacity: 0.55;
-    animation: artworkHalo 7s ease-in-out infinite;
-    animation-delay: 1.4s;
-    transition: opacity 0.7s ease;
-  }
-
-  /* On hover, the halo blooms wider and brighter — image stays same brightness */
-  .album-cover:hover::before {
-    opacity: 1;
-    animation: none;
-    inset: -75px;
-    background: radial-gradient(
-      circle at 50% 50%,
-      rgba(197, 168, 128, 0.62) 0%,
-      rgba(197, 168, 128, 0.28) 40%,
-      transparent 75%
-    );
-  }
-
+  /* The IMAGE carries the glow — same technique as the homepage portrait */
   .album-cover img {
     display: block;
     width: 100%;
@@ -301,15 +295,17 @@
     border: 1px solid #1f1f1f;
     background: #1a1a1a;
     filter: brightness(0.78) contrast(1.05);
-    transition: filter 0.8s ease, transform 0.8s ease, border-color 0.7s ease, box-shadow 0.7s ease;
+    transition: filter 0.8s ease, transform 0.8s ease, border-color 0.7s ease;
+    animation: artworkRestGlow 7s ease-in-out infinite;
+    animation-delay: 1.3s;
   }
 
-  /* Hover: subtle contrast lift only — no brightness increase */
+  /* On hover, halo expands outward and blooms */
   .album-cover:hover img {
-    filter: brightness(0.85) contrast(1.12);
+    filter: brightness(0.85) contrast(1.10);
     transform: scale(1.015);
     border-color: var(--gold-soft);
-    box-shadow: 0 20px 70px rgba(197, 168, 128, 0.28);
+    animation: artworkHoverGlow 4s ease-in-out infinite;
   }
 
   /* ---------- CTA HEADINGS ---------- */
