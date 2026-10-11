@@ -322,9 +322,21 @@
   .track-actions a:hover { color: #FCFCF7; }
   .track-actions a:hover::after { width: 100%; }
 
+  /* ---------- BOTTOM BACK LINK ---------- */
+  .back-bottom {
+    text-align: center;
+    margin-top: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.3s;
+  }
+
+  .back-bottom .back-link {
+    margin-bottom: 0;
+  }
+
   /* ---------- SIGNATURE ---------- */
   .signature {
-    margin-top: 90px;
+    margin-top: 60px;
     text-align: center;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.4s;
@@ -354,6 +366,8 @@
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
+    .back-bottom { margin-top: 40px; }
+    .signature { margin-top: 40px; }
     .signature-logo { height: 55px; }
   }
 </style>
@@ -575,6 +589,10 @@
       </div>
     </div>
 
+  </div>
+
+  <div class="back-bottom">
+    <a href="rent" class="back-link">← Back to Rent</a>
   </div>
 
   <div class="signature">
