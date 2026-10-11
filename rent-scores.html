@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +14,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- Service Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -36,7 +37,6 @@
 }
 </script>
 
-<!-- FAQ Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -47,7 +47,7 @@
       "name": "Can I rent a film score for a Kenyan production?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Noel Grass licenses his original cinematic scores directly to Kenyan directors and production houses. Tracks are available for film, TV, documentary, and commercial productions across Kenya, East Africa, and pan-African markets."
+        "text": "Yes. Noel Grass licenses his original cinematic scores directly to Kenyan directors and production houses. Tracks are available for film, TV, documentary, and commercial productions — in Kenya, East Africa, and internationally."
       }
     },
     {
@@ -68,10 +68,10 @@
     },
     {
       "@type": "Question",
-      "name": "Are these film scores available for East African and pan-African productions?",
+      "name": "Are these film scores available for East African and international productions?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The catalogue is licensed for productions across Kenya, East Africa, and the wider African continent, as well as international projects."
+        "text": "Yes. The catalogue is licensed for productions across Kenya, East Africa, the wider African continent, and international markets."
       }
     },
     {
@@ -79,14 +79,13 @@
       "name": "How much does it cost to rent a film score?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Film score licensing starts at Ksh 10,000 per track for a single production. Full terms are available on the Rent page."
+        "text": "Film score licensing starts at Ksh 10,000 per track for a single production. International licensing is available in USD, GBP, or EUR — contact for rates. Full terms are available on the Rent page."
       }
     }
   ]
 }
 </script>
 
-<!-- ItemList Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -106,3 +105,725 @@
 </script>
 
 <style>
+  :root {
+    --bg: #000000;
+    --gold: #C5A880;
+    --gold-soft: #B9975C;
+    --gold-pale: #E8D5B5;
+    --offwhite: #EDEAE3;
+    --muted: #9a958c;
+    --rule: #2a2a2a;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--offwhite);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  a:hover { color: #FCFCF7; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 28px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
+  }
+
+  .topnav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 34px;
+  }
+
+  .topnav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
+  }
+
+  .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
+
+  .topnav li { position: relative; }
+
+  .topnav li + li::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 14px;
+    background: var(--gold-soft);
+    opacity: 0.6;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 2.8em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
+  }
+
+  .hero-subhead {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.3em;
+    color: var(--offwhite);
+    margin-bottom: 20px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
+  .section-pricing {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.75em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.55s;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    padding-bottom: 2px;
+    margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .back-link:hover {
+    transform: translateX(-4px);
+    color: #FCFCF7;
+  }
+
+  .license-link {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    padding-bottom: 2px;
+    margin-bottom: 60px;
+    margin-left: 30px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .license-link:hover {
+    transform: translateX(4px);
+    color: #FCFCF7;
+  }
+
+  .mood-groups {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .mood-group {
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.4s ease;
+  }
+
+  .mood-group[open] {
+    border-bottom-color: var(--rule);
+  }
+
+  .mood-group summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 0 20px;
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 0.4s ease;
+  }
+
+  .mood-group summary::-webkit-details-marker { display: none; }
+  .mood-group summary::marker { content: ''; }
+
+  .mood-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: var(--offwhite);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .mood-group summary:hover .mood-label {
+    color: #FCFCF7;
+  }
+
+  .mood-count {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .mood-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 14px;
+    border-right: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    vertical-align: middle;
+  }
+
+  .mood-group[open] .mood-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--gold);
+  }
+
+  .mood-group .track-list {
+    padding-bottom: 10px;
+  }
+
+  .track-list {
+    text-align: left;
+  }
+
+  .track {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 30px;
+    align-items: center;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.4s ease;
+  }
+
+  .track:last-of-type { border-bottom: none; }
+
+  .track:hover { border-bottom-color: var(--gold-soft); }
+
+  .track-info {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .track-numeral {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.2em;
+    color: var(--gold-soft);
+    min-width: 42px;
+  }
+
+  .track-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: var(--offwhite);
+    letter-spacing: 0.02em;
+    transition: color 0.3s ease;
+  }
+
+  .track:hover .track-title { color: #FCFCF7; }
+
+  .track-meta {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.72em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    width: 100%;
+    padding-left: 60px;
+    margin-top: -8px;
+  }
+
+  .track-actions {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .track-actions a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.72em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    position: relative;
+    padding-bottom: 3px;
+    transition: color 0.3s ease;
+  }
+
+  .track-actions a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .track-actions a:hover { color: #FCFCF7; }
+  .track-actions a:hover::after { width: 100%; }
+
+  .back-bottom {
+    text-align: center;
+    margin-top: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.3s;
+  }
+
+  .back-bottom .back-link {
+    margin-bottom: 0;
+  }
+
+  .signature {
+    margin-top: 60px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
+  .signature-logo {
+    display: inline-block;
+    height: 70px;
+    width: auto;
+    opacity: 0.95;
+  }
+
+  /* ---------- FAQ FOOTER ---------- */
+  .faq-footer {
+    text-align: left;
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
+  }
+
+  .faq-footer details {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .faq-footer details:last-of-type {
+    border-bottom: none;
+  }
+
+  .faq-footer summary {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .faq-footer summary::-webkit-details-marker { display: none; }
+  .faq-footer summary::marker { content: ''; }
+
+  .faq-footer summary:hover { color: var(--offwhite); }
+
+  .faq-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-right: 1px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+    top: 1px;
+  }
+
+  .faq-footer details[open] .faq-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--muted);
+  }
+
+  .faq-footer details[open] summary {
+    color: var(--offwhite);
+  }
+
+  .faq-answer {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.9em;
+    line-height: 1.65;
+    color: var(--muted);
+    padding: 0 0 18px 20px;
+    margin: 0;
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 60px 22px 60px; }
+    h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
+    .hero-subhead { font-size: 1.1em; }
+    .back-link { margin-bottom: 30px; }
+    .license-link { margin-left: 0; margin-bottom: 30px; display: block; }
+    .mood-group summary { padding: 22px 0 16px; gap: 12px; }
+    .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
+    .mood-indicator { margin-right: 10px; }
+    .track { grid-template-columns: 1fr; gap: 12px; padding: 20px 0; }
+    .track-info { gap: 10px; }
+    .track-title { font-size: 1.25em; }
+    .track-numeral { min-width: 36px; }
+    .track-meta { padding-left: 46px; }
+    .track-actions { padding-left: 46px; gap: 20px; }
+    .topnav { padding: 20px 14px; }
+    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
+    .topnav ul { gap: 10px 22px; }
+    .topnav li + li::before { left: -12px; height: 10px; }
+    .back-bottom { margin-top: 40px; }
+    .signature { margin-top: 40px; }
+    .signature-logo { height: 55px; }
+    .faq-footer { margin-top: 60px; padding-top: 30px; }
+    .faq-footer summary { font-size: 0.95em; padding: 12px 0; }
+    .faq-answer { font-size: 0.85em; padding-left: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <ul>
+    <li><a href="biography">Biography</a></li>
+    <li><a href="./">Home</a></li>
+    <li><a href="film-composer">About</a></li>
+    <li><a href="commission">Commission a Scene</a></li>
+    <li><a href="film-gallery">Gallery</a></li>
+    <li><a href="rent">Rent</a></li>
+    <li><a href="contact">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+  <h1>Film Scores</h1>
+  <p class="hero-subhead">Cinematic masters available for Kenyan, East African, and pan-African productions.</p>
+  <p class="section-pricing">From Ksh 10,000</p>
+
+  <a href="rent" class="back-link">← Back to Rent</a>
+  <a href="#" class="license-link">What you own when you rent →</a>
+
+  <div class="mood-groups">
+
+    <details class="mood-group" open>
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Lost in Time</span>
+            <span class="track-meta">Feature Film · 2019 · Expansive · 4:22</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">The Parliament of Owls</span>
+            <span class="track-meta">Stage Production · 2024 · Theatrical · 4:05</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Atmospheric / Ambient</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Ziwa</span>
+            <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">Kutu</span>
+            <span class="track-meta">Short Film · 2021 · Haunting · 3:48</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Piano</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Score Title VIII</span>
+            <span class="track-meta">Client · Year · Intimate · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">Score Title IX</span>
+            <span class="track-meta">Client · Year · Reflective · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Tension / Suspense</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Thief</span>
+            <span class="track-meta">Short Film · 2024 · Atmospheric · 3:24</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">On Air</span>
+            <span class="track-meta">Feature Film · 2024 · Tense · 2:55</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Epic / Trailer</span></span>
+        <span class="mood-count">1 track</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Score Title X</span>
+            <span class="track-meta">Client · Year · Cinematic · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">African / Cultural</span></span>
+        <span class="mood-count">1 track</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Nyumba Ya Mburi</span>
+            <span class="track-meta">Cultural Cinema · 2024 · Rooted · 3:52</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+  </div>
+
+  <div class="back-bottom">
+    <a href="rent" class="back-link">← Back to Rent</a>
+  </div>
+
+  <div class="signature">
+    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+  </div>
+
+  <div class="faq-footer">
+
+    <details>
+      <summary><span class="faq-indicator"></span>Can I rent a film score for a Kenyan production?</summary>
+      <p class="faq-answer">Yes. Noel Grass licenses his original cinematic scores directly to Kenyan directors and production houses. Tracks are available for film, TV, documentary, and commercial productions — in Kenya, East Africa, and internationally.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>What is the difference between renting a master recording and licensing a composition?</summary>
+      <p class="faq-answer">Renting the master recording gives the producer permission to use the audio file in a specific project. The composition rights — the underlying music and melody — remain with the composer, Noel Grass.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>Do I need PAVRISK to license music for a film in Kenya?</summary>
+      <p class="faq-answer">No. When licensing directly from the composer who owns the rights, no collective management organization is required. PAVRISK handles public performance royalties for music played in public spaces, not direct sync licenses.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>Are these film scores available for East African and international productions?</summary>
+      <p class="faq-answer">Yes. The catalogue is licensed for productions across Kenya, East Africa, the wider African continent, and international markets.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>How much does it cost to rent a film score?</summary>
+      <p class="faq-answer">Film score licensing starts at Ksh 10,000 per track for a single production. International licensing is available in USD, GBP, or EUR — contact for rates. Full terms are available on the Rent page.</p>
+    </details>
+
+  </div>
+
+</div>
+
+</body>
+</html>
