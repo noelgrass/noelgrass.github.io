@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
-<title>Store — Noel Grass | Buy Solo Piano, Orchestral &amp; Ambient Albums</title>
-<meta name="description" content="Buy original albums by Noel Grass — neoclassical pianist and contemporary classical composer based in Nairobi, Kenya. Solo piano, orchestral, hybrid, and ambient works available as digital downloads.">
+<title>Store — Noel Grass | Solo Piano, Orchestral &amp; Ambient Albums</title>
+<meta name="description" content="The store for Noel Grass — neoclassical pianist and contemporary classical composer based in Nairobi, Kenya. Solo piano, orchestral, hybrid, and ambient works available as digital downloads. Purchasing opens soon.">
 <meta name="keywords" content="Noel Grass store, buy neoclassical piano album, Noel Grass album download, contemporary classical Kenya, buy solo piano album, orchestral album Nairobi, ambient album Africa, Into A Stillness That Answers buy">
 <link rel="canonical" href="https://noelgrass.github.io/store">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Store — Noel Grass | Buy Solo Piano, Orchestral &amp; Ambient Albums">
-<meta property="og:description" content="Buy original albums by Noel Grass — solo piano, orchestral, hybrid, and ambient works from Nairobi, Kenya.">
+<meta property="og:title" content="Store — Noel Grass | Solo Piano, Orchestral &amp; Ambient Albums">
+<meta property="og:description" content="The store for Noel Grass — solo piano, orchestral, hybrid, and ambient works. Purchasing opens soon.">
 <meta property="og:url" content="https://noelgrass.github.io/store">
 <meta property="og:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Store — Noel Grass">
-<meta name="twitter:description" content="Buy original albums by Noel Grass — solo piano, orchestral, hybrid, and ambient works.">
+<meta name="twitter:description" content="Solo piano, orchestral, hybrid, and ambient works. Purchasing opens soon.">
 <meta name="twitter:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 
 <script type="application/ld+json">
@@ -128,7 +128,6 @@
     }
   }
 
-  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -190,7 +189,6 @@
     opacity: 0.6;
   }
 
-  /* ---------- PAGE ---------- */
   .page {
     max-width: 1200px;
     margin: 0 auto;
@@ -198,7 +196,6 @@
     text-align: center;
   }
 
-  /* ---------- HERO ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -236,7 +233,6 @@
     animation-delay: 0.55s;
   }
 
-  /* ---------- MUSIC LABEL ---------- */
   .section-label {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -254,9 +250,21 @@
     font-style: italic;
     font-size: 1em;
     color: var(--muted);
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.85s;
+  }
+
+  /* ---------- PURCHASING NOTE ---------- */
+  .purchase-note {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.95em;
+    color: var(--gold-pale);
+    margin: 0 auto 50px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.95s;
   }
 
   /* ---------- MOOD GROUPS (COLLAPSIBLE) ---------- */
@@ -407,35 +415,11 @@
     transition: color 0.5s ease;
   }
 
+  /* Buy links are hidden until the store is live */
   .store-item .buy-link {
-    display: inline-block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 0.72em;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gold-pale);
-    position: relative;
-    padding-bottom: 3px;
-    margin-top: 14px;
-    transition: color 0.3s ease;
+    display: none;
   }
 
-  .store-item .buy-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background: var(--gold);
-    transition: width 0.3s ease;
-  }
-
-  .store-item .buy-link:hover { color: #FCFCF7; }
-  .store-item .buy-link:hover::after { width: 100%; }
-
-  /* Dim siblings within the same open group when one is hovered */
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .poster {
     box-shadow:
       0 0 15px 2px rgba(185, 151, 92, 0.08),
@@ -456,10 +440,6 @@
 
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .format-label {
     color: rgba(154, 149, 140, 0.3);
-  }
-
-  .store-gallery:has(.store-item:hover) .store-item:not(:hover) .buy-link {
-    color: rgba(232, 213, 181, 0.3);
   }
 
   /* ---------- MERCH NOTE ---------- */
@@ -489,7 +469,6 @@
     color: var(--muted);
   }
 
-  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 90px;
     text-align: center;
@@ -504,7 +483,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .store-gallery {
       gap: 60px 40px;
@@ -520,7 +498,8 @@
     .hero-subhead { font-size: 1em; }
     .hero-line { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 50px; }
     .section-label { font-size: 1.2em; letter-spacing: 0.2em; }
-    .section-note { font-size: 0.95em; margin-bottom: 30px; }
+    .section-note { font-size: 0.95em; margin-bottom: 14px; }
+    .purchase-note { font-size: 0.9em; margin-bottom: 40px; }
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
@@ -560,6 +539,8 @@
     <li><a href="artist">Artist</a></li>
     <li><a href="discography">Discography</a></li>
     <li><a href="latest-release">Latest Release</a></li>
+    <li><a href="performances">Performances</a></li>
+    <li><a href="store">Store</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -575,6 +556,8 @@
   <p class="section-label">Music</p>
 
   <p class="section-note">Solo Piano · Orchestral · Hybrid · Ambient</p>
+
+  <p class="purchase-note">Purchasing opens soon.</p>
 
   <div class="mood-groups">
 
