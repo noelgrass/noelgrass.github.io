@@ -10,7 +10,6 @@
 <meta name="keywords" content="commission film score, hire film composer Kenya, custom film music, cinematic music commission, Noel Grass composer, film scoring services Nairobi">
 <link rel="canonical" href="https://noelgrass.github.io/commission">
 
-<!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Commission a Scene — Original Film Scoring by Noel Grass">
 <meta property="og:description" content="Original film scoring and custom music for film, media, and sonic spaces. Based in Nairobi, Kenya — working internationally.">
@@ -25,7 +24,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- SERVICE SCHEMA -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -44,6 +42,7 @@
     { "@type": "City", "name": "Nairobi" },
     { "@type": "Country", "name": "Kenya" },
     { "@type": "Place", "name": "East Africa" },
+    { "@type": "Place", "name": "Africa" },
     { "@type": "Place", "name": "Worldwide" }
   ]
 }
@@ -94,7 +93,6 @@
     border: 0;
   }
 
-  /* ---------- ANIMATIONS ---------- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -108,7 +106,6 @@
     }
   }
 
-  /* ---------- SCROLL REVEAL ---------- */
   .reveal {
     opacity: 0;
     transform: translateY(24px);
@@ -149,7 +146,6 @@
     text-transform: uppercase;
     color: var(--gold-pale);
     text-decoration: none;
-    border-bottom: none;
     position: relative;
     transition: color 0.3s ease;
   }
@@ -191,7 +187,6 @@
     text-align: center;
   }
 
-  /* ---------- TITLE ---------- */
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -216,7 +211,6 @@
     display: block;
   }
 
-  /* Intro subheads — stagger on load */
   .subhead.animate {
     animation: fadeUp 1s ease-out both;
   }
@@ -227,7 +221,6 @@
     margin: 0 0 22px;
   }
 
-  /* Intro paragraphs — stagger on load */
   .intro-text {
     animation: fadeUp 1s ease-out both;
   }
@@ -274,47 +267,121 @@
     font-weight: 600;
   }
 
-  /* ---------- CONTACT BLOCK ---------- */
-  .contact-block {
+  /* ---------- FORM ---------- */
+  .form-section {
+    margin-top: 70px;
+    padding-top: 50px;
+    border-top: 1px solid var(--rule);
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.9s;
+  }
+
+  .contact-form {
+    text-align: left;
     margin-top: 40px;
   }
 
-  .contact-block .label {
+  .form-field {
+    margin-bottom: 24px;
+  }
+
+  .form-field label {
     display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+
+  .form-field input,
+  .form-field textarea {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--offwhite);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    padding: 14px 16px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    outline: none;
+    border-radius: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .form-field input:focus,
+  .form-field textarea:focus {
+    border-color: var(--gold-soft);
+    background: rgba(197, 168, 128, 0.03);
+  }
+
+  .form-field input::placeholder,
+  .form-field textarea::placeholder {
+    color: var(--muted);
+    font-style: italic;
+  }
+
+  .form-field textarea {
+    min-height: 140px;
+    resize: vertical;
+    font-family: 'Playfair Display', Georgia, serif;
+    line-height: 1.6;
+  }
+
+  .form-submit {
+    display: inline-block;
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    color: var(--gold-pale);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    margin-top: 10px;
+  }
+
+  .form-submit:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.05);
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* ---------- MORE CONTACT ---------- */
+  .more-contact {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
-    font-size: 1.15em;
-    color: var(--gold-pale);
-    text-decoration: underline;
-    text-underline-offset: 5px;
-    text-decoration-thickness: 1px;
-    margin: 30px 0 8px;
+    font-size: 1em;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
   }
 
-  .contact-block a,
-  .contact-block .value {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.1em;
-    color: var(--offwhite);
-    text-decoration: none;
-    transition: color 0.3s ease;
-    position: relative;
-    display: inline-block;
+  .more-contact a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease;
   }
 
-  .contact-block a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 1px;
-    background: var(--gold);
-    transition: width 0.4s ease;
+  .more-contact a:hover {
+    border-bottom-color: var(--gold);
   }
-
-  .contact-block a:hover { color: var(--gold); }
-  .contact-block a:hover::after { width: 100%; }
 
   /* ---------- SIGNATURE ---------- */
   .signature {
@@ -331,16 +398,22 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
     .subhead { font-size: 1.1em; margin: 40px 0 18px; }
     p, .steps .step { font-size: 1em; }
+    .form-section { margin-top: 50px; padding-top: 35px; }
+    .form-field { margin-bottom: 20px; }
+    .form-field input,
+    .form-field textarea { font-size: 0.95em; padding: 12px 14px; }
+    .form-submit { padding: 14px 32px; font-size: 0.75em; letter-spacing: 0.25em; }
     .topnav { padding: 20px 14px; }
     .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
     .topnav ul { gap: 10px 22px; }
     .topnav li + li::before { left: -12px; height: 10px; }
+    .more-contact { margin-top: 40px; padding-top: 30px; }
+    .signature { margin-top: 60px; }
     .signature-logo { height: 55px; }
   }
 </style>
@@ -354,6 +427,7 @@
     <li><a href="film-composer">About</a></li>
     <li><a href="commission">Commission a Scene</a></li>
     <li><a href="film-gallery">Gallery</a></li>
+    <li><a href="rent">Rent</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -390,18 +464,45 @@
 
   <section class="reveal">
     <span class="subhead">Start a Conversation</span>
-    <p>To discuss your project, please contact:</p>
-
-    <div class="contact-block">
-
-      <span class="label">Email</span>
-      <a href="mailto:noelgrassartist@gmail.com">noelgrassartist@gmail.com</a>
-
-      <span class="label">WhatsApp</span>
-      <a href="https://wa.me/254705872970" target="_blank" rel="noopener">+254 705 872 970</a>
-
-    </div>
+    <p>To discuss your project, please fill out the form below.</p>
   </section>
+
+  <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+
+    <input type="hidden" name="access_key" value="cd979eba-3b20-4241-a19f-7dd88f39d0ec">
+    <input type="hidden" name="from_name" value="Noel Grass Website">
+    <input type="hidden" name="subject" value="New commission inquiry from noelgrass.github.io/commission">
+    <input type="hidden" name="inquiry" value="Commission">
+
+    <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
+
+    <div class="form-field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required placeholder="Your name">
+    </div>
+
+    <div class="form-field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
+    </div>
+
+    <div class="form-field">
+      <label for="company">Company or Project</label>
+      <input type="text" id="company" name="company" placeholder="Optional">
+    </div>
+
+    <div class="form-field">
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required placeholder="Tell me about your film, timeline, and what you're looking for."></textarea>
+    </div>
+
+    <button type="submit" class="form-submit">Send Inquiry</button>
+
+  </form>
+
+  <div class="more-contact">
+    For more contact options, see the <a href="contact">Contact page →</a>.
+  </div>
 
   <div class="signature">
     <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
@@ -411,42 +512,39 @@
 
 <script>
   (function() {
-    /* Section reveals on scroll */
-    if ('IntersectionObserver' in window) {
-      var revealObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
-      document.querySelectorAll('.reveal').forEach(function(el) {
-        revealObserver.observe(el);
-      });
-
-      /* Steps fade in sequentially */
-      var stepsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            stepsObserver.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.2 });
-
-      var stepsEl = document.getElementById('steps');
-      if (stepsEl) {
-        stepsObserver.observe(stepsEl);
-      }
-    } else {
+    if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
         el.classList.add('visible');
       });
       var stepsFallback = document.getElementById('steps');
       if (stepsFallback) stepsFallback.classList.add('visible');
+      return;
     }
+
+    var revealObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(function(el) {
+      revealObserver.observe(el);
+    });
+
+    var stepsObserver = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          stepsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+
+    var stepsEl = document.getElementById('steps');
+    if (stepsEl) stepsObserver.observe(stepsEl);
   })();
 </script>
 
