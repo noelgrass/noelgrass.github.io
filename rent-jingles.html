@@ -901,5 +901,22 @@
 
 </div>
 
+<script>
+  (function() {
+    var groups = document.querySelectorAll('.mood-groups .mood-group');
+    groups.forEach(function(group) {
+      group.addEventListener('toggle', function() {
+        if (group.open) {
+          groups.forEach(function(other) {
+            if (other !== group && other.open) {
+              other.open = false;
+            }
+          });
+        }
+      });
+    });
+  })();
+</script>
+
 </body>
 </html>
