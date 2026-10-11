@@ -90,7 +90,6 @@
 
   a:hover { color: #FCFCF7; }
 
-  /* ---------- ANIMATIONS ---------- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -101,7 +100,6 @@
     to   { opacity: 1; transform: scale(1); }
   }
 
-  /* Resting halo — gentle breathing, same as homepage portrait */
   @keyframes artworkRestGlow {
     0% {
       box-shadow:
@@ -120,7 +118,6 @@
     }
   }
 
-  /* Hover halo — expanded, wide ring of gold light */
   @keyframes artworkHoverGlow {
     0% {
       box-shadow:
@@ -150,7 +147,6 @@
     }
   }
 
-  /* ---------- TOP NAV ---------- */
   .topnav {
     position: sticky;
     top: 0;
@@ -213,7 +209,6 @@
     opacity: 0.6;
   }
 
-  /* ---------- PAGE ---------- */
   .page {
     max-width: 900px;
     margin: 0 auto;
@@ -222,7 +217,6 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM (icons) ---------- */
   .page:has(.icons a:hover) .release-label,
   .page:has(.icons a:hover) .album-cover,
   .page:has(.icons a:hover) .cta-heading,
@@ -245,7 +239,6 @@
     opacity: 1;
   }
 
-  /* ---------- SPOTLIGHT DIM (album cover) ---------- */
   .page:has(.album-cover:hover) .release-label,
   .page:has(.album-cover:hover) .cta-heading,
   .page:has(.album-cover:hover) .icons,
@@ -258,7 +251,6 @@
     opacity: 1;
   }
 
-  /* ---------- RELEASE LABEL ---------- */
   .release-label {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.6em;
@@ -272,7 +264,6 @@
     transition: opacity 0.7s ease;
   }
 
-  /* ---------- ALBUM COVER ---------- */
   .album-cover {
     display: inline-block;
     position: relative;
@@ -285,7 +276,6 @@
     transition: opacity 0.7s ease;
   }
 
-  /* The IMAGE carries the glow — same technique as the homepage portrait */
   .album-cover img {
     display: block;
     width: 100%;
@@ -300,7 +290,6 @@
     animation-delay: 1.3s;
   }
 
-  /* On hover, halo expands outward and blooms */
   .album-cover:hover img {
     filter: brightness(0.85) contrast(1.10);
     transform: scale(1.015);
@@ -308,7 +297,6 @@
     animation: artworkHoverGlow 4s ease-in-out infinite;
   }
 
-  /* ---------- CTA HEADINGS ---------- */
   .cta-heading {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -331,7 +319,6 @@
     animation-delay: 1.2s;
   }
 
-  /* ---------- ICONS ---------- */
   .icons {
     display: flex;
     justify-content: center;
@@ -380,7 +367,6 @@
 
   .icons svg { width: 36px; height: 36px; fill: currentColor; }
 
-  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 100px;
     text-align: center;
@@ -396,7 +382,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     .release-label { font-size: 1.2em; margin-bottom: 30px; }
@@ -425,7 +410,8 @@
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
-    <li><a href="artist">About / Gallery</a></li>
+    <li><a href="artist">Artist</a></li>
+    <li><a href="discography">Discography</a></li>
     <li><a href="latest-release">Latest Release</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
