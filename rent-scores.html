@@ -6,8 +6,8 @@
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
 <title>Rent a Film Score in Kenya &amp; East Africa | Cinematic Masters | Noel Grass</title>
-<meta name="description" content="Rent original cinematic scores for Kenyan, East African, and pan-African film, TV, and documentary productions. Direct licensing from composer Noel Grass, based in Nairobi.">
-<meta name="keywords" content="rent film score Kenya, cinematic music Nairobi, film score licensing East Africa, sync licensing Kenya, production music Nairobi, Noel Grass scores">
+<meta name="description" content="Rent original cinematic scores for Kenyan, East African, and pan-African film, TV, and documentary productions. Orchestral, ambient, piano, tension, epic, and African cultural scores. Direct licensing from composer Noel Grass, Nairobi.">
+<meta name="keywords" content="rent film score Kenya, cinematic music Nairobi, film score licensing East Africa, sync licensing Kenya, orchestral music Nairobi, ambient film score, piano score Kenya, tension music film, epic trailer music, African cultural score, Noel Grass scores">
 <link rel="canonical" href="https://noelgrass.github.io/rent-scores">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +20,7 @@
   "@type": "Service",
   "name": "Film Score Licensing for Kenyan and East African Productions",
   "url": "https://noelgrass.github.io/rent-scores",
-  "description": "Direct licensing of original cinematic scores for Kenyan, East African, and pan-African film, TV, and documentary productions.",
+  "description": "Direct licensing of original cinematic scores for Kenyan, East African, and pan-African film, TV, and documentary productions. Categories include orchestral, atmospheric/ambient, piano, tension/suspense, epic/trailer, and African cultural.",
   "serviceType": "Music Licensing",
   "provider": {
     "@type": "Person",
@@ -233,7 +233,86 @@
     color: #FCFCF7;
   }
 
-  /* ---------- TRACK LIST ---------- */
+  /* ---------- MOOD GROUPS (COLLAPSIBLE) ---------- */
+  .mood-groups {
+    text-align: left;
+    margin-top: 20px;
+  }
+
+  .mood-group {
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.4s ease;
+  }
+
+  .mood-group[open] {
+    border-bottom-color: var(--gold-soft);
+  }
+
+  .mood-group summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 28px 0 20px;
+    cursor: pointer;
+    list-style: none;
+    border-bottom: 1px solid var(--gold-soft);
+    transition: border-color 0.4s ease;
+  }
+
+  .mood-group summary::-webkit-details-marker { display: none; }
+  .mood-group summary::marker { content: ''; }
+
+  .mood-group summary:hover {
+    border-bottom-color: var(--gold);
+  }
+
+  .mood-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: var(--offwhite);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .mood-group summary:hover .mood-label {
+    color: #FCFCF7;
+  }
+
+  .mood-count {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Indicator triangle */
+  .mood-indicator {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 14px;
+    border-right: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    vertical-align: middle;
+  }
+
+  .mood-group[open] .mood-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--gold);
+  }
+
+  .mood-group .track-list {
+    padding-bottom: 10px;
+  }
+
+  /* ---------- TRACK ROW ---------- */
   .track-list {
     text-align: left;
   }
@@ -356,6 +435,9 @@
     .hero-subhead { font-size: 1.1em; }
     .back-link { margin-bottom: 30px; }
     .license-link { margin-left: 0; margin-bottom: 30px; display: block; }
+    .mood-group summary { padding: 22px 0 16px; gap: 12px; }
+    .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
+    .mood-indicator { margin-right: 10px; }
     .track { grid-template-columns: 1fr; gap: 12px; padding: 20px 0; }
     .track-info { gap: 10px; }
     .track-title { font-size: 1.25em; }
@@ -395,127 +477,199 @@
   <a href="rent" class="back-link">← Back to Rent</a>
   <a href="#" class="license-link">What you own when you rent →</a>
 
-  <div class="track-list">
+  <div class="mood-groups">
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">I.</span>
-        <span class="track-title">Thief</span>
-        <span class="track-meta">Short Film · 2024 · Atmospheric · 3:24</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+    <!-- ==================== ORCHESTRAL ==================== -->
+    <details class="mood-group" open>
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">II.</span>
-        <span class="track-title">Ziwa</span>
-        <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+      <div class="track-list">
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">III.</span>
-        <span class="track-title">On Air</span>
-        <span class="track-meta">Feature Film · 2024 · Tense · 2:55</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Lost in Time</span>
+            <span class="track-meta">Feature Film · 2019 · Expansive · 4:22</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">IV.</span>
-        <span class="track-title">Kutu</span>
-        <span class="track-meta">Short Film · 2021 · Haunting · 3:48</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">The Parliament of Owls</span>
+            <span class="track-meta">Stage Production · 2024 · Theatrical · 4:05</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">V.</span>
-        <span class="track-title">Lost in Time</span>
-        <span class="track-meta">Feature Film · 2019 · Expansive · 4:22</span>
       </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+    </details>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">VI.</span>
-        <span class="track-title">Nyumba Ya Mburi</span>
-        <span class="track-meta">Cultural Cinema · 2024 · Rooted · 3:52</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+    <!-- ==================== ATMOSPHERIC / AMBIENT ==================== -->
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Atmospheric / Ambient</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">VII.</span>
-        <span class="track-title">The Parliament of Owls</span>
-        <span class="track-meta">Stage Production · 2024 · Theatrical · 4:05</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+      <div class="track-list">
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">VIII.</span>
-        <span class="track-title">Score Title VIII</span>
-        <span class="track-meta">Client · Year · Mood · 0:00</span>
-      </div>
-      <div class="track-actions">
-        <a href="#">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Ziwa</span>
+            <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">IX.</span>
-        <span class="track-title">Score Title IX</span>
-        <span class="track-meta">Client · Year · Mood · 0:00</span>
-      </div>
-      <div class="track-actions">
-        <a href="#">Preview</a>
-        <a href="#">Rent</a>
-      </div>
-    </div>
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">Kutu</span>
+            <span class="track-meta">Short Film · 2021 · Haunting · 3:48</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">X.</span>
-        <span class="track-title">Score Title X</span>
-        <span class="track-meta">Client · Year · Mood · 0:00</span>
       </div>
-      <div class="track-actions">
-        <a href="#">Preview</a>
-        <a href="#">Rent</a>
+    </details>
+
+    <!-- ==================== PIANO ==================== -->
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Piano</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Score Title VIII</span>
+            <span class="track-meta">Client · Year · Intimate · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">Score Title IX</span>
+            <span class="track-meta">Client · Year · Reflective · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </details>
+
+    <!-- ==================== TENSION / SUSPENSE ==================== -->
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Tension / Suspense</span></span>
+        <span class="mood-count">2 tracks</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Thief</span>
+            <span class="track-meta">Short Film · 2024 · Atmospheric · 3:24</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">II.</span>
+            <span class="track-title">On Air</span>
+            <span class="track-meta">Feature Film · 2024 · Tense · 2:55</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- ==================== EPIC / TRAILER ==================== -->
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">Epic / Trailer</span></span>
+        <span class="mood-count">1 track</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Score Title X</span>
+            <span class="track-meta">Client · Year · Cinematic · 0:00</span>
+          </div>
+          <div class="track-actions">
+            <a href="#">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- ==================== AFRICAN / CULTURAL ==================== -->
+    <details class="mood-group">
+      <summary>
+        <span><span class="mood-indicator"></span><span class="mood-label">African / Cultural</span></span>
+        <span class="mood-count">1 track</span>
+      </summary>
+
+      <div class="track-list">
+
+        <div class="track">
+          <div class="track-info">
+            <span class="track-numeral">I.</span>
+            <span class="track-title">Nyumba Ya Mburi</span>
+            <span class="track-meta">Cultural Cinema · 2024 · Rooted · 3:52</span>
+          </div>
+          <div class="track-actions">
+            <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener">Preview</a>
+            <a href="#">Rent</a>
+          </div>
+        </div>
+
+      </div>
+    </details>
 
   </div>
 
