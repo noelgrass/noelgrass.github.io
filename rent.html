@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
-<title>Rent Original Film Scores &amp; Jingles in Kenya | Noel Grass</title>
+<title>Rent Film Scores &amp; Jingles in Kenya | Noel Grass</title>
 <meta name="description" content="Rent original cinematic masters and jingles for Kenyan film, TV, and brand productions. Direct licensing from composer Noel Grass, based in Nairobi.">
 <meta name="keywords" content="rent film score Kenya, custom jingle Nairobi, sync licensing Kenya, production music Nairobi, Noel Grass licensing">
 <link rel="canonical" href="https://noelgrass.github.io/rent">
@@ -181,9 +181,61 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.05em;
     color: var(--offwhite);
-    margin-bottom: 30px;
+    margin-bottom: 40px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.55s;
+  }
+
+  /* ---------- ANCHOR LINKS ---------- */
+  .anchors {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 40px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+  }
+
+  .anchors a {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.4em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+  }
+
+  .anchors a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.4s ease;
+  }
+
+  .anchors a:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 20px rgba(197, 168, 128, 0.55),
+      0 0 45px rgba(197, 168, 128, 0.25);
+  }
+
+  .anchors a:hover::after { width: 100%; }
+
+  .anchors .diamond {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.9;
   }
 
   .license-link {
@@ -194,9 +246,9 @@
     color: var(--gold-pale);
     border-bottom: 1px solid rgba(197, 168, 128, 0.5);
     padding-bottom: 2px;
-    margin-bottom: 80px;
+    margin-bottom: 90px;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 0.7s;
+    animation-delay: 0.85s;
     transition: transform 0.3s ease, border-color 0.3s ease;
   }
 
@@ -210,6 +262,7 @@
   .section {
     text-align: left;
     margin-bottom: 90px;
+    scroll-margin-top: 120px;
   }
 
   .section-heading {
@@ -250,10 +303,9 @@
     padding: 26px 0;
     border-bottom: 1px solid var(--rule);
     transition: border-color 0.4s ease;
-    animation: fadeUp 1s ease-out both;
   }
 
-  .track:last-child { border-bottom: none; }
+  .track:last-of-type { border-bottom: none; }
 
   .track:hover { border-bottom-color: var(--gold-soft); }
 
@@ -327,6 +379,25 @@
   .track-actions a:hover { color: #FCFCF7; }
   .track-actions a:hover::after { width: 100%; }
 
+  /* ---------- VIEW ALL LINK ---------- */
+  .view-all {
+    display: inline-block;
+    margin-top: 40px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .view-all:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
   /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 90px;
@@ -348,6 +419,8 @@
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
     .hero-subhead { font-size: 1.1em; }
     .hero-line { font-size: 1em; }
+    .anchors { gap: 16px; margin-bottom: 30px; }
+    .anchors a { font-size: 1.1em; letter-spacing: 0.22em; }
     .section-heading { font-size: 1.3em; letter-spacing: 0.2em; }
     .section-poetic { font-size: 1em; }
     .track { grid-template-columns: 1fr; gap: 12px; padding: 20px 0; }
@@ -383,10 +456,16 @@
   <p class="hero-subhead">Original masters for Kenyan productions.</p>
   <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
+  <div class="anchors">
+    <a href="#jingles">Jingles</a>
+    <span class="diamond"></span>
+    <a href="#scores">Film Scores</a>
+  </div>
+
   <a href="#" class="license-link">What you own when you rent →</a>
 
   <!-- ==================== JINGLES ==================== -->
-  <div class="section">
+  <div class="section" id="jingles">
 
     <h2 class="section-heading">Jingles</h2>
     <p class="section-poetic">Short-form music for brand, broadcast, and identity.</p>
@@ -428,10 +507,36 @@
       </div>
     </div>
 
+    <div class="track">
+      <div class="track-info">
+        <span class="track-numeral">IV.</span>
+        <span class="track-title">Campaign Theme IV</span>
+        <span class="track-meta">Client · 2024 · Driving · 0:40</span>
+      </div>
+      <div class="track-actions">
+        <a href="#">Preview</a>
+        <a href="#">Rent</a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-info">
+        <span class="track-numeral">V.</span>
+        <span class="track-title">Brand Anthem V</span>
+        <span class="track-meta">Client · 2023 · Warm · 0:35</span>
+      </div>
+      <div class="track-actions">
+        <a href="#">Preview</a>
+        <a href="#">Rent</a>
+      </div>
+    </div>
+
+    <a href="rent-jingles" class="view-all">View all jingles →</a>
+
   </div>
 
   <!-- ==================== FILM SCORES ==================== -->
-  <div class="section">
+  <div class="section" id="scores">
 
     <h2 class="section-heading">Film Scores</h2>
     <p class="section-poetic">Cinematic masters available for Kenyan productions.</p>
@@ -472,6 +577,32 @@
         <a href="#">Rent</a>
       </div>
     </div>
+
+    <div class="track">
+      <div class="track-info">
+        <span class="track-numeral">IV.</span>
+        <span class="track-title">Kutu</span>
+        <span class="track-meta">Short Film · 2021 · Haunting · 3:48</span>
+      </div>
+      <div class="track-actions">
+        <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener">Preview</a>
+        <a href="#">Rent</a>
+      </div>
+    </div>
+
+    <div class="track">
+      <div class="track-info">
+        <span class="track-numeral">V.</span>
+        <span class="track-title">Lost in Time</span>
+        <span class="track-meta">Feature Film · 2019 · Expansive · 4:22</span>
+      </div>
+      <div class="track-actions">
+        <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener">Preview</a>
+        <a href="#">Rent</a>
+      </div>
+    </div>
+
+    <a href="rent-scores" class="view-all">View all film scores →</a>
 
   </div>
 
