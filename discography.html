@@ -280,6 +280,15 @@
     text-align: center;
   }
 
+  /* ---------- GALLERY-ACTIVE DIM (intro + signature) ---------- */
+  .intro-block {
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .intro-block {
+    opacity: 0.28;
+  }
+
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -312,6 +321,37 @@
     margin-bottom: 70px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.55s;
+  }
+
+  /* ---------- FEATURE ICON SPOTLIGHT DIM ---------- */
+  /* When any feature icon is hovered, dim everything else */
+  .page:has(.feature-icons a:hover) .intro-block,
+  .page:has(.feature-icons a:hover) .mood-groups,
+  .page:has(.feature-icons a:hover) .signature {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.feature-icons a:hover) .feature-icons {
+    opacity: 1;
+  }
+
+  .page:has(.feature-icons a:hover) .feature-icons a:not(:hover) {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  /* ---------- FEATURE COVER HOVER DIM ---------- */
+  /* When the album cover is hovered, dim everything else */
+  .page:has(.feature-cover:hover) .intro-block,
+  .page:has(.feature-cover:hover) .mood-groups,
+  .page:has(.feature-cover:hover) .signature {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.feature-cover:hover) .feature-cover {
+    opacity: 1;
   }
 
   /* ---------- MOOD GROUPS (COLLAPSIBLE) ---------- */
@@ -383,20 +423,77 @@
     border-color: var(--gold);
   }
 
-  /* ---------- LATEST RELEASE FEATURE ---------- */
+  /* ---------- FULL CATALOGUE INNER GROUPS ---------- */
+  .inner-groups {
+    padding: 10px 0 20px 0;
+  }
+
+  .inner-group {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .inner-group:last-child {
+    border-bottom: none;
+  }
+
+  .inner-group summary {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 22px 0 16px 30px;
+    cursor: pointer;
+    list-style: none;
+    transition: border-color 0.4s ease;
+  }
+
+  .inner-group summary::-webkit-details-marker { display: none; }
+  .inner-group summary::marker { content: ''; }
+
+  .inner-label {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: var(--offwhite);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .inner-group summary:hover .inner-label {
+    color: #FCFCF7;
+  }
+
+  .inner-count {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.68em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .inner-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 12px;
+    border-right: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    vertical-align: middle;
+  }
+
+  .inner-group[open] .inner-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--gold);
+  }
+
+  /* ---------- FEATURE RELEASE ---------- */
   .feature-release {
     padding: 50px 0 60px;
     text-align: center;
-  }
-
-  .feature-label {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.3em;
-    color: var(--gold-pale);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 40px;
-    display: block;
   }
 
   .feature-cover {
@@ -407,6 +504,7 @@
     aspect-ratio: 1 / 1;
     margin: 0 auto 40px;
     animation: fadeUp 1s ease-out both;
+    transition: opacity 0.7s ease;
   }
 
   .feature-cover img {
@@ -437,7 +535,6 @@
     color: var(--gold-pale);
     letter-spacing: 0.05em;
     margin-bottom: 40px;
-    transition: color 0.3s ease;
   }
 
   .feature-cta {
@@ -459,6 +556,7 @@
     gap: 44px;
     flex-wrap: wrap;
     margin-bottom: 20px;
+    transition: opacity 0.7s ease;
   }
 
   .feature-icons a {
@@ -470,7 +568,7 @@
     color: var(--gold-soft);
     border-radius: 50%;
     position: relative;
-    transition: color 0.4s ease, transform 0.4s ease;
+    transition: color 0.4s ease, transform 0.4s ease, opacity 0.7s ease;
   }
 
   .feature-icons a::before {
@@ -500,7 +598,7 @@
 
   .feature-icons svg { width: 32px; height: 32px; fill: currentColor; }
 
-  /* ---------- STORE GALLERY (INSIDE GROUPS) ---------- */
+  /* ---------- STORE GALLERY (inside groups) ---------- */
   .store-gallery {
     display: flex;
     flex-wrap: wrap;
@@ -604,6 +702,11 @@
     text-align: center;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.4s;
+    transition: opacity 0.9s ease;
+  }
+
+  .page.gallery-active .signature {
+    opacity: 0.28;
   }
 
   .signature-logo {
@@ -630,8 +733,10 @@
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
+    .inner-group summary { padding: 18px 0 14px 20px; gap: 12px; }
+    .inner-label { font-size: 1em; letter-spacing: 0.08em; }
+    .inner-indicator { margin-right: 8px; }
     .feature-release { padding: 30px 0 40px; }
-    .feature-label { font-size: 1.1em; margin-bottom: 30px; }
     .feature-cover { max-width: 320px; margin-bottom: 30px; }
     .feature-title { font-size: 1.4em; margin-bottom: 30px; }
     .feature-cta { font-size: 1em; }
@@ -679,11 +784,11 @@
 
 <div class="page">
 
-  <h1>Discography</h1>
-
-  <p class="hero-subhead">Latest release and full catalogue.</p>
-
-  <p class="hero-formats">Solo Piano &nbsp;·&nbsp; Orchestral &nbsp;·&nbsp; Hybrid &nbsp;·&nbsp; Ambient</p>
+  <div class="intro-block">
+    <h1>Discography</h1>
+    <p class="hero-subhead">Latest release and full catalogue.</p>
+    <p class="hero-formats">Solo Piano &nbsp;·&nbsp; Orchestral &nbsp;·&nbsp; Hybrid &nbsp;·&nbsp; Ambient</p>
+  </div>
 
   <div class="mood-groups">
 
@@ -737,122 +842,134 @@
       </div>
     </details>
 
-    <!-- ==================== SOLO PIANO ==================== -->
+    <!-- ==================== FULL CATALOGUE (nested) ==================== -->
     <details class="mood-group">
       <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
-        <span class="mood-count">4 albums</span>
+        <span><span class="mood-indicator"></span><span class="mood-label">Full Catalogue</span></span>
+        <span class="mood-count">9 albums</span>
       </summary>
 
-      <div class="store-gallery">
+      <div class="inner-groups">
 
-        <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+        <!-- Solo Piano -->
+        <details class="inner-group">
+          <summary>
+            <span><span class="inner-indicator"></span><span class="inner-label">Solo Piano</span></span>
+            <span class="inner-count">4 albums</span>
+          </summary>
+
+          <div class="store-gallery">
+
+            <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">Into A Stillness That Answers</div>
+              <div class="format-label">Solo Piano</div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=dgQjOQKJwnw&list=OLAK5uy_l_R-8HxUqoACTBwX1M0vwGQnoh_SkGJN4" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">Where I Begin Again</div>
+              <div class="format-label">Solo Piano</div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=hQsG4VxJSws&list=OLAK5uy_mC6gmQ6HKFaMIWtxNXyDZjIKX03mrRstU" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">The Impressionist</div>
+              <div class="format-label">Solo Piano</div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=f9vpu1eTEYE&list=OLAK5uy_n2m1iRVcZ9j-JP8wmV7g2Ykoz_fbRp3Ag" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">The Impressionist II</div>
+              <div class="format-label">Solo Piano</div>
+            </a>
+
           </div>
-          <div class="caption">Into A Stillness That Answers</div>
-          <div class="format-label">Solo Piano</div>
-        </a>
+        </details>
 
-        <a href="https://www.youtube.com/watch?v=dgQjOQKJwnw&list=OLAK5uy_l_R-8HxUqoACTBwX1M0vwGQnoh_SkGJN4" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+        <!-- Orchestral -->
+        <details class="inner-group">
+          <summary>
+            <span><span class="inner-indicator"></span><span class="inner-label">Orchestral</span></span>
+            <span class="inner-count">2 albums</span>
+          </summary>
+
+          <div class="store-gallery">
+
+            <a href="https://www.youtube.com/watch?v=N6GS8OGD2GY&list=OLAK5uy_lXKMU1d8-oeLghKj8oGc_pZ0xBWoYpm0g" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">Introspect</div>
+              <div class="format-label">Orchestral</div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=Ksw5e9IyGzs&list=OLAK5uy_kFkSLceGcqu6UZe288YzObKiU0eVm4FNs" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">Seven Deadly Sins</div>
+              <div class="format-label">Orchestral</div>
+            </a>
+
           </div>
-          <div class="caption">Where I Begin Again</div>
-          <div class="format-label">Solo Piano</div>
-        </a>
+        </details>
 
-        <a href="https://www.youtube.com/watch?v=hQsG4VxJSws&list=OLAK5uy_mC6gmQ6HKFaMIWtxNXyDZjIKX03mrRstU" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+        <!-- Hybrid -->
+        <details class="inner-group">
+          <summary>
+            <span><span class="inner-indicator"></span><span class="inner-label">Hybrid</span></span>
+            <span class="inner-count">2 albums</span>
+          </summary>
+
+          <div class="store-gallery">
+
+            <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAK5uy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">Agent 254</div>
+              <div class="format-label">Hybrid</div>
+            </a>
+
+            <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAK5uy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">The Impressionist III</div>
+              <div class="format-label">Hybrid</div>
+            </a>
+
           </div>
-          <div class="caption">The Impressionist</div>
-          <div class="format-label">Solo Piano</div>
-        </a>
+        </details>
 
-        <a href="https://www.youtube.com/watch?v=f9vpu1eTEYE&list=OLAK5uy_n2m1iRVcZ9j-JP8wmV7g2Ykoz_fbRp3Ag" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+        <!-- Ambient -->
+        <details class="inner-group">
+          <summary>
+            <span><span class="inner-indicator"></span><span class="inner-label">Ambient</span></span>
+            <span class="inner-count">1 album</span>
+          </summary>
+
+          <div class="store-gallery">
+
+            <a href="https://www.youtube.com/watch?v=zNHjyFSfxuc&list=OLAK5uy_l3spwn3ikdN9Ydatj8YH4aBC2MPgsGHZE" target="_blank" rel="noopener" class="store-item">
+              <div class="poster">
+                <img src="images/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
+              </div>
+              <div class="caption">When Stars Align</div>
+              <div class="format-label">Ambient</div>
+            </a>
+
           </div>
-          <div class="caption">The Impressionist II</div>
-          <div class="format-label">Solo Piano</div>
-        </a>
-
-      </div>
-    </details>
-
-    <!-- ==================== ORCHESTRAL ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-        <span class="mood-count">2 albums</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <a href="https://www.youtube.com/watch?v=N6GS8OGD2GY&list=OLAK5uy_lXKMU1d8-oeLghKj8oGc_pZ0xBWoYpm0g" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Introspect</div>
-          <div class="format-label">Orchestral</div>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=Ksw5e9IyGzs&list=OLAK5uy_kFkSLceGcqu6UZe288YzObKiU0eVm4FNs" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Seven Deadly Sins</div>
-          <div class="format-label">Orchestral</div>
-        </a>
-
-      </div>
-    </details>
-
-    <!-- ==================== HYBRID ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Hybrid</span></span>
-        <span class="mood-count">2 albums</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAK5uy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Agent 254</div>
-          <div class="format-label">Hybrid</div>
-        </a>
-
-        <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAK5uy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">The Impressionist III</div>
-          <div class="format-label">Hybrid</div>
-        </a>
-
-      </div>
-    </details>
-
-    <!-- ==================== AMBIENT ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-        <span class="mood-count">1 album</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <a href="https://www.youtube.com/watch?v=zNHjyFSfxuc&list=OLAK5uy_l3spwn3ikdN9Ydatj8YH4aBC2MPgsGHZE" target="_blank" rel="noopener" class="store-item">
-          <div class="poster">
-            <img src="images/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">When Stars Align</div>
-          <div class="format-label">Ambient</div>
-        </a>
+        </details>
 
       </div>
     </details>
@@ -867,11 +984,65 @@
 
 <script>
   (function() {
-    var groups = document.querySelectorAll('.mood-groups .mood-group');
-    groups.forEach(function(group) {
+    /* Tile reveal on scroll — triggers the gallery-active dim */
+    if ('IntersectionObserver' in window) {
+      var tileObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('lit');
+            tileObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+      document.querySelectorAll('.store-item').forEach(function(el, i) {
+        el.style.transitionDelay = ((i % 3) * 0.12) + 's';
+        tileObserver.observe(el);
+      });
+    } else {
+      document.querySelectorAll('.store-item').forEach(function(el) {
+        el.classList.add('lit');
+      });
+    }
+
+    /* Gallery-active dim — dim intro + signature when the mood-groups are in view */
+    var page = document.querySelector('.page');
+    var groups = document.querySelector('.mood-groups');
+
+    if (page && groups && 'IntersectionObserver' in window) {
+      var galleryObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            page.classList.add('gallery-active');
+          } else {
+            page.classList.remove('gallery-active');
+          }
+        });
+      }, { threshold: 0.15 });
+
+      galleryObserver.observe(groups);
+    }
+
+    /* One-open-at-a-time for top-level groups */
+    var topGroups = document.querySelectorAll('.mood-groups > .mood-group');
+    topGroups.forEach(function(group) {
       group.addEventListener('toggle', function() {
         if (group.open) {
-          groups.forEach(function(other) {
+          topGroups.forEach(function(other) {
+            if (other !== group && other.open) {
+              other.open = false;
+            }
+          });
+        }
+      });
+    });
+
+    /* One-open-at-a-time for inner groups (nested) */
+    var innerGroups = document.querySelectorAll('.inner-groups > .inner-group');
+    innerGroups.forEach(function(group) {
+      group.addEventListener('toggle', function() {
+        if (group.open) {
+          innerGroups.forEach(function(other) {
             if (other !== group && other.open) {
               other.open = false;
             }
