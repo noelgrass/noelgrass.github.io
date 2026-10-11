@@ -221,9 +221,6 @@
   }
 
   /* ---------- SPOTLIGHT DIM ---------- */
-  /* When any mood group is hovered, dim everything in .page EXCEPT
-     the hovered group and the FAQ footer. Nav is outside .page so
-     it stays full brightness automatically. */
   .page > h1,
   .page > .hero-subhead,
   .page > .section-pricing,
@@ -251,8 +248,6 @@
   .page:has(.mood-group:hover) .mood-group:not(:hover) {
     opacity: 0.25;
   }
-
-  /* FAQ footer stays at full brightness — no opacity rule applied */
 
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -509,7 +504,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- FAQ FOOTER ---------- */
   .faq-footer {
     text-align: left;
     margin-top: 100px;
@@ -858,6 +852,23 @@
   </div>
 
 </div>
+
+<script>
+  (function() {
+    var groups = document.querySelectorAll('.mood-groups .mood-group');
+    groups.forEach(function(group) {
+      group.addEventListener('toggle', function() {
+        if (group.open) {
+          groups.forEach(function(other) {
+            if (other !== group && other.open) {
+              other.open = false;
+            }
+          });
+        }
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>
