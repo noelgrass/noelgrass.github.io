@@ -220,6 +220,40 @@
     text-align: center;
   }
 
+  /* ---------- SPOTLIGHT DIM ---------- */
+  /* When any mood group is hovered, dim everything in .page EXCEPT
+     the hovered group and the FAQ footer. Nav is outside .page so
+     it stays full brightness automatically. */
+  .page > h1,
+  .page > .hero-subhead,
+  .page > .section-pricing,
+  .page > .back-link,
+  .page > .license-link,
+  .page > .back-bottom,
+  .page > .signature {
+    transition: opacity 0.5s ease;
+  }
+
+  .page .mood-groups .mood-group {
+    transition: opacity 0.5s ease, border-color 0.4s ease;
+  }
+
+  .page:has(.mood-group:hover) > h1,
+  .page:has(.mood-group:hover) > .hero-subhead,
+  .page:has(.mood-group:hover) > .section-pricing,
+  .page:has(.mood-group:hover) > .back-link,
+  .page:has(.mood-group:hover) > .license-link,
+  .page:has(.mood-group:hover) > .back-bottom,
+  .page:has(.mood-group:hover) > .signature {
+    opacity: 0.25;
+  }
+
+  .page:has(.mood-group:hover) .mood-group:not(:hover) {
+    opacity: 0.25;
+  }
+
+  /* FAQ footer stays at full brightness — no opacity rule applied */
+
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -598,7 +632,7 @@
 
   <div class="mood-groups">
 
-    <details class="mood-group" open>
+    <details class="mood-group">
       <summary>
         <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
         <span class="mood-count">2 tracks</span>
