@@ -190,46 +190,42 @@
     animation-delay: 0.55s;
   }
 
-  /* ---------- BACK LINK ---------- */
+  /* ---------- BACK LINK (no underline) ---------- */
   .back-link {
     display: inline-block;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-size: 1em;
     color: var(--gold-pale);
-    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
     padding-bottom: 2px;
     margin-bottom: 60px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.7s;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
   }
 
   .back-link:hover {
     transform: translateX(-4px);
-    border-bottom-color: var(--gold);
     color: #FCFCF7;
   }
 
-  /* ---------- LICENSE LINK ---------- */
+  /* ---------- LICENSE LINK (no underline) ---------- */
   .license-link {
     display: inline-block;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-size: 1em;
     color: var(--gold-pale);
-    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
     padding-bottom: 2px;
     margin-bottom: 60px;
     margin-left: 30px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.7s;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, color 0.3s ease;
   }
 
   .license-link:hover {
     transform: translateX(4px);
-    border-bottom-color: var(--gold);
     color: #FCFCF7;
   }
 
@@ -245,7 +241,7 @@
   }
 
   .mood-group[open] {
-    border-bottom-color: var(--gold-soft);
+    border-bottom-color: var(--rule);
   }
 
   .mood-group summary {
@@ -256,16 +252,11 @@
     padding: 28px 0 20px;
     cursor: pointer;
     list-style: none;
-    border-bottom: 1px solid var(--gold-soft);
     transition: border-color 0.4s ease;
   }
 
   .mood-group summary::-webkit-details-marker { display: none; }
   .mood-group summary::marker { content: ''; }
-
-  .mood-group summary:hover {
-    border-bottom-color: var(--gold);
-  }
 
   .mood-label {
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -290,7 +281,6 @@
     color: var(--muted);
   }
 
-  /* Indicator triangle */
   .mood-indicator {
     display: inline-block;
     width: 8px;
