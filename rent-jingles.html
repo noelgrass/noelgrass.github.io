@@ -14,6 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
+<!-- Service Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,6 +38,7 @@
 }
 </script>
 
+<!-- FAQ Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -47,7 +49,7 @@
       "name": "Can I rent a jingle for a Kenyan TV or radio commercial?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Noel Grass licenses original jingles directly to Kenyan brands, agencies, and production houses for TV, radio, online, and broadcast advertising campaigns across Kenya, East Africa, and pan-African markets."
+        "text": "Yes. Noel Grass licenses original jingles directly to Kenyan brands, agencies, and production houses for TV, radio, online, and broadcast advertising campaigns. The catalogue is also licensed for East African, pan-African, and international productions."
       }
     },
     {
@@ -68,10 +70,10 @@
     },
     {
       "@type": "Question",
-      "name": "Can I rent a jingle for an East African or pan-African campaign?",
+      "name": "Can I rent a jingle for an East African or international campaign?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The catalogue is licensed for campaigns across Kenya, East Africa, and the wider African continent, as well as international projects."
+        "text": "Yes. The catalogue is licensed for campaigns across Kenya, East Africa, the wider African continent, and international markets."
       }
     },
     {
@@ -79,13 +81,14 @@
       "name": "How much does it cost to rent a jingle?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Jingle licensing starts at Ksh 5,000 per track for a single campaign. Full terms are available on the Rent page."
+        "text": "Jingle licensing starts at Ksh 5,000 per track for a single campaign. International licensing is available in USD, GBP, or EUR — contact for rates. Full terms are available on the Rent page."
       }
     }
   ]
 }
 </script>
 
+<!-- ItemList Schema -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -484,6 +487,76 @@
     opacity: 0.95;
   }
 
+  /* ---------- FAQ FOOTER ---------- */
+  .faq-footer {
+    text-align: left;
+    margin-top: 100px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
+  }
+
+  .faq-footer details {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .faq-footer details:last-of-type {
+    border-bottom: none;
+  }
+
+  .faq-footer summary {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    padding: 14px 0;
+    cursor: pointer;
+    list-style: none;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+    transition: color 0.3s ease;
+  }
+
+  .faq-footer summary::-webkit-details-marker { display: none; }
+  .faq-footer summary::marker { content: ''; }
+
+  .faq-footer summary:hover { color: var(--offwhite); }
+
+  .faq-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-right: 6px;
+    border-right: 1px solid var(--muted);
+    border-bottom: 1px solid var(--muted);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+    position: relative;
+    top: 1px;
+  }
+
+  .faq-footer details[open] .faq-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--muted);
+  }
+
+  .faq-footer details[open] summary {
+    color: var(--offwhite);
+  }
+
+  .faq-answer {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.9em;
+    line-height: 1.65;
+    color: var(--muted);
+    padding: 0 0 18px 20px;
+    margin: 0;
+  }
+
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
@@ -506,6 +579,9 @@
     .back-bottom { margin-top: 40px; }
     .signature { margin-top: 40px; }
     .signature-logo { height: 55px; }
+    .faq-footer { margin-top: 60px; padding-top: 30px; }
+    .faq-footer summary { font-size: 0.95em; padding: 12px 0; }
+    .faq-answer { font-size: 0.85em; padding-left: 16px; }
   }
 </style>
 </head>
@@ -769,7 +845,17 @@
     <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
-</div>
+  <div class="faq-footer">
 
-</body>
-</html>
+    <details>
+      <summary><span class="faq-indicator"></span>Can I rent a jingle for a Kenyan TV or radio commercial?</summary>
+      <p class="faq-answer">Yes. Noel Grass licenses original jingles directly to Kenyan brands, agencies, and production houses for TV, radio, online, and broadcast advertising campaigns. The catalogue is also licensed for East African, pan-African, and international productions.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>What is the difference between a jingle and a stinger or ident?</summary>
+      <p class="faq-answer">A jingle is a short branded piece of music, usually 15 to 60 seconds, that carries a campaign or brand identity. A stinger or ident is shorter, typically 5 to 20 seconds, and functions as an audio logo or transition.</p>
+    </details>
+
+    <details>
+      <summary><span class="faq-indicator"></span>
