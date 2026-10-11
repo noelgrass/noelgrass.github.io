@@ -382,7 +382,6 @@
     border-color: var(--gold);
   }
 
-  /* ---------- LATEST RELEASE FEATURE ---------- */
   .feature-release {
     padding: 50px 0 60px;
     text-align: center;
@@ -489,7 +488,6 @@
 
   .feature-icons svg { width: 32px; height: 32px; fill: currentColor; }
 
-  /* ---------- STORE GALLERY (INSIDE GROUPS) ---------- */
   .store-gallery {
     display: flex;
     flex-wrap: wrap;
@@ -587,7 +585,6 @@
     color: rgba(154, 149, 140, 0.3);
   }
 
-  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 100px;
     text-align: center;
@@ -857,15 +854,48 @@
 
 <script>
   (function() {
-    var groups = document.querySelectorAll('.mood-groups .mood-group');
+    var groups = document.querySelectorAll('.mood-groups > .mood-group');
+    var closingProgrammatically = false;
+
     groups.forEach(function(group) {
       group.addEventListener('toggle', function() {
+        var summary = group.querySelector('summary');
+
         if (group.open) {
+          // Mark as programmatic close so other handlers skip their scroll
+          closingProgrammatically = true;
+
           groups.forEach(function(other) {
             if (other !== group && other.open) {
               other.open = false;
             }
           });
+
+          closingProgrammatically = false;
+
+          // Now scroll the newly opened group's summary into view
+          setTimeout(function() {
+            var rect = summary.getBoundingClientRect();
+            var targetTop = 130;
+            if (rect.top < 0 || rect.top > window.innerHeight * 0.4) {
+              window.scrollTo({
+                top: window.scrollY + rect.top - targetTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 20);
+        } else if (!closingProgrammatically) {
+          // User clicked to close this group — keep its summary in view
+          setTimeout(function() {
+            var rect = summary.getBoundingClientRect();
+            var targetTop = 130;
+            if (rect.top < 0 || rect.top > window.innerHeight * 0.5) {
+              window.scrollTo({
+                top: window.scrollY + rect.top - targetTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 20);
         }
       });
     });
