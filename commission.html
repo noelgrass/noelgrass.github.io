@@ -161,7 +161,7 @@
   }
 
   /* ============================================================
-     TOP BAR — blended (no border, matches page background)
+     TOP BAR — blended
      ============================================================ */
   .topnav {
     position: sticky;
@@ -268,7 +268,7 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER (blurs when menu opens) ---------- */
+  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -408,7 +408,6 @@
     transform: translateY(-50%) scale(1);
   }
 
-  /* ---------- CURRENT PAGE STATE ---------- */
   .menu-panel a.current {
     color: var(--gold-dim);
     background: rgba(197, 168, 128, 0.04);
@@ -433,6 +432,33 @@
     opacity: 0.85;
     transform: translateY(-50%) scale(1);
     color: var(--gold-dim);
+  }
+
+  /* ---------- RENT DESCRIPTOR IN MENU ---------- */
+  .menu-panel li.has-desc a {
+    padding-top: 15px;
+    padding-bottom: 26px;
+  }
+
+  .menu-panel li.has-desc .menu-desc {
+    position: absolute;
+    left: 26px;
+    bottom: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    opacity: 0.75;
+    transition: color 0.35s ease, left 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .menu-panel li.has-desc:hover .menu-desc {
+    left: 34px;
+    color: var(--gold-pale);
+    opacity: 1;
   }
 
   /* ---------- PAGE ---------- */
@@ -491,6 +517,69 @@
 
   em { font-style: italic; }
 
+  /* ============================================================
+     RENT CALLOUT — top of page, after intro paragraphs
+     ============================================================ */
+  .rent-callout {
+    display: block;
+    text-align: left;
+    max-width: 620px;
+    margin: 50px auto 20px;
+    padding: 32px 30px;
+    border: 1px solid var(--gold-soft);
+    background: rgba(197, 168, 128, 0.02);
+    transition: border-color 0.4s ease, background 0.4s ease;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+  }
+
+  .rent-callout:hover {
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.05);
+  }
+
+  .rent-callout .callout-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 18px;
+  }
+
+  .rent-callout p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.02em;
+    line-height: 1.75;
+    color: var(--offwhite);
+    margin: 0 0 16px;
+  }
+
+  .rent-callout p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .rent-callout .callout-link {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .rent-callout .callout-link:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  /* ---------- STEPS ---------- */
   .steps {
     text-align: left;
     margin: 30px auto 40px;
@@ -636,6 +725,29 @@
     border-bottom-color: var(--gold);
   }
 
+  /* Bottom inline rent link */
+  .rent-link-bottom {
+    margin-top: 30px;
+    text-align: center;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--offwhite);
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.1s;
+  }
+
+  .rent-link-bottom a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .rent-link-bottom a:hover {
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
   .signature {
     margin-top: 90px;
     text-align: center;
@@ -661,6 +773,19 @@
     .form-field input,
     .form-field textarea { font-size: 0.95em; padding: 12px 14px; }
     .form-submit { padding: 14px 32px; font-size: 0.75em; letter-spacing: 0.25em; }
+
+    .rent-callout {
+      padding: 26px 22px;
+      margin: 40px auto 20px;
+    }
+    .rent-callout .callout-label {
+      font-size: 0.65em;
+      letter-spacing: 0.25em;
+      margin-bottom: 14px;
+    }
+    .rent-callout p {
+      font-size: 0.98em;
+    }
 
     .topnav { padding: 18px 22px; }
 
@@ -707,7 +832,23 @@
       padding-left: 32px;
     }
 
+    .menu-panel li.has-desc a {
+      padding-top: 15px;
+      padding-bottom: 28px;
+    }
+
+    .menu-panel li.has-desc .menu-desc {
+      left: 24px;
+      bottom: 9px;
+      font-size: 0.7em;
+    }
+
+    .menu-panel li.has-desc:hover .menu-desc {
+      left: 32px;
+    }
+
     .more-contact { margin-top: 40px; padding-top: 30px; }
+    .rent-link-bottom { margin-top: 24px; }
     .signature { margin-top: 60px; }
     .signature-logo { height: 55px; }
   }
@@ -763,7 +904,12 @@
     <li><a href="film-composer">About</a></li>
     <li><a href="commission">Commission a Scene</a></li>
     <li><a href="film-gallery">Gallery</a></li>
-    <li><a href="rent">Rent</a></li>
+    <li class="has-desc">
+      <a href="rent">
+        Rent
+        <span class="menu-desc">existing scores &amp; jingles</span>
+      </a>
+    </li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -779,7 +925,16 @@
 
     <p class="intro-text">Based in Nairobi, Kenya, I work with filmmakers, production houses, and agencies across East Africa and internationally — from feature films and documentaries to commercial campaigns and sonic branding.</p>
 
-    <span class="subhead animate" style="animation-delay: 0.7s;">Philosophy</span>
+    <!-- ============================================================
+         RENT CALLOUT — top of page
+         ============================================================ -->
+    <a href="rent" class="rent-callout">
+      <span class="callout-label">Prefer something already made?</span>
+      <p>Browse the catalogue and license an existing score — available immediately, no composition timeline.</p>
+      <span class="callout-link">Rent from the catalogue →</span>
+    </a>
+
+    <span class="subhead animate" style="animation-delay: 0.85s;">Philosophy</span>
 
     <section class="reveal">
       <p>My work starts with your story. The core rule is simple: the emotion of the scene decides the music. The score isn't just an addition; it's a foundational layer built from the emotional needs of your project.</p>
@@ -844,6 +999,13 @@
       For more contact options, see the <a href="contact">Contact page →</a>.
     </div>
 
+    <!-- ============================================================
+         BOTTOM RENT LINK
+         ============================================================ -->
+    <div class="rent-link-bottom">
+      Prefer something already made? See the <a href="rent">Rent page →</a>
+    </div>
+
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -858,7 +1020,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -874,7 +1035,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -919,7 +1079,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -964,7 +1123,6 @@
       }
     }
 
-    /* ---------- SCROLL REVEAL ---------- */
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
         el.classList.add('visible');
