@@ -53,6 +53,7 @@
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
+    --light-plate: #F0ECE4;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -427,7 +428,7 @@
   }
 
   .page {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 100px 40px 80px;
     text-align: center;
@@ -503,6 +504,10 @@
     animation-delay: 1.3s;
   }
 
+  /* ============================================================
+     FILM GALLERY — album tiles (scaled down for cohesion)
+     ============================================================ */
+
   .gallery-section {
     position: relative;
   }
@@ -511,15 +516,15 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 90px 60px;
+    gap: 80px 50px;
     margin: 0 auto 40px;
-    max-width: 1100px;
+    max-width: 860px;
   }
 
   .gallery-item {
     display: block;
     text-align: center;
-    width: calc((100% - 120px) / 3);
+    width: calc((100% - 100px) / 3);
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 1.2s ease, transform 1.2s ease;
@@ -566,10 +571,10 @@
 
   .gallery-item .caption {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.1em;
+    font-size: 1.05em;
     letter-spacing: 0.08em;
     color: var(--gold-pale);
-    margin-top: 24px;
+    margin-top: 20px;
     text-transform: uppercase;
     transition: color 0.5s ease;
   }
@@ -604,11 +609,11 @@
   }
 
   /* ============================================================
-     CLIENTS SECTION — borderless logos with pulsing glow
+     CLIENTS SECTION — borderless logos, capped for cohesion
      ============================================================ */
 
   .clients-block {
-    margin-top: 120px;
+    margin-top: 110px;
     transition: opacity 0.9s ease;
   }
 
@@ -644,8 +649,8 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 60px 50px;
-    max-width: 1100px;
+    gap: 55px 45px;
+    max-width: 860px;
     margin: 0 auto;
   }
 
@@ -653,16 +658,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: calc((100% - 100px) / 3);
-    min-height: 120px;
-    padding: 20px;
-    text-align: center;
+    width: calc((100% - 90px) / 3);
+    min-height: 110px;
+    padding: 12px;
   }
 
   .client-item img {
     display: block;
     max-width: 100%;
-    max-height: 120px;
+    max-height: 100px;
     width: auto;
     height: auto;
     object-fit: contain;
@@ -670,10 +674,23 @@
     transition: filter 0.8s ease, transform 0.6s ease;
     animation: tileRestGlow 7s ease-in-out infinite;
     animation-delay: 1.4s;
-    border-radius: 4px;
   }
 
-  /* Hover: a single logo brightens and glows; all siblings dim */
+  /* Light plate for logos whose artwork is dark-on-transparent */
+  .client-item.has-plate {
+    background: var(--light-plate);
+    border-radius: 4px;
+    padding: 22px;
+    min-height: 130px;
+  }
+
+  .client-item.has-plate img {
+    filter: brightness(1) contrast(1);
+    animation: none;
+    transition: filter 0.8s ease, transform 0.6s ease;
+  }
+
+  /* Hover: one brightens and glows; siblings dim */
   .clients:has(.client-item:hover) .client-item img {
     animation: none;
   }
@@ -685,10 +702,32 @@
       0 0 24px 4px rgba(185, 151, 92, 0.02);
   }
 
+  .clients:has(.client-item:hover) .client-item:not(:hover).has-plate {
+    background: rgba(240, 236, 228, 0.15);
+    transition: background 0.6s ease;
+  }
+
+  .clients:has(.client-item:hover) .client-item:not(:hover).has-plate img {
+    filter: brightness(0.55) contrast(0.95);
+  }
+
   .clients:has(.client-item:hover) .client-item:hover img {
     filter: brightness(1) contrast(1.05);
     animation: tileHoverGlow 4s ease-in-out infinite;
     transform: scale(1.04);
+  }
+
+  .clients:has(.client-item:hover) .client-item:hover.has-plate {
+    background: #FCFAF6;
+    box-shadow:
+      0 0 30px 6px rgba(197, 168, 128, 0.55),
+      0 0 70px 15px rgba(197, 168, 128, 0.22);
+    transition: background 0.6s ease, box-shadow 0.6s ease;
+  }
+
+  .clients:has(.client-item:hover) .client-item:hover.has-plate img {
+    animation: none;
+    filter: brightness(1) contrast(1);
   }
 
   .signature {
@@ -710,18 +749,19 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .gallery {
-      gap: 60px 40px;
+      gap: 55px 35px;
     }
     .gallery-item {
-      width: calc((100% - 40px) / 2);
+      width: calc((100% - 35px) / 2);
     }
     .clients {
-      gap: 50px 35px;
+      gap: 45px 30px;
     }
     .client-item {
-      width: calc((100% - 70px) / 2);
+      width: calc((100% - 60px) / 2);
     }
   }
 
@@ -777,7 +817,7 @@
     }
 
     .gallery {
-      gap: 60px;
+      gap: 55px;
       max-width: 400px;
     }
     .gallery-item {
@@ -796,15 +836,19 @@
     .clients-subhead { font-size: 1.1em; }
     .clients-note { font-size: 0.95em; margin-bottom: 40px; }
     .clients {
-      gap: 45px 30px;
+      gap: 40px 25px;
       max-width: 400px;
     }
     .client-item {
-      width: calc((100% - 30px) / 2);
-      min-height: 90px;
-      padding: 10px;
+      width: calc((100% - 25px) / 2);
+      min-height: 85px;
+      padding: 8px;
     }
-    .client-item img { max-height: 90px; }
+    .client-item img { max-height: 80px; }
+    .client-item.has-plate {
+      padding: 18px;
+      min-height: 110px;
+    }
 
     .signature-logo { height: 55px; }
   }
@@ -949,7 +993,7 @@
 
       <div class="clients">
 
-        <div class="client-item">
+        <div class="client-item has-plate">
           <img src="images/corporate/world-bank.png" alt="World Bank Group logo" loading="lazy">
         </div>
 
@@ -965,7 +1009,7 @@
           <img src="images/corporate/sominvest.png" alt="SOMINVEST logo" loading="lazy">
         </div>
 
-        <div class="client-item">
+        <div class="client-item has-plate">
           <img src="images/corporate/radisson-blu.webp" alt="Radisson Blu logo" loading="lazy">
         </div>
 
@@ -981,7 +1025,7 @@
           <img src="images/corporate/heritage-institute.jpg" alt="Heritage Institute logo" loading="lazy">
         </div>
 
-        <div class="client-item">
+        <div class="client-item has-plate">
           <img src="images/corporate/profiles.png" alt="Profiles logo" loading="lazy">
         </div>
 
