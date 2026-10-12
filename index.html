@@ -85,6 +85,7 @@
     --bg: #000000;
     --gold: #C5A880;
     --gold-soft: #B9975C;
+    --gold-dim: #7a6b4f;   /* dimmed gold used for the current-page state */
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -186,7 +187,6 @@
     }
   }
 
-  /* ---------- NEW: MENU / BLUR / DROPDOWN ANIMATIONS ---------- */
   @keyframes panelDropIn {
     from {
       opacity: 0;
@@ -224,14 +224,14 @@
     position: sticky;
     top: 0;
     z-index: 300;
-    background: var(--bg); /* pure black, matches page exactly */
+    background: var(--bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 22px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* NO border-bottom — blends seamlessly with the page */
+    /* No border — blends seamlessly with the page */
     animation: fadeUp 0.8s ease-out both;
   }
 
@@ -277,7 +277,6 @@
 
   .menu-toggle:hover { color: #FBFAFC; }
 
-  /* Hamburger icon — 3 lines */
   .hamburger {
     display: inline-flex;
     flex-direction: column;
@@ -300,7 +299,6 @@
       width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Animate hamburger into an X when open */
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
     transform: translateY(6.25px) rotate(45deg);
   }
@@ -312,11 +310,10 @@
     transform: translateY(-6.25px) rotate(-45deg);
   }
 
-  /* Sweeping gold underline under MENU */
   .menu-toggle::after {
     content: '';
     position: absolute;
-    left: 34px; /* under the "MENU" text, skipping the hamburger */
+    left: 34px;
     right: 4px;
     bottom: 2px;
     height: 1px;
@@ -331,7 +328,7 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER (for blur effect) ---------- */
+  /* ---------- PAGE WRAPPER (blur behind menu) ---------- */
   .page-wrap {
     transition: filter 0.6s ease, opacity 0.6s ease;
   }
@@ -346,7 +343,7 @@
   /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
-    top: 78px; /* sits right under the sticky bar */
+    top: 78px;
     right: 40px;
     z-index: 400;
     min-width: 240px;
@@ -411,7 +408,7 @@
   .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.31s forwards; }
   .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards; }
 
-  /* Gold gradient bar that grows in from the left on hover */
+  /* Gold bar that grows in on hover */
   .menu-panel a::before {
     content: '';
     position: absolute;
@@ -436,7 +433,7 @@
     transform: scaleY(0.6);
   }
 
-  /* Delicate divider between items */
+  /* Divider between items */
   .menu-panel li + li::before {
     content: '';
     position: absolute;
@@ -452,7 +449,7 @@
     );
   }
 
-  /* Small gold diamond marker on hover for luxury feel */
+  /* Diamond marker on hover */
   .menu-panel li::after {
     content: '◆';
     position: absolute;
@@ -471,6 +468,52 @@
     transform: translateY(-50%) scale(1);
   }
 
+  /* ============================================================
+     CURRENT PAGE STATE
+     Applied automatically by JavaScript to the link that matches
+     the page the visitor is currently on.
+     ============================================================ */
+
+  .menu-panel a.current {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    padding-left: 34px;
+    cursor: default;
+    pointer-events: none; /* not really clickable — you're already here */
+    text-shadow: none;
+  }
+
+  /* Permanent gold bar to the left of the current link */
+  .menu-panel a.current::before {
+    transform: scaleY(0.6);
+    background: var(--gold-dim);
+  }
+
+  /* Override hover for the current link so it doesn't "light up" */
+  .menu-panel a.current:hover {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    text-shadow: none;
+  }
+
+  /* Permanent diamond ◆ next to the current link */
+  .menu-panel li.is-current::after {
+    opacity: 0.85;
+    transform: translateY(-50%) scale(1);
+    color: var(--gold-dim);
+  }
+
+  /* Small "You are here" hint for screen readers */
+  .menu-panel a.current .sr-current {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* ---------- PAGE ---------- */
   .page {
     max-width: 1200px;
@@ -480,7 +523,6 @@
     position: relative;
   }
 
-  /* Spotlight dims (role links) */
   .page:has(.role-links a:hover) .title-block,
   .page:has(.role-links a:hover) .editorial,
   .page:has(.role-links a:hover) .icons,
@@ -497,7 +539,6 @@
     transition: opacity 0.7s ease;
   }
 
-  /* Spotlight dims (icons) */
   .page:has(.icons a:hover) .title-block,
   .page:has(.icons a:hover) .editorial,
   .page:has(.icons a:hover) .role-links,
@@ -931,7 +972,6 @@
       transform: translateY(-5.75px) rotate(-45deg);
     }
 
-    /* Full-width dropdown on mobile */
     .menu-panel {
       top: 66px;
       left: 12px;
@@ -944,6 +984,10 @@
       padding: 15px 24px;
       font-size: 1.05em;
       letter-spacing: 0.22em;
+    }
+
+    .menu-panel a.current {
+      padding-left: 32px;
     }
 
     .role-links a {
@@ -976,7 +1020,7 @@
 </head>
 <body>
 
-<!-- ===== STICKY TOP BAR (blended to page) ===== -->
+<!-- ===== STICKY TOP BAR ===== -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
 
@@ -1013,7 +1057,7 @@
   </ul>
 </nav>
 
-<!-- ===== PAGE (blurs when menu is open) ===== -->
+<!-- ===== PAGE ===== -->
 <div class="page-wrap" id="pageWrap">
 
   <div class="page">
@@ -1102,10 +1146,11 @@
 
 <script>
   (function () {
-    var toggle  = document.getElementById('menuToggle');
-    var panel   = document.getElementById('menuPanel');
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
+    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -1133,14 +1178,12 @@
       }
     });
 
-    // Close on ESC
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) {
         closeMenu();
       }
     });
 
-    // Close when clicking outside the panel (and not on the toggle)
     document.addEventListener('click', function (e) {
       if (!panel.classList.contains('open')) return;
       if (panel.contains(e.target)) return;
@@ -1148,10 +1191,69 @@
       closeMenu();
     });
 
-    // Close when a link inside the panel is clicked
     panel.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', closeMenu);
     });
+
+    /* ---------- CURRENT-PAGE HIGHLIGHT ----------
+       Reads the current URL and matches it against each menu link.
+       Handles:
+         • trailing slashes           (/biography/ → /biography)
+         • .html extensions           (/biography.html → /biography)
+         • root / index pages         (/ and /index.html → Home)
+       Adds class="current" + aria-current="page" to the matching link.
+       Runs on page load — no per-page edits needed.
+    ------------------------------------------------------- */
+    function normalizePath(path) {
+      // strip query/hash if any got in
+      path = path.split('?')[0].split('#')[0];
+      // strip .html or .htm
+      path = path.replace(/\.html?$/i, '');
+      // strip trailing slash (except if it's just "/")
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      // strip /index at the end
+      path = path.replace(/\/index$/i, '/');
+      // ensure leading slash
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+
+    var links = panel.querySelectorAll('a');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      // ignore external / mailto / tel / anchors
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    // Fallback: if nothing matched and we're on root, highlight Home.
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+      if (matched.parentElement) {
+        matched.parentElement.classList.add('is-current');
+      }
+    }
   })();
 </script>
 
