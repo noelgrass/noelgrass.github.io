@@ -50,10 +50,22 @@ Allow: /
 User-agent: anthropic-ai
 Allow: /
 
+User-agent: claude-web
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
 User-agent: Google-Extended
+Allow: /
+
+User-agent: Google-CloudVertexBot
+Allow: /
+
+User-agent: Gemini-Deep-Research
 Allow: /
 
 User-agent: Applebot-Extended
@@ -71,15 +83,13 @@ Allow: /
 User-agent: meta-externalagent
 Allow: /
 
-User-agent: DeepSeekBot
-Allow: /
-
-# ——— ADDITIONAL AI CRAWLERS ———
-
 User-agent: meta-externalfetcher
 Allow: /
 
 User-agent: FacebookBot
+Allow: /
+
+User-agent: DeepSeekBot
 Allow: /
 
 User-agent: Amazonbot
@@ -119,15 +129,6 @@ User-agent: QwenBot
 Allow: /
 
 User-agent: MistralAI-User
-Allow: /
-
-User-agent: Google-CloudVertexBot
-Allow: /
-
-User-agent: Gemini-Deep-Research
-Allow: /
-
-User-agent: Perplexity-User
 Allow: /
 
 Sitemap: https://noelgrass.github.io/sitemap.xml
