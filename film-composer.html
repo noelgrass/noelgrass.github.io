@@ -53,11 +53,21 @@
       "Audio Post-Production"
     ],
     "sameAs": [
-      "https://www.imdb.com/name/nm14289703/",
-      "https://filamu.org/person/noel-grass/",
-      "https://musicinafrica.net/directory/noel-grass/",
       "https://www.wikidata.org/wiki/Q141263210",
-      "https://ke.linkedin.com/in/noel-grass-82329119b"
+      "https://www.imdb.com/name/nm14289703/",
+      "https://musicinafrica.net/directory/noel-grass/",
+      "https://filamu.org/person/noel-grass/",
+      "https://ke.linkedin.com/in/noelgrass",
+      "https://www.instagram.com/noelgrass/",
+      "https://facebook.com/noelgrassmusic",
+      "https://www.youtube.com/@NoelGrass",
+      "https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG",
+      "https://noelgrass.bandcamp.com/",
+      "https://soundcloud.com/noel-grass",
+      "https://music.apple.com/us/artist/noel-grass/1451933028",
+      "https://www.deezer.com/de/artist/58180192",
+      "https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403",
+      "https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8"
     ]
   }
 }
@@ -81,13 +91,18 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body {
+  html {
     background: var(--bg);
+    scrollbar-gutter: stable;
+  }
+
+  html, body {
     color: var(--offwhite);
     scroll-behavior: smooth;
   }
 
   body {
+    background: var(--bg);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 17px;
     line-height: 1.75;
@@ -97,6 +112,11 @@
 
   body.no-scroll {
     overflow: hidden;
+  }
+  @supports not (scrollbar-gutter: stable) {
+    body.no-scroll {
+      padding-right: var(--scrollbar-width, 0px);
+    }
   }
 
   a {
@@ -116,13 +136,11 @@
   @keyframes menuItemIn {
     from {
       opacity: 0;
-      transform: translateX(12px);
-      filter: blur(4px);
+      transform: translate3d(10px, 0, 0);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
-      filter: blur(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 
@@ -257,7 +275,8 @@
 
   /* ---------- PAGE WRAPPER (blur behind menu) ---------- */
   .page-wrap {
-    transition: filter 0.6s ease, opacity 0.6s ease;
+    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body.menu-open .page-wrap {
@@ -265,6 +284,7 @@
     opacity: 0.9;
     pointer-events: none;
     user-select: none;
+    will-change: filter, opacity;
   }
 
   /* ---------- DROPDOWN PANEL ---------- */
@@ -282,25 +302,20 @@
       0 0 30px rgba(197, 168, 128, 0.08);
     padding: 10px 0;
     opacity: 0;
-    visibility: hidden;
-    transform: translateY(-12px) scale(0.98);
+    transform: translate3d(0, -12px, 0) scale(0.98);
     transform-origin: top right;
     transition:
-      opacity 0.35s ease,
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0.35s;
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
+    will-change: auto;
   }
 
   .menu-panel.open {
     opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-    transition:
-      opacity 0.35s ease,
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0s;
+    transform: translate3d(0, 0, 0) scale(1);
     pointer-events: auto;
+    will-change: transform, opacity;
   }
 
   .menu-panel ul {
@@ -324,16 +339,22 @@
     color: var(--gold);
     position: relative;
     overflow: hidden;
-    transition: color 0.35s ease, background 0.35s ease, padding-left 0.35s ease, text-shadow 0.5s ease;
+    transition:
+      color 0.35s ease,
+      background 0.35s ease,
+      padding-left 0.35s ease,
+      text-shadow 0.5s ease;
     opacity: 0;
   }
 
-  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards; }
-  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.17s forwards; }
-  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards; }
-  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.31s forwards; }
-  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards; }
-  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards; }
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.44s forwards; }
+  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards; }
 
   .menu-panel a::before {
     content: '';
@@ -614,12 +635,14 @@
       right: 12px;
       min-width: 0;
       transform-origin: top right;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
     }
 
     .menu-panel a {
-      padding: 15px 24px;
-      font-size: 1.05em;
-      letter-spacing: 0.22em;
+      padding: 14px 24px;
+      font-size: 1.02em;
+      letter-spacing: 0.2em;
     }
 
     .menu-panel a.current {
@@ -743,12 +766,28 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
+    /* ---------- SCROLL LOCK (no layout shift) ---------- */
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.classList.add('no-scroll');
+    }
+
+    function unlockScroll() {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
     /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
       document.body.classList.add('menu-open');
-      document.body.classList.add('no-scroll');
+      lockScroll();
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
     }
@@ -757,7 +796,7 @@
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
-      document.body.classList.remove('no-scroll');
+      unlockScroll();
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
     }
