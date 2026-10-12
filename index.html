@@ -85,7 +85,7 @@
     --bg: #000000;
     --gold: #C5A880;
     --gold-soft: #B9975C;
-    --gold-dim: #7a6b4f;   /* dimmed gold used for the current-page state */
+    --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -93,12 +93,18 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body {
+  html {
     background: var(--bg);
+    scrollbar-gutter: stable;
+  }
+
+  html, body {
     color: var(--offwhite);
+    scroll-behavior: smooth;
   }
 
   body {
+    background: var(--bg);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 17px;
     line-height: 1.75;
@@ -108,6 +114,11 @@
 
   body.no-scroll {
     overflow: hidden;
+  }
+  @supports not (scrollbar-gutter: stable) {
+    body.no-scroll {
+      padding-right: var(--scrollbar-width, 0px);
+    }
   }
 
   a {
@@ -187,27 +198,15 @@
     }
   }
 
-  @keyframes panelDropIn {
-    from {
-      opacity: 0;
-      transform: translateY(-12px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
+  /* Smoother menu item entry — no blur, GPU-friendly */
   @keyframes menuItemIn {
     from {
       opacity: 0;
-      transform: translateX(12px);
-      filter: blur(4px);
+      transform: translate3d(10px, 0, 0);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
-      filter: blur(0);
+      transform: translate3d(0, 0, 0);
     }
   }
 
@@ -219,7 +218,9 @@
     }
   }
 
-  /* ---------- TOP NAV ---------- */
+  /* ============================================================
+     TOP BAR — blended (no border, matches page background)
+     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
@@ -231,11 +232,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    /* No border — blends seamlessly with the page */
     animation: fadeUp 0.8s ease-out both;
   }
 
-  /* ---------- WORDMARK ---------- */
   .wordmark {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
@@ -255,7 +254,6 @@
       0 0 40px rgba(197, 168, 128, 0.25);
   }
 
-  /* ---------- MENU BUTTON ---------- */
   .menu-toggle {
     background: transparent;
     border: 0;
@@ -330,7 +328,8 @@
 
   /* ---------- PAGE WRAPPER (blur behind menu) ---------- */
   .page-wrap {
-    transition: filter 0.6s ease, opacity 0.6s ease;
+    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body.menu-open .page-wrap {
@@ -338,6 +337,7 @@
     opacity: 0.9;
     pointer-events: none;
     user-select: none;
+    will-change: filter, opacity;
   }
 
   /* ---------- DROPDOWN PANEL ---------- */
@@ -355,25 +355,20 @@
       0 0 30px rgba(197, 168, 128, 0.08);
     padding: 10px 0;
     opacity: 0;
-    visibility: hidden;
-    transform: translateY(-12px) scale(0.98);
+    transform: translate3d(0, -12px, 0) scale(0.98);
     transform-origin: top right;
     transition:
-      opacity 0.35s ease,
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0.35s;
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
+    will-change: auto;
   }
 
   .menu-panel.open {
     opacity: 1;
-    visibility: visible;
-    transform: translateY(0) scale(1);
-    transition:
-      opacity 0.35s ease,
-      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-      visibility 0s linear 0s;
+    transform: translate3d(0, 0, 0) scale(1);
     pointer-events: auto;
+    will-change: transform, opacity;
   }
 
   .menu-panel ul {
@@ -397,18 +392,23 @@
     color: var(--gold);
     position: relative;
     overflow: hidden;
-    transition: color 0.35s ease, background 0.35s ease, padding-left 0.35s ease, text-shadow 0.5s ease;
+    transition:
+      color 0.35s ease,
+      background 0.35s ease,
+      padding-left 0.35s ease,
+      text-shadow 0.5s ease;
     opacity: 0;
   }
 
-  /* Staggered link entry */
-  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards; }
-  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.17s forwards; }
-  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards; }
-  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.31s forwards; }
-  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.44s forwards; }
+  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards; }
 
-  /* Gold bar that grows in on hover */
   .menu-panel a::before {
     content: '';
     position: absolute;
@@ -433,7 +433,6 @@
     transform: scaleY(0.6);
   }
 
-  /* Divider between items */
   .menu-panel li + li::before {
     content: '';
     position: absolute;
@@ -449,7 +448,6 @@
     );
   }
 
-  /* Diamond marker on hover */
   .menu-panel li::after {
     content: '◆';
     position: absolute;
@@ -468,50 +466,31 @@
     transform: translateY(-50%) scale(1);
   }
 
-  /* ============================================================
-     CURRENT PAGE STATE
-     Applied automatically by JavaScript to the link that matches
-     the page the visitor is currently on.
-     ============================================================ */
-
+  /* ---------- CURRENT PAGE STATE ---------- */
   .menu-panel a.current {
     color: var(--gold-dim);
     background: rgba(197, 168, 128, 0.04);
     padding-left: 34px;
     cursor: default;
-    pointer-events: none; /* not really clickable — you're already here */
+    pointer-events: none;
     text-shadow: none;
   }
 
-  /* Permanent gold bar to the left of the current link */
   .menu-panel a.current::before {
     transform: scaleY(0.6);
     background: var(--gold-dim);
   }
 
-  /* Override hover for the current link so it doesn't "light up" */
   .menu-panel a.current:hover {
     color: var(--gold-dim);
     background: rgba(197, 168, 128, 0.04);
     text-shadow: none;
   }
 
-  /* Permanent diamond ◆ next to the current link */
   .menu-panel li.is-current::after {
     opacity: 0.85;
     transform: translateY(-50%) scale(1);
     color: var(--gold-dim);
-  }
-
-  /* Small "You are here" hint for screen readers */
-  .menu-panel a.current .sr-current {
-    position: absolute;
-    width: 1px; height: 1px;
-    padding: 0; margin: -1px;
-    overflow: hidden;
-    clip: rect(0,0,0,0);
-    white-space: nowrap;
-    border: 0;
   }
 
   /* ---------- PAGE ---------- */
@@ -945,9 +924,7 @@
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 22px 50px; }
 
-    .topnav {
-      padding: 18px 22px;
-    }
+    .topnav { padding: 18px 22px; }
 
     .wordmark {
       font-size: 0.95em;
@@ -978,12 +955,14 @@
       right: 12px;
       min-width: 0;
       transform-origin: top right;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
     }
 
     .menu-panel a {
-      padding: 15px 24px;
-      font-size: 1.05em;
-      letter-spacing: 0.22em;
+      padding: 14px 24px;
+      font-size: 1.02em;
+      letter-spacing: 0.2em;
     }
 
     .menu-panel a.current {
@@ -1150,12 +1129,28 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
+    /* ---------- SCROLL LOCK (no layout shift) ---------- */
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.classList.add('no-scroll');
+    }
+
+    function unlockScroll() {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
     /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
       document.body.classList.add('menu-open');
-      document.body.classList.add('no-scroll');
+      lockScroll();
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
     }
@@ -1164,7 +1159,7 @@
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
-      document.body.classList.remove('no-scroll');
+      unlockScroll();
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
     }
@@ -1195,27 +1190,14 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ----------
-       Reads the current URL and matches it against each menu link.
-       Handles:
-         • trailing slashes           (/biography/ → /biography)
-         • .html extensions           (/biography.html → /biography)
-         • root / index pages         (/ and /index.html → Home)
-       Adds class="current" + aria-current="page" to the matching link.
-       Runs on page load — no per-page edits needed.
-    ------------------------------------------------------- */
+    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
-      // strip query/hash if any got in
       path = path.split('?')[0].split('#')[0];
-      // strip .html or .htm
       path = path.replace(/\.html?$/i, '');
-      // strip trailing slash (except if it's just "/")
       if (path.length > 1 && path.endsWith('/')) {
         path = path.slice(0, -1);
       }
-      // strip /index at the end
       path = path.replace(/\/index$/i, '/');
-      // ensure leading slash
       if (!path.startsWith('/')) path = '/' + path;
       return path;
     }
@@ -1228,7 +1210,6 @@
     links.forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
-      // ignore external / mailto / tel / anchors
       if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
 
       var linkPath = normalizePath(href);
@@ -1237,7 +1218,6 @@
       }
     });
 
-    // Fallback: if nothing matched and we're on root, highlight Home.
     if (!matched && (current === '/' || current === '')) {
       links.forEach(function (link) {
         var href = link.getAttribute('href');
