@@ -63,15 +63,21 @@
       "African Instrumental Music"
     ],
     "sameAs": [
+      "https://www.wikidata.org/wiki/Q141263210",
+      "https://www.imdb.com/name/nm14289703/",
+      "https://musicinafrica.net/directory/noel-grass/",
+      "https://filamu.org/person/noel-grass/",
+      "https://ke.linkedin.com/in/noelgrass",
+      "https://www.instagram.com/noelgrass/",
+      "https://facebook.com/noelgrassmusic",
+      "https://www.youtube.com/@NoelGrass",
       "https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG",
+      "https://noelgrass.bandcamp.com/",
+      "https://soundcloud.com/noel-grass",
       "https://music.apple.com/us/artist/noel-grass/1451933028",
       "https://www.deezer.com/de/artist/58180192",
       "https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403",
-      "https://noelgrass.bandcamp.com/",
-      "https://soundcloud.com/noel-grass",
-      "https://www.youtube.com/@NoelGrass",
-      "https://www.wikidata.org/wiki/Q141263210",
-      "https://www.imdb.com/name/nm14289703/"
+      "https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8"
     ]
   }
 }
@@ -337,7 +343,6 @@
     opacity: 0.9;
     pointer-events: none;
     user-select: none;
-    /* Only promote to its own layer while animating */
     will-change: filter, opacity;
   }
 
@@ -358,12 +363,10 @@
     opacity: 0;
     transform: translate3d(0, -12px, 0) scale(0.98);
     transform-origin: top right;
-    /* NOTE: no visibility in the transition — pure opacity + transform */
     transition:
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    /* Prevent inactive panel from being rendered */
     will-change: auto;
   }
 
@@ -849,11 +852,7 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ----------
-       Measures the scrollbar width once and applies it as padding-right
-       while the menu is open. Combined with html { scrollbar-gutter: stable }
-       this removes the sideways jump entirely.
-    ------------------------------------------------- */
+    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
