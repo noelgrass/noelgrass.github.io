@@ -129,7 +129,7 @@
   }
 
   /* ============================================================
-     TOP BAR — blended (no border, matches page background)
+     TOP BAR
      ============================================================ */
   .topnav {
     position: sticky;
@@ -236,7 +236,7 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER (blurs when menu opens) ---------- */
+  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -402,6 +402,33 @@
     color: var(--gold-dim);
   }
 
+  /* ---------- RENT DESCRIPTOR IN MENU ---------- */
+  .menu-panel li.has-desc a {
+    padding-top: 15px;
+    padding-bottom: 26px;
+  }
+
+  .menu-panel li.has-desc .menu-desc {
+    position: absolute;
+    left: 26px;
+    bottom: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    opacity: 0.75;
+    transition: color 0.35s ease, left 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .menu-panel li.has-desc:hover .menu-desc {
+    left: 34px;
+    color: var(--gold-pale);
+    opacity: 1;
+  }
+
   /* ---------- PAGE ---------- */
   .page {
     max-width: 900px;
@@ -441,13 +468,162 @@
     animation-delay: 0.55s;
   }
 
-  /* ---------- COMING SOON BLOCK ---------- */
+  /* ============================================================
+     NEW TO LICENSING? — plain-language explainer
+     ============================================================ */
+  .licensing-intro {
+    text-align: left;
+    margin: 60px auto 60px;
+    max-width: 720px;
+    padding: 50px 44px;
+    border: 1px solid var(--gold-soft);
+    background: rgba(197, 168, 128, 0.02);
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+    transition: border-color 0.4s ease, background 0.4s ease;
+  }
+
+  .licensing-intro:hover {
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.04);
+  }
+
+  .licensing-intro .intro-eyebrow {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.72em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 24px;
+  }
+
+  .licensing-intro .intro-headline {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-style: italic;
+    font-size: 1.5em;
+    color: var(--gold);
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+    margin-bottom: 28px;
+    display: block;
+  }
+
+  .licensing-intro p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    margin: 0 0 20px;
+  }
+
+  .licensing-intro p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .licensing-intro strong {
+    color: var(--gold-pale);
+    font-weight: 600;
+  }
+
+  .licensing-intro .divider {
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--gold-soft);
+    opacity: 0.5;
+    margin: 32px 0;
+  }
+
+  .licensing-intro .mini-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.72em;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 14px;
+  }
+
+  .licensing-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px;
+  }
+
+  .licensing-list li {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    line-height: 1.75;
+    color: var(--offwhite);
+    padding: 6px 0 6px 22px;
+    position: relative;
+  }
+
+  .licensing-list li::before {
+    content: '—';
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .licensing-steps {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 26px;
+  }
+
+  .licensing-steps li {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    line-height: 1.75;
+    color: var(--offwhite);
+    padding: 8px 0 8px 36px;
+    position: relative;
+    counter-increment: step;
+  }
+
+  .licensing-steps li::before {
+    content: counter(step) ".";
+    color: var(--gold-soft);
+    position: absolute;
+    left: 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1em;
+    font-weight: 500;
+  }
+
+  .licensing-intro .intro-cta {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    margin-top: 8px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .licensing-intro .intro-cta:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  /* ---------- COMING SOON ---------- */
   .coming-soon {
-    margin: 60px auto 40px;
+    margin: 40px auto 40px;
     max-width: 640px;
     text-align: center;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 0.7s;
+    animation-delay: 0.85s;
   }
 
   .coming-soon .ornament {
@@ -486,11 +662,7 @@
     margin-top: 30px;
   }
 
-  /* ---------- HIDDEN CATALOGUE WRAPPER ----------
-     The full rent content (anchors, license link, sections, tracks,
-     view-all links) is intact in the DOM but hidden visually.
-     Remove the `[hidden]` attribute when you're ready to launch.
-  ------------------------------------------------ */
+  /* ---------- HIDDEN CATALOGUE ---------- */
   .rent-catalogue[hidden] {
     display: none;
   }
@@ -720,7 +892,33 @@
     .hero-subhead { font-size: 1.1em; }
     .hero-line { font-size: 1em; }
 
-    .coming-soon { margin: 40px auto 30px; }
+    .licensing-intro {
+      padding: 36px 24px;
+      margin: 40px auto 40px;
+    }
+    .licensing-intro .intro-eyebrow {
+      font-size: 0.65em;
+      letter-spacing: 0.28em;
+      margin-bottom: 20px;
+    }
+    .licensing-intro .intro-headline {
+      font-size: 1.25em;
+      margin-bottom: 22px;
+    }
+    .licensing-intro p,
+    .licensing-list li,
+    .licensing-steps li {
+      font-size: 1em;
+    }
+    .licensing-intro .divider {
+      margin: 26px 0;
+    }
+    .licensing-intro .mini-heading {
+      font-size: 0.65em;
+      letter-spacing: 0.22em;
+    }
+
+    .coming-soon { margin: 30px auto 30px; }
     .coming-soon .ornament { margin-bottom: 32px; }
     .coming-soon .label { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 24px; }
     .coming-soon p { font-size: 1em; }
@@ -780,6 +978,21 @@
       padding-left: 32px;
     }
 
+    .menu-panel li.has-desc a {
+      padding-top: 15px;
+      padding-bottom: 28px;
+    }
+
+    .menu-panel li.has-desc .menu-desc {
+      left: 24px;
+      bottom: 9px;
+      font-size: 0.7em;
+    }
+
+    .menu-panel li.has-desc:hover .menu-desc {
+      left: 32px;
+    }
+
     .signature-logo { height: 55px; }
   }
 
@@ -834,7 +1047,12 @@
     <li><a href="film-composer">About</a></li>
     <li><a href="commission">Commission a Scene</a></li>
     <li><a href="film-gallery">Gallery</a></li>
-    <li><a href="rent">Rent</a></li>
+    <li class="has-desc">
+      <a href="rent">
+        Rent
+        <span class="menu-desc">existing scores &amp; jingles</span>
+      </a>
+    </li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -847,6 +1065,57 @@
     <h1>Rent</h1>
     <p class="hero-subhead">Original masters for Kenyan, East African, and pan-African productions.</p>
     <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
+
+    <!-- ============================================================
+         NEW TO LICENSING? — plain-language explainer
+         ============================================================ -->
+    <div class="licensing-intro">
+
+      <span class="intro-eyebrow">New to Licensing?</span>
+
+      <span class="intro-headline">Renting music isn't buying it. Here's what it actually means.</span>
+
+      <p>When you rent music from this catalogue, you are buying the <strong>right to use</strong> it in your production — a <strong>licence</strong>. You do not own the music. Noel still owns it. But you receive a signed, legal permission to use the track exactly as agreed: for a specific project, in a specific territory, for a specific period of time.</p>
+
+      <span class="divider"></span>
+
+      <span class="mini-heading">What You Receive</span>
+      <ul class="licensing-list">
+        <li>The high-quality audio file — the <strong>master</strong> — ready to drop into your edit.</li>
+        <li>A written licence stating exactly what you can and cannot do with it.</li>
+        <li>Confirmation of the terms: duration, territory, and permitted uses.</li>
+      </ul>
+
+      <span class="mini-heading">What You Can Use It For</span>
+      <ul class="licensing-list">
+        <li>Films, shorts, documentaries, and series.</li>
+        <li>TV, streaming, and online distribution.</li>
+        <li>Brand films, advertisements, and campaigns.</li>
+        <li>Podcasts, trailers, and promotional pieces.</li>
+      </ul>
+
+      <span class="mini-heading">What You Can't Do Without Upgrading</span>
+      <ul class="licensing-list">
+        <li>Resell the music on its own as a standalone track.</li>
+        <li>Claim the composition as your own work.</li>
+        <li>Use it in more projects than your licence covers.</li>
+      </ul>
+
+      <span class="divider"></span>
+
+      <span class="mini-heading">How It Works</span>
+      <ol class="licensing-steps">
+        <li>Browse the catalogue and preview the tracks.</li>
+        <li>Choose the track and select a licence tier for your project.</li>
+        <li>Pay — you receive the master file and the written licence.</li>
+        <li>Drop it into your production. Credit Noel Grass where reasonable.</li>
+      </ol>
+
+      <p>That's the whole process. If you're unsure which licence fits your project, tell me what you're making and I'll guide you.</p>
+
+      <a href="license" class="intro-cta">Read the full licence terms →</a>
+
+    </div>
 
     <!-- ============================================================
          VISIBLE: COMING SOON
@@ -933,7 +1202,7 @@
             <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
           </div>
           <div class="track-actions">
-            <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAKhuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
+            <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
             <a href="#">Rent</a>
           </div>
         </div>
@@ -958,7 +1227,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -974,7 +1242,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -1019,7 +1286,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
