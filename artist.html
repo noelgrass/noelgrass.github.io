@@ -60,7 +60,8 @@
       "Cinematic Instrumental Music",
       "Hybrid Scoring",
       "Ambient Composition",
-      "African Instrumental Music"
+      "African Instrumental Music",
+      "Live Performance"
     ],
     "sameAs": [
       "https://www.wikidata.org/wiki/Q141263210",
@@ -122,6 +123,14 @@
     },
     {
       "@type": "Question",
+      "name": "Does Noel Grass perform live?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass performs live in solo piano, ensemble, and orchestral settings. His performances range from intimate venues and private events to film festivals, cultural programmes, and international stages."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Who are contemporary classical composers in Kenya?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -152,7 +161,6 @@
 
   html {
     background: var(--bg);
-    /* Reserve scrollbar space so opening the menu doesn't shift the page */
     scrollbar-gutter: stable;
   }
 
@@ -170,11 +178,9 @@
     overflow-x: hidden;
   }
 
-  /* Smooth scroll-lock that does NOT shift layout */
   body.no-scroll {
     overflow: hidden;
   }
-  /* Fallback for browsers without scrollbar-gutter */
   @supports not (scrollbar-gutter: stable) {
     body.no-scroll {
       padding-right: var(--scrollbar-width, 0px);
@@ -204,7 +210,6 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  /* Smoother menu item entry — no blur, GPU-friendly */
   @keyframes menuItemIn {
     from {
       opacity: 0;
@@ -225,7 +230,7 @@
   }
 
   /* ============================================================
-     TOP BAR — blended (no border, matches page background)
+     TOP BAR
      ============================================================ */
   .topnav {
     position: sticky;
@@ -332,7 +337,7 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER (blurs when menu opens) ---------- */
+  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -406,7 +411,6 @@
     opacity: 0;
   }
 
-  /* Staggered entry — supports up to 8 items, smoother curve */
   .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
   .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
   .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
@@ -473,7 +477,6 @@
     transform: translateY(-50%) scale(1);
   }
 
-  /* ---------- CURRENT PAGE STATE ---------- */
   .menu-panel a.current {
     color: var(--gold-dim);
     background: rgba(197, 168, 128, 0.04);
@@ -635,7 +638,8 @@
     border-bottom-color: var(--gold);
   }
 
-  .to-discography {
+  .to-discography,
+  .to-performances {
     display: inline-block;
     margin: 30px 0 0;
     font-style: italic;
@@ -648,7 +652,8 @@
     animation-delay: 0.9s;
   }
 
-  .to-discography:hover {
+  .to-discography:hover,
+  .to-performances:hover {
     transform: translateX(4px);
     border-bottom-color: var(--gold);
     color: #FCFCF7;
@@ -822,6 +827,16 @@
 
     </div>
 
+    <span class="subhead">Live Performance</span>
+
+    <div class="body-section">
+
+      <p>Available for live performances of original works: contemporary classical, neoclassical, and cinematic compositions from the catalogue. Performances range from solo piano to ensemble and orchestral settings. Performed locally in Nairobi and internationally. Suited to intimate venues, private events, film festivals, and cultural programmes.</p>
+
+      <a href="performances" class="to-performances">See Performances →</a>
+
+    </div>
+
     <span class="subhead">Where He Works</span>
 
     <div class="body-section">
@@ -852,7 +867,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -868,7 +882,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -913,7 +926,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
