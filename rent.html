@@ -12,7 +12,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <script type="application/ld+json">
 {
@@ -25,7 +25,24 @@
   "provider": {
     "@type": "Person",
     "@id": "https://noelgrass.github.io/#person",
-    "name": "Noel Grass"
+    "name": "Noel Grass",
+    "sameAs": [
+      "https://www.wikidata.org/wiki/Q141263210",
+      "https://www.imdb.com/name/nm14289703/",
+      "https://musicinafrica.net/directory/noel-grass/",
+      "https://filamu.org/person/noel-grass/",
+      "https://ke.linkedin.com/in/noelgrass",
+      "https://www.instagram.com/noelgrass/",
+      "https://facebook.com/noelgrassmusic",
+      "https://www.youtube.com/@NoelGrass",
+      "https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG",
+      "https://noelgrass.bandcamp.com/",
+      "https://soundcloud.com/noel-grass",
+      "https://music.apple.com/us/artist/noel-grass/1451933028",
+      "https://www.deezer.com/de/artist/58180192",
+      "https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403",
+      "https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8"
+    ]
   },
   "areaServed": [
     { "@type": "City", "name": "Nairobi" },
@@ -43,6 +60,7 @@
     --gold: #C5A880;
     --gold-soft: #B9975C;
     --gold-pale: #E8D5B5;
+    --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -50,18 +68,32 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body {
+  html {
     background: var(--bg);
+    scrollbar-gutter: stable;
+  }
+
+  html, body {
     color: var(--offwhite);
     scroll-behavior: smooth;
   }
 
   body {
+    background: var(--bg);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 17px;
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+  @supports not (scrollbar-gutter: stable) {
+    body.no-scroll {
+      padding-right: var(--scrollbar-width, 0px);
+    }
   }
 
   a {
@@ -77,6 +109,17 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translate3d(10px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -85,67 +128,282 @@
     }
   }
 
+  /* ============================================================
+     TOP BAR — blended (no border, matches page background)
+     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
-    padding: 28px 20px;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
+    z-index: 300;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
   }
 
-  .topnav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 34px;
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
   }
 
-  .topnav a {
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-pale);
-    text-decoration: none;
-    position: relative;
     transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
 
-  .topnav a::after {
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  .menu-toggle::after {
+    content: '';
+    position: absolute;
+    left: 34px;
+    right: 4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* ---------- PAGE WRAPPER (blurs when menu opens) ---------- */
+  .page-wrap {
+    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(7px) brightness(0.55);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+    will-change: filter, opacity;
+  }
+
+  /* ---------- DROPDOWN PANEL ---------- */
+  .menu-panel {
+    position: fixed;
+    top: 78px;
+    right: 40px;
+    z-index: 400;
+    min-width: 260px;
+    background: #000000;
+    border: 1px solid var(--gold-soft);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(197, 168, 128, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08);
+    padding: 10px 0;
+    opacity: 0;
+    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    will-change: auto;
+  }
+
+  .menu-panel.open {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+    will-change: transform, opacity;
+  }
+
+  .menu-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-panel li {
+    position: relative;
+  }
+
+  .menu-panel a {
+    display: block;
+    padding: 13px 26px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition:
+      color 0.35s ease,
+      background 0.35s ease,
+      padding-left 0.35s ease,
+      text-shadow 0.5s ease;
+    opacity: 0;
+  }
+
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.44s forwards; }
+  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards; }
+
+  .menu-panel a::before {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
     background: var(--gold);
-    transition: width 0.35s ease;
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-panel a:hover {
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    padding-left: 34px;
+    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+  }
+
+  .menu-panel a:hover::before {
+    transform: scaleY(0.6);
+  }
+
+  .menu-panel li + li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.22) 50%,
+      transparent 100%
+    );
+  }
+
+  .menu-panel li::after {
+    content: '◆';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    color: var(--gold);
+    font-size: 0.55em;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
 
-  .topnav a:hover { color: #FBFAFC; }
-  .topnav a:hover::after { width: 100%; }
-
-  .topnav li { position: relative; }
-
-  .topnav li + li::before {
-    content: '';
-    position: absolute;
-    left: -18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 14px;
-    background: var(--gold-soft);
-    opacity: 0.6;
+  .menu-panel li:hover::after {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
   }
 
+  /* ---------- CURRENT PAGE STATE ---------- */
+  .menu-panel a.current {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    padding-left: 34px;
+    cursor: default;
+    pointer-events: none;
+    text-shadow: none;
+  }
+
+  .menu-panel a.current::before {
+    transform: scaleY(0.6);
+    background: var(--gold-dim);
+  }
+
+  .menu-panel a.current:hover {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    text-shadow: none;
+  }
+
+  .menu-panel li.is-current::after {
+    opacity: 0.85;
+    transform: translateY(-50%) scale(1);
+    color: var(--gold-dim);
+  }
+
+  /* ---------- PAGE ---------- */
   .page {
     max-width: 900px;
     margin: 0 auto;
@@ -406,6 +664,7 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
@@ -420,17 +679,100 @@
     .track-title { font-size: 1.25em; }
     .track-meta { padding-left: 30px; }
     .track-actions { padding-left: 30px; gap: 20px; }
-    .topnav { padding: 20px 14px; }
-    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
-    .topnav ul { gap: 10px 22px; }
-    .topnav li + li::before { left: -12px; height: 10px; }
+
+    .topnav { padding: 18px 22px; }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    .menu-panel {
+      top: 66px;
+      left: 12px;
+      right: 12px;
+      min-width: 0;
+      transform-origin: top right;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+    }
+
+    .menu-panel a {
+      padding: 14px 24px;
+      font-size: 1.02em;
+      letter-spacing: 0.2em;
+    }
+
+    .menu-panel a.current {
+      padding-left: 32px;
+    }
+
     .signature-logo { height: 55px; }
+  }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
   }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ===== STICKY TOP BAR ===== -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<!-- ===== DROPDOWN PANEL ===== -->
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
@@ -442,95 +784,214 @@
   </ul>
 </nav>
 
-<div class="page">
+<!-- ===== PAGE ===== -->
+<div class="page-wrap" id="pageWrap">
 
-  <h1>Rent</h1>
-  <p class="hero-subhead">Original masters for Kenyan, East African, and pan-African productions.</p>
-  <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
+  <div class="page">
 
-  <div class="anchors">
-    <a href="#jingles">Jingles</a>
-    <span class="diamond"></span>
-    <a href="#scores">Film Scores</a>
-  </div>
+    <h1>Rent</h1>
+    <p class="hero-subhead">Original masters for Kenyan, East African, and pan-African productions.</p>
+    <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
-  <a href="license" class="license-link">What you own when you rent →</a>
-
-  <!-- ==================== JINGLES ==================== -->
-  <div class="section" id="jingles">
-
-    <h2 class="section-heading">Jingles</h2>
-    <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
-    <p class="section-pricing">From Ksh 5,000</p>
-
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">I.</span>
-        <span class="track-title">Brand Anthem I</span>
-        <span class="track-meta">HELB · 2024 · Uplifting · 0:30</span>
-      </div>
-      <div class="track-actions">
-        <a href="#">Preview</a>
-        <a href="#">Rent</a>
-      </div>
+    <div class="anchors">
+      <a href="#jingles">Jingles</a>
+      <span class="diamond"></span>
+      <a href="#scores">Film Scores</a>
     </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">II.</span>
-        <span class="track-title">Campaign Theme II</span>
-        <span class="track-meta">GAA · 2024 · Urgent · 0:45</span>
+    <a href="license" class="license-link">What you own when you rent →</a>
+
+    <!-- ==================== JINGLES ==================== -->
+    <div class="section" id="jingles">
+
+      <h2 class="section-heading">Jingles</h2>
+      <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
+      <p class="section-pricing">From Ksh 5,000</p>
+
+      <div class="track">
+        <div class="track-info">
+          <span class="track-numeral">I.</span>
+          <span class="track-title">Brand Anthem I</span>
+          <span class="track-meta">HELB · 2024 · Uplifting · 0:30</span>
+        </div>
+        <div class="track-actions">
+          <a href="#">Preview</a>
+          <a href="#">Rent</a>
+        </div>
       </div>
-      <div class="track-actions">
-        <a href="#">Preview</a>
-        <a href="#">Rent</a>
+
+      <div class="track">
+        <div class="track-info">
+          <span class="track-numeral">II.</span>
+          <span class="track-title">Campaign Theme II</span>
+          <span class="track-meta">GAA · 2024 · Urgent · 0:45</span>
+        </div>
+        <div class="track-actions">
+          <a href="#">Preview</a>
+          <a href="#">Rent</a>
+        </div>
       </div>
+
+      <a href="rent-jingles" class="view-all">View all jingles →</a>
+
     </div>
 
-    <a href="rent-jingles" class="view-all">View all jingles →</a>
+    <!-- ==================== FILM SCORES ==================== -->
+    <div class="section" id="scores">
 
-  </div>
+      <h2 class="section-heading">Film Scores</h2>
+      <p class="section-poetic">Cinematic masters available for Kenyan, East African, and pan-African productions.</p>
+      <p class="section-pricing">From Ksh 10,000</p>
 
-  <!-- ==================== FILM SCORES ==================== -->
-  <div class="section" id="scores">
-
-    <h2 class="section-heading">Film Scores</h2>
-    <p class="section-poetic">Cinematic masters available for Kenyan, East African, and pan-African productions.</p>
-    <p class="section-pricing">From Ksh 10,000</p>
-
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">I.</span>
-        <span class="track-title">Thief</span>
-        <span class="track-meta">Short Film · 2024 · Atmospheric · 3:24</span>
+      <div class="track">
+        <div class="track-info">
+          <span class="track-numeral">I.</span>
+          <span class="track-title">Thief</span>
+          <span class="track-meta">Short Film · 2024 · Atmospheric · 3:24</span>
+        </div>
+        <div class="track-actions">
+          <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener">Preview</a>
+          <a href="#">Rent</a>
+        </div>
       </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
+
+      <div class="track">
+        <div class="track-info">
+          <span class="track-numeral">II.</span>
+          <span class="track-title">Ziwa</span>
+          <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
+        </div>
+        <div class="track-actions">
+          <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
+          <a href="#">Rent</a>
+        </div>
       </div>
+
+      <a href="rent-scores" class="view-all">View all film scores →</a>
+
     </div>
 
-    <div class="track">
-      <div class="track-info">
-        <span class="track-numeral">II.</span>
-        <span class="track-title">Ziwa</span>
-        <span class="track-meta">Short Drama · 2023 · Meditative · 4:10</span>
-      </div>
-      <div class="track-actions">
-        <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener">Preview</a>
-        <a href="#">Rent</a>
-      </div>
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
 
-    <a href="rent-scores" class="view-all">View all film scores →</a>
-
-  </div>
-
-  <div class="signature">
-    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
 </div>
+
+<script>
+  (function () {
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
+    var pageWrap = document.getElementById('pageWrap');
+
+    /* ---------- SCROLL LOCK (no layout shift) ---------- */
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.classList.add('no-scroll');
+    }
+
+    function unlockScroll() {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
+    /* ---------- OPEN / CLOSE MENU ---------- */
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      lockScroll();
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      unlockScroll();
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target)) return;
+      if (toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
+    function normalizePath(path) {
+      path = path.split('?')[0].split('#')[0];
+      path = path.replace(/\.html?$/i, '');
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      path = path.replace(/\/index$/i, '/');
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+
+    var links = panel.querySelectorAll('a');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+      if (matched.parentElement) {
+        matched.parentElement.classList.add('is-current');
+      }
+    }
+  })();
+</script>
 
 </body>
 </html>
