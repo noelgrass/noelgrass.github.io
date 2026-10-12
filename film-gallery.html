@@ -426,6 +426,33 @@
     color: var(--gold-dim);
   }
 
+  /* ---------- RENT DESCRIPTOR IN MENU ---------- */
+  .menu-panel li.has-desc a {
+    padding-top: 15px;
+    padding-bottom: 26px;
+  }
+
+  .menu-panel li.has-desc .menu-desc {
+    position: absolute;
+    left: 26px;
+    bottom: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    opacity: 0.75;
+    transition: color 0.35s ease, left 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .menu-panel li.has-desc:hover .menu-desc {
+    left: 34px;
+    color: var(--gold-pale);
+    opacity: 1;
+  }
+
   .page {
     max-width: 1100px;
     margin: 0 auto;
@@ -502,10 +529,6 @@
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.3s;
   }
-
-  /* ============================================================
-     FILM GALLERY — album tiles
-     ============================================================ */
 
   .gallery-section {
     position: relative;
@@ -608,7 +631,7 @@
   }
 
   /* ============================================================
-     CLIENTS SECTION — uniform borderless logos with pulsing glow
+     CLIENTS SECTION
      ============================================================ */
 
   .clients-block {
@@ -777,6 +800,21 @@
       padding-left: 32px;
     }
 
+    .menu-panel li.has-desc a {
+      padding-top: 15px;
+      padding-bottom: 28px;
+    }
+
+    .menu-panel li.has-desc .menu-desc {
+      left: 24px;
+      bottom: 9px;
+      font-size: 0.7em;
+    }
+
+    .menu-panel li.has-desc:hover .menu-desc {
+      left: 32px;
+    }
+
     .gallery {
       gap: 55px;
       max-width: 400px;
@@ -859,6 +897,12 @@
     <li><a href="film-composer">About</a></li>
     <li><a href="commission">Commission a Scene</a></li>
     <li><a href="film-gallery">Gallery</a></li>
+    <li class="has-desc">
+      <a href="rent">
+        Rent
+        <span class="menu-desc">existing scores &amp; jingles</span>
+      </a>
+    </li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
