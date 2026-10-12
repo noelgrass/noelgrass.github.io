@@ -743,7 +743,6 @@
     position: relative;
   }
 
-  /* Center diamond between the two doors */
   .fork-row::before {
     content: '';
     position: absolute;
@@ -787,7 +786,6 @@
     animation: doorHoverGlow 4s ease-in-out infinite;
   }
 
-  /* The label */
   .fork-label {
     display: block;
     font-family: 'Cormorant Garamond', Georgia, serif;
@@ -807,7 +805,6 @@
       0 0 50px rgba(197, 168, 128, 0.30);
   }
 
-  /* The description line */
   .fork-desc {
     display: block;
     font-family: 'Playfair Display', Georgia, serif;
@@ -824,7 +821,6 @@
     opacity: 1;
   }
 
-  /* The "enter" cue */
   .fork-enter {
     display: block;
     margin-top: 30px;
@@ -844,7 +840,6 @@
     color: var(--gold);
   }
 
-  /* Hover arrow that slides in */
   .fork-enter::after {
     content: ' →';
     display: inline-block;
@@ -859,7 +854,6 @@
     opacity: 1;
   }
 
-  /* Subtle inner gold gradient sheen on hover */
   .fork-card::before {
     content: '';
     position: absolute;
@@ -878,7 +872,6 @@
     opacity: 1;
   }
 
-  /* Thin gold rule that appears above the label on hover */
   .fork-card::after {
     content: '';
     position: absolute;
@@ -1089,14 +1082,13 @@
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 22px 50px; }
 
-    /* Stack the two doors on mobile */
     .fork { margin: 60px auto 50px; }
     .fork-row {
       grid-template-columns: 1fr;
       gap: 20px;
     }
     .fork-row::before {
-      display: none; /* hide the center diamond on stacked layout */
+      display: none;
     }
     .fork-card {
       padding: 36px 24px 32px;
@@ -1258,13 +1250,13 @@
 
         <a href="artist" class="fork-card" aria-label="Enter the Artist side — listen to the catalogue">
           <span class="fork-label">Artist</span>
-          <span class="fork-desc">Listen to the catalogue — solo piano, orchestral, hybrid, and ambient works.</span>
+          <span class="fork-desc">Listen to the catalogue · solo piano, orchestral, hybrid, and ambient works.</span>
           <span class="fork-enter">Enter</span>
         </a>
 
         <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
           <span class="fork-label">Film Composer</span>
-          <span class="fork-desc">Score your film — original soundtracks, cinematic composition, and sonic branding.</span>
+          <span class="fork-desc">Score your film · original soundtracks, cinematic composition, and sonic branding.</span>
           <span class="fork-enter">Enter</span>
         </a>
 
