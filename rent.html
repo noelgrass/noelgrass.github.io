@@ -469,13 +469,14 @@
   }
 
   /* ============================================================
-     NEW TO LICENSING? — plain-language explainer
+     NEW TO LICENSING? — summary always visible, details fold
      ============================================================ */
   .licensing-intro {
+    display: block;
     text-align: left;
     margin: 60px auto 60px;
     max-width: 720px;
-    padding: 50px 44px;
+    padding: 0;
     border: 1px solid var(--gold-soft);
     background: rgba(197, 168, 128, 0.02);
     animation: fadeUp 1s ease-out both;
@@ -488,7 +489,27 @@
     background: rgba(197, 168, 128, 0.04);
   }
 
+  /* The summary block: eyebrow + headline + first paragraph + toggle icon */
+  .licensing-intro > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 42px 44px 30px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "eyebrow toggle"
+      "headline headline"
+      "leadpara leadpara";
+    gap: 0 24px;
+    align-items: start;
+    transition: padding-bottom 0.4s ease;
+  }
+
+  .licensing-intro > summary::-webkit-details-marker { display: none; }
+  .licensing-intro > summary::marker { content: ''; }
+
   .licensing-intro .intro-eyebrow {
+    grid-area: eyebrow;
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
     font-size: 0.72em;
@@ -496,10 +517,12 @@
     text-transform: uppercase;
     color: var(--gold-pale);
     display: block;
-    margin-bottom: 24px;
+    margin-bottom: 18px;
+    align-self: center;
   }
 
   .licensing-intro .intro-headline {
+    grid-area: headline;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
     font-style: italic;
@@ -507,37 +530,88 @@
     color: var(--gold);
     letter-spacing: 0.02em;
     line-height: 1.4;
-    margin-bottom: 28px;
     display: block;
+    margin-bottom: 22px;
+    transition: color 0.3s ease;
   }
 
-  .licensing-intro p {
+  .licensing-intro:hover .intro-headline {
+    color: #FCFCF7;
+  }
+
+  .licensing-intro .intro-lead {
+    grid-area: leadpara;
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.05em;
     line-height: 1.85;
     color: var(--offwhite);
-    margin: 0 0 20px;
+    margin: 0;
+    display: block;
   }
 
-  .licensing-intro p:last-of-type {
-    margin-bottom: 0;
-  }
-
-  .licensing-intro strong {
+  .licensing-intro .intro-lead strong {
     color: var(--gold-pale);
     font-weight: 600;
   }
 
-  .licensing-intro .divider {
+  /* Toggle icon */
+  .licensing-toggle-icon {
+    grid-area: toggle;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    flex-shrink: 0;
+    position: relative;
+    margin-top: 4px;
+  }
+
+  .licensing-toggle-icon::before,
+  .licensing-toggle-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--gold-soft);
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      background 0.3s ease;
+  }
+
+  .licensing-toggle-icon::before {
+    width: 16px;
+    height: 1.5px;
+  }
+
+  .licensing-toggle-icon::after {
+    width: 1.5px;
+    height: 16px;
+    transform: rotate(0deg);
+  }
+
+  .licensing-intro[open] .licensing-toggle-icon::after {
+    transform: rotate(90deg);
+  }
+
+  .licensing-intro:hover .licensing-toggle-icon::before,
+  .licensing-intro:hover .licensing-toggle-icon::after {
+    background: var(--gold);
+  }
+
+  /* The content that folds — divider, mini-headings, lists, steps, closing, links */
+  .licensing-content {
+    padding: 0 44px 50px;
+  }
+
+  .licensing-content .divider {
     display: block;
     width: 40px;
     height: 1px;
     background: var(--gold-soft);
     opacity: 0.5;
-    margin: 32px 0;
+    margin: 0 0 32px;
   }
 
-  .licensing-intro .mini-heading {
+  .licensing-content .mini-heading {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 0.72em;
@@ -546,6 +620,23 @@
     color: var(--gold-pale);
     display: block;
     margin-bottom: 14px;
+  }
+
+  .licensing-content p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    margin: 0 0 20px;
+  }
+
+  .licensing-content p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .licensing-content strong {
+    color: var(--gold-pale);
+    font-weight: 600;
   }
 
   .licensing-list {
@@ -599,7 +690,7 @@
     font-weight: 500;
   }
 
-  .licensing-intro .intro-cta {
+  .licensing-content .intro-cta {
     display: inline-block;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -611,7 +702,7 @@
     transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   }
 
-  .licensing-intro .intro-cta:hover {
+  .licensing-content .intro-cta:hover {
     transform: translateX(4px);
     border-bottom-color: var(--gold);
     color: #FCFCF7;
@@ -926,39 +1017,45 @@
     .hero-subhead { font-size: 1.1em; }
     .hero-line { font-size: 1em; }
 
-    .licensing-intro {
-      padding: 36px 24px;
-      margin: 40px auto 40px;
+    .licensing-intro { margin: 40px auto 40px; }
+    .licensing-intro > summary {
+      padding: 32px 24px 24px;
+      gap: 0 16px;
     }
+    .licensing-content { padding: 0 24px 36px; }
     .licensing-intro .intro-eyebrow {
       font-size: 0.65em;
       letter-spacing: 0.28em;
-      margin-bottom: 20px;
+      margin-bottom: 14px;
     }
     .licensing-intro .intro-headline {
       font-size: 1.25em;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
-    .licensing-intro p,
+    .licensing-intro .intro-lead {
+      font-size: 1em;
+    }
+    .licensing-content .divider { margin: 0 0 24px; }
+    .licensing-content .mini-heading {
+      font-size: 0.65em;
+      letter-spacing: 0.22em;
+    }
     .licensing-list li,
     .licensing-steps li {
       font-size: 1em;
     }
-    .licensing-intro .divider {
-      margin: 26px 0;
+    .licensing-toggle-icon {
+      width: 18px;
+      height: 18px;
     }
-    .licensing-intro .mini-heading {
-      font-size: 0.65em;
-      letter-spacing: 0.22em;
-    }
+    .licensing-toggle-icon::before { width: 13px; }
+    .licensing-toggle-icon::after  { height: 13px; }
 
     .commission-link {
       margin-top: 28px;
       padding-top: 22px;
     }
-    .commission-link p {
-      font-size: 0.98em;
-    }
+    .commission-link p { font-size: 0.98em; }
 
     .coming-soon { margin: 30px auto 30px; }
     .coming-soon .ornament { margin-bottom: 32px; }
@@ -1109,63 +1206,70 @@
     <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
     <!-- ============================================================
-         NEW TO LICENSING? — plain-language explainer
+         NEW TO LICENSING? — summary always visible, details fold
          ============================================================ -->
-    <div class="licensing-intro">
+    <details class="licensing-intro">
 
-      <span class="intro-eyebrow">New to Licensing?</span>
+      <summary>
+        <span class="intro-eyebrow">New to Licensing?</span>
+        <span class="licensing-toggle-icon" aria-hidden="true"></span>
+        <span class="intro-headline">Renting music isn't buying it. Here's what it actually means.</span>
+        <span class="intro-lead">
+          When you rent music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>licence</strong>. You do not own the music. Noel still owns it. But you receive a signed, legal permission to use the track exactly as agreed: for a specific project, in a specific territory, for a specific period of time.
+        </span>
+      </summary>
 
-      <span class="intro-headline">Renting music isn't buying it. Here's what it actually means.</span>
+      <div class="licensing-content">
 
-      <p>When you rent music from this catalogue, you are buying the <strong>right to use</strong> it in your production — a <strong>licence</strong>. You do not own the music. Noel still owns it. But you receive a signed, legal permission to use the track exactly as agreed: for a specific project, in a specific territory, for a specific period of time.</p>
+        <span class="divider"></span>
 
-      <span class="divider"></span>
+        <span class="mini-heading">What You Receive</span>
+        <ul class="licensing-list">
+          <li>The high-quality audio file, the <strong>master</strong>, ready to drop into your edit.</li>
+          <li>A written licence stating exactly what you can and cannot do with it.</li>
+          <li>Confirmation of the terms: duration, territory, and permitted uses.</li>
+        </ul>
 
-      <span class="mini-heading">What You Receive</span>
-      <ul class="licensing-list">
-        <li>The high-quality audio file — the <strong>master</strong> — ready to drop into your edit.</li>
-        <li>A written licence stating exactly what you can and cannot do with it.</li>
-        <li>Confirmation of the terms: duration, territory, and permitted uses.</li>
-      </ul>
+        <span class="mini-heading">What You Can Use It For</span>
+        <ul class="licensing-list">
+          <li>Films, shorts, documentaries, and series.</li>
+          <li>TV, streaming, and online distribution.</li>
+          <li>Brand films, advertisements, and campaigns.</li>
+          <li>Podcasts, trailers, and promotional pieces.</li>
+        </ul>
 
-      <span class="mini-heading">What You Can Use It For</span>
-      <ul class="licensing-list">
-        <li>Films, shorts, documentaries, and series.</li>
-        <li>TV, streaming, and online distribution.</li>
-        <li>Brand films, advertisements, and campaigns.</li>
-        <li>Podcasts, trailers, and promotional pieces.</li>
-      </ul>
+        <span class="mini-heading">What You Can't Do Without Upgrading</span>
+        <ul class="licensing-list">
+          <li>Resell the music on its own as a standalone track.</li>
+          <li>Claim the composition as your own work.</li>
+          <li>Use it in more projects than your licence covers.</li>
+        </ul>
 
-      <span class="mini-heading">What You Can't Do Without Upgrading</span>
-      <ul class="licensing-list">
-        <li>Resell the music on its own as a standalone track.</li>
-        <li>Claim the composition as your own work.</li>
-        <li>Use it in more projects than your licence covers.</li>
-      </ul>
+        <span class="divider"></span>
 
-      <span class="divider"></span>
+        <span class="mini-heading">How It Works</span>
+        <ol class="licensing-steps">
+          <li>Browse the catalogue and preview the tracks.</li>
+          <li>Choose the track and select a licence tier for your project.</li>
+          <li>Pay, then you receive the master file and the written licence.</li>
+          <li>Drop it into your production. Credit Noel Grass where reasonable.</li>
+        </ol>
 
-      <span class="mini-heading">How It Works</span>
-      <ol class="licensing-steps">
-        <li>Browse the catalogue and preview the tracks.</li>
-        <li>Choose the track and select a licence tier for your project.</li>
-        <li>Pay — you receive the master file and the written licence.</li>
-        <li>Drop it into your production. Credit Noel Grass where reasonable.</li>
-      </ol>
+        <p>That's the whole process. If you're unsure which licence fits your project, tell me what you're making and I'll guide you.</p>
 
-      <p>That's the whole process. If you're unsure which licence fits your project, tell me what you're making and I'll guide you.</p>
+        <a href="license" class="intro-cta">Read the full licence terms →</a>
 
-      <a href="license" class="intro-cta">Read the full licence terms →</a>
+        <!-- ============================================================
+             REVERSE LINK TO COMMISSION
+             ============================================================ -->
+        <div class="commission-link">
+          <p>Prefer something made just for your project?</p>
+          <a href="commission">Commission a Scene →</a>
+        </div>
 
-      <!-- ============================================================
-           REVERSE LINK TO COMMISSION
-           ============================================================ -->
-      <div class="commission-link">
-        <p>Prefer something made just for your project?</p>
-        <a href="commission">Commission a Scene →</a>
       </div>
 
-    </div>
+    </details>
 
     <!-- ============================================================
          VISIBLE: COMING SOON
