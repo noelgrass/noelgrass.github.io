@@ -46,6 +46,7 @@
     --gold: #C5A880;
     --gold-soft: #B9975C;
     --gold-pale: #E8D5B5;
+    --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -53,18 +54,32 @@
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  html, body {
+  html {
     background: var(--bg);
+    scrollbar-gutter: stable;
+  }
+
+  html, body {
     color: var(--offwhite);
     scroll-behavior: smooth;
   }
 
   body {
+    background: var(--bg);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 17px;
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+  @supports not (scrollbar-gutter: stable) {
+    body.no-scroll {
+      padding-right: var(--scrollbar-width, 0px);
+    }
   }
 
   a {
@@ -78,6 +93,17 @@
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translate3d(10px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
 
   @keyframes tileRestGlow {
@@ -128,67 +154,288 @@
     }
   }
 
+  /* ============================================================
+     TOP BAR — wordmark + hamburger (shared across pages)
+     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
-    padding: 28px 20px;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
+    z-index: 300;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
   }
 
-  .topnav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 34px;
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
   }
 
-  .topnav a {
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-pale);
-    text-decoration: none;
-    position: relative;
     transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
 
-  .topnav a::after {
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  .menu-toggle::after {
+    content: '';
+    position: absolute;
+    left: 34px;
+    right: 4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .page-wrap {
+    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(7px) brightness(0.55);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+    will-change: filter, opacity;
+  }
+
+  .menu-panel {
+    position: fixed;
+    top: 78px;
+    right: 40px;
+    z-index: 400;
+    min-width: 260px;
+    background: #000000;
+    border: 1px solid var(--gold-soft);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(197, 168, 128, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08);
+    padding: 10px 0;
+    opacity: 0;
+    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    will-change: auto;
+  }
+
+  .menu-panel.open {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+    will-change: transform, opacity;
+  }
+
+  .menu-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-panel li {
+    position: relative;
+  }
+
+  .menu-panel a {
+    display: block;
+    padding: 13px 26px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition:
+      color 0.35s ease,
+      background 0.35s ease,
+      padding-left 0.35s ease,
+      text-shadow 0.5s ease;
+    opacity: 0;
+  }
+
+  /* Base animation for every menu item — future-proof */
+  .menu-panel.open li a {
+    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Staggered delays for each item */
+  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
+  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
+  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
+  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
+  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
+  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
+  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
+  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
+  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
+
+  .menu-panel a::before {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
     background: var(--gold);
-    transition: width 0.35s ease;
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-panel a:hover {
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    padding-left: 34px;
+    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+  }
+
+  .menu-panel a:hover::before {
+    transform: scaleY(0.6);
+  }
+
+  .menu-panel li + li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.22) 50%,
+      transparent 100%
+    );
+  }
+
+  .menu-panel li::after {
+    content: '◆';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    color: var(--gold);
+    font-size: 0.55em;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
 
-  .topnav a:hover { color: #FBFAFC; }
-  .topnav a:hover::after { width: 100%; }
-
-  .topnav li { position: relative; }
-
-  .topnav li + li::before {
-    content: '';
-    position: absolute;
-    left: -18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 14px;
-    background: var(--gold-soft);
-    opacity: 0.6;
+  .menu-panel li:hover::after {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
   }
 
+  .menu-panel a.current {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    padding-left: 34px;
+    cursor: default;
+    pointer-events: none;
+    text-shadow: none;
+  }
+
+  .menu-panel a.current::before {
+    transform: scaleY(0.6);
+    background: var(--gold-dim);
+  }
+
+  .menu-panel a.current:hover {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    text-shadow: none;
+  }
+
+  .menu-panel li.is-current::after {
+    opacity: 0.85;
+    transform: translateY(-50%) scale(1);
+    color: var(--gold-dim);
+  }
+
+  /* ============================================================
+     PAGE
+     ============================================================ */
   .page {
     max-width: 1200px;
     margin: 0 auto;
@@ -515,238 +762,185 @@
     }
     .store-item .caption { font-size: 1em; }
     .store-item .format-label { font-size: 0.62em; letter-spacing: 0.2em; }
-    .topnav { padding: 20px 14px; }
-    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
-    .topnav ul { gap: 10px 22px; }
-    .topnav li + li::before { left: -12px; height: 10px; }
+
+    .topnav { padding: 18px 22px; }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    .menu-panel {
+      top: 66px;
+      left: 12px;
+      right: 12px;
+      min-width: 0;
+      transform-origin: top right;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+    }
+
+    .menu-panel a {
+      padding: 14px 24px;
+      font-size: 1.02em;
+      letter-spacing: 0.2em;
+    }
+
+    .menu-panel a.current {
+      padding-left: 32px;
+    }
+
     .merch-note { margin-top: 50px; padding-top: 35px; }
     .signature { margin-top: 60px; }
     .signature-logo { height: 55px; }
+  }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
+
+    .menu-panel a {
+      padding: 12px 20px;
+      font-size: 0.95em;
+    }
   }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ===== STICKY TOP BAR ===== -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<!-- ===== DROPDOWN PANEL ===== -->
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
     <li><a href="artist">Artist</a></li>
     <li><a href="discography">Discography</a></li>
     <li><a href="performances">Performances</a></li>
+    <li><a href="tour-dates">Tour Dates</a></li>
     <li><a href="join">Join</a></li>
     <li><a href="store">Store</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
 
-<div class="page">
+<!-- ===== PAGE ===== -->
+<div class="page-wrap" id="pageWrap">
 
-  <h1>Store</h1>
+  <div class="page">
 
-  <p class="hero-subhead">Buy the albums. Support the work directly.</p>
+    <h1>Store</h1>
 
-  <p class="hero-line">Digital downloads &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Instantly delivered</p>
+    <p class="hero-subhead">Buy the albums. Support the work directly.</p>
 
-  <p class="section-label">Music</p>
+    <p class="hero-line">Digital downloads &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Instantly delivered</p>
 
-  <p class="section-note">Solo Piano · Orchestral · Hybrid · Ambient</p>
+    <p class="section-label">Music</p>
 
-  <p class="purchase-note">Purchasing opens soon.</p>
+    <p class="section-note">Solo Piano · Orchestral · Hybrid · Ambient</p>
 
-  <div class="mood-groups">
+    <p class="purchase-note">Purchasing opens soon.</p>
 
-    <!-- ==================== SOLO PIANO ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
-        <span class="mood-count">4 albums</span>
-      </summary>
+    <div class="mood-groups">
 
-      <div class="store-gallery">
+      <!-- ==================== SOLO PIANO ==================== -->
+      <details class="mood-group">
+        <summary>
+          <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
+          <span class="mood-count">4 albums</span>
+        </summary>
 
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+        <div class="store-gallery">
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Into A Stillness That Answers</div>
+            <div class="format-label">Solo Piano</div>
+            <a href="#" class="buy-link">Buy</a>
           </div>
-          <div class="caption">Into A Stillness That Answers</div>
-          <div class="format-label">Solo Piano</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
 
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Where I Begin Again</div>
+            <div class="format-label">Solo Piano</div>
+            <a href="#" class="buy-link">Buy</a>
           </div>
-          <div class="caption">Where I Begin Again</div>
-          <div class="format-label">Solo Piano</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
 
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">The Impressionist</div>
+            <div class="format-label">Solo Piano</div>
+            <a href="#" class="buy-link">Buy</a>
           </div>
-          <div class="caption">The Impressionist</div>
-          <div class="format-label">Solo Piano</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
 
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">The Impressionist II</div>
+            <div class="format-label">Solo Piano</div>
+            <a href="#" class="buy-link">Buy</a>
           </div>
-          <div class="caption">The Impressionist II</div>
-          <div class="format-label">Solo Piano</div>
-          <a href="#" class="buy-link">Buy</a>
+
         </div>
+      </details>
 
-      </div>
-    </details>
-
-    <!-- ==================== ORCHESTRAL ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-        <span class="mood-count">2 albums</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Introspect</div>
-          <div class="format-label">Orchestral</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
-
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Seven Deadly Sins</div>
-          <div class="format-label">Orchestral</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
-
-      </div>
-    </details>
-
-    <!-- ==================== HYBRID ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Hybrid</span></span>
-        <span class="mood-count">2 albums</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">Agent 254</div>
-          <div class="format-label">Hybrid</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
-
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">The Impressionist III</div>
-          <div class="format-label">Hybrid</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
-
-      </div>
-    </details>
-
-    <!-- ==================== AMBIENT ==================== -->
-    <details class="mood-group">
-      <summary>
-        <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-        <span class="mood-count">1 album</span>
-      </summary>
-
-      <div class="store-gallery">
-
-        <div class="store-item">
-          <div class="poster">
-            <img src="images/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
-          </div>
-          <div class="caption">When Stars Align</div>
-          <div class="format-label">Ambient</div>
-          <a href="#" class="buy-link">Buy</a>
-        </div>
-
-      </div>
-    </details>
-
-  </div>
-
-  <div class="merch-note">
-    <p class="merch-label">Merch</p>
-    <p class="merch-line">Coming soon.</p>
-  </div>
-
-  <div class="signature">
-    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
-  </div>
-
-</div>
-
-<script>
-  (function() {
-    var groups = document.querySelectorAll('.mood-groups > .mood-group');
-    var closingProgrammatically = false;
-
-    groups.forEach(function(group) {
-      group.addEventListener('toggle', function() {
-        var summary = group.querySelector('summary');
-
-        if (group.open) {
-          // Mark as programmatic close so other handlers skip their scroll
-          closingProgrammatically = true;
-
-          groups.forEach(function(other) {
-            if (other !== group && other.open) {
-              other.open = false;
-            }
-          });
-
-          closingProgrammatically = false;
-
-          // Now scroll the newly opened group's summary into view
-          setTimeout(function() {
-            var rect = summary.getBoundingClientRect();
-            var targetTop = 130;
-            if (rect.top < 0 || rect.top > window.innerHeight * 0.4) {
-              window.scrollTo({
-                top: window.scrollY + rect.top - targetTop,
-                behavior: 'smooth'
-              });
-            }
-          }, 20);
-        } else if (!closingProgrammatically) {
-          // User clicked to close this group — keep its summary in view
-          setTimeout(function() {
-            var rect = summary.getBoundingClientRect();
-            var targetTop = 130;
-            if (rect.top < 0 || rect.top > window.innerHeight * 0.5) {
-              window.scrollTo({
-                top: window.scrollY + rect.top - targetTop,
-                behavior: 'smooth'
-              });
-            }
-          }, 20);
-        }
-      });
-    });
-  })();
-</script>
-
-</body>
-</html>
+      <!-- ==================== ORCHESTRAL =
