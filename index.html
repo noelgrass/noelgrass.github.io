@@ -105,6 +105,10 @@
     overflow-x: hidden;
   }
 
+  body.no-scroll {
+    overflow: hidden;
+  }
+
   a {
     color: var(--gold);
     text-decoration: none;
@@ -140,7 +144,6 @@
     100% { opacity: 0.4; transform: translateY(0); }
   }
 
-  /* Name glow — stronger breathing halo */
   @keyframes nameGlow {
     0% {
       text-shadow:
@@ -165,7 +168,6 @@
     }
   }
 
-  /* Portrait glow — TIGHT pulsing GOLD halo */
   @keyframes portraitGlow {
     0% {
       box-shadow:
@@ -184,6 +186,31 @@
     }
   }
 
+  /* ---------- NEW: MENU / BLUR / DROPDOWN ANIMATIONS ---------- */
+  @keyframes panelDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-12px) scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+      filter: blur(0);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -196,59 +223,252 @@
   .topnav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
-    padding: 28px 20px;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
+    z-index: 300;
+    background: var(--bg); /* pure black, matches page exactly */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* NO border-bottom — blends seamlessly with the page */
     animation: fadeUp 0.8s ease-out both;
   }
 
-  .topnav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 34px;
+  /* ---------- WORDMARK ---------- */
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
   }
 
-  .topnav a {
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  /* ---------- MENU BUTTON ---------- */
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: #E8D5B5;
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
     position: relative;
   }
 
-  .topnav a::after {
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  /* Hamburger icon — 3 lines */
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Animate hamburger into an X when open */
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  /* Sweeping gold underline under MENU */
+  .menu-toggle::after {
+    content: '';
+    position: absolute;
+    left: 34px; /* under the "MENU" text, skipping the hamburger */
+    right: 4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* ---------- PAGE WRAPPER (for blur effect) ---------- */
+  .page-wrap {
+    transition: filter 0.6s ease, opacity 0.6s ease;
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(7px) brightness(0.55);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---------- DROPDOWN PANEL ---------- */
+  .menu-panel {
+    position: fixed;
+    top: 78px; /* sits right under the sticky bar */
+    right: 40px;
+    z-index: 400;
+    min-width: 240px;
+    background: #000000;
+    border: 1px solid var(--gold-soft);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(197, 168, 128, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08);
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.35s;
+    pointer-events: none;
+  }
+
+  .menu-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0s;
+    pointer-events: auto;
+  }
+
+  .menu-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .menu-panel li {
+    position: relative;
+  }
+
+  .menu-panel a {
+    display: block;
+    padding: 13px 26px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition: color 0.35s ease, background 0.35s ease, padding-left 0.35s ease, text-shadow 0.5s ease;
+    opacity: 0;
+  }
+
+  /* Staggered link entry */
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.17s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.31s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards; }
+
+  /* Gold gradient bar that grows in from the left on hover */
+  .menu-panel a::before {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
     background: var(--gold);
-    transition: width 0.35s ease;
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .topnav a:hover { color: #FBFAFC; }
-  .topnav a:hover::after { width: 100%; }
+  .menu-panel a:hover {
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    padding-left: 34px;
+    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+  }
 
-  .topnav li { position: relative; }
+  .menu-panel a:hover::before {
+    transform: scaleY(0.6);
+  }
 
-  .topnav li + li::before {
+  /* Delicate divider between items */
+  .menu-panel li + li::before {
     content: '';
     position: absolute;
-    left: -18px;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.22) 50%,
+      transparent 100%
+    );
+  }
+
+  /* Small gold diamond marker on hover for luxury feel */
+  .menu-panel li::after {
+    content: '◆';
+    position: absolute;
+    right: 18px;
     top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 14px;
-    background: var(--gold-soft);
-    opacity: 0.6;
+    transform: translateY(-50%) scale(0);
+    color: var(--gold);
+    font-size: 0.55em;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .menu-panel li:hover::after {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
   }
 
   /* ---------- PAGE ---------- */
@@ -260,7 +480,7 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM (role links) ---------- */
+  /* Spotlight dims (role links) */
   .page:has(.role-links a:hover) .title-block,
   .page:has(.role-links a:hover) .editorial,
   .page:has(.role-links a:hover) .icons,
@@ -277,7 +497,7 @@
     transition: opacity 0.7s ease;
   }
 
-  /* ---------- SPOTLIGHT DIM (icons) ---------- */
+  /* Spotlight dims (icons) */
   .page:has(.icons a:hover) .title-block,
   .page:has(.icons a:hover) .editorial,
   .page:has(.icons a:hover) .role-links,
@@ -362,7 +582,6 @@
     animation-delay: 0.4s;
   }
 
-  /* Portrait image with TIGHT pulsing GOLD halo */
   .portrait img {
     display: block;
     width: 100%;
@@ -684,10 +903,49 @@
   @media (max-width: 700px) {
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 22px 50px; }
-    .topnav { padding: 20px 14px; }
-    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
-    .topnav ul { gap: 10px 22px; }
-    .topnav li + li::before { left: -12px; height: 10px; }
+
+    .topnav {
+      padding: 18px 22px;
+    }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    /* Full-width dropdown on mobile */
+    .menu-panel {
+      top: 66px;
+      left: 12px;
+      right: 12px;
+      min-width: 0;
+      transform-origin: top right;
+    }
+
+    .menu-panel a {
+      padding: 15px 24px;
+      font-size: 1.05em;
+      letter-spacing: 0.22em;
+    }
+
     .role-links a {
       font-size: 1.15em;
       letter-spacing: 0.25em;
@@ -700,11 +958,52 @@
     .signature-logo { height: 55px; }
     .scroll-cue .line { height: 30px; }
   }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ===== STICKY TOP BAR (blended to page) ===== -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<!-- ===== DROPDOWN PANEL ===== -->
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
@@ -714,87 +1013,147 @@
   </ul>
 </nav>
 
-<div class="page">
+<!-- ===== PAGE (blurs when menu is open) ===== -->
+<div class="page-wrap" id="pageWrap">
 
-  <div class="title-block">
-    <p class="eyebrow">Film Composer &nbsp;|&nbsp; Pianist &nbsp;|&nbsp; Music Producer</p>
-    <h1>Noel Grass<span class="visually-hidden"> — Film Composer, Neoclassical Pianist &amp; Music Producer in Nairobi, Kenya</span></h1>
-    <div class="rule-small"></div>
-  </div>
+  <div class="page">
 
-  <div class="editorial">
-
-    <div class="portrait">
-      <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
+    <div class="title-block">
+      <p class="eyebrow">Film Composer &nbsp;|&nbsp; Pianist &nbsp;|&nbsp; Music Producer</p>
+      <h1>Noel Grass<span class="visually-hidden"> — Film Composer, Neoclassical Pianist &amp; Music Producer in Nairobi, Kenya</span></h1>
+      <div class="rule-small"></div>
     </div>
 
-    <div class="editorial-text">
-      <p class="intro">
-        Welcome to a world where music and sound become a space you can feel. This is the craft of emotion: shaping cinematic moments and designing intentional spaces.
-      </p>
-      <p class="intro-body">
-        Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
-      </p>
-      <p class="bio-link">
-        <a href="biography">Read the full biography →</a>
-      </p>
+    <div class="editorial">
+
+      <div class="portrait">
+        <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
+      </div>
+
+      <div class="editorial-text">
+        <p class="intro">
+          Welcome to a world where music and sound become a space you can feel. This is the craft of emotion: shaping cinematic moments and designing intentional spaces.
+        </p>
+        <p class="intro-body">
+          Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
+        </p>
+        <p class="bio-link">
+          <a href="biography">Read the full biography →</a>
+        </p>
+      </div>
+
     </div>
 
-  </div>
+    <div class="role-links">
+      <a href="artist">Artist</a>
+      <span class="diamond"></span>
+      <a href="film-composer">Film Composer</a>
+    </div>
 
-  <div class="role-links">
-    <a href="artist">Artist</a>
-    <span class="diamond"></span>
-    <a href="film-composer">Film Composer</a>
-  </div>
+    <div class="scroll-cue" aria-hidden="true">
+      <span class="label">Explore</span>
+      <span class="line"></span>
+    </div>
 
-  <div class="scroll-cue" aria-hidden="true">
-    <span class="label">Explore</span>
-    <span class="line"></span>
-  </div>
+    <div class="icons">
+      <a href="https://www.youtube.com/@NoelGrass" title="YouTube" target="_blank" rel="noopener" aria-label="Noel Grass on YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
+        </svg>
+      </a>
 
-  <div class="icons">
-    <a href="https://www.youtube.com/@NoelGrass" title="YouTube" target="_blank" rel="noopener" aria-label="Noel Grass on YouTube">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
-      </svg>
-    </a>
+      <a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG" title="Spotify" target="_blank" rel="noopener" aria-label="Noel Grass on Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
+        </svg>
+      </a>
 
-    <a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG" title="Spotify" target="_blank" rel="noopener" aria-label="Noel Grass on Spotify">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
-      </svg>
-    </a>
+      <a href="https://music.apple.com/us/artist/noel-grass/1451933028" title="Apple Music" target="_blank" rel="noopener" aria-label="Noel Grass on Apple Music">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
+        </svg>
+      </a>
+    </div>
 
-    <a href="https://music.apple.com/us/artist/noel-grass/1451933028" title="Apple Music" target="_blank" rel="noopener" aria-label="Noel Grass on Apple Music">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
-      </svg>
-    </a>
-  </div>
+    <div class="rule-full"></div>
 
-  <div class="rule-full"></div>
+    <ul class="footer-links">
+      <li><a href="biography">Biography</a></li>
+      <li><a href="https://www.wikidata.org/wiki/Q141263210" target="_blank" rel="noopener">Wikidata</a></li>
+      <li><a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener">Profile</a></li>
+      <li><a href="https://ke.linkedin.com/in/noelgrass" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://www.imdb.com/name/nm14289703/" target="_blank" rel="noopener">IMDb</a></li>
+      <li><a href="https://musicinafrica.net/directory/noel-grass/" target="_blank" rel="noopener">Music In Africa</a></li>
+      <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Google Business</a></li>
+      <li><a href="https://filamu.org/person/noel-grass/" target="_blank" rel="noopener">Filamu</a></li>
+      <li><a href="https://facebook.com/noelgrassmusic" target="_blank" rel="noopener">Facebook</a></li>
+      <li><a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://noelgrass.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a></li>
+      <li><a href="https://www.instagram.com/noelgrass/" target="_blank" rel="noopener">Instagram</a></li>
+    </ul>
 
-  <ul class="footer-links">
-    <li><a href="biography">Biography</a></li>
-    <li><a href="https://www.wikidata.org/wiki/Q141263210" target="_blank" rel="noopener">Wikidata</a></li>
-    <li><a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener">Profile</a></li>
-    <li><a href="https://ke.linkedin.com/in/noelgrass" target="_blank" rel="noopener">LinkedIn</a></li>
-    <li><a href="https://www.imdb.com/name/nm14289703/" target="_blank" rel="noopener">IMDb</a></li>
-    <li><a href="https://musicinafrica.net/directory/noel-grass/" target="_blank" rel="noopener">Music In Africa</a></li>
-    <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Google Business</a></li>
-    <li><a href="https://filamu.org/person/noel-grass/" target="_blank" rel="noopener">Filamu</a></li>
-    <li><a href="https://facebook.com/noelgrassmusic" target="_blank" rel="noopener">Facebook</a></li>
-    <li><a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">YouTube</a></li>
-    <li><a href="https://noelgrass.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a></li>
-    <li><a href="https://www.instagram.com/noelgrass/" target="_blank" rel="noopener">Instagram</a></li>
-  </ul>
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    </div>
 
-  <div class="signature">
-    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
   </div>
 
 </div>
+
+<script>
+  (function () {
+    var toggle  = document.getElementById('menuToggle');
+    var panel   = document.getElementById('menuPanel');
+    var pageWrap = document.getElementById('pageWrap');
+
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      document.body.classList.add('no-scroll');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      document.body.classList.remove('no-scroll');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    // Close on ESC
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    // Close when clicking outside the panel (and not on the toggle)
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target)) return;
+      if (toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    // Close when a link inside the panel is clicked
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+  })();
+</script>
 
 </body>
 </html>
