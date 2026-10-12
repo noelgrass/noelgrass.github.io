@@ -414,6 +414,7 @@
   .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.33s forwards; }
   .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
   .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.43s forwards; }
+  .menu-panel.open li:nth-child(9) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.48s forwards; }
 
   .menu-panel a::before {
     content: '';
@@ -798,8 +799,6 @@
 
     <p class="hero-roles">Neoclassical Pianist &nbsp;·&nbsp; Contemporary Classical Composer &nbsp;·&nbsp; Orchestrator &nbsp;·&nbsp; Music Arranger &nbsp;·&nbsp; Music Producer</p>
 
-   <!-- <p class="hero-location">Nairobi, Kenya &nbsp;·&nbsp; East Africa &nbsp;·&nbsp; International</p>-->
-
     <span class="subhead">About the Artist</span>
 
     <div class="body-section">
@@ -895,82 +894,4 @@
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
-      unlockScroll();
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
-    }
-
-    toggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (panel.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) {
-        closeMenu();
-      }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!panel.classList.contains('open')) return;
-      if (panel.contains(e.target)) return;
-      if (toggle.contains(e.target)) return;
-      closeMenu();
-    });
-
-    panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
-    });
-
-    function normalizePath(path) {
-      path = path.split('?')[0].split('#')[0];
-      path = path.replace(/\.html?$/i, '');
-      if (path.length > 1 && path.endsWith('/')) {
-        path = path.slice(0, -1);
-      }
-      path = path.replace(/\/index$/i, '/');
-      if (!path.startsWith('/')) path = '/' + path;
-      return path;
-    }
-
-    var current = normalizePath(window.location.pathname);
-
-    var links = panel.querySelectorAll('a');
-    var matched = null;
-
-    links.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-
-      var linkPath = normalizePath(href);
-      if (linkPath === current) {
-        matched = link;
-      }
-    });
-
-    if (!matched && (current === '/' || current === '')) {
-      links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (href === './' || href === '/' || href === 'index.html') {
-          matched = link;
-        }
-      });
-    }
-
-    if (matched) {
-      matched.classList.add('current');
-      matched.setAttribute('aria-current', 'page');
-      if (matched.parentElement) {
-        matched.parentElement.classList.add('is-current');
-      }
-    }
-  })();
-</script>
-
-</body>
-</html>
+      unlockScroll
