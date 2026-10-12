@@ -24,10 +24,10 @@
 {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
-  "@id": "https://noelgrass.github.io/#collection",
-  "url": "https://noelgrass.github.io/",
-  "name": "Live  — Noel Grass",
-  "description": "A collection of live  of original works by Noel Grass, neoclassical pianist and contemporary classical composer based in Nairobi, Kenya. Formats range from solo piano to ensemble and orchestral settings.",
+  "@id": "https://noelgrass.github.io/performances#collection",
+  "url": "https://noelgrass.github.io/performances",
+  "name": "Live Performances — Noel Grass",
+  "description": "A collection of live performances of original works by Noel Grass, neoclassical pianist and contemporary classical composer based in Nairobi, Kenya. Formats range from solo piano to ensemble and orchestral settings.",
   "mainEntity": {
     "@type": "Person",
     "@id": "https://noelgrass.github.io/#person",
@@ -328,14 +328,21 @@
     opacity: 0;
   }
 
-  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
-  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
-  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
-  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards; }
-  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
-  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
-  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.44s forwards; }
-  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards; }
+  /* Base animation for every menu item — future-proof */
+  .menu-panel.open li a {
+    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Staggered delays for each item */
+  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
+  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
+  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
+  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
+  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
+  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
+  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
+  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
+  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
 
   .menu-panel a::before {
     content: '';
@@ -675,7 +682,7 @@
       <span class="ornament" aria-hidden="true"></span>
       <span class="label">Coming Soon</span>
       <p>Live performance recordings are being prepared. This page will feature videos of performances from Nairobi and international stages: solo piano, ensemble, and orchestral settings.</p>
-      <p class="italic">In the meantime, for booking inquiries, see the Contact page.</p>
+      <p class="italic">Booking inquiries are welcome in the meantime.</p>
     </div>
 
     <div class="booking-cta">
