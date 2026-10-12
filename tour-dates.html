@@ -12,12 +12,12 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Tour Dates — Noel Grass | Live Performances">
-<meta property="og:description" content="Tour dates and live performances of original works by Noel Grass. Available for festival programmes, concert halls, cultural institutions, and private engagements.">
+<meta property="og:description" content="Tour dates and live performances of original works by Noel Grass.">
 <meta property="og:url" content="https://noelgrass.github.io/tour-dates">
 <meta property="og:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tour Dates — Noel Grass">
-<meta name="twitter:description" content="Tour dates and live performances of original works by Noel Grass. Available for festival programmes, concert halls, cultural institutions, and private engagements.">
+<meta name="twitter:description" content="Tour dates and live performances of original works by Noel Grass.">
 <meta name="twitter:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 
 <script type="application/ld+json">
@@ -132,9 +132,6 @@
     }
   }
 
-  /* ============================================================
-     TOP BAR — blended (no border, matches page background)
-     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
@@ -253,7 +250,6 @@
     will-change: filter, opacity;
   }
 
-  /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -405,7 +401,6 @@
     color: var(--gold-dim);
   }
 
-  /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -436,126 +431,75 @@
     animation-delay: 0.4s;
   }
 
-  /* ---------- SECTION HEADING ---------- */
-  .section-heading {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 600;
-    font-size: 1.5em;
-    color: var(--offwhite);
-    letter-spacing: 0.3em;
+  /* ---------- COMING SOON BLOCK ---------- */
+  .coming-soon {
+    margin: 60px auto 60px;
+    max-width: 640px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
+  }
+
+  .coming-soon .ornament {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.85;
+    margin-bottom: 40px;
+  }
+
+  .coming-soon .label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.72em;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
-    margin: 0 0 40px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--gold-soft);
+    color: var(--gold-pale);
     display: block;
-    text-align: center;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.55s;
+    margin-bottom: 30px;
   }
 
-  /* ---------- BOOKING BLOCK ---------- */
-  .booking-block {
-    text-align: center;
-    margin-bottom: 90px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.7s;
-  }
-
-  .booking-block p {
+  .coming-soon p {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.05em;
     line-height: 1.85;
     color: var(--offwhite);
-    margin: 0 0 28px;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto 20px;
+    max-width: 560px;
   }
 
-  .booking-formats {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    font-size: 1.4em;
-    color: var(--gold-pale);
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    margin: 0 0 28px;
-    line-height: 1.5;
-  }
-
-  .booking-formats .sep {
-    display: inline-block;
-    color: var(--gold);
-    margin: 0 8px;
-    font-size: 0.7em;
-    vertical-align: middle;
-    opacity: 0.85;
-  }
-
-  .booking-location {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 0.75em;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+  .coming-soon p.italic {
+    font-style: italic;
     color: var(--muted);
-    margin: 0 0 40px;
+    font-size: 0.95em;
+    margin-top: 30px;
   }
 
-  .booking-cta {
+  .coming-soon .booking-link {
     display: inline-block;
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
-    font-size: 1.15em;
+    font-size: 1.05em;
     color: var(--gold-pale);
     border-bottom: 1px solid rgba(197, 168, 128, 0.5);
-    padding-bottom: 3px;
+    padding-bottom: 2px;
+    margin-top: 20px;
     transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.85s;
   }
 
-  .booking-cta:hover {
-    transform: translateX(6px);
+  .coming-soon .booking-link:hover {
+    transform: translateX(4px);
     border-bottom-color: var(--gold);
     color: #FCFCF7;
   }
 
-  /* ---------- PERFORMANCE HISTORY ---------- */
-  .history-block {
-    text-align: center;
-    margin-bottom: 60px;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 1s;
-  }
-
-  .history-block p {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.05em;
-    line-height: 1.85;
-    color: var(--offwhite);
-    margin: 0 0 30px;
-    max-width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  .now-booking {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 1.2em;
-    color: var(--gold-pale);
-    letter-spacing: 0.04em;
-    display: block;
-    margin-top: 20px;
-  }
-
-  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 100px;
     text-align: center;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.15s;
+    animation-delay: 0.85s;
   }
 
   .signature-logo {
@@ -565,33 +509,16 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
 
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 24px; }
     .hero-subhead { font-size: 1.05em; margin-bottom: 60px; }
 
-    .section-heading {
-      font-size: 1.2em;
-      letter-spacing: 0.22em;
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-    }
-
-    .booking-block { margin-bottom: 70px; }
-    .booking-block p { font-size: 1em; }
-    .booking-formats {
-      font-size: 1.05em;
-      letter-spacing: 0.2em;
-      margin-bottom: 24px;
-    }
-    .booking-formats .sep { margin: 0 4px; }
-    .booking-location { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 32px; }
-    .booking-cta { font-size: 1.05em; }
-
-    .history-block p { font-size: 1em; }
-    .now-booking { font-size: 1.05em; }
+    .coming-soon { margin: 40px auto 40px; }
+    .coming-soon .ornament { margin-bottom: 32px; }
+    .coming-soon .label { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 24px; }
+    .coming-soon p { font-size: 1em; }
 
     .topnav { padding: 18px 22px; }
 
@@ -655,11 +582,6 @@
       left: 30px;
     }
 
-    .booking-formats {
-      font-size: 0.9em;
-      letter-spacing: 0.16em;
-    }
-
     .menu-panel a {
       padding: 12px 20px;
       font-size: 0.95em;
@@ -718,35 +640,17 @@
 
     <p class="hero-subhead">Live performances of original works across Kenya and internationally.</p>
 
-    <!-- ==================== BOOKING ==================== -->
-    <span class="section-heading">Booking</span>
+    <!-- ==================== COMING SOON ==================== -->
+    <div class="coming-soon">
 
-    <div class="booking-block">
+      <span class="ornament" aria-hidden="true"></span>
+      <span class="label">Coming Soon</span>
 
-      <p>Available for festival programmes, concert halls, cultural institutions, and private engagements.</p>
+      <p>Tour dates are being confirmed. The next performances will be announced here first.</p>
 
-      <p class="booking-formats">
-        Solo Piano
-        <span class="sep">◆</span>
-        Ensemble
-        <span class="sep">◆</span>
-        Orchestral
-      </p>
+      <p>In the meantime, for booking enquiries, please reach out directly.</p>
 
-      <p class="booking-location">Based in Nairobi, Kenya &nbsp;·&nbsp; Available internationally</p>
-
-      <a href="contact" class="booking-cta">Contact for booking →</a>
-
-    </div>
-
-    <!-- ==================== PERFORMANCE HISTORY ==================== -->
-    <span class="section-heading">Performance History</span>
-
-    <div class="history-block">
-
-      <p>Performances can be presented as solo piano, with a string ensemble, or with a full orchestra, each shaped around the venue and the occasion.</p>
-
-      <span class="now-booking">Now booking for 2026 and 2027 seasons.</span>
+      <a href="contact" class="booking-link">Contact for booking →</a>
 
     </div>
 
@@ -823,7 +727,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
