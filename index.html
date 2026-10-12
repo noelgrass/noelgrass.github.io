@@ -208,6 +208,46 @@
     }
   }
 
+  /* Door resting + hover glow */
+  @keyframes doorRestGlow {
+    0% {
+      box-shadow:
+        0 0 20px 1px rgba(185, 151, 92, 0.14),
+        0 0 40px 4px rgba(185, 151, 92, 0.05);
+    }
+    50% {
+      box-shadow:
+        0 0 28px 3px rgba(185, 151, 92, 0.26),
+        0 0 55px 8px rgba(185, 151, 92, 0.10);
+    }
+    100% {
+      box-shadow:
+        0 0 20px 1px rgba(185, 151, 92, 0.14),
+        0 0 40px 4px rgba(185, 151, 92, 0.05);
+    }
+  }
+
+  @keyframes doorHoverGlow {
+    0% {
+      box-shadow:
+        0 0 30px 4px rgba(197, 168, 128, 0.42),
+        0 0 70px 15px rgba(197, 168, 128, 0.18),
+        0 0 110px 30px rgba(197, 168, 128, 0.06);
+    }
+    50% {
+      box-shadow:
+        0 0 45px 10px rgba(197, 168, 128, 0.62),
+        0 0 100px 25px rgba(197, 168, 128, 0.28),
+        0 0 150px 50px rgba(197, 168, 128, 0.10);
+    }
+    100% {
+      box-shadow:
+        0 0 30px 4px rgba(197, 168, 128, 0.42),
+        0 0 70px 15px rgba(197, 168, 128, 0.18),
+        0 0 110px 30px rgba(197, 168, 128, 0.06);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -330,7 +370,6 @@
                 opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Cheaper blur — lower radius, no brightness filter (was doubling repaint cost) */
   body.menu-open .page-wrap {
     filter: blur(5px);
     opacity: 0.75;
@@ -339,13 +378,11 @@
     will-change: filter, opacity;
   }
 
-  /* ---------- FREEZE AMBIENT ANIMATIONS WHILE MENU IS OPEN ----------
-     Home page has three infinite animations running (nameGlow, portraitGlow,
-     scrollPulse). Pausing them while the menu opens frees the GPU to render
-     the menu smoothly. This is the biggest single improvement. */
+  /* Freeze ambient animations while the menu is open */
   body.menu-open h1,
   body.menu-open .portrait img,
-  body.menu-open .scroll-cue .line {
+  body.menu-open .scroll-cue .line,
+  body.menu-open .fork-card {
     animation-play-state: paused;
   }
 
@@ -355,7 +392,7 @@
     top: 78px;
     right: 40px;
     z-index: 400;
-    min-width: 240px;
+    min-width: 260px;
     background: #000000;
     border: 1px solid var(--gold-soft);
     box-shadow:
@@ -513,25 +550,27 @@
     position: relative;
   }
 
-  .page:has(.role-links a:hover) .title-block,
-  .page:has(.role-links a:hover) .editorial,
-  .page:has(.role-links a:hover) .icons,
-  .page:has(.role-links a:hover) .rule-full,
-  .page:has(.role-links a:hover) .footer-links,
-  .page:has(.role-links a:hover) .signature,
-  .page:has(.role-links a:hover) .scroll-cue {
-    opacity: 0.1;
+  /* Spotlight dim on fork hover — dims everything except the fork */
+  .page:has(.fork-card:hover) .title-block,
+  .page:has(.fork-card:hover) .editorial,
+  .page:has(.fork-card:hover) .icons,
+  .page:has(.fork-card:hover) .rule-full,
+  .page:has(.fork-card:hover) .footer-links,
+  .page:has(.fork-card:hover) .signature,
+  .page:has(.fork-card:hover) .scroll-cue {
+    opacity: 0.15;
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.role-links a:hover) .role-links a:not(:hover) {
-    opacity: 0.1;
+  .page:has(.fork-card:hover) .fork-card:not(:hover) {
+    opacity: 0.25;
     transition: opacity 0.7s ease;
   }
 
+  /* Spotlight dim on icons hover */
   .page:has(.icons a:hover) .title-block,
   .page:has(.icons a:hover) .editorial,
-  .page:has(.icons a:hover) .role-links,
+  .page:has(.icons a:hover) .fork,
   .page:has(.icons a:hover) .scroll-cue,
   .page:has(.icons a:hover) .rule-full,
   .page:has(.icons a:hover) .footer-links,
@@ -676,67 +715,185 @@
     border-bottom-color: var(--gold);
   }
 
-  /* ---------- ROLE LINKS ---------- */
-  .role-links {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 24px;
-    margin: 0 0 70px;
-    flex-wrap: wrap;
+  /* ============================================================
+     THE FORK — two doors for the two practices
+     ============================================================ */
+  .fork {
+    margin: 90px auto 70px;
+    max-width: 900px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.15s;
-    position: relative;
-    z-index: 2;
     transition: opacity 0.7s ease;
   }
 
-  .role-links a {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    font-size: 1.4em;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: #E8D5B5;
-    transition: color 0.4s ease, opacity 0.7s ease, text-shadow 0.7s ease;
-    position: relative;
-    padding-bottom: 4px;
+  .fork-intro {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1em;
+    color: var(--gold-pale, #E8D5B5);
+    text-align: center;
+    margin-bottom: 40px;
+    opacity: 0.85;
   }
 
-  .role-links a::after {
+  .fork-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    position: relative;
+  }
+
+  /* Center diamond between the two doors */
+  .fork-row::before {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
+    left: 50%;
+    top: 50%;
+    width: 10px;
+    height: 10px;
     background: var(--gold);
-    transition: width 0.4s ease;
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: 3;
+    transition: opacity 0.7s ease;
+    opacity: 0.85;
   }
 
-  .role-links a:hover {
+  .page:has(.fork-card:hover) .fork-row::before {
+    opacity: 0.15;
+  }
+
+  .fork-card {
+    display: block;
+    position: relative;
+    padding: 46px 34px 42px;
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    text-align: center;
+    overflow: hidden;
+    transition:
+      color 0.5s ease,
+      border-color 0.5s ease,
+      background 0.5s ease,
+      transform 0.5s ease,
+      opacity 0.7s ease;
+    animation: doorRestGlow 6s ease-in-out infinite;
+    animation-delay: 1.4s;
+  }
+
+  .fork-card:hover {
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.04);
+    transform: translateY(-3px);
+    animation: doorHoverGlow 4s ease-in-out infinite;
+  }
+
+  /* The label */
+  .fork-label {
+    display: block;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.9em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    transition: color 0.4s ease, text-shadow 0.5s ease;
+  }
+
+  .fork-card:hover .fork-label {
     color: #FCFCF7;
     text-shadow:
-      0 0 20px rgba(197, 168, 128, 0.55),
-      0 0 45px rgba(197, 168, 128, 0.25);
+      0 0 22px rgba(197, 168, 128, 0.65),
+      0 0 50px rgba(197, 168, 128, 0.30);
   }
 
-  .role-links a:hover::after {
-    width: 100%;
+  /* The description line */
+  .fork-desc {
+    display: block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    line-height: 1.7;
+    color: var(--offwhite);
+    opacity: 0.85;
+    transition: color 0.4s ease, opacity 0.4s ease;
   }
 
-  .role-links .diamond {
+  .fork-card:hover .fork-desc {
+    color: #FCFCF7;
+    opacity: 1;
+  }
+
+  /* The "enter" cue */
+  .fork-enter {
+    display: block;
+    margin-top: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale, #E8D5B5);
+    opacity: 0.55;
+    transition: opacity 0.4s ease, letter-spacing 0.5s ease, color 0.4s ease;
+  }
+
+  .fork-card:hover .fork-enter {
+    opacity: 1;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+  }
+
+  /* Hover arrow that slides in */
+  .fork-enter::after {
+    content: ' →';
     display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: var(--gold);
-    transform: rotate(45deg);
-    opacity: 0.9;
-    transition: opacity 0.7s ease;
+    margin-left: 2px;
+    transform: translateX(-4px);
+    opacity: 0;
+    transition: transform 0.4s ease, opacity 0.4s ease;
   }
 
-  .page:has(.role-links a:hover) .role-links .diamond {
-    opacity: 0.1;
+  .fork-card:hover .fork-enter::after {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  /* Subtle inner gold gradient sheen on hover */
+  .fork-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      ellipse at 50% 100%,
+      rgba(197, 168, 128, 0.12) 0%,
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+  }
+
+  .fork-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Thin gold rule that appears above the label on hover */
+  .fork-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    transform: translateX(-50%) scaleX(0);
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .fork-card:hover::after {
+    transform: translateX(-50%) scaleX(1);
   }
 
   /* ---------- SCROLL CUE ---------- */
@@ -926,14 +1083,30 @@
     .bio-link a:hover {
       transform: translateX(0);
     }
-    .role-links {
-      justify-content: center;
-    }
   }
 
   @media (max-width: 700px) {
     h1 { font-size: 3.2em; letter-spacing: 0.04em; }
     .page { padding: 60px 22px 50px; }
+
+    /* Stack the two doors on mobile */
+    .fork { margin: 60px auto 50px; }
+    .fork-row {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .fork-row::before {
+      display: none; /* hide the center diamond on stacked layout */
+    }
+    .fork-card {
+      padding: 36px 24px 32px;
+    }
+    .fork-label {
+      font-size: 1.5em;
+      letter-spacing: 0.22em;
+    }
+    .fork-desc { font-size: 0.95em; }
+    .fork-intro { font-size: 1em; margin-bottom: 30px; }
 
     .topnav { padding: 18px 22px; }
 
@@ -980,11 +1153,6 @@
       padding-left: 32px;
     }
 
-    .role-links a {
-      font-size: 1.15em;
-      letter-spacing: 0.25em;
-    }
-    .role-links { gap: 18px; margin-bottom: 50px; }
     .icons { gap: 25px; }
     .intro { font-size: 1.05em; }
     .intro-body { font-size: 1em; }
@@ -1031,7 +1199,7 @@
   </button>
 </header>
 
-<!-- ===== DROPDOWN PANEL ===== -->
+<!-- ===== DROPDOWN PANEL — FILM COMPOSER ENTITY ===== -->
 <nav
   class="menu-panel"
   id="menuPanel"
@@ -1042,7 +1210,9 @@
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
     <li><a href="film-composer">Film Composer</a></li>
-    <li><a href="artist">Artist</a></li>
+    <li><a href="commission">Commission a Scene</a></li>
+    <li><a href="film-gallery">Gallery</a></li>
+    <li><a href="rent">Rent</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -1078,10 +1248,27 @@
 
     </div>
 
-    <div class="role-links">
-      <a href="artist">Artist</a>
-      <span class="diamond"></span>
-      <a href="film-composer">Film Composer</a>
+    <!-- ============================================================
+         THE FORK — two doors
+         ============================================================ -->
+    <div class="fork">
+      <p class="fork-intro">Two practices. One name. Choose your door.</p>
+
+      <div class="fork-row">
+
+        <a href="artist" class="fork-card" aria-label="Enter the Artist side — listen to the catalogue">
+          <span class="fork-label">Artist</span>
+          <span class="fork-desc">Listen to the catalogue — solo piano, orchestral, hybrid, and ambient works.</span>
+          <span class="fork-enter">Enter</span>
+        </a>
+
+        <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
+          <span class="fork-label">Film Composer</span>
+          <span class="fork-desc">Score your film — original soundtracks, cinematic composition, and sonic branding.</span>
+          <span class="fork-enter">Enter</span>
+        </a>
+
+      </div>
     </div>
 
     <div class="scroll-cue" aria-hidden="true">
