@@ -120,7 +120,6 @@
     }
   }
 
-  /* Pulsing gold halo — medium strength, 6-second cycle */
   @keyframes licensingPulse {
     0% {
       box-shadow:
@@ -139,7 +138,6 @@
     }
   }
 
-  /* Hover pulse — stronger, still slow */
   @keyframes licensingPulseHover {
     0% {
       box-shadow:
@@ -288,7 +286,6 @@
     will-change: filter, opacity;
   }
 
-  /* Freeze the licensing pulse while the menu is open */
   body.menu-open .licensing-intro {
     animation-play-state: paused;
   }
@@ -540,7 +537,6 @@
     animation-delay: 0.7s, 0s;
   }
 
-  /* Summary block: always visible */
   .licensing-intro > summary {
     list-style: none;
     cursor: pointer;
@@ -604,7 +600,6 @@
     font-weight: 600;
   }
 
-  /* Chevron toggle */
   .licensing-toggle-icon {
     grid-area: toggle;
     display: inline-flex;
@@ -641,7 +636,6 @@
     border-color: var(--gold);
   }
 
-  /* The dropdown content — appears below the summary */
   .licensing-content {
     padding: 0 44px 50px;
   }
@@ -1252,7 +1246,7 @@
     <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
     <!-- ============================================================
-         NEW TO LICENSING? — golden-pulsing dropdown
+         NEW TO LICENSING? — golden-pulsing dropdown, click-outside closes
          ============================================================ -->
     <details class="licensing-intro">
 
@@ -1305,9 +1299,6 @@
 
         <a href="license" class="intro-cta">Read the full licence terms →</a>
 
-        <!-- ============================================================
-             REVERSE LINK TO COMMISSION
-             ============================================================ -->
         <div class="commission-link">
           <p>Prefer something made just for your project?</p>
           <a href="commission">Commission a Scene →</a>
@@ -1528,6 +1519,16 @@
       if (matched.parentElement) {
         matched.parentElement.classList.add('is-current');
       }
+    }
+
+    /* ---------- LICENSING BOX: close on click-outside ---------- */
+    var licensingBox = document.querySelector('.licensing-intro');
+    if (licensingBox) {
+      document.addEventListener('click', function (e) {
+        if (!licensingBox.open) return;
+        if (licensingBox.contains(e.target)) return;
+        licensingBox.open = false;
+      });
     }
   })();
 </script>
