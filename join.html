@@ -463,14 +463,10 @@
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-pale);
-    background: transparent;
     border: 1px solid var(--gold-soft);
     padding: 20px 50px;
     cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
     text-decoration: none;
-    line-height: 1;
     transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease, letter-spacing 0.5s ease;
     position: relative;
     overflow: hidden;
@@ -748,12 +744,11 @@
 
     <!-- ==================== JOIN CTA (Kit modal trigger) ==================== -->
     <div class="join-cta">
-      <button
-        type="button"
+      <a
         data-formkit-toggle="cdde1f4e75"
+        href="https://noel-grass.kit.com/cdde1f4e75"
         class="join-link"
-        id="joinButton"
-      >Join Now</button>
+      >Join Now</a>
     </div>
 
     <p class="join-note">No account. No cost. One email.</p>
@@ -781,49 +776,12 @@
 </div>
 
 <!-- ============================================================
-     Kit form script — powers the modal overlay
+     Kit form script — REQUIRED for the modal popup to work
+     Do not remove this. It reads data-formkit-toggle above.
      ============================================================ -->
 <script async data-uid="cdde1f4e75" src="https://noel-grass.kit.com/cdde1f4e75/index.js"></script>
 
 <script>
-  /* ============================================================
-     Kit modal fallback
-     ------------------------------------------------------------
-     If the Kit script fails to load (ad blocker, offline, CDN
-     hiccup), clicking the Join button opens the hosted Kit page
-     in a new tab instead of doing nothing.
-     ============================================================ */
-  (function () {
-    var joinBtn = document.getElementById('joinButton');
-    if (!joinBtn) return;
-
-    var kitReady = false;
-
-    // Give the async Kit script up to 2.5s to load. Kit replaces
-    // the button's click behavior via event delegation on body,
-    // so if formkit global exists we assume it's wired up.
-    var checkKit = setInterval(function () {
-      if (window.formkit || document.querySelector('.formkit-modal, .formkit-form')) {
-        kitReady = true;
-        clearInterval(checkKit);
-      }
-    }, 200);
-
-    setTimeout(function () { clearInterval(checkKit); }, 2500);
-
-    joinBtn.addEventListener('click', function (e) {
-      // If Kit never showed up, do the graceful fallback.
-      if (!kitReady && !window.formkit) {
-        e.preventDefault();
-        window.open(
-          'https://noel-grass.kit.com/cdde1f4e75',
-          '_blank',
-          'noopener,noreferrer'
-        );
-      }
-    }, true); // capture phase so we run before Kit's handler if any
-  })();
-
   /* ============================================================
      Menu logic (unchanged)
      ============================================================ */
