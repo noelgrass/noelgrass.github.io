@@ -65,7 +65,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -73,6 +73,7 @@
     --gold: #C5A880;
     --gold-soft: #B9975C;
     --gold-pale: #E8D5B5;
+    --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -94,6 +95,10 @@
     overflow-x: hidden;
   }
 
+  body.no-scroll {
+    overflow: hidden;
+  }
+
   a {
     color: var(--gold);
     text-decoration: none;
@@ -106,6 +111,19 @@
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+      filter: blur(0);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -128,67 +146,277 @@
     transform: translateY(0);
   }
 
-  /* ---------- TOP NAV ---------- */
+  /* ============================================================
+     TOP BAR (blended — no border, matches page background)
+     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
-    padding: 28px 20px;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
+    z-index: 300;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
   }
 
-  .topnav ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 34px;
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
   }
 
-  .topnav a {
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  /* ---------- MENU BUTTON ---------- */
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-pale);
-    text-decoration: none;
-    border-bottom: none;
-    position: relative;
     transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
   }
 
-  .topnav a::after {
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  .menu-toggle::after {
     content: '';
     position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
+    left: 34px;
+    right: 4px;
+    bottom: 2px;
     height: 1px;
     background: var(--gold);
-    transition: width 0.35s ease;
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* ---------- PAGE WRAPPER (blur behind menu) ---------- */
+  .page-wrap {
+    transition: filter 0.6s ease, opacity 0.6s ease;
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(7px) brightness(0.55);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ---------- DROPDOWN PANEL ---------- */
+  .menu-panel {
+    position: fixed;
+    top: 78px;
+    right: 40px;
+    z-index: 400;
+    min-width: 260px;
+    background: #000000;
+    border: 1px solid var(--gold-soft);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(197, 168, 128, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08);
+    padding: 10px 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-12px) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.35s;
     pointer-events: none;
   }
 
-  .topnav a:hover { color: #FBFAFC; }
-  .topnav a:hover::after { width: 100%; }
+  .menu-panel.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    transition:
+      opacity 0.35s ease,
+      transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0s;
+    pointer-events: auto;
+  }
 
-  .topnav li { position: relative; }
+  .menu-panel ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+  }
 
-  .topnav li + li::before {
+  .menu-panel li {
+    position: relative;
+  }
+
+  .menu-panel a {
+    display: block;
+    padding: 13px 26px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition: color 0.35s ease, background 0.35s ease, padding-left 0.35s ease, text-shadow 0.5s ease;
+    opacity: 0;
+  }
+
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.10s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.17s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.24s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.31s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) 0.45s forwards; }
+
+  .menu-panel a::before {
     content: '';
     position: absolute;
-    left: -18px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gold);
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-panel a:hover {
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    padding-left: 34px;
+    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+  }
+
+  .menu-panel a:hover::before {
+    transform: scaleY(0.6);
+  }
+
+  .menu-panel li + li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.22) 50%,
+      transparent 100%
+    );
+  }
+
+  .menu-panel li::after {
+    content: '◆';
+    position: absolute;
+    right: 18px;
     top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 14px;
-    background: var(--gold-soft);
-    opacity: 0.6;
+    transform: translateY(-50%) scale(0);
+    color: var(--gold);
+    font-size: 0.55em;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+
+  .menu-panel li:hover::after {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
+  }
+
+  /* ---------- CURRENT PAGE STATE ---------- */
+  .menu-panel a.current {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    padding-left: 34px;
+    cursor: default;
+    pointer-events: none;
+    text-shadow: none;
+  }
+
+  .menu-panel a.current::before {
+    transform: scaleY(0.6);
+    background: var(--gold-dim);
+  }
+
+  .menu-panel a.current:hover {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    text-shadow: none;
+  }
+
+  .menu-panel li.is-current::after {
+    opacity: 0.85;
+    transform: translateY(-50%) scale(1);
+    color: var(--gold-dim);
   }
 
   /* ---------- PAGE ---------- */
@@ -200,7 +428,6 @@
     position: relative;
   }
 
-  /* ---------- SPOTLIGHT DIM (sections only, not CTA row) ---------- */
   .page:has(.cta-link:hover) h1,
   .page:has(.cta-link:hover) .subhead,
   .page:has(.cta-link:hover) .intro-text,
@@ -210,19 +437,16 @@
     transition: opacity 0.6s ease;
   }
 
-  /* The other CTA link dims to 30% */
   .page:has(.cta-link:hover) .cta-link:not(:hover) {
     opacity: 0.3;
     transition: opacity 0.6s ease;
   }
 
-  /* The diamond dims to 20% */
   .page:has(.cta-link:hover) .cta-row .diamond {
     opacity: 0.2;
     transition: opacity 0.6s ease;
   }
 
-  /* CTA row itself stays visible */
   .page:has(.cta-link:hover) .cta-row {
     opacity: 1;
   }
@@ -358,19 +582,100 @@
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
     .subhead { font-size: 1.1em; margin: 40px 0 18px; }
     p { font-size: 1em; }
-    .topnav { padding: 20px 14px; }
-    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
-    .topnav ul { gap: 10px 22px; }
-    .topnav li + li::before { left: -12px; height: 10px; }
+
+    .topnav { padding: 18px 22px; }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    .menu-panel {
+      top: 66px;
+      left: 12px;
+      right: 12px;
+      min-width: 0;
+      transform-origin: top right;
+    }
+
+    .menu-panel a {
+      padding: 15px 24px;
+      font-size: 1.05em;
+      letter-spacing: 0.22em;
+    }
+
+    .menu-panel a.current {
+      padding-left: 32px;
+    }
+
     .cta-row { gap: 20px; margin: 30px 0 30px; }
     .cta-link { font-size: 1.15em; letter-spacing: 0.25em; }
     .signature-logo { height: 55px; }
+  }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
   }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ===== STICKY TOP BAR ===== -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<!-- ===== DROPDOWN PANEL ===== -->
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
@@ -381,72 +686,175 @@
   </ul>
 </nav>
 
-<div class="page">
+<!-- ===== PAGE ===== -->
+<div class="page-wrap" id="pageWrap">
 
-  <h1>About</h1>
+  <div class="page">
 
-  <span class="subhead">Cinematic Music Composition &amp; Audio Production</span>
+    <h1>About</h1>
 
-  <p class="intro-text">I am Noel Grass, an Architect of Sound. I translate cinematic stories into sound and human feeling into sonic space. With two decades at the piano and over ten years in the industry, my practice as a professional film composer, pianist, and music producer based in Nairobi, Kenya is built on a single law: emotion directs the architecture.</p>
+    <span class="subhead">Cinematic Music Composition &amp; Audio Production</span>
 
-  <p class="intro-text">This isn't about style it's about necessity. Some stories require restrained stillness; others demand expressive movement. My role is to build the precise sonic space that the visual narrative requires.</p>
+    <p class="intro-text">I am Noel Grass, an Architect of Sound. I translate cinematic stories into sound and human feeling into sonic space. With two decades at the piano and over ten years in the industry, my practice as a professional film composer, pianist, and music producer based in Nairobi, Kenya is built on a single law: emotion directs the architecture.</p>
 
-  <section class="reveal">
-    <span class="subhead">Gallery: The Scored Scene</span>
+    <p class="intro-text">This isn't about style it's about necessity. Some stories require restrained stillness; others demand expressive movement. My role is to build the precise sonic space that the visual narrative requires.</p>
 
-    <p>This work exists to serve visual narrative as an original film composer. It is an act of shared vision, translating the emotional core of independent films, feature lengths, and documentaries into intentional sound. The goal is clarity for the motion picture soundtrack to function as an unseen character within the frame.</p>
+    <section class="reveal">
+      <span class="subhead">Gallery: The Scored Scene</span>
 
-    <p><strong>Notable Filmography &amp; Soundtracks</strong> — <em>Lost in Time</em> (2019) Feature Film (Award Winner for Best Feature Film) — Atmospheric World-Building &amp; OST. <em>Kutu</em> — Short Film (Kalasha Award Winner for Best Short Film). The goal is clarity: for the motion picture soundtrack to function as an unseen character within the frame.</p>
-  </section>
+      <p>This work exists to serve visual narrative as an original film composer. It is an act of shared vision, translating the emotional core of independent films, feature lengths, and documentaries into intentional sound. The goal is clarity for the motion picture soundtrack to function as an unseen character within the frame.</p>
 
-  <section class="reveal">
-    <span class="subhead">Commercial Sonic Branding &amp; Partnerships</span>
+      <p><strong>Notable Filmography &amp; Soundtracks</strong> — <em>Lost in Time</em> (2019) Feature Film (Award Winner for Best Feature Film) — Atmospheric World-Building &amp; OST. <em>Kutu</em> — Short Film (Kalasha Award Winner for Best Short Film). The goal is clarity: for the motion picture soundtrack to function as an unseen character within the frame.</p>
+    </section>
 
-    <p>Commercial Sonic Branding &amp; Partnerships — operating with an agile, mobile workflow, I deliver custom soundtracks and audio post-production for corporate, governmental, and international development campaigns. Trusted brand scoring partnerships include — <strong>International Finance Corporation (IFC / World Bank Group)</strong>, <strong>Higher Education Loans Board (HELB)</strong>, <strong>Government Advertising Agency (GAA)</strong>, <strong>SOMINVEST</strong>.</p>
-  </section>
+    <section class="reveal">
+      <span class="subhead">Commercial Sonic Branding &amp; Partnerships</span>
 
-  <section class="reveal">
-    <span class="subhead">The Consistent Method</span>
+      <p>Commercial Sonic Branding &amp; Partnerships — operating with an agile, mobile workflow, I deliver custom soundtracks and audio post-production for corporate, governmental, and international development campaigns. Trusted brand scoring partnerships include — <strong>International Finance Corporation (IFC / World Bank Group)</strong>, <strong>Higher Education Loans Board (HELB)</strong>, <strong>Government Advertising Agency (GAA)</strong>, <strong>SOMINVEST</strong>.</p>
+    </section>
 
-    <p>Whether for screen or speaker, the method is consistent: to design with such intentionality that you don't just hear the piece — you locate yourself within its emotional geography.</p>
+    <section class="reveal">
+      <span class="subhead">The Consistent Method</span>
 
-    <p>My tools are logic and intuition. My collaborators are trust and vision. My output is architecture.</p>
+      <p>Whether for screen or speaker, the method is consistent: to design with such intentionality that you don't just hear the piece — you locate yourself within its emotional geography.</p>
 
-    <p><em>Click to view my profile and explore the gallery:</em></p>
-  </section>
+      <p>My tools are logic and intuition. My collaborators are trust and vision. My output is architecture.</p>
 
-  <!-- CTA row is now OUTSIDE the .reveal section -->
-  <div class="cta-row">
-    <a href="film-gallery" class="cta-link">Gallery</a>
-    <span class="diamond"></span>
-    <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
-  </div>
+      <p><em>Click to view my profile and explore the gallery:</em></p>
+    </section>
 
-  <div class="signature">
-    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    <div class="cta-row">
+      <a href="film-gallery" class="cta-link">Gallery</a>
+      <span class="diamond"></span>
+      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
+    </div>
+
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    </div>
+
   </div>
 
 </div>
 
 <script>
-  (function() {
+  (function () {
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
+    var pageWrap = document.getElementById('pageWrap');
+
+    /* ---------- OPEN / CLOSE MENU ---------- */
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      document.body.classList.add('no-scroll');
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      document.body.classList.remove('no-scroll');
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target)) return;
+      if (toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    /* ---------- CURRENT-PAGE HIGHLIGHT ----------
+       Matches the current URL against each menu link.
+       Handles trailing slashes, .html extensions, and root/index pages.
+    ------------------------------------------------------- */
+    function normalizePath(path) {
+      path = path.split('?')[0].split('#')[0];
+      path = path.replace(/\.html?$/i, '');
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      path = path.replace(/\/index$/i, '/');
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+
+    var links = panel.querySelectorAll('a');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    // Fallback: root path → Home
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+      if (matched.parentElement) {
+        matched.parentElement.classList.add('is-current');
+      }
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
         el.classList.add('visible');
       });
-      return;
-    }
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+    } else {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        observer.observe(el);
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
+    }
   })();
 </script>
 
