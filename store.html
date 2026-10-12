@@ -96,14 +96,8 @@
   }
 
   @keyframes menuItemIn {
-    from {
-      opacity: 0;
-      transform: translate3d(10px, 0, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translate3d(10px, 0, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
   }
 
   @keyframes tileRestGlow {
@@ -149,13 +143,12 @@
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
-      animation-delay: 0ms !important;
       transition-duration: 0.01ms !important;
     }
   }
 
   /* ============================================================
-     TOP BAR — wordmark + hamburger (shared across pages)
+     TOP BAR
      ============================================================ */
   .topnav {
     position: sticky;
@@ -275,6 +268,9 @@
     will-change: filter, opacity;
   }
 
+  /* ============================================================
+     MENU PANEL — fixed: clean open/close, no collapse
+     ============================================================ */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -293,16 +289,21 @@
     transform-origin: top right;
     transition:
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 0.4s;
     pointer-events: none;
-    will-change: auto;
+    visibility: hidden;
   }
 
   .menu-panel.open {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     pointer-events: auto;
-    will-change: transform, opacity;
+    visibility: visible;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      visibility 0s linear 0s;
   }
 
   .menu-panel ul {
@@ -315,6 +316,8 @@
     position: relative;
   }
 
+  /* Base state — links are ALWAYS visible. The open animation
+     is purely cosmetic and does not fight with the panel close. */
   .menu-panel a {
     display: block;
     padding: 13px 26px;
@@ -326,29 +329,28 @@
     color: var(--gold);
     position: relative;
     overflow: hidden;
+    opacity: 1;
     transition:
       color 0.35s ease,
       background 0.35s ease,
       padding-left 0.35s ease,
       text-shadow 0.5s ease;
-    opacity: 0;
   }
 
-  /* Base animation for every menu item — future-proof */
-  .menu-panel.open li a {
-    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  /* Animation only applies while open */
+  .menu-panel.open a {
+    animation: menuItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
-  /* Staggered delays for each item */
-  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
-  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
-  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
-  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
-  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
-  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
-  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
-  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
-  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
+  .menu-panel.open li:nth-child(1) a { animation-delay: 0.06s; }
+  .menu-panel.open li:nth-child(2) a { animation-delay: 0.10s; }
+  .menu-panel.open li:nth-child(3) a { animation-delay: 0.14s; }
+  .menu-panel.open li:nth-child(4) a { animation-delay: 0.18s; }
+  .menu-panel.open li:nth-child(5) a { animation-delay: 0.22s; }
+  .menu-panel.open li:nth-child(6) a { animation-delay: 0.26s; }
+  .menu-panel.open li:nth-child(7) a { animation-delay: 0.30s; }
+  .menu-panel.open li:nth-child(8) a { animation-delay: 0.34s; }
+  .menu-panel.open li:nth-child(9) a { animation-delay: 0.38s; }
 
   .menu-panel a::before {
     content: '';
@@ -943,4 +945,238 @@
         </div>
       </details>
 
-      <!-- ==================== ORCHESTRAL =
+      <!-- ==================== ORCHESTRAL ==================== -->
+      <details class="mood-group">
+        <summary>
+          <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
+          <span class="mood-count">3 albums</span>
+        </summary>
+
+        <div class="store-gallery">
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/orchestral-1.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Orchestral I</div>
+            <div class="format-label">Orchestral</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/orchestral-2.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Orchestral II</div>
+            <div class="format-label">Orchestral</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/orchestral-3.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Orchestral III</div>
+            <div class="format-label">Orchestral</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ==================== HYBRID ==================== -->
+      <details class="mood-group">
+        <summary>
+          <span><span class="mood-indicator"></span><span class="mood-label">Hybrid</span></span>
+          <span class="mood-count">2 albums</span>
+        </summary>
+
+        <div class="store-gallery">
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/hybrid-1.jpg" alt="Hybrid work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Hybrid I</div>
+            <div class="format-label">Hybrid</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/hybrid-2.jpg" alt="Hybrid work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Hybrid II</div>
+            <div class="format-label">Hybrid</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+        </div>
+      </details>
+
+      <!-- ==================== AMBIENT ==================== -->
+      <details class="mood-group">
+        <summary>
+          <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
+          <span class="mood-count">2 albums</span>
+        </summary>
+
+        <div class="store-gallery">
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/ambient-1.jpg" alt="Ambient work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Ambient I</div>
+            <div class="format-label">Ambient</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+          <div class="store-item">
+            <div class="poster">
+              <img src="images/ambient-2.jpg" alt="Ambient work by Noel Grass" loading="lazy">
+            </div>
+            <div class="caption">Ambient II</div>
+            <div class="format-label">Ambient</div>
+            <a href="#" class="buy-link">Buy</a>
+          </div>
+
+        </div>
+      </details>
+
+    </div>
+
+    <div class="merch-note">
+      <div class="merch-label">Merch</div>
+      <div class="merch-line">Physical editions coming soon.</div>
+    </div>
+
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    var toggle = document.getElementById('menuToggle');
+    var panel  = document.getElementById('menuPanel');
+
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.classList.add('no-scroll');
+    }
+
+    function unlockScroll() {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      lockScroll();
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      unlockScroll();
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target)) return;
+      if (toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    // Close panel when a menu link is clicked — but do NOT block navigation.
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        // Instantly hide the panel without waiting for transitions,
+        // so the page can navigate cleanly.
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('menu-open');
+        unlockScroll();
+        toggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    // Highlight the current page's menu item
+    function normalizePath(path) {
+      path = path.split('?')[0].split('#')[0];
+      path = path.replace(/\.html?$/i, '');
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      path = path.replace(/\/index$/i, '/');
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+    var links = panel.querySelectorAll('a');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+      if (matched.parentElement) {
+        matched.parentElement.classList.add('is-current');
+      }
+    }
+  })();
+</script>
+
+</body>
+</html>
