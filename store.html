@@ -255,6 +255,7 @@
     transform-origin: left center;
   }
 
+  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -268,9 +269,7 @@
     will-change: filter, opacity;
   }
 
-  /* ============================================================
-     MENU PANEL — fixed: clean open/close, no collapse
-     ============================================================ */
+  /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -289,21 +288,16 @@
     transform-origin: top right;
     transition:
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      visibility 0s linear 0.4s;
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    visibility: hidden;
+    will-change: auto;
   }
 
   .menu-panel.open {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     pointer-events: auto;
-    visibility: visible;
-    transition:
-      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      visibility 0s linear 0s;
+    will-change: transform, opacity;
   }
 
   .menu-panel ul {
@@ -316,8 +310,7 @@
     position: relative;
   }
 
-  /* Base state — links are ALWAYS visible. The open animation
-     is purely cosmetic and does not fight with the panel close. */
+  /* NOTE: no `opacity: 0` here — that was the collapse bug */
   .menu-panel a {
     display: block;
     padding: 13px 26px;
@@ -329,7 +322,6 @@
     color: var(--gold);
     position: relative;
     overflow: hidden;
-    opacity: 1;
     transition:
       color 0.35s ease,
       background 0.35s ease,
@@ -337,20 +329,19 @@
       text-shadow 0.5s ease;
   }
 
-  /* Animation only applies while open */
-  .menu-panel.open a {
-    animation: menuItemIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  .menu-panel.open li a {
+    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  .menu-panel.open li:nth-child(1) a { animation-delay: 0.06s; }
-  .menu-panel.open li:nth-child(2) a { animation-delay: 0.10s; }
-  .menu-panel.open li:nth-child(3) a { animation-delay: 0.14s; }
-  .menu-panel.open li:nth-child(4) a { animation-delay: 0.18s; }
-  .menu-panel.open li:nth-child(5) a { animation-delay: 0.22s; }
-  .menu-panel.open li:nth-child(6) a { animation-delay: 0.26s; }
-  .menu-panel.open li:nth-child(7) a { animation-delay: 0.30s; }
-  .menu-panel.open li:nth-child(8) a { animation-delay: 0.34s; }
-  .menu-panel.open li:nth-child(9) a { animation-delay: 0.38s; }
+  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
+  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
+  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
+  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
+  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
+  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
+  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
+  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
+  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
 
   .menu-panel a::before {
     content: '';
@@ -728,12 +719,8 @@
   }
 
   @media (max-width: 900px) {
-    .store-gallery {
-      gap: 60px 40px;
-    }
-    .store-item {
-      width: calc((100% - 40px) / 2);
-    }
+    .store-gallery { gap: 60px 40px; }
+    .store-item { width: calc((100% - 40px) / 2); }
   }
 
   @media (max-width: 700px) {
@@ -748,40 +735,17 @@
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
     .mood-group .store-gallery { padding: 30px 0 40px; }
-    .store-gallery {
-      gap: 60px;
-      max-width: 400px;
-    }
-    .store-item {
-      width: 100%;
-    }
-    .store-item .poster img {
-      filter: brightness(0.85) contrast(1.05);
-    }
-    .store-item:hover .poster img {
-      filter: brightness(0.85) contrast(1.05);
-      transform: none;
-    }
+    .store-gallery { gap: 60px; max-width: 400px; }
+    .store-item { width: 100%; }
+    .store-item .poster img { filter: brightness(0.85) contrast(1.05); }
+    .store-item:hover .poster img { filter: brightness(0.85) contrast(1.05); transform: none; }
     .store-item .caption { font-size: 1em; }
     .store-item .format-label { font-size: 0.62em; letter-spacing: 0.2em; }
 
     .topnav { padding: 18px 22px; }
-
-    .wordmark {
-      font-size: 0.95em;
-      letter-spacing: 0.28em;
-    }
-
-    .menu-toggle {
-      font-size: 0.7em;
-      letter-spacing: 0.22em;
-      gap: 10px;
-    }
-
-    .hamburger {
-      width: 20px;
-      height: 13px;
-    }
+    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
+    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
+    .hamburger { width: 20px; height: 13px; }
 
     .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
       transform: translateY(5.75px) rotate(45deg);
@@ -800,15 +764,8 @@
       overflow-y: auto;
     }
 
-    .menu-panel a {
-      padding: 14px 24px;
-      font-size: 1.02em;
-      letter-spacing: 0.2em;
-    }
-
-    .menu-panel a.current {
-      padding-left: 32px;
-    }
+    .menu-panel a { padding: 14px 24px; font-size: 1.02em; letter-spacing: 0.2em; }
+    .menu-panel a.current { padding-left: 32px; }
 
     .merch-note { margin-top: 50px; padding-top: 35px; }
     .signature { margin-top: 60px; }
@@ -816,22 +773,10 @@
   }
 
   @media (max-width: 380px) {
-    .wordmark {
-      font-size: 0.8em;
-      letter-spacing: 0.22em;
-    }
-    .menu-toggle {
-      font-size: 0.65em;
-      letter-spacing: 0.18em;
-    }
-    .menu-toggle::after {
-      left: 30px;
-    }
-
-    .menu-panel a {
-      padding: 12px 20px;
-      font-size: 0.95em;
-    }
+    .wordmark { font-size: 0.8em; letter-spacing: 0.22em; }
+    .menu-toggle { font-size: 0.65em; letter-spacing: 0.18em; }
+    .menu-toggle::after { left: 30px; }
+    .menu-panel a { padding: 12px 20px; font-size: 0.95em; }
   }
 </style>
 </head>
@@ -1061,8 +1006,9 @@
 
 <script>
   (function () {
-    var toggle = document.getElementById('menuToggle');
-    var panel  = document.getElementById('menuPanel');
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
+    var pageWrap = document.getElementById('pageWrap');
 
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
@@ -1119,20 +1065,11 @@
       closeMenu();
     });
 
-    // Close panel when a menu link is clicked — but do NOT block navigation.
     panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        // Instantly hide the panel without waiting for transitions,
-        // so the page can navigate cleanly.
-        panel.classList.remove('open');
-        panel.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('menu-open');
-        unlockScroll();
-        toggle.setAttribute('aria-expanded', 'false');
-      });
+      link.addEventListener('click', closeMenu);
     });
 
-    // Highlight the current page's menu item
+    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -1145,6 +1082,7 @@
     }
 
     var current = normalizePath(window.location.pathname);
+
     var links = panel.querySelectorAll('a');
     var matched = null;
 
