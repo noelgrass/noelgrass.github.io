@@ -440,6 +440,33 @@
     color: var(--gold-dim);
   }
 
+  /* ---------- RENT DESCRIPTOR IN MENU ---------- */
+  .menu-panel li.has-desc a {
+    padding-top: 15px;
+    padding-bottom: 26px;
+  }
+
+  .menu-panel li.has-desc .menu-desc {
+    position: absolute;
+    left: 26px;
+    bottom: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    opacity: 0.75;
+    transition: color 0.35s ease, left 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .menu-panel li.has-desc:hover .menu-desc {
+    left: 34px;
+    color: var(--gold-pale);
+    opacity: 1;
+  }
+
   /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
@@ -649,6 +676,21 @@
       padding-left: 32px;
     }
 
+    .menu-panel li.has-desc a {
+      padding-top: 15px;
+      padding-bottom: 28px;
+    }
+
+    .menu-panel li.has-desc .menu-desc {
+      left: 24px;
+      bottom: 9px;
+      font-size: 0.7em;
+    }
+
+    .menu-panel li.has-desc:hover .menu-desc {
+      left: 32px;
+    }
+
     .cta-row { gap: 20px; margin: 30px 0 30px; }
     .cta-link { font-size: 1.15em; letter-spacing: 0.25em; }
     .signature-logo { height: 55px; }
@@ -704,7 +746,12 @@
     <li><a href="./">Home</a></li>
     <li><a href="film-composer">About</a></li>
     <li><a href="commission">Commission a Scene</a></li>
-    <li><a href="film-gallery">Gallery</a></li>
+    <li class="has-desc">
+      <a href="rent">
+        Rent
+        <span class="menu-desc">existing scores &amp; jingles</span>
+      </a>
+    </li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -766,7 +813,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -782,7 +828,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -827,10 +872,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ----------
-       Matches the current URL against each menu link.
-       Handles trailing slashes, .html extensions, and root/index pages.
-    ------------------------------------------------------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -858,7 +899,6 @@
       }
     });
 
-    // Fallback: root path → Home
     if (!matched && (current === '/' || current === '')) {
       links.forEach(function (link) {
         var href = link.getAttribute('href');
@@ -876,7 +916,6 @@
       }
     }
 
-    /* ---------- SCROLL REVEAL ---------- */
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
         el.classList.add('visible');
