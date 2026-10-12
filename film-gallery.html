@@ -53,7 +53,6 @@
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
-    --light-plate: #F0ECE4;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -505,7 +504,7 @@
   }
 
   /* ============================================================
-     FILM GALLERY — album tiles (scaled down for cohesion)
+     FILM GALLERY — album tiles
      ============================================================ */
 
   .gallery-section {
@@ -609,7 +608,7 @@
   }
 
   /* ============================================================
-     CLIENTS SECTION — borderless logos, capped for cohesion
+     CLIENTS SECTION — uniform borderless logos with pulsing glow
      ============================================================ */
 
   .clients-block {
@@ -676,21 +675,6 @@
     animation-delay: 1.4s;
   }
 
-  /* Light plate for logos whose artwork is dark-on-transparent */
-  .client-item.has-plate {
-    background: var(--light-plate);
-    border-radius: 4px;
-    padding: 22px;
-    min-height: 130px;
-  }
-
-  .client-item.has-plate img {
-    filter: brightness(1) contrast(1);
-    animation: none;
-    transition: filter 0.8s ease, transform 0.6s ease;
-  }
-
-  /* Hover: one brightens and glows; siblings dim */
   .clients:has(.client-item:hover) .client-item img {
     animation: none;
   }
@@ -702,32 +686,10 @@
       0 0 24px 4px rgba(185, 151, 92, 0.02);
   }
 
-  .clients:has(.client-item:hover) .client-item:not(:hover).has-plate {
-    background: rgba(240, 236, 228, 0.15);
-    transition: background 0.6s ease;
-  }
-
-  .clients:has(.client-item:hover) .client-item:not(:hover).has-plate img {
-    filter: brightness(0.55) contrast(0.95);
-  }
-
   .clients:has(.client-item:hover) .client-item:hover img {
     filter: brightness(1) contrast(1.05);
     animation: tileHoverGlow 4s ease-in-out infinite;
     transform: scale(1.04);
-  }
-
-  .clients:has(.client-item:hover) .client-item:hover.has-plate {
-    background: #FCFAF6;
-    box-shadow:
-      0 0 30px 6px rgba(197, 168, 128, 0.55),
-      0 0 70px 15px rgba(197, 168, 128, 0.22);
-    transition: background 0.6s ease, box-shadow 0.6s ease;
-  }
-
-  .clients:has(.client-item:hover) .client-item:hover.has-plate img {
-    animation: none;
-    filter: brightness(1) contrast(1);
   }
 
   .signature {
@@ -749,7 +711,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .gallery {
       gap: 55px 35px;
@@ -845,10 +806,6 @@
       padding: 8px;
     }
     .client-item img { max-height: 80px; }
-    .client-item.has-plate {
-      padding: 18px;
-      min-height: 110px;
-    }
 
     .signature-logo { height: 55px; }
   }
@@ -993,7 +950,7 @@
 
       <div class="clients">
 
-        <div class="client-item has-plate">
+        <div class="client-item">
           <img src="images/corporate/world-bank.png" alt="World Bank Group logo" loading="lazy">
         </div>
 
@@ -1009,8 +966,8 @@
           <img src="images/corporate/sominvest.png" alt="SOMINVEST logo" loading="lazy">
         </div>
 
-        <div class="client-item has-plate">
-          <img src="images/corporate/radisson-blu.webp" alt="Radisson Blu logo" loading="lazy">
+        <div class="client-item">
+          <img src="images/corporate/radisson-blu.png" alt="Radisson Blu logo" loading="lazy">
         </div>
 
         <div class="client-item">
@@ -1025,7 +982,7 @@
           <img src="images/corporate/heritage-institute.jpg" alt="Heritage Institute logo" loading="lazy">
         </div>
 
-        <div class="client-item has-plate">
+        <div class="client-item">
           <img src="images/corporate/profiles.png" alt="Profiles logo" loading="lazy">
         </div>
 
