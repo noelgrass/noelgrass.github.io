@@ -133,7 +133,7 @@
   }
 
   /* ============================================================
-     TOP BAR
+     TOP BAR — blended (no border, matches page background)
      ============================================================ */
   .topnav {
     position: sticky;
@@ -466,7 +466,6 @@
     border: 1px solid var(--gold-soft);
     padding: 20px 50px;
     cursor: pointer;
-    text-decoration: none;
     transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease, letter-spacing 0.5s ease;
     position: relative;
     overflow: hidden;
@@ -495,11 +494,6 @@
 
   .join-link:hover::before {
     opacity: 1;
-  }
-
-  .join-link:focus-visible {
-    outline: 1px solid var(--gold);
-    outline-offset: 3px;
   }
 
   /* ---------- REASSURANCE LINE ---------- */
@@ -723,8 +717,8 @@
     <li><a href="discography">Discography</a></li>
     <li><a href="performances">Performances</a></li>
     <li><a href="tour-dates">Tour Dates</a></li>
-    <li><a href="join">Join</a></li>
     <li><a href="store">Store</a></li>
+    <li><a href="join">Join</a></li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -776,15 +770,11 @@
 </div>
 
 <!-- ============================================================
-     Kit form script — REQUIRED for the modal popup to work
-     Do not remove this. It reads data-formkit-toggle above.
+     Kit form script — powers the modal overlay
      ============================================================ -->
 <script async data-uid="cdde1f4e75" src="https://noel-grass.kit.com/cdde1f4e75/index.js"></script>
 
 <script>
-  /* ============================================================
-     Menu logic (unchanged)
-     ============================================================ */
   (function () {
     var toggle = document.getElementById('menuToggle');
     var panel  = document.getElementById('menuPanel');
