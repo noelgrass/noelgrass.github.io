@@ -10,7 +10,6 @@
 <meta name="description" content="Noel Grass is a leading film composer, neoclassical pianist, and music producer based in Nairobi, Kenya. He specializes in crafting emotional cinematic music, contemporary neoclassical piano compositions, and custom original soundtracks for film, television, and visual media.">
 <link rel="canonical" href="https://noelgrass.github.io/">
 
-<!-- Open Graph / social preview -->
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Noel Grass — Film Composer, Pianist &amp; Music Producer">
 <meta property="og:description" content="Film composer and neoclassical pianist based in Nairobi, Kenya.">
@@ -198,7 +197,6 @@
     }
   }
 
-  /* Smoother menu item entry — no blur, GPU-friendly */
   @keyframes menuItemIn {
     from {
       opacity: 0;
@@ -328,16 +326,27 @@
 
   /* ---------- PAGE WRAPPER (blur behind menu) ---------- */
   .page-wrap {
-    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
+  /* Cheaper blur — lower radius, no brightness filter (was doubling repaint cost) */
   body.menu-open .page-wrap {
-    filter: blur(7px) brightness(0.55);
-    opacity: 0.9;
+    filter: blur(5px);
+    opacity: 0.75;
     pointer-events: none;
     user-select: none;
     will-change: filter, opacity;
+  }
+
+  /* ---------- FREEZE AMBIENT ANIMATIONS WHILE MENU IS OPEN ----------
+     Home page has three infinite animations running (nameGlow, portraitGlow,
+     scrollPulse). Pausing them while the menu opens frees the GPU to render
+     the menu smoothly. This is the biggest single improvement. */
+  body.menu-open h1,
+  body.menu-open .portrait img,
+  body.menu-open .scroll-cue .line {
+    animation-play-state: paused;
   }
 
   /* ---------- DROPDOWN PANEL ---------- */
@@ -355,8 +364,10 @@
       0 0 30px rgba(197, 168, 128, 0.08);
     padding: 10px 0;
     opacity: 0;
-    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform: translate3d(0, -12px, 0) scale3d(0.98, 0.98, 1);
     transform-origin: top right;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     transition:
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
@@ -366,7 +377,7 @@
 
   .menu-panel.open {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
     pointer-events: auto;
     will-change: transform, opacity;
   }
@@ -1129,7 +1140,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -1145,7 +1155,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -1190,7 +1199,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
