@@ -604,7 +604,7 @@
   }
 
   /* ============================================================
-     CLIENTS SECTION
+     CLIENTS SECTION — borderless logos with pulsing glow
      ============================================================ */
 
   .clients-block {
@@ -643,78 +643,52 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 70px 50px;
+    align-items: center;
+    gap: 60px 50px;
     max-width: 1100px;
     margin: 0 auto;
   }
 
   .client-item {
-    display: block;
-    text-align: center;
-    width: calc((100% - 100px) / 3);
-  }
-
-  .client-item .poster {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: #1a1a1a;
-    overflow: visible;
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #1f1f1f;
-    transition: border-color 0.7s ease, box-shadow 0.9s ease;
+    width: calc((100% - 100px) / 3);
+    min-height: 120px;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .client-item img {
+    display: block;
+    max-width: 100%;
+    max-height: 120px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0.85) contrast(1.05);
+    transition: filter 0.8s ease, transform 0.6s ease;
     animation: tileRestGlow 7s ease-in-out infinite;
     animation-delay: 1.4s;
+    border-radius: 4px;
   }
 
-  .client-item .poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-    padding: 12%;
-    filter: brightness(0.85) contrast(1.05);
-    transition: filter 0.8s ease;
-  }
-
-  .client-item .caption {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.1em;
-    letter-spacing: 0.08em;
-    color: var(--gold-pale);
-    margin-top: 24px;
-    text-transform: uppercase;
-  }
-
-  .clients:has(.client-item:hover) .client-item .poster {
+  /* Hover: a single logo brightens and glows; all siblings dim */
+  .clients:has(.client-item:hover) .client-item img {
     animation: none;
   }
 
-  .clients:has(.client-item:hover) .client-item:not(:hover) .poster {
-    box-shadow:
-      0 0 15px 2px rgba(185, 151, 92, 0.08),
-      0 0 30px 4px rgba(185, 151, 92, 0.03);
-    border-color: #1a1a1a;
-    transition: box-shadow 0.7s ease, border-color 0.7s ease;
-  }
-
-  .clients:has(.client-item:hover) .client-item:not(:hover) .poster img {
+  .clients:has(.client-item:hover) .client-item:not(:hover) img {
     filter: brightness(0.55) contrast(0.95);
+    box-shadow:
+      0 0 12px 2px rgba(185, 151, 92, 0.06),
+      0 0 24px 4px rgba(185, 151, 92, 0.02);
   }
 
-  .clients:has(.client-item:hover) .client-item:not(:hover) .caption {
-    color: rgba(232, 213, 181, 0.3);
-  }
-
-  .clients:has(.client-item:hover) .client-item:hover .poster {
-    border-color: var(--gold-soft);
+  .clients:has(.client-item:hover) .client-item:hover img {
+    filter: brightness(1) contrast(1.05);
     animation: tileHoverGlow 4s ease-in-out infinite;
-  }
-
-  .clients:has(.client-item:hover) .client-item:hover .poster img {
-    filter: brightness(0.95) contrast(1.05);
+    transform: scale(1.04);
   }
 
   .signature {
@@ -744,10 +718,10 @@
       width: calc((100% - 40px) / 2);
     }
     .clients {
-      gap: 55px 40px;
+      gap: 50px 35px;
     }
     .client-item {
-      width: calc((100% - 40px) / 2);
+      width: calc((100% - 70px) / 2);
     }
   }
 
@@ -822,13 +796,15 @@
     .clients-subhead { font-size: 1.1em; }
     .clients-note { font-size: 0.95em; margin-bottom: 40px; }
     .clients {
-      gap: 45px;
+      gap: 45px 30px;
       max-width: 400px;
     }
     .client-item {
-      width: 100%;
+      width: calc((100% - 30px) / 2);
+      min-height: 90px;
+      padding: 10px;
     }
-    .client-item .caption { font-size: 1em; }
+    .client-item img { max-height: 90px; }
 
     .signature-logo { height: 55px; }
   }
@@ -974,73 +950,43 @@
       <div class="clients">
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/world-bank.webp" alt="World Bank Group logo" loading="lazy">
-          </div>
-          <div class="caption">World Bank Group</div>
+          <img src="images/corporate/world-bank.png" alt="World Bank Group logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/helb.png" alt="HELB logo" loading="lazy">
-          </div>
-          <div class="caption">HELB</div>
+          <img src="images/corporate/helb.png" alt="HELB logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/gaa.png" alt="GAA logo" loading="lazy">
-          </div>
-          <div class="caption">GAA</div>
+          <img src="images/corporate/gaa.png" alt="GAA logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/sominvest.jpg" alt="SOMINVEST logo" loading="lazy">
-          </div>
-          <div class="caption">SOMINVEST</div>
+          <img src="images/corporate/sominvest.png" alt="SOMINVEST logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/radisson-blu.png" alt="Radisson Blu logo" loading="lazy">
-          </div>
-          <div class="caption">Radisson Blu</div>
+          <img src="images/corporate/radisson-blu.webp" alt="Radisson Blu logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/serena-hotel.webp" alt="Serena Hotel logo" loading="lazy">
-          </div>
-          <div class="caption">Serena Hotel</div>
+          <img src="images/corporate/serena-hotel.png" alt="Serena Hotel logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/camera-africa.png" alt="Camera Africa logo" loading="lazy">
-          </div>
-          <div class="caption">Camera Africa</div>
+          <img src="images/corporate/camera-africa.jpeg" alt="Camera Africa logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/hips.jpg" alt="HIPS logo" loading="lazy">
-          </div>
-          <div class="caption">HIPS</div>
+          <img src="images/corporate/heritage-institute.jpg" alt="Heritage Institute logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/profiles.png" alt="Profiles logo" loading="lazy">
-          </div>
-          <div class="caption">Profiles</div>
+          <img src="images/corporate/profiles.png" alt="Profiles logo" loading="lazy">
         </div>
 
         <div class="client-item">
-          <div class="poster">
-            <img src="images/corporate/engage.jpeg" alt="Engage logo" loading="lazy">
-          </div>
-          <div class="caption">Engage</div>
+          <img src="images/corporate/engage.jpeg" alt="Engage logo" loading="lazy">
         </div>
 
       </div>
