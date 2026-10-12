@@ -309,14 +309,21 @@
     opacity: 0;
   }
 
-  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
-  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.13s forwards; }
-  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.18s forwards; }
-  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.23s forwards; }
-  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.28s forwards; }
-  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.33s forwards; }
-  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
-  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.43s forwards; }
+  /* Base animation for every menu item — future-proof */
+  .menu-panel.open li a {
+    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Staggered delays for each item */
+  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
+  .menu-panel.open li:nth-child(2) a { animation-delay: 0.13s; }
+  .menu-panel.open li:nth-child(3) a { animation-delay: 0.18s; }
+  .menu-panel.open li:nth-child(4) a { animation-delay: 0.23s; }
+  .menu-panel.open li:nth-child(5) a { animation-delay: 0.28s; }
+  .menu-panel.open li:nth-child(6) a { animation-delay: 0.33s; }
+  .menu-panel.open li:nth-child(7) a { animation-delay: 0.38s; }
+  .menu-panel.open li:nth-child(8) a { animation-delay: 0.43s; }
+  .menu-panel.open li:nth-child(9) a { animation-delay: 0.48s; }
 
   .menu-panel a::before {
     content: '';
@@ -639,7 +646,7 @@
 
     <h1>Tour Dates</h1>
 
-    <p class="hero-subhead">Live performance of original works, shaped for the room..</p>
+    <p class="hero-subhead">Live performance of original works, shaped for the room.</p>
 
     <!-- ==================== COMING SOON ==================== -->
     <div class="coming-soon">
@@ -649,7 +656,7 @@
 
       <p>Tour dates are being confirmed. The next performances will be announced here first.</p>
 
-      <p>In the meantime, for booking enquiries, please reach out directly.</p>
+      <p class="italic">For booking enquiries, please reach out directly.</p>
 
       <a href="contact" class="booking-link">Contact for booking →</a>
 
