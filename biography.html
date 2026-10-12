@@ -22,7 +22,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <!-- PERSON SCHEMA -->
 <script type="application/ld+json">
@@ -79,9 +79,9 @@
     "https://facebook.com/noelgrassmusic",
     "https://www.youtube.com/@NoelGrass",
     "https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG",
-    "https://music.apple.com/us/artist/noel-grass/1451933028",
     "https://noelgrass.bandcamp.com/",
     "https://soundcloud.com/noel-grass",
+    "https://music.apple.com/us/artist/noel-grass/1451933028",
     "https://www.deezer.com/de/artist/58180192",
     "https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403",
     "https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8"
@@ -168,6 +168,8 @@
     --bg: #000000;
     --gold: #C5A880;
     --gold-soft: #B9975C;
+    --gold-pale: #E8D5B5;
+    --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
@@ -175,14 +177,20 @@
 
   * { box-sizing: border-box; }
 
-  html, body {
+  html {
     background: var(--bg);
+    scrollbar-gutter: stable;
+  }
+
+  html, body {
     color: var(--offwhite);
     margin: 0;
     padding: 0;
+    scroll-behavior: smooth;
   }
 
   body {
+    background: var(--bg);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 17px;
     line-height: 1.85;
@@ -190,10 +198,48 @@
     overflow-x: hidden;
   }
 
+  body.no-scroll {
+    overflow: hidden;
+  }
+  @supports not (scrollbar-gutter: stable) {
+    body.no-scroll {
+      padding-right: var(--scrollbar-width, 0px);
+    }
+  }
+
+  a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  a:hover { color: #FCFCF7; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* ---------- ANIMATIONS ---------- */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes menuItemIn {
+    from {
+      opacity: 0;
+      transform: translate3d(10px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -216,70 +262,282 @@
     transform: translateY(0);
   }
 
-  /* ---------- TOP NAV ---------- */
+  /* ============================================================
+     TOP BAR — blended (no border, matches page background)
+     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(0, 0, 0, 0.92);
-    backdrop-filter: blur(8px);
-    padding: 28px 20px;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
+    z-index: 300;
+    background: var(--bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
   }
 
-  .topnav ul {
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  .menu-toggle::after {
+    content: '';
+    position: absolute;
+    left: 34px;
+    right: 4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  /* ---------- PAGE WRAPPER (blurs when menu opens) ---------- */
+  .page-wrap {
+    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(7px) brightness(0.55);
+    opacity: 0.9;
+    pointer-events: none;
+    user-select: none;
+    will-change: filter, opacity;
+  }
+
+  /* ---------- DROPDOWN PANEL ---------- */
+  .menu-panel {
+    position: fixed;
+    top: 78px;
+    right: 40px;
+    z-index: 400;
+    min-width: 260px;
+    background: #000000;
+    border: 1px solid var(--gold-soft);
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.75),
+      0 0 0 1px rgba(197, 168, 128, 0.06),
+      0 0 30px rgba(197, 168, 128, 0.08);
+    padding: 10px 0;
+    opacity: 0;
+    transform: translate3d(0, -12px, 0) scale(0.98);
+    transform-origin: top right;
+    transition:
+      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    will-change: auto;
+  }
+
+  .menu-panel.open {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    pointer-events: auto;
+    will-change: transform, opacity;
+  }
+
+  .menu-panel ul {
     list-style: none;
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px 34px;
+    flex-direction: column;
     margin: 0;
     padding: 0;
   }
 
-  .topnav a {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #E8D5B5;
-    text-decoration: none;
-    border-bottom: none;
+  .menu-panel li {
     position: relative;
-    transition: color 0.3s ease;
   }
 
-  .topnav a::after {
+  .menu-panel a {
+    display: block;
+    padding: 13px 26px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.05em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition:
+      color 0.35s ease,
+      background 0.35s ease,
+      padding-left 0.35s ease,
+      text-shadow 0.5s ease;
+    opacity: 0;
+    border-bottom: none;
+  }
+
+  .menu-panel.open li:nth-child(1) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.08s forwards; }
+  .menu-panel.open li:nth-child(2) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.14s forwards; }
+  .menu-panel.open li:nth-child(3) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.20s forwards; }
+  .menu-panel.open li:nth-child(4) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.26s forwards; }
+  .menu-panel.open li:nth-child(5) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.32s forwards; }
+  .menu-panel.open li:nth-child(6) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s forwards; }
+  .menu-panel.open li:nth-child(7) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.44s forwards; }
+  .menu-panel.open li:nth-child(8) a { animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.50s forwards; }
+
+  .menu-panel a::before {
     content: '';
     position: absolute;
     left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
     background: var(--gold);
-    transition: width 0.35s ease;
+    transform: scaleY(0);
+    transform-origin: center;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-panel a:hover {
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    padding-left: 34px;
+    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+  }
+
+  .menu-panel a:hover::before {
+    transform: scaleY(0.6);
+  }
+
+  .menu-panel li + li::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.22) 50%,
+      transparent 100%
+    );
+  }
+
+  .menu-panel li::after {
+    content: '◆';
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    color: var(--gold);
+    font-size: 0.55em;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     pointer-events: none;
   }
 
-  .topnav a:hover { color: #FBFAFC; }
+  .menu-panel li:hover::after {
+    opacity: 0.7;
+    transform: translateY(-50%) scale(1);
+  }
 
-  .topnav a:hover::after { width: 100%; }
+  /* ---------- CURRENT PAGE STATE ---------- */
+  .menu-panel a.current {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    padding-left: 34px;
+    cursor: default;
+    pointer-events: none;
+    text-shadow: none;
+  }
 
-  .topnav li { position: relative; list-style: none; padding: 0; border: none; }
+  .menu-panel a.current::before {
+    transform: scaleY(0.6);
+    background: var(--gold-dim);
+  }
 
-  .topnav li + li::before {
-    content: '';
-    position: absolute;
-    left: -18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 1px;
-    height: 14px;
-    background: var(--gold-soft);
-    opacity: 0.6;
+  .menu-panel a.current:hover {
+    color: var(--gold-dim);
+    background: rgba(197, 168, 128, 0.04);
+    text-shadow: none;
+  }
+
+  .menu-panel li.is-current::after {
+    opacity: 0.85;
+    transform: translateY(-50%) scale(1);
+    color: var(--gold-dim);
   }
 
   /* ---------- PAGE ---------- */
@@ -363,7 +621,6 @@
     letter-spacing: 0.02em;
   }
 
-  /* Intro paragraphs — stagger on load */
   .intro-paragraph {
     animation: fadeUp 1s ease-out both;
   }
@@ -429,13 +686,13 @@
     font-size: 1.25em;
     font-style: italic;
     letter-spacing: 0.03em;
-    border-bottom: none;
+    border-bottom: none !important;
     display: inline-block;
     transition: transform 0.3s ease, color 0.3s ease;
   }
 
   .cta:hover {
-    border-bottom: none;
+    border-bottom: none !important;
     transform: translateX(6px);
     color: #FCFCF7;
   }
@@ -462,11 +719,52 @@
     opacity: 0.95;
   }
 
+  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
-    .topnav { padding: 20px 14px; }
-    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
-    .topnav ul { gap: 10px 22px; }
-    .topnav li + li::before { left: -12px; height: 10px; }
+    .topnav { padding: 18px 22px; }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    .menu-panel {
+      top: 66px;
+      left: 12px;
+      right: 12px;
+      min-width: 0;
+      transform-origin: top right;
+      max-height: calc(100vh - 90px);
+      overflow-y: auto;
+    }
+
+    .menu-panel a {
+      padding: 14px 24px;
+      font-size: 1.02em;
+      letter-spacing: 0.2em;
+    }
+
+    .menu-panel a.current {
+      padding-left: 32px;
+    }
   }
 
   @media (max-width: 600px) {
@@ -476,11 +774,52 @@
     body { font-size: 16px; }
     .signature-logo { height: 55px; }
   }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
+  }
 </style>
 </head>
 <body>
 
-<nav class="topnav">
+<!-- ===== STICKY TOP BAR ===== -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<!-- ===== DROPDOWN PANEL ===== -->
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
@@ -490,167 +829,283 @@
   </ul>
 </nav>
 
-<div class="page">
+<!-- ===== PAGE ===== -->
+<div class="page-wrap" id="pageWrap">
 
-  <h1>Noel Grass</h1>
-  <p class="roles">Cinematic Film Composer &middot; Contemporary Classical Pianist &middot; Music Producer</p>
-  <p class="location">Nairobi, Kenya</p>
-  <p class="official">Official website: <a href="https://noelgrass.github.io">noelgrass.github.io</a></p>
+  <div class="page">
 
-  <p class="intro-paragraph">Noel Grass is a leading cinematic film composer, pianist, and music producer based in Nairobi, Kenya. Recognized as a foundational figure in narrative-driven cinema scores and contemporary instrumental music in East Africa, his professional footprint establishes him among the top motion picture composers and pianists in Kenya.</p>
+    <h1>Noel Grass</h1>
+    <p class="roles">Cinematic Film Composer &middot; Contemporary Classical Pianist &middot; Music Producer</p>
+    <p class="location">Nairobi, Kenya</p>
+    <p class="official">Official website: <a href="https://noelgrass.github.io">noelgrass.github.io</a></p>
 
-  <p class="intro-paragraph">With over a decade of industry experience, Noel Grass is defined by a unique sonic identity that merges traditional orchestral instruments with contemporary textures bridging raw, minimalist contemporary classical solo piano with large-scale cinematic orchestrations and authentic African instrumental textures.</p>
+    <p class="intro-paragraph">Noel Grass is a leading cinematic film composer, pianist, and music producer based in Nairobi, Kenya. Recognized as a foundational figure in narrative-driven cinema scores and contemporary instrumental music in East Africa, his professional footprint establishes him among the top motion picture composers and pianists in Kenya.</p>
 
-  <p class="intro-paragraph">His artistic identity is rooted in two distinct yet complementary musical worlds: the raw, introspective intimacy of contemporary classical piano and the vast, sweeping grandeur of cinematic orchestration. This duality is further enriched by his masterful use of ambient textures, creating immersive sonic environments that transport listeners beyond the screen.</p>
+    <p class="intro-paragraph">With over a decade of industry experience, Noel Grass is defined by a unique sonic identity that merges traditional orchestral instruments with contemporary textures bridging raw, minimalist contemporary classical solo piano with large-scale cinematic orchestrations and authentic African instrumental textures.</p>
 
-  <p class="intro-paragraph">His composition style seamlessly bridges expansive orchestral arrangements with contemporary African instrumental textures, resulting in a remarkably diverse sonic palette. From delicate, meditative piano passages to thunderous, emotionally charged orchestral swells, his highly adaptive musical approach fluidly translates visual stories into immersive audio soundscapes.</p>
+    <p class="intro-paragraph">His artistic identity is rooted in two distinct yet complementary musical worlds: the raw, introspective intimacy of contemporary classical piano and the vast, sweeping grandeur of cinematic orchestration. This duality is further enriched by his masterful use of ambient textures, creating immersive sonic environments that transport listeners beyond the screen.</p>
 
-  <p class="intro-paragraph">Beyond independent cinema, Noel serves as a trusted sonic branding partner for major corporate, governmental, and international development sector projects. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities.</p>
+    <p class="intro-paragraph">His composition style seamlessly bridges expansive orchestral arrangements with contemporary African instrumental textures, resulting in a remarkably diverse sonic palette. From delicate, meditative piano passages to thunderous, emotionally charged orchestral swells, his highly adaptive musical approach fluidly translates visual stories into immersive audio soundscapes.</p>
 
-  <section class="reveal">
-    <h2>Core Specializations &amp; Industry Expertise</h2>
+    <p class="intro-paragraph">Beyond independent cinema, Noel serves as a trusted sonic branding partner for major corporate, governmental, and international development sector projects. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities.</p>
 
-    <h3>Film Composer in Kenya — Cinematic Scores</h3>
-    <p>A highly recognized figure in the African film music industry, Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score. His acclaimed portfolio includes composing the soundtracks for major award-winning projects, such as the psychological thriller feature film <em>Lost in Time</em> (2019), which won five Kalasha Awards including Best Feature Film, and the drama <em>Kutu</em> (2021), which won Best Short Film. His prominent filmography also includes the intense feature thriller <em>On Air</em> (2024), the short film <em>Thief</em> (2024), the independent score <em>Nyūmba Ya Mbūri</em>, and the stage play adaptation <em>The Parliament of Owls</em> (2024). He also composed the original soundtrack for the acclaimed short drama <em>Ziwa</em> (2023), which won the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</p>
+    <section class="reveal">
+      <h2>Core Specializations &amp; Industry Expertise</h2>
 
-    <h3>Contemporary Classical &amp; Neoclassical Pianist in Africa — Discography</h3>
-    <p>Celebrated as a leading independent recording artist who helped shape the modern African contemporary classical and neoclassical genre, his music blends raw, introspective intimacy with vast, sweeping grandeur. His acclaimed studio albums include <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
+      <h3>Film Composer in Kenya — Cinematic Scores</h3>
+      <p>A highly recognized figure in the African film music industry, Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score. His acclaimed portfolio includes composing the soundtracks for major award-winning projects, such as the psychological thriller feature film <em>Lost in Time</em> (2019), which won five Kalasha Awards including Best Feature Film, and the drama <em>Kutu</em> (2021), which won Best Short Film. His prominent filmography also includes the intense feature thriller <em>On Air</em> (2024), the short film <em>Thief</em> (2024), the independent score <em>Nyūmba Ya Mbūri</em>, and the stage play adaptation <em>The Parliament of Owls</em> (2024). He also composed the original soundtrack for the acclaimed short drama <em>Ziwa</em> (2023), which won the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</p>
 
-    <h3>Sonic Branding &amp; Audio Post-Production</h3>
-    <p>A trusted audio partner for global and national institutions, Noel Grass composes custom media soundtracks and corporate audio identities. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities across the corporate, governmental, and international development sectors.</p>
-  </section>
+      <h3>Contemporary Classical &amp; Neoclassical Pianist in Africa — Discography</h3>
+      <p>Celebrated as a leading independent recording artist who helped shape the modern African contemporary classical and neoclassical genre, his music blends raw, introspective intimacy with vast, sweeping grandeur. His acclaimed studio albums include <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-  <section class="reveal">
-    <h2>Core Filmography &amp; Masterworks</h2>
-    <ul>
-      <li><em>Lost in Time</em> (2019) — Feature Film. Kalasha Award Winner, Best Feature Film. Atmospheric world-building and original soundtrack.</li>
-      <li><em>Kutu</em> (2021) — Short Film. Kalasha Award Winner for Best Short Film. Haunting, visceral orchestral arrangements.</li>
-      <li><em>Ziwa</em> (2023) — Award-Winning Drama. Original Motion Picture Soundtrack. Winner of the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</li>
-      <li><em>On Air</em> (2024) — Intense Feature Film Thriller. Original Score.</li>
-      <li><em>Thief</em> (2024) — Short Film. Official Soundtrack.</li>
-      <li><em>Nyūmba Ya Mbūri</em> — Cultural Cinema Soundtrack. Original Score.</li>
-      <li><em>The Parliament of Owls</em> (2024) — Stage Production. Thematic Theatrical Score.</li>
-    </ul>
-  </section>
+      <h3>Sonic Branding &amp; Audio Post-Production</h3>
+      <p>A trusted audio partner for global and national institutions, Noel Grass composes custom media soundtracks and corporate audio identities. His verified commercial soundtrack and audio post-production catalog features bespoke compositions for prestigious global entities across the corporate, governmental, and international development sectors.</p>
+    </section>
 
-  <section class="reveal">
-    <h2>Selected Corporate, Government &amp; NGO Clients</h2>
-    <ul>
-      <li><strong>International Finance Corporation (IFC / World Bank Group)</strong> — Documentary Score &amp; Global Investment Media Branding</li>
-      <li><strong>Higher Education Loans Board (HELB)</strong> — National Loan Recovery Campaign &amp; New Funding Model Jingles</li>
-      <li><strong>Government Advertising Agency (GAA)</strong> — Uhuru Legacy Project &amp; GBV National Campaign Documentary Scores</li>
-      <li><strong>SOMINVEST</strong> — Official Investment Documentary Film Scoring</li>
-      <li><strong>Engage Talk Kenya</strong> — Commercial Brand and Luxury Identity Scoring</li>
-    </ul>
-  </section>
+    <section class="reveal">
+      <h2>Core Filmography &amp; Masterworks</h2>
+      <ul>
+        <li><em>Lost in Time</em> (2019) — Feature Film. Kalasha Award Winner, Best Feature Film. Atmospheric world-building and original soundtrack.</li>
+        <li><em>Kutu</em> (2021) — Short Film. Kalasha Award Winner for Best Short Film. Haunting, visceral orchestral arrangements.</li>
+        <li><em>Ziwa</em> (2023) — Award-Winning Drama. Original Motion Picture Soundtrack. Winner of the Najib Ayyed Grand Prize at the Khouribga International African Film Festival.</li>
+        <li><em>On Air</em> (2024) — Intense Feature Film Thriller. Original Score.</li>
+        <li><em>Thief</em> (2024) — Short Film. Official Soundtrack.</li>
+        <li><em>Nyūmba Ya Mbūri</em> — Cultural Cinema Soundtrack. Original Score.</li>
+        <li><em>The Parliament of Owls</em> (2024) — Stage Production. Thematic Theatrical Score.</li>
+      </ul>
+    </section>
 
-  <section class="reveal">
-    <h2>Skills &amp; Expertise</h2>
-    <ul>
-      <li>Film Scoring</li>
-      <li>Cinematic Composition</li>
-      <li>Contemporary Classical Composition</li>
-      <li>Neoclassical Piano</li>
-      <li>Traditional Orchestral Instruments</li>
-      <li>Textural Sound Design</li>
-      <li>Music Composition</li>
-      <li>Orchestration</li>
-      <li>Music Production</li>
-      <li>Sonic Branding</li>
-      <li>Audio Post-Production</li>
-    </ul>
-  </section>
+    <section class="reveal">
+      <h2>Selected Corporate, Government &amp; NGO Clients</h2>
+      <ul>
+        <li><strong>International Finance Corporation (IFC / World Bank Group)</strong> — Documentary Score &amp; Global Investment Media Branding</li>
+        <li><strong>Higher Education Loans Board (HELB)</strong> — National Loan Recovery Campaign &amp; New Funding Model Jingles</li>
+        <li><strong>Government Advertising Agency (GAA)</strong> — Uhuru Legacy Project &amp; GBV National Campaign Documentary Scores</li>
+        <li><strong>SOMINVEST</strong> — Official Investment Documentary Film Scoring</li>
+        <li><strong>Engage Talk Kenya</strong> — Commercial Brand and Luxury Identity Scoring</li>
+      </ul>
+    </section>
 
-  <section class="reveal">
-    <h2>Awards &amp; Recognition</h2>
-    <ul>
-      <li>Two-time Kalasha International Film Awards nominee — Best Original Score</li>
-      <li><em>Ziwa</em> (2023) — Najib Ayyed Grand Prize, Khouribga International African Film Festival</li>
-      <li><em>Lost in Time</em> (2019) — Five Kalasha Awards including Best Feature Film</li>
-      <li><em>Kutu</em> (2021) — Kalasha Award for Best Short Film</li>
-    </ul>
-  </section>
+    <section class="reveal">
+      <h2>Skills &amp; Expertise</h2>
+      <ul>
+        <li>Film Scoring</li>
+        <li>Cinematic Composition</li>
+        <li>Contemporary Classical Composition</li>
+        <li>Neoclassical Piano</li>
+        <li>Traditional Orchestral Instruments</li>
+        <li>Textural Sound Design</li>
+        <li>Music Composition</li>
+        <li>Orchestration</li>
+        <li>Music Production</li>
+        <li>Sonic Branding</li>
+        <li>Audio Post-Production</li>
+      </ul>
+    </section>
 
-  <section class="reveal">
-    <h2>Frequently Asked Questions</h2>
+    <section class="reveal">
+      <h2>Awards &amp; Recognition</h2>
+      <ul>
+        <li>Two-time Kalasha International Film Awards nominee — Best Original Score</li>
+        <li><em>Ziwa</em> (2023) — Najib Ayyed Grand Prize, Khouribga International African Film Festival</li>
+        <li><em>Lost in Time</em> (2019) — Five Kalasha Awards including Best Feature Film</li>
+        <li><em>Kutu</em> (2021) — Kalasha Award for Best Short Film</li>
+      </ul>
+    </section>
 
-    <h3>Who is Noel Grass?</h3>
-    <p>Noel Grass is a cinematic film composer, contemporary classical pianist, and music producer based in Nairobi, Kenya. He is a two-time Kalasha International Film Awards nominee for Best Original Score.</p>
+    <section class="reveal">
+      <h2>Frequently Asked Questions</h2>
 
-    <h3>What films has Noel Grass composed music for?</h3>
-    <p>Noel Grass has composed original scores for <em>Lost in Time</em> (2019), <em>Kutu</em> (2021), <em>Ziwa</em> (2023), <em>On Air</em> (2024), <em>Thief</em> (2024), <em>Nyūmba Ya Mbūri</em>, and <em>The Parliament of Owls</em> (2024).</p>
+      <h3>Who is Noel Grass?</h3>
+      <p>Noel Grass is a cinematic film composer, contemporary classical pianist, and music producer based in Nairobi, Kenya. He is a two-time Kalasha International Film Awards nominee for Best Original Score.</p>
 
-    <h3>Is Noel Grass considered a notable film composer in Kenya?</h3>
-    <p>Yes. Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score, known for <em>Lost in Time</em>, <em>Kutu</em>, and <em>Ziwa</em>.</p>
+      <h3>What films has Noel Grass composed music for?</h3>
+      <p>Noel Grass has composed original scores for <em>Lost in Time</em> (2019), <em>Kutu</em> (2021), <em>Ziwa</em> (2023), <em>On Air</em> (2024), <em>Thief</em> (2024), <em>Nyūmba Ya Mbūri</em>, and <em>The Parliament of Owls</em> (2024).</p>
 
-    <h3>Is Noel Grass a contemporary classical pianist in Nairobi?</h3>
-    <p>Yes. Noel Grass is a contemporary classical and neoclassical pianist based in Nairobi, known for the albums <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
+      <h3>Is Noel Grass considered a notable film composer in Kenya?</h3>
+      <p>Yes. Noel Grass is a two-time Kalasha International Film Awards nominee for Best Original Score, known for <em>Lost in Time</em>, <em>Kutu</em>, and <em>Ziwa</em>.</p>
 
-    <h3>What albums has Noel Grass released?</h3>
-    <p>Noel Grass has released <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
+      <h3>Is Noel Grass a contemporary classical pianist in Nairobi?</h3>
+      <p>Yes. Noel Grass is a contemporary classical and neoclassical pianist based in Nairobi, known for the albums <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-    <h3>What is Noel Grass known for?</h3>
-    <p>Noel Grass is known for cinematic film scores, contemporary classical piano compositions, and sonic branding for global institutions including the IFC / World Bank Group.</p>
+      <h3>What albums has Noel Grass released?</h3>
+      <p>Noel Grass has released <em>Where I Begin Again</em>, <em>The Impressionist</em>, <em>Seven Deadly Sins</em>, and <em>Tales of a Poet</em>.</p>
 
-    <h3>What is Noel Grass's compositional style?</h3>
-    <p>Noel Grass merges traditional orchestral instruments with contemporary textures, creating a cinematic sound that bridges classical orchestration with ambient and African instrumental elements.</p>
+      <h3>What is Noel Grass known for?</h3>
+      <p>Noel Grass is known for cinematic film scores, contemporary classical piano compositions, and sonic branding for global institutions including the IFC / World Bank Group.</p>
 
-    <h3>What makes Noel Grass's music distinctive?</h3>
-    <p>Noel Grass is known for fusing traditional orchestral instruments with modern textures — a sonic signature that blends cinematic grandeur with intimate contemporary classical piano.</p>
-  </section>
+      <h3>What is Noel Grass's compositional style?</h3>
+      <p>Noel Grass merges traditional orchestral instruments with contemporary textures, creating a cinematic sound that bridges classical orchestration with ambient and African instrumental elements.</p>
 
-  <section class="reveal">
-    <h2>Connect</h2>
-    <ul>
-      <li><a href="https://noelgrass.github.io">Official Website</a></li>
-      <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
-      <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
-      <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
-      <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
-      <li><a href="https://ke.linkedin.com/in/noelgrass">LinkedIn</a></li>
-      <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
-      <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
-      <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
-      <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
-      <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
-      <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
-      <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
-      <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
-      <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
-      <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
-    </ul>
-  </section>
+      <h3>What makes Noel Grass's music distinctive?</h3>
+      <p>Noel Grass is known for fusing traditional orchestral instruments with modern textures — a sonic signature that blends cinematic grandeur with intimate contemporary classical piano.</p>
+    </section>
 
-  <hr>
-  <p><a class="cta" href="https://noelgrass.github.io">Visit Noel Grass&rsquo;s Official Website &rarr;</a></p>
+    <section class="reveal">
+      <h2>Connect</h2>
+      <ul>
+        <li><a href="https://noelgrass.github.io">Official Website</a></li>
+        <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
+        <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
+        <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
+        <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
+        <li><a href="https://ke.linkedin.com/in/noelgrass">LinkedIn</a></li>
+        <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
+        <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
+        <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
+        <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
+        <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
+        <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
+        <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
+        <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
+        <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
+        <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
+      </ul>
+    </section>
 
-  <p><small>Last updated: October 2026</small></p>
+    <hr>
+    <p><a class="cta" href="https://noelgrass.github.io">Visit Noel Grass&rsquo;s Official Website &rarr;</a></p>
 
-  <div class="signature">
-    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    <p><small>Last updated: October 2026</small></p>
+
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    </div>
+
   </div>
 
 </div>
 
 <script>
-  (function() {
+  (function () {
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
+    var pageWrap = document.getElementById('pageWrap');
+
+    /* ---------- SCROLL LOCK (no layout shift) ---------- */
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.classList.add('no-scroll');
+    }
+
+    function unlockScroll() {
+      document.body.classList.remove('no-scroll');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
+    /* ---------- OPEN / CLOSE MENU ---------- */
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      lockScroll();
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      unlockScroll();
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!panel.classList.contains('open')) return;
+      if (panel.contains(e.target)) return;
+      if (toggle.contains(e.target)) return;
+      closeMenu();
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
+    function normalizePath(path) {
+      path = path.split('?')[0].split('#')[0];
+      path = path.replace(/\.html?$/i, '');
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      path = path.replace(/\/index$/i, '/');
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+
+    var links = panel.querySelectorAll('a');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+      if (matched.parentElement) {
+        matched.parentElement.classList.add('is-current');
+      }
+    }
+
+    /* ---------- SCROLL REVEAL ---------- */
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
         el.classList.add('visible');
       });
-      return;
-    }
-    var observer = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
+    } else {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) {
+        observer.observe(el);
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -80px 0px' });
-    document.querySelectorAll('.reveal').forEach(function(el) {
-      observer.observe(el);
-    });
+    }
   })();
 </script>
 
