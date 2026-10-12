@@ -617,6 +617,40 @@
     color: #FCFCF7;
   }
 
+  /* ---------- COMMISSION REVERSE LINK ---------- */
+  .commission-link {
+    display: block;
+    margin-top: 36px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(197, 168, 128, 0.25);
+  }
+
+  .commission-link p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    line-height: 1.7;
+    color: var(--offwhite);
+    margin: 0 0 12px;
+  }
+
+  .commission-link a {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .commission-link a:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
   /* ---------- COMING SOON ---------- */
   .coming-soon {
     margin: 40px auto 40px;
@@ -918,6 +952,14 @@
       letter-spacing: 0.22em;
     }
 
+    .commission-link {
+      margin-top: 28px;
+      padding-top: 22px;
+    }
+    .commission-link p {
+      font-size: 0.98em;
+    }
+
     .coming-soon { margin: 30px auto 30px; }
     .coming-soon .ornament { margin-bottom: 32px; }
     .coming-soon .label { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 24px; }
@@ -1114,6 +1156,14 @@
       <p>That's the whole process. If you're unsure which licence fits your project, tell me what you're making and I'll guide you.</p>
 
       <a href="license" class="intro-cta">Read the full licence terms →</a>
+
+      <!-- ============================================================
+           REVERSE LINK TO COMMISSION
+           ============================================================ -->
+      <div class="commission-link">
+        <p>Prefer something made just for your project?</p>
+        <a href="commission">Commission a Scene →</a>
+      </div>
 
     </div>
 
