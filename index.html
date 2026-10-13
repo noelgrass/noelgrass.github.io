@@ -709,7 +709,7 @@
   }
 
   /* ============================================================
-     THE FORK — image-backed cards, cinematic
+     THE FORK
      ============================================================ */
   .fork {
     margin: 100px auto 70px;
@@ -784,7 +784,7 @@
     animation: doorHoverGlow 4s ease-in-out infinite;
   }
 
-  /* Image background layer — cinematic, matching the hero */
+  /* Image background layer */
   .fork-bg {
     position: absolute;
     inset: 0;
@@ -806,10 +806,19 @@
                 opacity 0.8s ease;
   }
 
+  /* Artist card image — dimmer */
+  .fork-bg--artist img {
+    filter: grayscale(100%) brightness(0.28) contrast(1.15);
+  }
+
   .fork-card:hover .fork-bg img {
     transform: scale(1.08);
     filter: grayscale(100%) brightness(0.55) contrast(1.15);
     opacity: 1;
+  }
+
+  .fork-card:hover .fork-bg--artist img {
+    filter: grayscale(100%) brightness(0.35) contrast(1.15);
   }
 
   /* Dark cinematic gradient overlay */
@@ -1128,7 +1137,6 @@
     }
     .fork-card.in-view { transform: translateY(0); }
 
-    /* Mobile: taller cards so image is clearly visible */
     .fork-content {
       padding: 140px 24px 36px;
       min-height: 400px;
@@ -1142,6 +1150,11 @@
     .fork-card:hover .fork-bg img {
       filter: grayscale(100%) brightness(0.5) contrast(1.1);
       transform: scale(1.02);
+    }
+
+    .fork-bg--artist img,
+    .fork-card:hover .fork-bg--artist img {
+      filter: grayscale(100%) brightness(0.35) contrast(1.1);
     }
 
     .fork-label {
@@ -1290,7 +1303,7 @@
 
         <!-- ARTIST CARD -->
         <a href="artist" class="fork-card" aria-label="Enter the Artist side">
-          <div class="fork-bg" aria-hidden="true">
+          <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
           </div>
           <div class="fork-content">
