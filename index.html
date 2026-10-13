@@ -250,9 +250,6 @@
     body { opacity: 1; }
   }
 
-  /* ============================================================
-     TOP BAR
-     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
@@ -494,9 +491,6 @@
     background: var(--gold-dim);
   }
 
-  /* ============================================================
-     HERO
-     ============================================================ */
   .hero {
     position: relative;
     width: 100%;
@@ -585,9 +579,6 @@
     animation-delay: 0.5s;
   }
 
-  /* ============================================================
-     PAGE
-     ============================================================ */
   .page {
     max-width: 1200px;
     margin: 0 auto;
@@ -629,7 +620,6 @@
 
   .page:has(.icons a:hover) .icons { opacity: 1; }
 
-  /* ---------- EDITORIAL SPLIT ---------- */
   .editorial {
     display: grid;
     grid-template-columns: 340px 1fr;
@@ -682,9 +672,18 @@
     font-size: 1.05em;
     color: var(--offwhite);
     line-height: 1.85;
-    margin-bottom: 36px;
+    margin-bottom: 30px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.85s;
+  }
+
+  .intro-location {
+    font-size: 1.05em;
+    color: var(--offwhite);
+    line-height: 1.85;
+    margin-bottom: 36px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
   }
 
   .bio-link {
@@ -692,7 +691,7 @@
     font-style: italic;
     margin-bottom: 0;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1s;
+    animation-delay: 1.15s;
   }
 
   .bio-link a {
@@ -708,9 +707,6 @@
     border-bottom-color: var(--gold);
   }
 
-  /* ============================================================
-     THE FORK
-     ============================================================ */
   .fork {
     margin: 100px auto 70px;
     max-width: 960px;
@@ -784,7 +780,6 @@
     animation: doorHoverGlow 4s ease-in-out infinite;
   }
 
-  /* Image background layer */
   .fork-bg {
     position: absolute;
     inset: 0;
@@ -806,7 +801,6 @@
                 opacity 0.8s ease;
   }
 
-  /* Artist card image — dimmer */
   .fork-bg--artist img {
     filter: grayscale(100%) brightness(0.28) contrast(1.15);
   }
@@ -821,7 +815,6 @@
     filter: grayscale(100%) brightness(0.35) contrast(1.15);
   }
 
-  /* Dark cinematic gradient overlay */
   .fork-bg::after {
     content: '';
     position: absolute;
@@ -832,7 +825,6 @@
     z-index: 1;
   }
 
-  /* Content layer */
   .fork-content {
     position: relative;
     z-index: 2;
@@ -937,7 +929,6 @@
     transform: translateX(-50%) scaleX(1);
   }
 
-  /* ---------- SCROLL CUE ---------- */
   .scroll-cue {
     display: flex;
     flex-direction: column;
@@ -969,7 +960,6 @@
     animation: scrollPulse 3s ease-in-out infinite;
   }
 
-  /* ---------- STREAMING ICONS ---------- */
   .icons {
     display: flex;
     justify-content: center;
@@ -1035,7 +1025,6 @@
 
   .icons svg { width: 32px; height: 32px; fill: currentColor; }
 
-  /* ---------- RULE ---------- */
   .rule-full {
     width: 100%;
     max-width: 1000px;
@@ -1048,7 +1037,6 @@
     transition: opacity 0.7s ease;
   }
 
-  /* ---------- FOOTER ---------- */
   .footer-links {
     display: flex;
     flex-wrap: wrap;
@@ -1091,7 +1079,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px) {
     .editorial {
       grid-template-columns: 1fr;
@@ -1112,7 +1099,7 @@
       transform: none;
     }
     .editorial-text { text-align: center; }
-    .intro, .intro-body { text-align: center; }
+    .intro, .intro-body, .intro-location { text-align: center; }
     .bio-link { text-align: center; }
     .bio-link a:hover { transform: translateX(0); }
   }
@@ -1209,6 +1196,7 @@
     .icons { gap: 25px; }
     .intro { font-size: 1.05em; }
     .intro-body { font-size: 1em; }
+    .intro-location { font-size: 1em; }
     .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
     .scroll-cue .line { height: 30px; }
@@ -1284,10 +1272,13 @@
 
       <div class="editorial-text">
         <p class="intro">
-          Welcome to a world where music and sound become a space you can feel. This is the craft of emotion: shaping cinematic moments and designing intentional spaces.
+          Welcome to a world where music and sound become a space you can feel.
         </p>
         <p class="intro-body">
-          Based in Nairobi, Kenya, I work as a film composer, neoclassical pianist, and music producer, translating visual stories into immersive audio soundscapes. Specializing in cinematic music, contemporary neoclassical piano, and custom scores.
+          As a film composer, I score stories for the screen. As an artist, I compose, perform, and produce, across solo, ensemble, and orchestral settings.
+        </p>
+        <p class="intro-location">
+          Based in Nairobi, available worldwide.
         </p>
         <p class="bio-link">
           <a href="biography">Read the full biography →</a>
@@ -1295,13 +1286,11 @@
       </div>
     </div>
 
-    <!-- THE FORK -->
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
 
       <div class="fork-row">
 
-        <!-- ARTIST CARD -->
         <a href="artist" class="fork-card" aria-label="Enter the Artist side">
           <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
@@ -1313,7 +1302,6 @@
           </div>
         </a>
 
-        <!-- FILM COMPOSER CARD -->
         <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
           <div class="fork-bg" aria-hidden="true">
             <img src="images/film/film-strip.jpg" alt="" loading="lazy">
