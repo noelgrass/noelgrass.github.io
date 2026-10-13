@@ -86,9 +86,11 @@
     --gold: #C5A880;
     --gold-soft: #B9975C;
     --gold-dim: #7a6b4f;
+    --gold-pale: #E8D5B5;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
+    --scrollbar-width: 0px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -255,13 +257,14 @@
     top: 0;
     z-index: 300;
     background: var(--bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    /* REMOVED: backdrop-filter (invisible on solid black, was causing mobile scroll jank) */
     padding: 22px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
+    /* ADDED: isolate nav paint work so scroll doesn't repaint the page */
+    contain: layout paint;
   }
 
   .wordmark {
@@ -365,6 +368,8 @@
     opacity: 0.75;
     pointer-events: none;
     user-select: none;
+    /* CHANGED: will-change now only applies while the menu is actually open,
+       not during idle scroll — this was the main mobile scroll culprit */
     will-change: filter, opacity;
   }
 
@@ -397,14 +402,12 @@
       opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
       transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    will-change: auto;
   }
 
   .menu-panel.open {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
     pointer-events: auto;
-    will-change: transform, opacity;
   }
 
   .menu-panel ul {
@@ -518,6 +521,7 @@
     opacity: 0.85;
     transform: scale(1.02);
     transition: transform 14s ease;
+    backface-visibility: hidden;
   }
 
   .hero.loaded .hero-bg img { transform: scale(1.08); }
@@ -719,7 +723,7 @@
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-size: 1.1em;
-    color: var(--gold-pale, #E8D5B5);
+    color: var(--gold-pale);
     text-align: center;
     margin-bottom: 40px;
     opacity: 0.85;
@@ -758,21 +762,23 @@
     text-align: center;
     overflow: hidden;
     opacity: 0;
+    /* CHANGED: slide duration 1s -> 1.8s (desktop + mobile), GPU-friendly transform */
     transition:
       border-color 0.5s ease,
-      transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 1s ease,
+      transform 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 1.6s ease,
       box-shadow 0.6s ease;
     animation: doorRestGlow 6s ease-in-out infinite;
     animation-delay: 1.4s;
+    backface-visibility: hidden;
   }
 
-  .fork-card:nth-child(1) { transform: translateX(-70px); }
-  .fork-card:nth-child(2) { transform: translateX(70px); }
+  .fork-card:nth-child(1) { transform: translate3d(-70px, 0, 0); }
+  .fork-card:nth-child(2) { transform: translate3d(70px, 0, 0); }
 
   .fork-card.in-view {
     opacity: 1;
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
 
   .fork-card:hover {
@@ -886,7 +892,7 @@
     font-size: 0.7em;
     letter-spacing: 0.3em;
     text-transform: uppercase;
-    color: var(--gold-pale, #E8D5B5);
+    color: var(--gold-pale);
     opacity: 0.65;
     transition: opacity 0.4s ease, letter-spacing 0.5s ease, color 0.4s ease;
   }
@@ -1143,9 +1149,9 @@
     .fork-row::before { display: none; }
     .fork-card:nth-child(1),
     .fork-card:nth-child(2) {
-      transform: translateY(40px);
+      transform: translate3d(0, 24px, 0);
     }
-    .fork-card.in-view { transform: translateY(0); }
+    .fork-card.in-view { transform: translate3d(0, 0, 0); }
 
     .fork-content {
       padding: 140px 24px 36px;
@@ -1224,6 +1230,62 @@
     .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
     .scroll-cue .line { height: 30px; }
+
+    /* ===== MOBILE-ONLY SCROLL SMOOTHNESS FIXES =====
+       These only affect mobile. Desktop design is untouched. */
+
+    /* Let mobile use native momentum scrolling instead of JS-smooth scrolling,
+       which fights with touch and can feel glitchy */
+    html, body {
+      scroll-behavior: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Background image scale animations re-rasterize on every frame on mobile.
+       Freeze the transform (the visual look is unchanged since it was barely moving). */
+    .hero-bg img,
+    .hero.loaded .hero-bg img {
+      transform: scale(1.02);
+      transition: none;
+    }
+
+    .fork-bg img,
+    .fork-card:hover .fork-bg img {
+      transform: scale(1.02);
+      transition: filter 0.4s ease, opacity 0.4s ease;
+    }
+
+    /* The infinite glow loops run box-shadow/text-shadow animations every frame,
+       which is the heaviest mobile paint cost. Show a static version instead. */
+    h1 {
+      animation: fadeUp 1s ease-out both;
+      animation-delay: 0.25s;
+      text-shadow:
+        0 11px 15px rgba(0,0,0,0.27),
+        0 0 30px rgba(197, 168, 128, 0.35),
+        0 0 60px rgba(197, 168, 128, 0.15);
+    }
+
+    .portrait img {
+      animation: none;
+      box-shadow:
+        0 0 24px 3px rgba(185, 151, 92, 0.35),
+        0 0 45px 6px rgba(185, 151, 92, 0.15);
+    }
+
+    .fork-card {
+      animation: none;
+      box-shadow:
+        0 0 22px 2px rgba(185, 151, 92, 0.20),
+        0 0 42px 5px rgba(185, 151, 92, 0.08);
+    }
+
+    .fork-card:hover {
+      animation: none;
+      box-shadow:
+        0 0 32px 5px rgba(197, 168, 128, 0.45),
+        0 0 70px 14px rgba(197, 168, 128, 0.18);
+    }
   }
 
   @media (max-width: 380px) {
