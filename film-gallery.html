@@ -772,6 +772,7 @@
     animation: tileHoverGlow 4s ease-in-out infinite;
   }
 
+  /* ---------- CLIENTS SECTION ---------- */
   .clients-block {
     margin-top: 130px;
     transition: opacity 0.9s ease;
@@ -821,6 +822,7 @@
     width: calc((100% - 110px) / 3);
     min-height: 130px;
     padding: 16px;
+    cursor: default;
   }
 
   .client-item img {
@@ -831,26 +833,9 @@
     height: auto;
     object-fit: contain;
     filter: brightness(0.85) contrast(1.05);
-    transition: filter 0.8s ease, transform 0.6s ease;
     animation: tileRestGlow 7s ease-in-out infinite;
     animation-delay: 1.4s;
-  }
-
-  .clients:has(.client-item:hover) .client-item img {
-    animation: none;
-  }
-
-  .clients:has(.client-item:hover) .client-item:not(:hover) img {
-    filter: brightness(0.55) contrast(0.95);
-    box-shadow:
-      0 0 12px 2px rgba(185, 151, 92, 0.06),
-      0 0 24px 4px rgba(185, 151, 92, 0.02);
-  }
-
-  .clients:has(.client-item:hover) .client-item:hover img {
-    filter: brightness(1) contrast(1.05);
-    animation: tileHoverGlow 4s ease-in-out infinite;
-    transform: scale(1.04);
+    pointer-events: none;
   }
 
   .clients-caption {
@@ -1117,7 +1102,7 @@
 
       <h1>Gallery</h1>
 
-      <p class="intro-text">Original scores for film. Each written to serve the story. Tap a poster to listen.</p>
+      <p class="intro-text">Original scores for film and media by Noel Grass, a film composer based in Nairobi, Kenya. The gallery features work for feature films, short films, documentaries, and campaigns.</p>
 
     </div>
 
@@ -1182,7 +1167,7 @@
 
       <h2 class="clients-subhead">Documentaries, Organizations &amp; Media</h2>
 
-      <p class="clients-note">Selected clients whose films, campaigns, and jingles I have scored.</p>
+      <p class="clients-note">Clients whose films, campaigns, and jingles I have scored.</p>
 
       <div class="clients">
 
