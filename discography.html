@@ -432,12 +432,10 @@
     opacity: 0;
   }
 
-  /* Base animation for every menu item — future-proof */
   .menu-panel.open li a {
     animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* Staggered delays for each item */
   .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
   .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
   .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
@@ -676,6 +674,25 @@
     animation: artworkHoverGlow 4s ease-in-out infinite;
   }
 
+  .feature-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.6em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(185, 151, 92, 0.5);
+    padding: 5px 10px;
+    pointer-events: none;
+  }
+
   .feature-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -786,6 +803,26 @@
     transition: filter 0.8s ease, transform 0.8s ease;
   }
 
+  .store-item .badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.58em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(185, 151, 92, 0.5);
+    padding: 5px 9px;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
   .store-item:hover .poster {
     border-color: var(--gold-soft);
     animation: tileHoverGlow 4s ease-in-out infinite;
@@ -843,6 +880,10 @@
     color: rgba(154, 149, 140, 0.3);
   }
 
+  .store-gallery:has(.store-item:hover) .store-item:not(:hover) .badge {
+    opacity: 0.35;
+  }
+
   .signature {
     margin-top: 100px;
     text-align: center;
@@ -876,6 +917,7 @@
     .mood-indicator { margin-right: 10px; }
     .feature-release { padding: 30px 0 40px; }
     .feature-cover { max-width: 320px; margin-bottom: 30px; }
+    .feature-badge { top: 10px; right: 10px; font-size: 0.55em; padding: 4px 8px; }
     .feature-title { font-size: 1.4em; margin-bottom: 30px; }
     .feature-cta { font-size: 1em; }
     .feature-icons { gap: 30px; }
@@ -897,6 +939,7 @@
     }
     .store-item .caption { font-size: 1em; }
     .store-item .format-label { font-size: 0.62em; letter-spacing: 0.2em; }
+    .store-item .badge { top: 8px; right: 8px; font-size: 0.55em; padding: 4px 8px; }
 
     .topnav { padding: 18px 22px; }
 
@@ -1026,6 +1069,7 @@
 
           <a href="https://noelgrass.bandcamp.com/album/into-a-stillness-that-answers" target="_blank" rel="noopener" class="feature-cover">
             <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
+            <span class="feature-badge">EP</span>
           </a>
 
           <p class="feature-title">Into A Stillness That Answers</p>
@@ -1071,14 +1115,15 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
-          <span class="mood-count">4 albums</span>
+          <span class="mood-count">4 releases</span>
         </summary>
 
         <div class="store-gallery">
 
           <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAK5uy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Into A Stillness That Answers</div>
             <div class="format-label">Solo Piano</div>
@@ -1086,7 +1131,8 @@
 
           <a href="https://www.youtube.com/watch?v=dgQjOQKJwnw&list=OLAK5uy_l_R-8HxUqoACTBwX1M0vwGQnoh_SkGJN4" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Where I Begin Again</div>
             <div class="format-label">Solo Piano</div>
@@ -1095,6 +1141,7 @@
           <a href="https://www.youtube.com/watch?v=hQsG4VxJSws&list=OLAK5uy_mC6gmQ6HKFaMIWtxNXyDZjIKX03mrRstU" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist</div>
             <div class="format-label">Solo Piano</div>
@@ -1103,6 +1150,7 @@
           <a href="https://www.youtube.com/watch?v=f9vpu1eTEYE&list=OLAK5uy_n2m1iRVcZ9j-JP8wmV7g2Ykoz_fbRp3Ag" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist II</div>
             <div class="format-label">Solo Piano</div>
@@ -1115,14 +1163,15 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-          <span class="mood-count">2 albums</span>
+          <span class="mood-count">2 releases</span>
         </summary>
 
         <div class="store-gallery">
 
           <a href="https://www.youtube.com/watch?v=N6GS8OGD2GY&list=OLAK5uy_lXKMU1d8-oeLghKj8oGc_pZ0xBWoYpm0g" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
+              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Introspect</div>
             <div class="format-label">Orchestral</div>
@@ -1131,6 +1180,7 @@
           <a href="https://www.youtube.com/watch?v=Ksw5e9IyGzs&list=OLAK5uy_kFkSLceGcqu6UZe288YzObKiU0eVm4FNs" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
               <img src="images/discography/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">Seven Deadly Sins</div>
             <div class="format-label">Orchestral</div>
@@ -1143,14 +1193,15 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Hybrid</span></span>
-          <span class="mood-count">2 albums</span>
+          <span class="mood-count">2 releases</span>
         </summary>
 
         <div class="store-gallery">
 
           <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAK5uy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
+              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Agent 254</div>
             <div class="format-label">Hybrid</div>
@@ -1159,6 +1210,7 @@
           <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAK5uy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist III</div>
             <div class="format-label">Hybrid</div>
@@ -1171,14 +1223,15 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-          <span class="mood-count">1 album</span>
+          <span class="mood-count">1 release</span>
         </summary>
 
         <div class="store-gallery">
 
           <a href="https://www.youtube.com/watch?v=zNHjyFSfxuc" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
+              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient single by Noel Grass" loading="lazy">
+              <span class="badge">Single</span>
             </div>
             <div class="caption">When Stars Align</div>
             <div class="format-label">Ambient</div>
