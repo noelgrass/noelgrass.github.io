@@ -114,17 +114,11 @@
     transition: opacity 1s ease;
   }
 
-  body.loaded {
-    opacity: 1;
-  }
+  body.loaded { opacity: 1; }
 
-  body.no-scroll {
-    overflow: hidden;
-  }
+  body.no-scroll { overflow: hidden; }
   @supports not (scrollbar-gutter: stable) {
-    body.no-scroll {
-      padding-right: var(--scrollbar-width, 0px);
-    }
+    body.no-scroll { padding-right: var(--scrollbar-width, 0px); }
   }
 
   a {
@@ -204,14 +198,8 @@
   }
 
   @keyframes menuItemIn {
-    from {
-      opacity: 0;
-      transform: translate3d(10px, 0, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translate3d(10px, 0, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
   }
 
   @keyframes doorRestGlow {
@@ -538,9 +526,7 @@
     transition: transform 14s ease;
   }
 
-  .hero.loaded .hero-bg img {
-    transform: scale(1.08);
-  }
+  .hero.loaded .hero-bg img { transform: scale(1.08); }
 
   .hero-bg::after {
     content: '';
@@ -723,7 +709,7 @@
   }
 
   /* ============================================================
-     THE FORK — image-backed cards
+     THE FORK — image-backed cards, cinematic
      ============================================================ */
   .fork {
     margin: 100px auto 70px;
@@ -783,7 +769,6 @@
       box-shadow 0.6s ease;
     animation: doorRestGlow 6s ease-in-out infinite;
     animation-delay: 1.4s;
-    min-height: 380px;
   }
 
   .fork-card:nth-child(1) { transform: translateX(-70px); }
@@ -799,12 +784,13 @@
     animation: doorHoverGlow 4s ease-in-out infinite;
   }
 
-  /* Image background layer */
+  /* Image background layer — cinematic, matching the hero */
   .fork-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
     pointer-events: none;
+    overflow: hidden;
   }
 
   .fork-bg img {
@@ -812,10 +798,10 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: grayscale(100%) brightness(0.4) contrast(1.15);
-    opacity: 0.7;
-    transform: scale(1.03);
-    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+    filter: grayscale(100%) brightness(0.42) contrast(1.15);
+    opacity: 0.9;
+    transform: scale(1.02);
+    transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
                 filter 0.8s ease,
                 opacity 0.8s ease;
   }
@@ -823,15 +809,17 @@
   .fork-card:hover .fork-bg img {
     transform: scale(1.08);
     filter: grayscale(100%) brightness(0.55) contrast(1.15);
-    opacity: 0.85;
+    opacity: 1;
   }
 
+  /* Dark cinematic gradient overlay */
   .fork-bg::after {
     content: '';
     position: absolute;
     inset: 0;
     background:
-      linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.9) 100%);
+      radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.92) 95%),
+      linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 55%, rgba(0,0,0,0.75) 100%);
     z-index: 1;
   }
 
@@ -839,31 +827,38 @@
   .fork-content {
     position: relative;
     z-index: 2;
-    padding: 46px 34px 42px;
+    padding: 42px 30px 38px;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    min-height: 380px;
-    height: 100%;
+    justify-content: center;
+    align-items: center;
+    min-height: 260px;
   }
 
   .fork-label {
     display: block;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 2em;
-    letter-spacing: 0.3em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 20px;
+    margin-bottom: 18px;
+    text-shadow:
+      0 6px 10px rgba(0,0,0,0.35),
+      0 0 18px rgba(197, 168, 128, 0.35),
+      0 0 40px rgba(197, 168, 128, 0.18),
+      0 0 70px rgba(197, 168, 128, 0.08);
     transition: color 0.4s ease, text-shadow 0.5s ease;
   }
 
   .fork-card:hover .fork-label {
     color: #FCFCF7;
     text-shadow:
-      0 0 22px rgba(197, 168, 128, 0.65),
-      0 0 50px rgba(197, 168, 128, 0.30);
+      0 6px 10px rgba(0,0,0,0.35),
+      0 0 24px rgba(197, 168, 128, 0.65),
+      0 0 55px rgba(197, 168, 128, 0.32),
+      0 0 100px rgba(197, 168, 128, 0.14);
   }
 
   .fork-desc {
@@ -874,6 +869,7 @@
     line-height: 1.7;
     color: var(--offwhite);
     opacity: 0.85;
+    margin-bottom: 24px;
     transition: color 0.4s ease, opacity 0.4s ease;
   }
 
@@ -884,7 +880,6 @@
 
   .fork-enter {
     display: block;
-    margin-top: 26px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 0.7em;
@@ -1124,28 +1119,37 @@
     .fork { margin: 60px auto 50px; }
     .fork-row {
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 24px;
     }
     .fork-row::before { display: none; }
-    .fork-card {
-      min-height: 300px;
-    }
     .fork-card:nth-child(1),
     .fork-card:nth-child(2) {
       transform: translateY(40px);
     }
     .fork-card.in-view { transform: translateY(0); }
+
+    /* Mobile: taller cards so image is clearly visible */
     .fork-content {
-      padding: 32px 24px 30px;
-      min-height: 300px;
+      padding: 140px 24px 36px;
+      min-height: 400px;
+      justify-content: flex-end;
     }
+
+    .fork-bg img {
+      filter: grayscale(100%) brightness(0.5) contrast(1.1);
+      opacity: 0.9;
+    }
+    .fork-card:hover .fork-bg img {
+      filter: grayscale(100%) brightness(0.5) contrast(1.1);
+      transform: scale(1.02);
+    }
+
     .fork-label {
       font-size: 1.6em;
       letter-spacing: 0.22em;
     }
     .fork-desc { font-size: 0.95em; }
     .fork-intro { font-size: 1em; margin-bottom: 30px; }
-    .fork-bg img { filter: grayscale(100%) brightness(0.5) contrast(1.1); opacity: 0.75; }
 
     .editorial { margin: 40px auto 60px; }
 
@@ -1278,16 +1282,16 @@
       </div>
     </div>
 
-    <!-- THE FORK — image-backed cards -->
+    <!-- THE FORK -->
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
 
       <div class="fork-row">
 
-        <!-- ARTIST CARD — replace the img src with your artist-side image when ready -->
+        <!-- ARTIST CARD -->
         <a href="artist" class="fork-card" aria-label="Enter the Artist side">
           <div class="fork-bg" aria-hidden="true">
-            <img src="images/noel-grass.jpeg" alt="" loading="lazy">
+            <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
           </div>
           <div class="fork-content">
             <span class="fork-label">Artist</span>
@@ -1296,10 +1300,10 @@
           </div>
         </a>
 
-        <!-- FILM COMPOSER CARD — replace the img src with your film-side image when ready -->
+        <!-- FILM COMPOSER CARD -->
         <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
           <div class="fork-bg" aria-hidden="true">
-            <img src="images/noel-grass.jpeg" alt="" loading="lazy">
+            <img src="images/film-strip.jpg" alt="" loading="lazy">
           </div>
           <div class="fork-content">
             <span class="fork-label">Film Composer</span>
