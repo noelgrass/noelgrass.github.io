@@ -627,7 +627,8 @@
     transition: opacity 0.9s ease;
   }
 
-  .page.gallery-active .intro-block {
+  /* Intro dims when a film tile is hovered */
+  .page:has(.gallery-item:hover) .intro-block {
     opacity: 0.28;
   }
 
@@ -778,10 +779,6 @@
     transition: opacity 0.9s ease;
   }
 
-  .page.gallery-active .clients-block {
-    opacity: 0.28;
-  }
-
   .clients-subhead {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -856,11 +853,6 @@
     font-style: italic;
     font-size: 1em;
     text-align: center;
-    transition: opacity 0.9s ease;
-  }
-
-  .page.gallery-active .commission-line {
-    opacity: 0.28;
   }
 
   .commission-line a {
@@ -879,11 +871,6 @@
     font-style: italic;
     font-size: 1em;
     text-align: center;
-    transition: opacity 0.9s ease;
-  }
-
-  .page.gallery-active .cross-link {
-    opacity: 0.28;
   }
 
   .cross-link a {
@@ -900,11 +887,6 @@
   .signature {
     margin-top: 80px;
     text-align: center;
-    transition: opacity 0.9s ease;
-  }
-
-  .page.gallery-active .signature {
-    opacity: 0.28;
   }
 
   .signature-logo {
@@ -1366,23 +1348,6 @@
       document.querySelectorAll('.gallery-item').forEach(function(el) {
         el.classList.add('lit');
       });
-    }
-
-    var page = document.querySelector('.page');
-    var gallerySection = document.getElementById('gallery-section');
-
-    if (page && gallerySection && 'IntersectionObserver' in window) {
-      var galleryObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry) {
-          if (entry.isIntersecting) {
-            page.classList.add('gallery-active');
-          } else {
-            page.classList.remove('gallery-active');
-          }
-        });
-      }, { threshold: 0.15 });
-
-      galleryObserver.observe(gallerySection);
     }
   })();
 </script>
