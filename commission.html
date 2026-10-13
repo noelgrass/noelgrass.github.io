@@ -5,19 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
-<title>Commission a Scene — Original Film Scoring by Noel Grass | Nairobi, Kenya</title>
-<meta name="description" content="Commission an original music project for film, media, or a custom sonic space by Noel Grass — cinematic film composer based in Nairobi, Kenya. A clear four-step process: Brief, Agreement, Creation, Delivery.">
+<title>Commission a Score — Original Film Scoring by Noel Grass | Nairobi</title>
+<meta name="description" content="Commission original film scoring and custom music from Noel Grass, film composer in Nairobi, Kenya. A clear four-step process from brief to delivery.">
 <meta name="keywords" content="commission film score, hire film composer Kenya, custom film music, cinematic music commission, Noel Grass composer, film scoring services Nairobi">
 <link rel="canonical" href="https://noelgrass.github.io/commission">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Commission a Scene — Original Film Scoring by Noel Grass">
-<meta property="og:description" content="Original film scoring and custom music for film, media, and sonic spaces. Based in Nairobi, Kenya — working internationally.">
+<meta property="og:title" content="Commission a Score — Original Film Scoring by Noel Grass">
+<meta property="og:description" content="Original film scoring and custom music for film, media, and sonic spaces. Based in Nairobi, Kenya, working internationally.">
 <meta property="og:url" content="https://noelgrass.github.io/commission">
 <meta property="og:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Commission a Scene — Original Film Scoring by Noel Grass">
-<meta name="twitter:description" content="Original film scoring and custom music for film, media, and sonic spaces. Based in Nairobi, Kenya — working internationally.">
+<meta name="twitter:title" content="Commission a Score — Original Film Scoring by Noel Grass">
+<meta name="twitter:description" content="Original film scoring and custom music for film, media, and sonic spaces. Based in Nairobi, Kenya, working internationally.">
 <meta name="twitter:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,7 @@
   "url": "https://noelgrass.github.io/commission",
   "description": "Original film scoring, custom music composition, and cinematic sound design for film, media, and sonic spaces.",
   "serviceType": "Film Composition",
+  "dateModified": "2026-10-13",
   "provider": {
     "@type": "Person",
     "@id": "https://noelgrass.github.io/#person",
@@ -160,9 +161,6 @@
     transform: translateY(0);
   }
 
-  /* ============================================================
-     TOP BAR — blended
-     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
@@ -268,7 +266,6 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
@@ -282,7 +279,6 @@
     will-change: filter, opacity;
   }
 
-  /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -434,7 +430,6 @@
     color: var(--gold-dim);
   }
 
-  /* ---------- RENT DESCRIPTOR IN MENU ---------- */
   .menu-panel li.has-desc a {
     padding-top: 15px;
     padding-bottom: 26px;
@@ -461,7 +456,6 @@
     opacity: 1;
   }
 
-  /* ---------- PAGE ---------- */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -481,10 +475,12 @@
     animation-delay: 0.2s;
   }
 
+  h2,
   .subhead {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
     font-size: 1.25em;
+    font-weight: 400;
     color: var(--gold-pale);
     text-decoration: underline;
     text-underline-offset: 6px;
@@ -493,6 +489,7 @@
     display: block;
   }
 
+  h2.animate,
   .subhead.animate {
     animation: fadeUp 1s ease-out both;
   }
@@ -517,9 +514,6 @@
 
   em { font-style: italic; }
 
-  /* ============================================================
-     RENT CALLOUT — top of page, after intro paragraphs
-     ============================================================ */
   .rent-callout {
     display: block;
     text-align: left;
@@ -579,11 +573,13 @@
     color: #FCFCF7;
   }
 
-  /* ---------- STEPS ---------- */
   .steps {
     text-align: left;
     margin: 30px auto 40px;
     max-width: 720px;
+    list-style: none;
+    padding: 0;
+    counter-reset: step;
   }
 
   .steps .step {
@@ -725,7 +721,6 @@
     border-bottom-color: var(--gold);
   }
 
-  /* Bottom inline rent link */
   .rent-link-bottom {
     margin-top: 30px;
     text-align: center;
@@ -762,11 +757,10 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
-    .subhead { font-size: 1.1em; margin: 40px 0 18px; }
+    h2, .subhead { font-size: 1.1em; margin: 40px 0 18px; }
     p, .steps .step { font-size: 1em; }
     .form-section { margin-top: 50px; padding-top: 35px; }
     .form-field { margin-bottom: 20px; }
@@ -870,9 +864,8 @@
 </head>
 <body>
 
-<!-- ===== STICKY TOP BAR ===== -->
 <header class="topnav">
-  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+  <a href="./" class="wordmark" aria-label="Noel Grass Home">Noel Grass</a>
 
   <button
     class="menu-toggle"
@@ -891,7 +884,6 @@
   </button>
 </header>
 
-<!-- ===== DROPDOWN PANEL ===== -->
 <nav
   class="menu-panel"
   id="menuPanel"
@@ -901,7 +893,7 @@
   <ul>
     <li><a href="biography">Biography</a></li>
     <li><a href="./">Home</a></li>
-    <li><a href="film-composer">About</a></li>
+    <li><a href="film-composer">Film Composer</a></li>
     <li><a href="commission">Commission a Scene</a></li>
     <li><a href="film-gallery">Gallery</a></li>
     <li class="has-desc">
@@ -914,50 +906,41 @@
   </ul>
 </nav>
 
-<!-- ===== PAGE ===== -->
 <div class="page-wrap" id="pageWrap">
 
   <div class="page">
 
-    <h1>Commission a Scene<span class="visually-hidden"> — Original Film Scoring in Kenya and Worldwide</span></h1>
+    <h1>Commission a Score<span class="visually-hidden"> — Original Film Scoring in Kenya and Worldwide</span></h1>
 
     <p class="intro-text">The process for commissioning an original music project for film, media, or a custom sonic space.</p>
 
-    <p class="intro-text">Based in Nairobi, Kenya, I work with filmmakers, production houses, and agencies across East Africa and internationally — from feature films and documentaries to commercial campaigns and sonic branding.</p>
+    <p class="intro-text">Based in Nairobi, Kenya, I work with filmmakers, production houses, and agencies across East Africa and internationally, from feature films and documentaries to commercial campaigns and sonic branding.</p>
 
-    <!-- ============================================================
-         RENT CALLOUT — top of page
-         ============================================================ -->
     <a href="rent" class="rent-callout">
       <span class="callout-label">Prefer something already made?</span>
-      <p>Browse the catalogue and license an existing score — available immediately, no composition timeline.</p>
+      <p>Browse the catalogue and license an existing score. Available immediately, no composition timeline.</p>
       <span class="callout-link">Rent from the catalogue →</span>
     </a>
 
-    <span class="subhead animate" style="animation-delay: 0.85s;">Philosophy</span>
+    <h2 class="subhead animate" style="animation-delay: 0.85s;">Philosophy</h2>
 
     <section class="reveal">
       <p>My work starts with your story. The core rule is simple: the emotion of the scene decides the music. The score isn't just an addition; it's a foundational layer built from the emotional needs of your project.</p>
     </section>
 
-    <span class="subhead animate" style="animation-delay: 0.9s;">The Process</span>
+    <h2 class="subhead animate" style="animation-delay: 0.9s;">The Process</h2>
 
     <p class="intro-text" style="animation-delay: 1s;">To protect the creative vision, I follow a clear, four-step path:</p>
 
-    <div class="steps" id="steps">
-      <div class="step">1. <strong>The Brief</strong>: We define the core feeling, the story's mood, and the project's practical boundaries.</div>
-      <div class="step">2. <strong>The Agreement</strong>: We formalize the brief, deliverables, timeline, and terms in writing. No creative work starts without this step.</div>
-      <div class="step">3. <strong>The Creation</strong>: I compose and produce the score privately, following our brief.</div>
-      <div class="step">4. <strong>The Delivery</strong>: You receive the final piece as a polished, intentional work, ready for its purpose.</div>
-    </div>
+    <ol class="steps" id="steps">
+      <li class="step"><strong>The Brief</strong>: We define the core feeling, the story's mood, and the project's practical boundaries.</li>
+      <li class="step"><strong>The Agreement</strong>: We formalize the brief, deliverables, timeline, and terms in writing. No creative work starts without this step.</li>
+      <li class="step"><strong>The Creation</strong>: I compose and send drafts as the score develops. You give feedback, and I refine. This is where the music takes shape.</li>
+      <li class="step"><strong>The Delivery</strong>: You receive the final piece as a polished, intentional work, ready for its purpose.</li>
+    </ol>
 
     <section class="reveal">
-      <span class="subhead">The Foundation</span>
-      <p>Every commission follows a non-negotiable standard to ensure the music has clarity, intentional pacing, and fits seamlessly into its world. This is a collaboration built on trust and a shared vision.</p>
-    </section>
-
-    <section class="reveal">
-      <span class="subhead">Start a Conversation</span>
+      <h2 class="subhead">Start a Conversation</h2>
       <p>To discuss your project, please fill out the form below.</p>
     </section>
 
@@ -999,15 +982,12 @@
       For more contact options, see the <a href="contact">Contact page →</a>.
     </div>
 
-    <!-- ============================================================
-         BOTTOM RENT LINK
-         ============================================================ -->
     <div class="rent-link-bottom">
       Prefer something already made? See the <a href="rent">Rent page →</a>
     </div>
 
     <div class="signature">
-      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass signature logo" class="signature-logo">
     </div>
 
   </div>
