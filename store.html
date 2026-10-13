@@ -638,6 +638,25 @@
     animation: artworkHoverGlow 4s ease-in-out infinite;
   }
 
+  .feature-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.6em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(185, 151, 92, 0.5);
+    padding: 5px 10px;
+    pointer-events: none;
+  }
+
   .feature-title {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -698,6 +717,26 @@
     display: block;
     filter: brightness(0.72) contrast(1.05);
     transition: filter 0.8s ease, transform 0.8s ease;
+  }
+
+  .store-item .badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.58em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: rgba(0, 0, 0, 0.62);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(185, 151, 92, 0.5);
+    padding: 5px 9px;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
   }
 
   .store-item:hover .poster {
@@ -801,6 +840,10 @@
 
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .format-label {
     color: rgba(154, 149, 140, 0.3);
+  }
+
+  .store-gallery:has(.store-item:hover) .store-item:not(:hover) .badge {
+    opacity: 0.35;
   }
 
   /* ---------- VIDEO MODAL ---------- */
@@ -936,9 +979,11 @@
     .store-item:hover .poster img { filter: brightness(0.85) contrast(1.05); transform: none; }
     .store-item .caption { font-size: 1em; }
     .store-item .format-label { font-size: 0.62em; letter-spacing: 0.2em; }
+    .store-item .badge { top: 8px; right: 8px; font-size: 0.55em; padding: 4px 8px; }
 
     .feature-release { padding: 30px 0 40px; }
     .feature-cover { max-width: 320px; margin-bottom: 30px; }
+    .feature-badge { top: 10px; right: 10px; font-size: 0.55em; padding: 4px 8px; }
     .feature-title { font-size: 1.4em; margin-bottom: 24px; }
     .feature-actions { gap: 20px; }
 
@@ -1053,6 +1098,7 @@
 
           <div class="feature-cover">
             <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
+            <span class="feature-badge">EP</span>
           </div>
 
           <p class="feature-title">Into A Stillness That Answers</p>
@@ -1082,7 +1128,8 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Into A Stillness That Answers</div>
             <div class="format-label">Solo Piano</div>
@@ -1094,7 +1141,8 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Where I Begin Again</div>
             <div class="format-label">Solo Piano</div>
@@ -1107,6 +1155,7 @@
           <div class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist</div>
             <div class="format-label">Solo Piano</div>
@@ -1119,6 +1168,7 @@
           <div class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist II</div>
             <div class="format-label">Solo Piano</div>
@@ -1142,7 +1192,8 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
+              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Introspect</div>
             <div class="format-label">Orchestral</div>
@@ -1155,6 +1206,7 @@
           <div class="store-item">
             <div class="poster">
               <img src="images/discography/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">Seven Deadly Sins</div>
             <div class="format-label">Orchestral</div>
@@ -1178,7 +1230,8 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
+              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid EP by Noel Grass" loading="lazy">
+              <span class="badge">EP</span>
             </div>
             <div class="caption">Agent 254</div>
             <div class="format-label">Hybrid</div>
@@ -1191,6 +1244,7 @@
           <div class="store-item">
             <div class="poster">
               <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
+              <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist III</div>
             <div class="format-label">Hybrid</div>
@@ -1214,7 +1268,8 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
+              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient single by Noel Grass" loading="lazy">
+              <span class="badge">Single</span>
             </div>
             <div class="caption">When Stars Align</div>
             <div class="format-label">Ambient</div>
