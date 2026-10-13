@@ -406,12 +406,10 @@
     opacity: 0;
   }
 
-  /* Base animation for every menu item — future-proof */
   .menu-panel.open li a {
     animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
 
-  /* Staggered delays for each item */
   .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
   .menu-panel.open li:nth-child(2) a { animation-delay: 0.13s; }
   .menu-panel.open li:nth-child(3) a { animation-delay: 0.18s; }
@@ -618,6 +616,32 @@
     letter-spacing: 0.02em;
   }
 
+  .live-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.9s;
+  }
+
+  .live-links a {
+    display: inline-block;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .live-links a:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
   .cross-link {
     margin-top: 60px;
     padding-top: 40px;
@@ -639,8 +663,7 @@
     border-bottom-color: var(--gold);
   }
 
-  .to-discography,
-  .to-performances {
+  .to-discography {
     display: inline-block;
     margin: 30px 0 0;
     font-style: italic;
@@ -653,8 +676,7 @@
     animation-delay: 0.9s;
   }
 
-  .to-discography:hover,
-  .to-performances:hover {
+  .to-discography:hover {
     transform: translateX(4px);
     border-bottom-color: var(--gold);
     color: #FCFCF7;
@@ -682,6 +704,9 @@
     .subhead { font-size: 1.1em; margin: 48px 0 20px; }
     p { font-size: 1em; }
     .format-list li { font-size: 1em; padding-left: 22px; }
+
+    .live-links { gap: 20px; }
+    .live-links a { font-size: 1em; }
 
     .topnav { padding: 18px 22px; }
 
@@ -755,7 +780,6 @@
 </head>
 <body>
 
-<!-- ===== STICKY TOP BAR ===== -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
 
@@ -776,7 +800,6 @@
   </button>
 </header>
 
-<!-- ===== DROPDOWN PANEL ===== -->
 <nav
   class="menu-panel"
   id="menuPanel"
@@ -796,7 +819,6 @@
   </ul>
 </nav>
 
-<!-- ===== PAGE ===== -->
 <div class="page-wrap" id="pageWrap">
 
   <div class="page">
@@ -819,6 +841,21 @@
 
     </div>
 
+    <span class="subhead">Live Performance</span>
+
+    <div class="body-section">
+
+      <p>Noel Grass performs his own compositions live, from solo piano to full ensemble. Sets range from intimate rooms to festival stages.</p>
+
+      <p>Available for private events, cultural programmes, and film festivals.</p>
+
+      <div class="live-links">
+        <a href="performances">See Performances →</a>
+        <a href="tour-dates">See Tour Dates →</a>
+      </div>
+
+    </div>
+
     <span class="subhead">Four Modes</span>
 
     <div class="body-section">
@@ -831,16 +868,6 @@
         <li><strong>Hybrid.</strong> Piano and orchestration interwoven with electronic textures and sound design.</li>
         <li><strong>Ambient.</strong> Layered, atmospheric work built around texture and tone.</li>
       </ul>
-
-    </div>
-
-    <span class="subhead">Live Performance</span>
-
-    <div class="body-section">
-
-      <p>Available for live performances of original works: contemporary classical, neoclassical, and cinematic compositions from the catalogue. Performances range from solo piano to ensemble and orchestral settings. Performed locally in Nairobi and internationally. Suited to intimate venues, private events, film festivals, and cultural programmes.</p>
-
-      <a href="performances" class="to-performances">See Performances →</a>
 
     </div>
 
