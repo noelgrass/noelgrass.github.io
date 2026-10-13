@@ -132,9 +132,6 @@
     }
   }
 
-  /* ============================================================
-     TOP BAR — blended (no border, matches page background)
-     ============================================================ */
   .topnav {
     position: sticky;
     top: 0;
@@ -253,7 +250,6 @@
     will-change: filter, opacity;
   }
 
-  /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -406,7 +402,6 @@
     color: var(--gold-dim);
   }
 
-  /* ---------- PAGE ---------- */
   .page {
     max-width: 720px;
     margin: 0 auto;
@@ -447,53 +442,165 @@
     animation-delay: 0.55s;
   }
 
-  /* ---------- JOIN CTA ---------- */
-  .join-cta {
-    text-align: center;
-    margin-bottom: 30px;
+  /* ============================================================
+     KIT INLINE FORM — wrapped and themed
+     ============================================================ */
+  .kit-form-wrap {
+    max-width: 520px;
+    margin: 0 auto 40px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.7s;
   }
 
-  .join-link {
-    display: inline-block;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    font-size: 1.5em;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--gold-pale);
-    border: 1px solid var(--gold-soft);
-    padding: 20px 50px;
-    cursor: pointer;
-    transition: color 0.4s ease, border-color 0.4s ease, background 0.4s ease, letter-spacing 0.5s ease;
-    position: relative;
-    overflow: hidden;
+  /* Container */
+  .kit-form-wrap .formkit-form {
+    max-width: 100% !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .join-link::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at 50% 100%,
-      rgba(197, 168, 128, 0.12) 0%,
-      transparent 65%
-    );
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    pointer-events: none;
+  .kit-form-wrap .formkit-form [data-style="clean"] {
+    padding: 0 !important;
   }
 
-  .join-link:hover {
-    color: #FCFCF7;
-    border-color: var(--gold);
-    background: rgba(197, 168, 128, 0.05);
-    letter-spacing: 0.38em;
+  /* Fields container */
+  .kit-form-wrap .formkit-fields {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    margin: 0 !important;
+    width: 100% !important;
   }
 
-  .join-link:hover::before {
-    opacity: 1;
+  .kit-form-wrap .formkit-field,
+  .kit-form-wrap .formkit-submit {
+    margin: 0 !important;
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
+
+  /* Input */
+  .kit-form-wrap .formkit-input {
+    width: 100% !important;
+    background: transparent !important;
+    border: 1px solid var(--rule) !important;
+    color: var(--offwhite) !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 1em !important;
+    padding: 16px 18px !important;
+    border-radius: 0 !important;
+    transition: border-color 0.3s ease, background 0.3s ease !important;
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  .kit-form-wrap .formkit-input:focus {
+    border-color: var(--gold-soft) !important;
+    background: rgba(197, 168, 128, 0.03) !important;
+  }
+
+  .kit-form-wrap .formkit-input::placeholder {
+    color: var(--muted) !important;
+    font-style: italic !important;
+    opacity: 1 !important;
+  }
+
+  /* Submit button */
+  .kit-form-wrap .formkit-submit {
+    display: inline-block !important;
+    background: transparent !important;
+    border: 1px solid var(--gold-soft) !important;
+    color: var(--gold-pale) !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 400 !important;
+    font-size: 0.8em !important;
+    letter-spacing: 0.3em !important;
+    text-transform: uppercase !important;
+    padding: 18px 40px !important;
+    cursor: pointer !important;
+    border-radius: 0 !important;
+    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease !important;
+    text-align: center !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .kit-form-wrap .formkit-submit:hover,
+  .kit-form-wrap .formkit-submit:focus {
+    color: #FCFCF7 !important;
+    border-color: var(--gold) !important;
+    background: rgba(197, 168, 128, 0.06) !important;
+    letter-spacing: 0.38em !important;
+    outline: none !important;
+  }
+
+  .kit-form-wrap .formkit-submit > span {
+    padding: 0 !important;
+    display: inline-block !important;
+    background: transparent !important;
+  }
+
+  /* Spinner */
+  .kit-form-wrap .formkit-spinner {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .kit-form-wrap .formkit-spinner > div {
+    background-color: var(--gold-soft) !important;
+  }
+
+  /* Alerts */
+  .kit-form-wrap .formkit-alert {
+    background: rgba(197, 168, 128, 0.06) !important;
+    border: 1px solid var(--gold-soft) !important;
+    color: var(--gold-pale) !important;
+    border-radius: 0 !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-size: 0.95em !important;
+    padding: 14px 18px !important;
+    margin: 0 0 18px 0 !important;
+    text-align: center !important;
+  }
+
+  .kit-form-wrap .formkit-alert-success {
+    background: rgba(197, 168, 128, 0.08) !important;
+    border-color: var(--gold) !important;
+    color: var(--gold-pale) !important;
+  }
+
+  .kit-form-wrap .formkit-alert-error {
+    background: rgba(197, 168, 128, 0.06) !important;
+    border-color: var(--gold-dim) !important;
+    color: var(--offwhite) !important;
+  }
+
+  /* Powered by Kit container */
+  .kit-form-wrap .formkit-powered-by-convertkit-container {
+    margin: 20px 0 0 0 !important;
+    opacity: 0.4 !important;
+    transition: opacity 0.3s ease !important;
+  }
+
+  .kit-form-wrap .formkit-powered-by-convertkit-container:hover {
+    opacity: 0.75 !important;
+  }
+
+  /* Privacy / disclaimer text if any */
+  .kit-form-wrap .formkit-disclaimer,
+  .kit-form-wrap .formkit-guarantee {
+    color: var(--muted) !important;
+    font-family: 'Playfair Display', Georgia, serif !important;
+    font-style: italic !important;
+    font-size: 0.8em !important;
+    margin-top: 14px !important;
   }
 
   /* ---------- REASSURANCE LINE ---------- */
@@ -558,7 +665,6 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
   }
 
-  /* ---------- SIGNATURE ---------- */
   .signature {
     margin-top: 80px;
     text-align: center;
@@ -573,7 +679,6 @@
     opacity: 0.95;
   }
 
-  /* ---------- RESPONSIVE ---------- */
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
 
@@ -586,14 +691,15 @@
     .hero-hook { font-size: 1.15em; }
     .hero-desc { font-size: 1em; margin-bottom: 40px; }
 
-    .join-link {
-      font-size: 1.15em;
-      letter-spacing: 0.22em;
-      padding: 16px 34px;
+    .kit-form-wrap .formkit-input {
+      font-size: 0.95em !important;
+      padding: 14px 16px !important;
     }
 
-    .join-link:hover {
-      letter-spacing: 0.28em;
+    .kit-form-wrap .formkit-submit {
+      padding: 16px 32px !important;
+      font-size: 0.75em !important;
+      letter-spacing: 0.25em !important;
     }
 
     .join-note {
@@ -671,18 +777,11 @@
       padding: 12px 20px;
       font-size: 0.95em;
     }
-
-    .join-link {
-      font-size: 1em;
-      letter-spacing: 0.18em;
-      padding: 14px 26px;
-    }
   }
 </style>
 </head>
 <body>
 
-<!-- ===== STICKY TOP BAR ===== -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
 
@@ -703,7 +802,6 @@
   </button>
 </header>
 
-<!-- ===== DROPDOWN PANEL ===== -->
 <nav
   class="menu-panel"
   id="menuPanel"
@@ -723,7 +821,6 @@
   </ul>
 </nav>
 
-<!-- ===== PAGE ===== -->
 <div class="page-wrap" id="pageWrap">
 
   <div class="page">
@@ -736,18 +833,13 @@
       Occasional notes from the studio and stage. New releases, live dates, and news from Noel Grass.
     </p>
 
-    <!-- ==================== JOIN CTA (Kit modal trigger) ==================== -->
-    <div class="join-cta">
-      <a
-        data-formkit-toggle="cdde1f4e75"
-        href="https://noel-grass.kit.com/cdde1f4e75"
-        class="join-link"
-      >Join Now</a>
+    <!-- ==================== KIT INLINE FORM ==================== -->
+    <div class="kit-form-wrap">
+      <script async data-uid="da005b1a19" src="https://noel-grass.kit.com/da005b1a19/index.js"></script>
     </div>
 
     <p class="join-note">No account. No cost. One email.</p>
 
-    <!-- ==================== WHAT YOU GET ==================== -->
     <div class="get-block">
 
       <span class="get-heading">What You Get</span>
@@ -760,7 +852,6 @@
 
     </div>
 
-    <!-- ==================== SIGNATURE ==================== -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -768,11 +859,6 @@
   </div>
 
 </div>
-
-<!-- ============================================================
-     Kit form script — powers the modal overlay
-     ============================================================ -->
-<script async data-uid="cdde1f4e75" src="https://noel-grass.kit.com/cdde1f4e75/index.js"></script>
 
 <script>
   (function () {
