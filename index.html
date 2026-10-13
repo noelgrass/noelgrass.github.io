@@ -111,7 +111,7 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     opacity: 0;
-    transition: opacity 0.9s ease;
+    transition: opacity 1s ease;
   }
 
   body.loaded {
@@ -370,7 +370,6 @@
     transform-origin: left center;
   }
 
-  /* ---------- PAGE WRAPPER ---------- */
   .page-wrap {
     transition: filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
                 opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -391,7 +390,6 @@
     animation-play-state: paused;
   }
 
-  /* ---------- DROPDOWN PANEL ---------- */
   .menu-panel {
     position: fixed;
     top: 78px;
@@ -430,9 +428,7 @@
     flex-direction: column;
   }
 
-  .menu-panel li {
-    position: relative;
-  }
+  .menu-panel li { position: relative; }
 
   .menu-panel a {
     display: block;
@@ -479,9 +475,7 @@
     text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
   }
 
-  .menu-panel a:hover::before {
-    transform: scaleY(0.6);
-  }
+  .menu-panel a:hover::before { transform: scaleY(0.6); }
 
   .menu-panel li + li::before {
     content: '';
@@ -498,24 +492,6 @@
     );
   }
 
-  .menu-panel li::after {
-    content: '◆';
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%) scale(0);
-    color: var(--gold);
-    font-size: 0.55em;
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-  }
-
-  .menu-panel li:hover::after {
-    opacity: 0.7;
-    transform: translateY(-50%) scale(1);
-  }
-
   .menu-panel a.current {
     color: var(--gold-dim);
     background: rgba(197, 168, 128, 0.04);
@@ -530,72 +506,15 @@
     background: var(--gold-dim);
   }
 
-  .menu-panel a.current:hover {
-    color: var(--gold-dim);
-    background: rgba(197, 168, 128, 0.04);
-    text-shadow: none;
-  }
-
-  .menu-panel li.is-current::after {
-    opacity: 0.85;
-    transform: translateY(-50%) scale(1);
-    color: var(--gold-dim);
-  }
-
-  /* ---------- PAGE ---------- */
-  .page {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 100px 40px 80px;
-    text-align: center;
-    position: relative;
-  }
-
-  .page:has(.fork-card:hover) .title-block,
-  .page:has(.fork-card:hover) .editorial,
-  .page:has(.fork-card:hover) .icons,
-  .page:has(.fork-card:hover) .rule-full,
-  .page:has(.fork-card:hover) .footer-links,
-  .page:has(.fork-card:hover) .signature,
-  .page:has(.fork-card:hover) .scroll-cue {
-    opacity: 0.15;
-    transition: opacity 0.7s ease;
-  }
-
-  .page:has(.fork-card:hover) .fork-card:not(:hover) {
-    opacity: 0.25;
-    transition: opacity 0.7s ease;
-  }
-
-  .page:has(.icons a:hover) .title-block,
-  .page:has(.icons a:hover) .editorial,
-  .page:has(.icons a:hover) .fork,
-  .page:has(.icons a:hover) .scroll-cue,
-  .page:has(.icons a:hover) .rule-full,
-  .page:has(.icons a:hover) .footer-links,
-  .page:has(.icons a:hover) .signature {
-    opacity: 0.1;
-    transition: opacity 0.7s ease;
-  }
-
-  .page:has(.icons a:hover) .icons a:not(:hover) {
-    opacity: 0.1;
-    transition: opacity 0.7s ease;
-  }
-
-  .page:has(.icons a:hover) .icons {
-    opacity: 1;
-  }
-
   /* ============================================================
-     HERO — new full-bleed cinematic block
+     HERO
      ============================================================ */
   .hero {
     position: relative;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 60px 40px 40px;
+    padding: 80px 40px 60px;
     text-align: center;
     overflow: hidden;
     isolation: isolate;
@@ -612,11 +531,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
-    filter: grayscale(100%) brightness(0.28) contrast(1.15);
-    opacity: 0.55;
+    object-position: center 25%;
+    filter: grayscale(100%) brightness(0.42) contrast(1.15);
+    opacity: 0.85;
     transform: scale(1.02);
-    transition: transform 12s ease;
+    transition: transform 14s ease;
   }
 
   .hero.loaded .hero-bg img {
@@ -628,31 +547,27 @@
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at 50% 40%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.88) 90%),
-      linear-gradient(180deg, rgba(0,0,0,0.55) 0%, transparent 25%, transparent 60%, var(--bg) 100%);
+      radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.92) 95%),
+      linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 55%, var(--bg) 100%);
     z-index: 1;
   }
 
-  .hero-content {
-    position: relative;
-    z-index: 2;
-  }
+  .hero-content { position: relative; z-index: 2; }
 
-  /* ---------- TITLE BLOCK ---------- */
   .title-block {
     text-align: center;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
     transition: opacity 0.7s ease;
   }
 
   .eyebrow {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 0.75em;
+    font-size: 0.72em;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: #E8D5B5;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     line-height: 1.6;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.1s;
@@ -662,11 +577,11 @@
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 400;
     color: var(--gold);
-    font-size: 8em;
+    font-size: 4.5em;
     line-height: 1.05;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    margin-bottom: 30px;
+    margin-bottom: 26px;
     display: inline-block;
     animation:
       fadeUp 1s ease-out both,
@@ -684,14 +599,58 @@
     animation-delay: 0.5s;
   }
 
+  /* ============================================================
+     PAGE
+     ============================================================ */
+  .page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 40px 80px;
+    text-align: center;
+    position: relative;
+  }
+
+  .page:has(.fork-card:hover) .editorial,
+  .page:has(.fork-card:hover) .icons,
+  .page:has(.fork-card:hover) .rule-full,
+  .page:has(.fork-card:hover) .footer-links,
+  .page:has(.fork-card:hover) .signature,
+  .page:has(.fork-card:hover) .scroll-cue,
+  .page:has(.fork-card:hover) .fork-intro {
+    opacity: 0.15;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.fork-card:hover) .fork-card:not(:hover) {
+    opacity: 0.25;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.icons a:hover) .editorial,
+  .page:has(.icons a:hover) .fork,
+  .page:has(.icons a:hover) .scroll-cue,
+  .page:has(.icons a:hover) .rule-full,
+  .page:has(.icons a:hover) .footer-links,
+  .page:has(.icons a:hover) .signature {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.icons a:hover) .icons a:not(:hover) {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.icons a:hover) .icons { opacity: 1; }
+
   /* ---------- EDITORIAL SPLIT ---------- */
   .editorial {
     display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 70px;
+    grid-template-columns: 340px 1fr;
+    gap: 60px;
     align-items: start;
     text-align: left;
-    margin: 120px auto 70px;
+    margin: 60px auto 80px;
     max-width: 1100px;
     transition: opacity 0.7s ease;
   }
@@ -710,7 +669,7 @@
     aspect-ratio: 4 / 5;
     object-fit: cover;
     border: 1px solid var(--rule);
-    filter: grayscale(100%) contrast(1.05) brightness(0.65);
+    filter: grayscale(100%) contrast(1.05) brightness(0.7);
     transition: filter 0.7s ease, transform 0.6s ease;
     animation: portraitGlow 6s ease-in-out infinite;
     animation-delay: 1.3s;
@@ -721,10 +680,7 @@
     transform: scale(1.015);
   }
 
-  .editorial-text {
-    text-align: left;
-    padding-top: 10px;
-  }
+  .editorial-text { text-align: left; padding-top: 10px; }
 
   .intro {
     font-style: italic;
@@ -767,11 +723,11 @@
   }
 
   /* ============================================================
-     THE FORK — with slide-in animation
+     THE FORK — image-backed cards
      ============================================================ */
   .fork {
-    margin: 140px auto 70px;
-    max-width: 900px;
+    margin: 100px auto 70px;
+    max-width: 960px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.15s;
     transition: opacity 0.7s ease;
@@ -785,6 +741,7 @@
     text-align: center;
     margin-bottom: 40px;
     opacity: 0.85;
+    transition: opacity 0.7s ease;
   }
 
   .fork-row {
@@ -808,37 +765,29 @@
     opacity: 0.85;
   }
 
-  .page:has(.fork-card:hover) .fork-row::before {
-    opacity: 0.15;
-  }
+  .page:has(.fork-card:hover) .fork-row::before { opacity: 0.15; }
 
   .fork-card {
     display: block;
     position: relative;
-    padding: 46px 34px 42px;
+    padding: 0;
     background: transparent;
     border: 1px solid var(--gold-soft);
     text-align: center;
     overflow: hidden;
     opacity: 0;
     transition:
-      color 0.5s ease,
       border-color 0.5s ease,
-      background 0.5s ease,
       transform 1s cubic-bezier(0.16, 1, 0.3, 1),
       opacity 1s ease,
       box-shadow 0.6s ease;
     animation: doorRestGlow 6s ease-in-out infinite;
     animation-delay: 1.4s;
+    min-height: 380px;
   }
 
-  .fork-card:nth-child(1) {
-    transform: translateX(-60px);
-  }
-
-  .fork-card:nth-child(2) {
-    transform: translateX(60px);
-  }
+  .fork-card:nth-child(1) { transform: translateX(-70px); }
+  .fork-card:nth-child(2) { transform: translateX(70px); }
 
   .fork-card.in-view {
     opacity: 1;
@@ -847,15 +796,62 @@
 
   .fork-card:hover {
     border-color: var(--gold);
-    background: rgba(197, 168, 128, 0.04);
     animation: doorHoverGlow 4s ease-in-out infinite;
+  }
+
+  /* Image background layer */
+  .fork-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .fork-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(100%) brightness(0.4) contrast(1.15);
+    opacity: 0.7;
+    transform: scale(1.03);
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+                filter 0.8s ease,
+                opacity 0.8s ease;
+  }
+
+  .fork-card:hover .fork-bg img {
+    transform: scale(1.08);
+    filter: grayscale(100%) brightness(0.55) contrast(1.15);
+    opacity: 0.85;
+  }
+
+  .fork-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.7) 55%, rgba(0,0,0,0.9) 100%);
+    z-index: 1;
+  }
+
+  /* Content layer */
+  .fork-content {
+    position: relative;
+    z-index: 2;
+    padding: 46px 34px 42px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 380px;
+    height: 100%;
   }
 
   .fork-label {
     display: block;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
-    font-size: 1.9em;
+    font-size: 2em;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold);
@@ -888,14 +884,14 @@
 
   .fork-enter {
     display: block;
-    margin-top: 30px;
+    margin-top: 26px;
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 0.7em;
     letter-spacing: 0.3em;
     text-transform: uppercase;
     color: var(--gold-pale, #E8D5B5);
-    opacity: 0.55;
+    opacity: 0.65;
     transition: opacity 0.4s ease, letter-spacing 0.5s ease, color 0.4s ease;
   }
 
@@ -919,24 +915,6 @@
     opacity: 1;
   }
 
-  .fork-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(
-      ellipse at 50% 100%,
-      rgba(197, 168, 128, 0.12) 0%,
-      transparent 65%
-    );
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    pointer-events: none;
-  }
-
-  .fork-card:hover::before {
-    opacity: 1;
-  }
-
   .fork-card::after {
     content: '';
     position: absolute;
@@ -948,6 +926,7 @@
     transform: translateX(-50%) scaleX(0);
     transform-origin: center;
     transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    z-index: 3;
   }
 
   .fork-card:hover::after {
@@ -1044,9 +1023,7 @@
     transform: scale(1.15);
   }
 
-  .icons a:hover::before {
-    opacity: 1;
-  }
+  .icons a:hover::before { opacity: 1; }
 
   .icons a:hover::after {
     box-shadow: 0 0 45px 10px rgba(185, 151, 92, 0.22);
@@ -1116,7 +1093,7 @@
       grid-template-columns: 1fr;
       gap: 40px;
       text-align: center;
-      margin-top: 80px;
+      margin-top: 50px;
     }
     .portrait {
       position: static;
@@ -1130,52 +1107,47 @@
       filter: grayscale(100%) contrast(1.05) brightness(0.85);
       transform: none;
     }
-    .editorial-text {
-      text-align: center;
-    }
-    .intro, .intro-body {
-      text-align: center;
-    }
-    .bio-link {
-      text-align: center;
-    }
-    .bio-link a:hover {
-      transform: translateX(0);
-    }
+    .editorial-text { text-align: center; }
+    .intro, .intro-body { text-align: center; }
+    .bio-link { text-align: center; }
+    .bio-link a:hover { transform: translateX(0); }
   }
 
   @media (max-width: 700px) {
-    h1 { font-size: 3.4em; letter-spacing: 0.04em; }
-    .page { padding: 40px 22px 50px; }
-    .hero { padding: 30px 22px 20px; }
+    h1 { font-size: 2.8em; letter-spacing: 0.08em; margin-bottom: 22px; }
+    .page { padding: 30px 22px 50px; }
+    .hero { padding: 50px 22px 30px; }
     .hero-bg img { object-position: center 15%; }
 
-    .fork { margin: 70px auto 50px; }
+    .eyebrow { font-size: 0.65em; letter-spacing: 0.25em; margin-bottom: 24px; }
+
+    .fork { margin: 60px auto 50px; }
     .fork-row {
       grid-template-columns: 1fr;
       gap: 20px;
     }
-    .fork-row::before {
-      display: none;
-    }
+    .fork-row::before { display: none; }
     .fork-card {
-      padding: 36px 24px 32px;
+      min-height: 300px;
     }
     .fork-card:nth-child(1),
     .fork-card:nth-child(2) {
-      transform: translateY(30px);
+      transform: translateY(40px);
     }
-    .fork-card.in-view {
-      transform: translateY(0);
+    .fork-card.in-view { transform: translateY(0); }
+    .fork-content {
+      padding: 32px 24px 30px;
+      min-height: 300px;
     }
     .fork-label {
-      font-size: 1.5em;
+      font-size: 1.6em;
       letter-spacing: 0.22em;
     }
     .fork-desc { font-size: 0.95em; }
     .fork-intro { font-size: 1em; margin-bottom: 30px; }
+    .fork-bg img { filter: grayscale(100%) brightness(0.5) contrast(1.1); opacity: 0.75; }
 
-    .editorial { margin: 60px auto 50px; }
+    .editorial { margin: 40px auto 60px; }
 
     .topnav { padding: 18px 22px; }
 
@@ -1190,10 +1162,7 @@
       gap: 10px;
     }
 
-    .hamburger {
-      width: 20px;
-      height: 13px;
-    }
+    .hamburger { width: 20px; height: 13px; }
 
     .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
       transform: translateY(5.75px) rotate(45deg);
@@ -1218,9 +1187,7 @@
       letter-spacing: 0.2em;
     }
 
-    .menu-panel a.current {
-      padding-left: 32px;
-    }
+    .menu-panel a.current { padding-left: 32px; }
 
     .icons { gap: 25px; }
     .intro { font-size: 1.05em; }
@@ -1231,18 +1198,10 @@
   }
 
   @media (max-width: 380px) {
-    h1 { font-size: 2.8em; }
-    .wordmark {
-      font-size: 0.8em;
-      letter-spacing: 0.22em;
-    }
-    .menu-toggle {
-      font-size: 0.65em;
-      letter-spacing: 0.18em;
-    }
-    .menu-toggle::after {
-      left: 30px;
-    }
+    h1 { font-size: 2.2em; }
+    .wordmark { font-size: 0.8em; letter-spacing: 0.22em; }
+    .menu-toggle { font-size: 0.65em; letter-spacing: 0.18em; }
+    .menu-toggle::after { left: 30px; }
   }
 </style>
 </head>
@@ -1285,28 +1244,23 @@
 
 <div class="page-wrap" id="pageWrap">
 
-  <!-- ===== HERO with full-bleed background ===== -->
   <section class="hero" id="hero">
-
     <div class="hero-bg">
       <img src="images/noel-grass.jpeg" alt="" aria-hidden="true">
     </div>
 
     <div class="hero-content">
-
       <div class="title-block">
         <p class="eyebrow">Film Composer &nbsp;|&nbsp; Pianist &nbsp;|&nbsp; Music Producer</p>
         <h1>Noel Grass<span class="visually-hidden"> — Film Composer, Neoclassical Pianist &amp; Music Producer in Nairobi, Kenya</span></h1>
         <div class="rule-small"></div>
       </div>
-
     </div>
   </section>
 
   <div class="page">
 
     <div class="editorial">
-
       <div class="portrait">
         <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
       </div>
@@ -1322,27 +1276,36 @@
           <a href="biography">Read the full biography →</a>
         </p>
       </div>
-
     </div>
 
-    <!-- ============================================================
-         THE FORK — two doors
-         ============================================================ -->
+    <!-- THE FORK — image-backed cards -->
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
 
       <div class="fork-row">
 
+        <!-- ARTIST CARD — replace the img src with your artist-side image when ready -->
         <a href="artist" class="fork-card" aria-label="Enter the Artist side">
-          <span class="fork-label">Artist</span>
-          <span class="fork-desc">Music, live performances, releases, and more. Step into the world.</span>
-          <span class="fork-enter">Enter</span>
+          <div class="fork-bg" aria-hidden="true">
+            <img src="images/noel-grass.jpeg" alt="" loading="lazy">
+          </div>
+          <div class="fork-content">
+            <span class="fork-label">Artist</span>
+            <span class="fork-desc">Music, live performances, releases, and more. Step into the world.</span>
+            <span class="fork-enter">Enter</span>
+          </div>
         </a>
 
+        <!-- FILM COMPOSER CARD — replace the img src with your film-side image when ready -->
         <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
-          <span class="fork-label">Film Composer</span>
-          <span class="fork-desc">Score your film · original soundtracks, cinematic composition, and sonic branding.</span>
-          <span class="fork-enter">Enter</span>
+          <div class="fork-bg" aria-hidden="true">
+            <img src="images/noel-grass.jpeg" alt="" loading="lazy">
+          </div>
+          <div class="fork-content">
+            <span class="fork-label">Film Composer</span>
+            <span class="fork-desc">Score your film · original soundtracks, cinematic composition, and sonic branding.</span>
+            <span class="fork-enter">Enter</span>
+          </div>
         </a>
 
       </div>
@@ -1399,14 +1362,12 @@
 </div>
 
 <script>
-  /* ---------- FADE IN ON LOAD ---------- */
   window.addEventListener('load', function() {
     document.body.classList.add('loaded');
     var hero = document.getElementById('hero');
     if (hero) hero.classList.add('loaded');
   });
 
-  /* ---------- FORK CARD SLIDE-IN ON SCROLL ---------- */
   (function() {
     var cards = document.querySelectorAll('.fork-card');
     if (!cards.length) return;
@@ -1428,7 +1389,6 @@
     cards.forEach(function(card) { observer.observe(card); });
   })();
 
-  /* ---------- MENU LOGIC ---------- */
   (function () {
     var toggle = document.getElementById('menuToggle');
     var panel  = document.getElementById('menuPanel');
