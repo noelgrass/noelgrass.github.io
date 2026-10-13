@@ -139,6 +139,45 @@
     }
   }
 
+  @keyframes artworkRestGlow {
+    0% {
+      box-shadow:
+        0 0 25px 3px rgba(185, 151, 92, 0.30),
+        0 0 55px 8px rgba(185, 151, 92, 0.12);
+    }
+    50% {
+      box-shadow:
+        0 0 35px 6px rgba(185, 151, 92, 0.55),
+        0 0 75px 14px rgba(185, 151, 92, 0.22);
+    }
+    100% {
+      box-shadow:
+        0 0 25px 3px rgba(185, 151, 92, 0.30),
+        0 0 55px 8px rgba(185, 151, 92, 0.12);
+    }
+  }
+
+  @keyframes artworkHoverGlow {
+    0% {
+      box-shadow:
+        0 0 45px 8px rgba(197, 168, 128, 0.55),
+        0 0 100px 25px rgba(197, 168, 128, 0.30),
+        0 0 160px 50px rgba(197, 168, 128, 0.12);
+    }
+    50% {
+      box-shadow:
+        0 0 60px 14px rgba(197, 168, 128, 0.75),
+        0 0 130px 40px rgba(197, 168, 128, 0.42),
+        0 0 200px 70px rgba(197, 168, 128, 0.18);
+    }
+    100% {
+      box-shadow:
+        0 0 45px 8px rgba(197, 168, 128, 0.55),
+        0 0 100px 25px rgba(197, 168, 128, 0.30),
+        0 0 160px 50px rgba(197, 168, 128, 0.12);
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -310,7 +349,6 @@
     position: relative;
   }
 
-  /* NOTE: no `opacity: 0` here — that was the collapse bug */
   .menu-panel a {
     display: block;
     padding: 13px 26px;
@@ -327,6 +365,7 @@
       background 0.35s ease,
       padding-left 0.35s ease,
       text-shadow 0.5s ease;
+    opacity: 0;
   }
 
   .menu-panel.open li a {
@@ -495,17 +534,6 @@
     animation-delay: 0.85s;
   }
 
-  .purchase-note {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: 0.95em;
-    color: var(--gold-pale);
-    margin: 0 auto 50px;
-    text-align: center;
-    animation: fadeUp 1s ease-out both;
-    animation-delay: 0.95s;
-  }
-
   .mood-groups {
     text-align: left;
     margin-top: 20px;
@@ -574,6 +602,61 @@
     border-color: var(--gold);
   }
 
+  /* ---------- LATEST RELEASE (feature) ---------- */
+  .feature-release {
+    padding: 50px 0 60px;
+    text-align: center;
+  }
+
+  .feature-cover {
+    display: inline-block;
+    position: relative;
+    max-width: 480px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    margin: 0 auto 40px;
+  }
+
+  .feature-cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border: 1px solid #1f1f1f;
+    background: #1a1a1a;
+    filter: brightness(0.78) contrast(1.05);
+    transition: filter 0.8s ease, transform 0.8s ease, border-color 0.7s ease;
+    animation: artworkRestGlow 7s ease-in-out infinite;
+    animation-delay: 1.3s;
+  }
+
+  .feature-cover:hover img {
+    filter: brightness(0.85) contrast(1.10);
+    transform: scale(1.015);
+    border-color: var(--gold-soft);
+    animation: artworkHoverGlow 4s ease-in-out infinite;
+  }
+
+  .feature-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.8em;
+    color: var(--gold-pale);
+    letter-spacing: 0.05em;
+    margin-bottom: 30px;
+    transition: color 0.3s ease;
+  }
+
+  .feature-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  /* ---------- STORE GRID ---------- */
   .mood-group .store-gallery {
     padding: 40px 0 50px;
   }
@@ -652,8 +735,50 @@
     transition: color 0.5s ease;
   }
 
-  .store-item .buy-link {
-    display: none;
+  /* ---------- BUY / PREVIEW ACTIONS ---------- */
+  .item-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .action-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.68em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: 1px solid rgba(185, 151, 92, 0.45);
+    padding: 8px 18px;
+    cursor: pointer;
+    position: relative;
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      background 0.35s ease,
+      box-shadow 0.5s ease,
+      transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .action-link:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.08);
+    box-shadow: 0 0 18px rgba(197, 168, 128, 0.28);
+    transform: translateY(-1px);
+  }
+
+  .action-link.is-soon {
+    color: var(--gold-dim);
+    border-color: rgba(122, 107, 79, 0.45);
+    cursor: not-allowed;
+    pointer-events: none;
   }
 
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .poster {
@@ -678,6 +803,77 @@
     color: rgba(154, 149, 140, 0.3);
   }
 
+  /* ---------- VIDEO MODAL ---------- */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .video-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--gold-soft);
+    background: #000;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.85),
+      0 0 60px rgba(197, 168, 128, 0.15);
+    transform: scale(0.94);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .video-modal.open .video-modal-inner {
+    transform: scale(1);
+  }
+
+  .video-modal-inner iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-close {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: transparent;
+    border: 0;
+    color: var(--gold-pale);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 2px;
+    transition: color 0.3s ease, text-shadow 0.4s ease;
+  }
+
+  .video-close:hover {
+    color: #FCFCF7;
+    text-shadow: 0 0 14px rgba(197, 168, 128, 0.5);
+  }
+
+  /* ---------- MERCH + SIGNATURE ---------- */
   .merch-note {
     margin-top: 80px;
     padding-top: 50px;
@@ -730,7 +926,6 @@
     .hero-line { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 50px; }
     .section-label { font-size: 1.2em; letter-spacing: 0.2em; }
     .section-note { font-size: 0.95em; margin-bottom: 14px; }
-    .purchase-note { font-size: 0.9em; margin-bottom: 40px; }
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
@@ -741,6 +936,11 @@
     .store-item:hover .poster img { filter: brightness(0.85) contrast(1.05); transform: none; }
     .store-item .caption { font-size: 1em; }
     .store-item .format-label { font-size: 0.62em; letter-spacing: 0.2em; }
+
+    .feature-release { padding: 30px 0 40px; }
+    .feature-cover { max-width: 320px; margin-bottom: 30px; }
+    .feature-title { font-size: 1.4em; margin-bottom: 24px; }
+    .feature-actions { gap: 20px; }
 
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
@@ -766,6 +966,8 @@
 
     .menu-panel a { padding: 14px 24px; font-size: 1.02em; letter-spacing: 0.2em; }
     .menu-panel a.current { padding-left: 32px; }
+
+    .video-close { top: -40px; }
 
     .merch-note { margin-top: 50px; padding-top: 35px; }
     .signature { margin-top: 60px; }
@@ -838,9 +1040,36 @@
 
     <p class="section-note">Solo Piano · Orchestral · Hybrid · Ambient</p>
 
-    <p class="purchase-note">Purchasing opens soon.</p>
-
     <div class="mood-groups">
+
+      <!-- ==================== LATEST RELEASE ==================== -->
+      <details class="mood-group">
+        <summary>
+          <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
+          <span class="mood-count">E.P.</span>
+        </summary>
+
+        <div class="feature-release">
+
+          <div class="feature-cover">
+            <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
+          </div>
+
+          <p class="feature-title">Into A Stillness That Answers</p>
+
+          <div class="feature-actions">
+            <button
+              type="button"
+              class="action-link js-preview"
+              data-video="T6jDLG2Acbk"
+              aria-label="Preview Into A Stillness That Answers"
+            >Preview</button>
+
+            <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+          </div>
+
+        </div>
+      </details>
 
       <!-- ==================== SOLO PIANO ==================== -->
       <details class="mood-group">
@@ -853,38 +1082,50 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano album by Noel Grass" loading="lazy">
             </div>
             <div class="caption">Into A Stillness That Answers</div>
             <div class="format-label">Solo Piano</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="T6jDLG2Acbk" aria-label="Preview Into A Stillness That Answers">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano album by Noel Grass" loading="lazy">
             </div>
             <div class="caption">Where I Begin Again</div>
             <div class="format-label">Solo Piano</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="dgQjOQKJwnw" aria-label="Preview Where I Begin Again">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
             </div>
             <div class="caption">The Impressionist</div>
             <div class="format-label">Solo Piano</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="hQsG4VxJSws" aria-label="Preview The Impressionist">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
+              <img src="images/discography/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
             </div>
             <div class="caption">The Impressionist II</div>
             <div class="format-label">Solo Piano</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="f9vpu1eTEYE" aria-label="Preview The Impressionist II">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
         </div>
@@ -894,36 +1135,33 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-          <span class="mood-count">3 albums</span>
+          <span class="mood-count">2 albums</span>
         </summary>
 
         <div class="store-gallery">
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/orchestral-1.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral album by Noel Grass" loading="lazy">
             </div>
-            <div class="caption">Orchestral I</div>
+            <div class="caption">Introspect</div>
             <div class="format-label">Orchestral</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="N6GS8OGD2GY" aria-label="Preview Introspect">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/orchestral-2.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+              <img src="images/discography/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
             </div>
-            <div class="caption">Orchestral II</div>
+            <div class="caption">Seven Deadly Sins</div>
             <div class="format-label">Orchestral</div>
-            <a href="#" class="buy-link">Buy</a>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/orchestral-3.jpg" alt="Orchestral work by Noel Grass" loading="lazy">
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="Ksw5e9IyGzs" aria-label="Preview Seven Deadly Sins">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
             </div>
-            <div class="caption">Orchestral III</div>
-            <div class="format-label">Orchestral</div>
-            <a href="#" class="buy-link">Buy</a>
           </div>
 
         </div>
@@ -940,20 +1178,26 @@
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/hybrid-1.jpg" alt="Hybrid work by Noel Grass" loading="lazy">
+              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid album by Noel Grass" loading="lazy">
             </div>
-            <div class="caption">Hybrid I</div>
+            <div class="caption">Agent 254</div>
             <div class="format-label">Hybrid</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="z-LEJuI9u6A" aria-label="Preview Agent 254">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/hybrid-2.jpg" alt="Hybrid work by Noel Grass" loading="lazy">
+              <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
             </div>
-            <div class="caption">Hybrid II</div>
+            <div class="caption">The Impressionist III</div>
             <div class="format-label">Hybrid</div>
-            <a href="#" class="buy-link">Buy</a>
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="iLW3pvDHahI" aria-label="Preview The Impressionist III">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
+            </div>
           </div>
 
         </div>
@@ -963,27 +1207,21 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-          <span class="mood-count">2 albums</span>
+          <span class="mood-count">1 album</span>
         </summary>
 
         <div class="store-gallery">
 
           <div class="store-item">
             <div class="poster">
-              <img src="images/ambient-1.jpg" alt="Ambient work by Noel Grass" loading="lazy">
+              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient album by Noel Grass" loading="lazy">
             </div>
-            <div class="caption">Ambient I</div>
+            <div class="caption">When Stars Align</div>
             <div class="format-label">Ambient</div>
-            <a href="#" class="buy-link">Buy</a>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/ambient-2.jpg" alt="Ambient work by Noel Grass" loading="lazy">
+            <div class="item-actions">
+              <button type="button" class="action-link js-preview" data-video="zNHjyFSfxuc" aria-label="Preview When Stars Align">Preview</button>
+              <span class="action-link is-soon" aria-disabled="true">Buy · Soon</span>
             </div>
-            <div class="caption">Ambient II</div>
-            <div class="format-label">Ambient</div>
-            <a href="#" class="buy-link">Buy</a>
           </div>
 
         </div>
@@ -1002,6 +1240,20 @@
 
   </div>
 
+</div>
+
+<!-- ===== VIDEO MODAL ===== -->
+<div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video preview">
+  <div class="video-modal-inner">
+    <button type="button" class="video-close" id="videoClose">Close ✕</button>
+    <iframe
+      id="videoFrame"
+      src=""
+      title="YouTube video preview"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
 </div>
 
 <script>
@@ -1113,6 +1365,93 @@
         matched.parentElement.classList.add('is-current');
       }
     }
+  })();
+
+  /* ---------- ACCORDION: ONE OPEN AT A TIME + SCROLL INTO VIEW ---------- */
+  (function() {
+    var groups = document.querySelectorAll('.mood-groups > .mood-group');
+    var closingProgrammatically = false;
+
+    groups.forEach(function(group) {
+      group.addEventListener('toggle', function() {
+        var summary = group.querySelector('summary');
+
+        if (group.open) {
+          closingProgrammatically = true;
+
+          groups.forEach(function(other) {
+            if (other !== group && other.open) {
+              other.open = false;
+            }
+          });
+
+          closingProgrammatically = false;
+
+          setTimeout(function() {
+            var rect = summary.getBoundingClientRect();
+            var targetTop = 130;
+            if (rect.top < 0 || rect.top > window.innerHeight * 0.4) {
+              window.scrollTo({
+                top: window.scrollY + rect.top - targetTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 20);
+        } else if (!closingProgrammatically) {
+          setTimeout(function() {
+            var rect = summary.getBoundingClientRect();
+            var targetTop = 130;
+            if (rect.top < 0 || rect.top > window.innerHeight * 0.5) {
+              window.scrollTo({
+                top: window.scrollY + rect.top - targetTop,
+                behavior: 'smooth'
+              });
+            }
+          }, 20);
+        }
+      });
+    });
+  })();
+
+  /* ---------- YOUTUBE PREVIEW MODAL ---------- */
+  (function() {
+    var modal    = document.getElementById('videoModal');
+    var frame    = document.getElementById('videoFrame');
+    var closeBtn = document.getElementById('videoClose');
+
+    function openModal(videoId) {
+      frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      document.body.classList.remove('no-scroll');
+    }
+
+    document.querySelectorAll('.js-preview').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = btn.getAttribute('data-video');
+        if (id) openModal(id);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
   })();
 </script>
 
