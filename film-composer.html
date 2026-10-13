@@ -563,7 +563,7 @@
   .page:has(.cta-link:hover) .reveal,
   .page:has(.cta-link:hover) .signature,
   .page:has(.cta-link:hover) .cross-link,
-  .page:has(.cta-link:hover) .faq {
+  .page:has(.cta-link:hover) .faq-wrap {
     opacity: 0.15;
     transition: opacity 0.6s ease;
   }
@@ -637,52 +637,89 @@
 
   em { font-style: italic; }
 
-  /* ---------- FAQ (footer style, quiet) ---------- */
-  .faq {
+  /* ---------- FAQ ACCORDION (footer, quiet) ---------- */
+  .faq-wrap {
     text-align: left;
     margin: 30px auto 0;
     max-width: 720px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.6s;
     transition: opacity 0.6s ease;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
+
+  .faq-wrap summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 2px;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.3s ease;
+  }
+
+  .faq-wrap summary::-webkit-details-marker { display: none; }
+  .faq-wrap summary::marker { content: ''; }
 
   .faq-label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 0.7em;
+    font-size: 0.62em;
     letter-spacing: 0.35em;
     text-transform: uppercase;
     color: var(--muted);
-    margin: 50px 0 18px;
-    text-align: center;
-    display: block;
-    transition: opacity 0.6s ease;
+    transition: color 0.3s ease;
+  }
+
+  .faq-wrap summary:hover .faq-label {
+    color: var(--gold-pale);
+  }
+
+  .faq-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    flex: 0 0 auto;
+  }
+
+  .faq-wrap[open] .faq-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--gold);
+  }
+
+  .faq-body {
+    padding: 4px 0 18px;
   }
 
   .faq-item {
-    border-bottom: 1px solid rgba(42, 42, 42, 0.7);
-    padding: 16px 0;
+    padding: 12px 0;
+    border-top: 1px solid rgba(42, 42, 42, 0.7);
   }
 
-  .faq-item:last-child {
-    border-bottom: none;
+  .faq-item:first-child {
+    border-top: none;
+    padding-top: 4px;
   }
 
   .faq-item h3 {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: normal;
     font-weight: 400;
-    font-size: 0.98em;
+    font-size: 0.88em;
     color: var(--offwhite);
     letter-spacing: 0;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     line-height: 1.5;
     opacity: 0.9;
   }
 
   .faq-item p {
-    font-size: 0.92em;
+    font-size: 0.82em;
     line-height: 1.75;
     margin: 0;
     color: var(--muted);
@@ -798,10 +835,11 @@
     h2, .subhead { font-size: 1.1em; margin: 40px 0 18px; }
     p { font-size: 1em; }
 
-    .faq-label { font-size: 0.62em; margin: 40px 0 14px; }
-    .faq-item { padding: 14px 0; }
-    .faq-item h3 { font-size: 0.94em; }
-    .faq-item p { font-size: 0.88em; }
+    .faq-wrap summary { padding: 14px 2px; }
+    .faq-label { font-size: 0.58em; }
+    .faq-item { padding: 11px 0; }
+    .faq-item h3 { font-size: 0.84em; }
+    .faq-item p { font-size: 0.78em; }
 
     .topnav { padding: 18px 22px; }
 
@@ -971,39 +1009,44 @@
       <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
     </div>
 
-    <span class="faq-label">Questions</span>
+    <details class="faq-wrap">
+      <summary>
+        <span class="faq-label">Questions</span>
+        <span class="faq-indicator" aria-hidden="true"></span>
+      </summary>
 
-    <div class="faq">
-      <div class="faq-item">
-        <h3>How do I hire a film composer in Kenya?</h3>
-        <p>Start with a brief that describes the story, mood, and delivery timeline. Noel Grass works with filmmakers, production houses, and agencies across East Africa and internationally, following a clear four-step process: Brief, Agreement, Creation, Delivery. Inquiries start through the <a href="commission">Commission a Score</a> page.</p>
-      </div>
+      <div class="faq-body">
+        <div class="faq-item">
+          <h3>How do I hire a film composer in Kenya?</h3>
+          <p>Start with a brief that describes the story, mood, and delivery timeline. Noel Grass works with filmmakers, production houses, and agencies across East Africa and internationally, following a clear four-step process: Brief, Agreement, Creation, Delivery. Inquiries start through the <a href="commission">Commission a Score</a> page.</p>
+        </div>
 
-      <div class="faq-item">
-        <h3>Does Noel Grass compose jingles and TV commercial music?</h3>
-        <p>Yes. Noel Grass composes jingles, TV and radio commercial music, brand anthems, and full custom soundtracks for corporate and international development campaigns. Clients have included the International Finance Corporation (IFC / World Bank Group), the Higher Education Loans Board (HELB), the Government Advertising Agency (GAA), and SOMINVEST.</p>
-      </div>
+        <div class="faq-item">
+          <h3>Does Noel Grass compose jingles and TV commercial music?</h3>
+          <p>Yes. Noel Grass composes jingles, TV and radio commercial music, brand anthems, and full custom soundtracks for corporate and international development campaigns. Clients have included the International Finance Corporation (IFC / World Bank Group), the Higher Education Loans Board (HELB), the Government Advertising Agency (GAA), and SOMINVEST.</p>
+        </div>
 
-      <div class="faq-item">
-        <h3>Can I license existing music instead of commissioning new work?</h3>
-        <p>Yes. Already-made scores and jingles from the Noel Grass catalogue can be licensed for immediate use. This is faster than commissioning a new piece and suits productions with tight timelines or smaller budgets. See the <a href="rent">Rent page</a> for the licensing catalogue.</p>
-      </div>
+        <div class="faq-item">
+          <h3>Can I license existing music instead of commissioning new work?</h3>
+          <p>Yes. Already-made scores and jingles from the Noel Grass catalogue can be licensed for immediate use. This is faster than commissioning a new piece and suits productions with tight timelines or smaller budgets. See the <a href="rent">Rent page</a> for the licensing catalogue.</p>
+        </div>
 
-      <div class="faq-item">
-        <h3>What does a film composer do?</h3>
-        <p>A film composer writes original music for a film, documentary, or brand campaign. The score supports the story, sets tone, and shapes how the audience feels at each moment. Noel Grass composes cinematic scores that function as an unseen character within the frame.</p>
-      </div>
+        <div class="faq-item">
+          <h3>What does a film composer do?</h3>
+          <p>A film composer writes original music for a film, documentary, or brand campaign. The score supports the story, sets tone, and shapes how the audience feels at each moment. Noel Grass composes cinematic scores that function as an unseen character within the frame.</p>
+        </div>
 
-      <div class="faq-item">
-        <h3>What should I look for in a film composer?</h3>
-        <p>Look for a composer with a clear process, demonstrated range, and a track record you can hear. Strong communication and deadline reliability matter as much as the music itself. Noel Grass brings a four-step process, awards for Best Feature Film and Best Short Film, and a client list that includes the IFC and World Bank Group.</p>
-      </div>
+        <div class="faq-item">
+          <h3>What should I look for in a film composer?</h3>
+          <p>Look for a composer with a clear process, demonstrated range, and a track record you can hear. Strong communication and deadline reliability matter as much as the music itself. Noel Grass brings a four-step process, awards for Best Feature Film and Best Short Film, and a client list that includes the IFC and World Bank Group.</p>
+        </div>
 
-      <div class="faq-item">
-        <h3>Where is Noel Grass based?</h3>
-        <p>Noel Grass is based in Nairobi, Kenya. He works with clients across East Africa and internationally, from feature films and documentaries to commercial campaigns and sonic branding.</p>
+        <div class="faq-item">
+          <h3>Where is Noel Grass based?</h3>
+          <p>Noel Grass is based in Nairobi, Kenya. He works with clients across East Africa and internationally, from feature films and documentaries to commercial campaigns and sonic branding.</p>
+        </div>
       </div>
-    </div>
+    </details>
 
     <div class="cross-link">
       For Noel Grass's own catalogue, solo piano, orchestral, hybrid, and ambient works, see the <a href="artist">Artist page</a>.
