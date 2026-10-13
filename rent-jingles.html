@@ -480,6 +480,32 @@
     color: var(--gold-dim);
   }
 
+  .menu-panel li.has-desc a {
+    padding-top: 15px;
+    padding-bottom: 26px;
+  }
+
+  .menu-panel li.has-desc .menu-desc {
+    position: absolute;
+    left: 26px;
+    bottom: 8px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    opacity: 0.75;
+    transition: color 0.35s ease, left 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+
+  .menu-panel li.has-desc:hover .menu-desc {
+    left: 34px;
+    color: var(--gold-pale);
+    opacity: 1;
+  }
+
   /* ---------- PAGE ---------- */
   .page {
     max-width: 900px;
@@ -902,6 +928,21 @@
       padding-left: 32px;
     }
 
+    .menu-panel li.has-desc a {
+      padding-top: 15px;
+      padding-bottom: 28px;
+    }
+
+    .menu-panel li.has-desc .menu-desc {
+      left: 24px;
+      bottom: 9px;
+      font-size: 0.7em;
+    }
+
+    .menu-panel li.has-desc:hover .menu-desc {
+      left: 32px;
+    }
+
     .back-bottom { margin-top: 40px; }
     .signature { margin-top: 40px; }
     .signature-logo { height: 55px; }
@@ -961,7 +1002,12 @@
     <li><a href="film-composer">Film Composer</a></li>
     <li><a href="commission">Commission a Score</a></li>
     <li><a href="film-gallery">Gallery</a></li>
-    <li><a href="rent">Rent</a></li>
+    <li class="has-desc">
+      <a href="rent">
+        Rent
+        <span class="menu-desc">existing scores &amp; jingles</span>
+      </a>
+    </li>
     <li><a href="contact">Contact</a></li>
   </ul>
 </nav>
@@ -1254,7 +1300,6 @@
     var panel    = document.getElementById('menuPanel');
     var pageWrap = document.getElementById('pageWrap');
 
-    /* ---------- SCROLL LOCK (no layout shift) ---------- */
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
     }
@@ -1270,7 +1315,6 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    /* ---------- OPEN / CLOSE MENU ---------- */
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
@@ -1315,7 +1359,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    /* ---------- CURRENT-PAGE HIGHLIGHT ---------- */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -1360,7 +1403,6 @@
       }
     }
 
-    /* ---------- ACCORDION: close others when one opens ---------- */
     var groups = document.querySelectorAll('.mood-groups .mood-group');
     groups.forEach(function(group) {
       group.addEventListener('toggle', function() {
