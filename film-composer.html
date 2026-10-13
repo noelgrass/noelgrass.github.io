@@ -637,50 +637,67 @@
 
   em { font-style: italic; }
 
-  /* ---------- FAQ ---------- */
+  /* ---------- FAQ (footer style, quiet) ---------- */
   .faq {
     text-align: left;
-    margin: 40px auto 20px;
+    margin: 30px auto 0;
     max-width: 720px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.6s;
     transition: opacity 0.6s ease;
   }
 
-  .faq-item {
-    border-bottom: 1px solid var(--rule);
-    padding: 22px 0;
+  .faq-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 50px 0 18px;
+    text-align: center;
+    display: block;
+    transition: opacity 0.6s ease;
   }
 
-  .faq-item:first-child {
-    border-top: 1px solid var(--rule);
+  .faq-item {
+    border-bottom: 1px solid rgba(42, 42, 42, 0.7);
+    padding: 16px 0;
+  }
+
+  .faq-item:last-child {
+    border-bottom: none;
   }
 
   .faq-item h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 600;
-    font-size: 1.15em;
-    color: var(--gold-pale);
-    letter-spacing: 0.02em;
-    margin-bottom: 10px;
-    line-height: 1.4;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.98em;
+    color: var(--offwhite);
+    letter-spacing: 0;
+    margin-bottom: 6px;
+    line-height: 1.5;
+    opacity: 0.9;
   }
 
   .faq-item p {
-    font-size: 1em;
-    line-height: 1.8;
+    font-size: 0.92em;
+    line-height: 1.75;
     margin: 0;
-    color: var(--offwhite);
+    color: var(--muted);
   }
 
   .faq-item p a {
-    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
     padding-bottom: 1px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, color 0.3s ease;
   }
 
   .faq-item p a:hover {
     border-bottom-color: var(--gold);
+    color: #FCFCF7;
   }
 
   .cta-row {
@@ -781,8 +798,10 @@
     h2, .subhead { font-size: 1.1em; margin: 40px 0 18px; }
     p { font-size: 1em; }
 
-    .faq-item h3 { font-size: 1.05em; }
-    .faq-item p { font-size: 0.95em; }
+    .faq-label { font-size: 0.62em; margin: 40px 0 14px; }
+    .faq-item { padding: 14px 0; }
+    .faq-item h3 { font-size: 0.94em; }
+    .faq-item p { font-size: 0.88em; }
 
     .topnav { padding: 18px 22px; }
 
@@ -952,7 +971,7 @@
       <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
     </div>
 
-    <h2 class="subhead">Frequently Asked Questions</h2>
+    <span class="faq-label">Questions</span>
 
     <div class="faq">
       <div class="faq-item">
