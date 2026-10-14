@@ -642,6 +642,27 @@
     color: #FCFCF7;
   }
 
+  .booking-line {
+    text-align: left;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--muted);
+    margin: 24px 0 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
+  }
+
+  .booking-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .booking-line a:hover {
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
   .cross-link {
     margin-top: 60px;
     padding-top: 40px;
@@ -694,6 +715,27 @@
     height: 70px;
     width: auto;
     opacity: 0.95;
+  }
+
+  .contact-quiet {
+    text-align: center;
+    margin-top: 32px;
+    font-style: italic;
+    font-size: 1em;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
+  }
+
+  .contact-quiet a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease, color 0.3s ease, letter-spacing 0.4s ease;
+  }
+
+  .contact-quiet a:hover {
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+    letter-spacing: 0.05em;
   }
 
   @media (max-width: 700px) {
@@ -756,6 +798,7 @@
     .cross-link { margin-top: 50px; padding-top: 30px; }
     .signature { margin-top: 60px; }
     .signature-logo { height: 55px; }
+    .contact-quiet { margin-top: 24px; }
   }
 
   @media (max-width: 380px) {
@@ -833,11 +876,11 @@
 
     <div class="body-section">
 
-      <p>Noel Grass is a neoclassical pianist, contemporary classical composer, orchestrator, music arranger, and music producer. His practice moves across solo piano, orchestral composition, hybrid scoring, and ambient sound design, from the intimacy of a single instrument to the sweep of a full ensemble.</p>
+      <p>Noel Grass writes music for piano and for orchestra, for a single instrument and for a full ensemble. His work moves between the quiet of solo piano and the expanse of cinematic sound, always searching for the space where emotion and architecture meet.</p>
 
-      <p>As a pianist and composer, his solo works, <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, and <em>Where I Begin Again</em>, sit within the contemporary classical tradition. They draw on impressionism, cinematic texture, and the restraint of neoclassical form, without settling into any single school.</p>
+      <p>His solo works, <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, and <em>Where I Begin Again</em>, sit within the contemporary classical tradition. They lean on impressionism, cinematic texture, and the restraint of neoclassical form, without ever settling into a single school.</p>
 
-      <p>As an orchestrator, music arranger, and producer, he shapes each release from the studio, building arrangements, layering traditional orchestral instruments with ambient textures and African instrumental elements, and producing the final work. His practice is built on a single principle: emotion directs the architecture.</p>
+      <p>In the studio, he shapes each release himself, layering traditional orchestral instruments with ambient textures and African instrumental elements. His practice is built on a single principle: emotion directs the architecture.</p>
 
     </div>
 
@@ -847,26 +890,26 @@
 
       <p>Noel Grass performs his own compositions live, from solo piano to full ensemble. Sets range from intimate rooms to festival stages.</p>
 
-      <p>Available for private events, cultural programmes, and film festivals.</p>
-
       <div class="live-links">
         <a href="performances">See Performances →</a>
         <a href="tour-dates">See Tour Dates →</a>
       </div>
 
+      <p class="booking-line">For bookings and collaborations, visit the <a href="contact">Contact</a> page.</p>
+
     </div>
 
-    <span class="subhead">Four Modes</span>
+    <span class="subhead">Four Rooms</span>
 
     <div class="body-section">
 
-      <p>His catalogue is organised around four distinct sonic modes:</p>
+      <p>His catalogue moves through four sonic spaces:</p>
 
       <ul class="format-list">
-        <li><strong>Solo Piano.</strong> Neoclassical and contemporary classical piano, at its most intimate.</li>
-        <li><strong>Orchestral.</strong> Full ensemble writing, from sweeping cinematic to introspective chamber.</li>
-        <li><strong>Hybrid.</strong> Piano and orchestration interwoven with electronic textures and sound design.</li>
-        <li><strong>Ambient.</strong> Layered, atmospheric work built around texture and tone.</li>
+        <li><strong>Solo Piano.</strong> Just the instrument, in a quiet room.</li>
+        <li><strong>Orchestral.</strong> Full ensemble writing, from sweeping to still.</li>
+        <li><strong>Hybrid.</strong> Piano and orchestra woven with electronic textures.</li>
+        <li><strong>Ambient.</strong> Layered atmosphere, built from tone and time.</li>
       </ul>
 
     </div>
@@ -884,12 +927,16 @@
     </div>
 
     <div class="cross-link">
-      For film scoring and commissioned work, see the <a href="film-composer">Film Composer →</a> page.
+      For stories on screen, see the <a href="film-composer">Film Composer →</a> page.
     </div>
 
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
+
+    <p class="contact-quiet">
+      <a href="contact">Contact →</a>
+    </p>
 
   </div>
 
