@@ -415,9 +415,6 @@
     will-change: filter, opacity;
   }
 
-  /* ============================================================
-     CINEMATIC FULL-SCREEN OVERLAY MENU (two-column)
-     ============================================================ */
   .menu-panel {
     position: fixed;
     inset: 0;
@@ -700,34 +697,6 @@
     text-align: center;
   }
 
-  .page > h1,
-  .page > .hero-subhead,
-  .page > .section-pricing,
-  .page > .back-link,
-  .page > .license-link,
-  .page > .back-bottom,
-  .page > .signature {
-    transition: opacity 0.5s ease;
-  }
-
-  .page .mood-groups .mood-group {
-    transition: opacity 0.5s ease, border-color 0.4s ease;
-  }
-
-  .page:has(.mood-group:hover) > h1,
-  .page:has(.mood-group:hover) > .hero-subhead,
-  .page:has(.mood-group:hover) > .section-pricing,
-  .page:has(.mood-group:hover) > .back-link,
-  .page:has(.mood-group:hover) > .license-link,
-  .page:has(.mood-group:hover) > .back-bottom,
-  .page:has(.mood-group:hover) > .signature {
-    opacity: 0.25;
-  }
-
-  .page:has(.mood-group:hover) .mood-group:not(:hover) {
-    opacity: 0.25;
-  }
-
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
@@ -796,6 +765,60 @@
   .license-link:hover {
     transform: translateX(4px);
     color: #FCFCF7;
+  }
+
+  /* Coming Soon block */
+  .coming-soon {
+    margin: 0 auto 60px;
+    max-width: 640px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.85s;
+  }
+
+  .coming-soon .ornament {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.85;
+    margin-bottom: 40px;
+  }
+
+  .coming-soon .label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.72em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 30px;
+  }
+
+  .coming-soon p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    margin: 0 auto 20px;
+  }
+
+  .coming-soon p.italic {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.95em;
+    margin-top: 30px;
+  }
+
+  /* Dimmed catalogue */
+  .catalogue-dimmed {
+    opacity: 0.35;
+    pointer-events: none;
+    user-select: none;
+    text-align: left;
+    margin-top: 20px;
   }
 
   .mood-groups {
@@ -1058,6 +1081,10 @@
     .hero-subhead { font-size: 1.1em; }
     .back-link { margin-bottom: 30px; }
     .license-link { margin-left: 0; margin-bottom: 30px; display: block; }
+    .coming-soon { margin: 0 auto 40px; }
+    .coming-soon .ornament { margin-bottom: 32px; }
+    .coming-soon .label { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 24px; }
+    .coming-soon p { font-size: 1em; }
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
@@ -1247,237 +1274,248 @@
     <a href="rent" class="back-link">← Back to Rent</a>
     <a href="license" class="license-link">What you own when you rent →</a>
 
-    <div class="mood-groups">
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Modern / Contemporary</span></span>
-          <span class="mood-count">6 tracks</span>
-        </summary>
-
-        <div class="track-list">
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">I.</span>
-              <span class="track-title">Brand Anthem I</span>
-              <span class="track-meta">HELB · 2024 · Uplifting · 0:30</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">II.</span>
-              <span class="track-title">Campaign Theme II</span>
-              <span class="track-meta">GAA · 2024 · Urgent · 0:45</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">III.</span>
-              <span class="track-title">Ident III</span>
-              <span class="track-meta">SOMINVEST · 2023 · Reflective · 0:20</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">IV.</span>
-              <span class="track-title">Brand Anthem V</span>
-              <span class="track-meta">Client · 2023 · Warm · 0:35</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">V.</span>
-              <span class="track-title">Campaign Theme VII</span>
-              <span class="track-meta">Client · 2023 · Hopeful · 0:50</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">VI.</span>
-              <span class="track-title">Brand Anthem VIII</span>
-              <span class="track-meta">Client · 2024 · Confident · 0:30</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-        </div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">African / Cultural</span></span>
-          <span class="mood-count">4 tracks</span>
-        </summary>
-
-        <div class="track-list">
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">I.</span>
-              <span class="track-title">Campaign Theme IV</span>
-              <span class="track-meta">Client · 2024 · Driving · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">II.</span>
-              <span class="track-title">Ident VI</span>
-              <span class="track-meta">Client · 2024 · Playful · 0:15</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">III.</span>
-              <span class="track-title">Campaign Theme X</span>
-              <span class="track-meta">Client · 2024 · Triumphant · 0:45</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">IV.</span>
-              <span class="track-title">Brand Anthem XI</span>
-              <span class="track-meta">Client · 2023 · Reflective · 0:35</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-        </div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Stingers / Idents</span></span>
-          <span class="mood-count">6 tracks</span>
-        </summary>
-
-        <div class="track-list">
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">I.</span>
-              <span class="track-title">Ident IX</span>
-              <span class="track-meta">Client · 2023 · Serene · 0:20</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">II.</span>
-              <span class="track-title">Ident XII</span>
-              <span class="track-meta">Client · 2024 · Bold · 0:15</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">III.</span>
-              <span class="track-title">Campaign Theme XIII</span>
-              <span class="track-meta">Client · 2023 · Nostalgic · 0:55</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">IV.</span>
-              <span class="track-title">Brand Anthem XIV</span>
-              <span class="track-meta">Client · 2024 · Warm · 0:30</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">V.</span>
-              <span class="track-title">Ident XV</span>
-              <span class="track-meta">Client · 2023 · Uplifting · 0:20</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">VI.</span>
-              <span class="track-title">Campaign Theme XVI</span>
-              <span class="track-meta">Client · 2024 · Cinematic · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <a href="#">Preview</a>
-              <a href="#">Rent</a>
-            </div>
-          </div>
-
-        </div>
-      </details>
-
+    <div class="coming-soon">
+      <span class="ornament" aria-hidden="true"></span>
+      <span class="label">Coming Soon</span>
+      <p>The jingle catalogue is being prepared. Original jingles for brand, broadcast, and identity campaigns will be available here for direct licensing — browse, preview, and rent.</p>
+      <p class="italic">In the meantime, for licensing inquiries, see the Contact page.</p>
     </div>
 
-    <div class="back-bottom">
-      <a href="rent" class="back-link">← Back to Rent</a>
+    <div class="catalogue-dimmed">
+
+      <div class="mood-groups">
+
+        <details class="mood-group">
+          <summary>
+            <span><span class="mood-indicator"></span><span class="mood-label">Modern / Contemporary</span></span>
+            <span class="mood-count">6 tracks</span>
+          </summary>
+
+          <div class="track-list">
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">I.</span>
+                <span class="track-title">Brand Anthem I</span>
+                <span class="track-meta">HELB · 2024 · Uplifting · 0:30</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">II.</span>
+                <span class="track-title">Campaign Theme II</span>
+                <span class="track-meta">GAA · 2024 · Urgent · 0:45</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">III.</span>
+                <span class="track-title">Ident III</span>
+                <span class="track-meta">SOMINVEST · 2023 · Reflective · 0:20</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">IV.</span>
+                <span class="track-title">Brand Anthem V</span>
+                <span class="track-meta">Client · 2023 · Warm · 0:35</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">V.</span>
+                <span class="track-title">Campaign Theme VII</span>
+                <span class="track-meta">Client · 2023 · Hopeful · 0:50</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">VI.</span>
+                <span class="track-title">Brand Anthem VIII</span>
+                <span class="track-meta">Client · 2024 · Confident · 0:30</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+          </div>
+        </details>
+
+        <details class="mood-group">
+          <summary>
+            <span><span class="mood-indicator"></span><span class="mood-label">African / Cultural</span></span>
+            <span class="mood-count">4 tracks</span>
+          </summary>
+
+          <div class="track-list">
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">I.</span>
+                <span class="track-title">Campaign Theme IV</span>
+                <span class="track-meta">Client · 2024 · Driving · 0:40</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">II.</span>
+                <span class="track-title">Ident VI</span>
+                <span class="track-meta">Client · 2024 · Playful · 0:15</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">III.</span>
+                <span class="track-title">Campaign Theme X</span>
+                <span class="track-meta">Client · 2024 · Triumphant · 0:45</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">IV.</span>
+                <span class="track-title">Brand Anthem XI</span>
+                <span class="track-meta">Client · 2023 · Reflective · 0:35</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+          </div>
+        </details>
+
+        <details class="mood-group">
+          <summary>
+            <span><span class="mood-indicator"></span><span class="mood-label">Stingers / Idents</span></span>
+            <span class="mood-count">6 tracks</span>
+          </summary>
+
+          <div class="track-list">
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">I.</span>
+                <span class="track-title">Ident IX</span>
+                <span class="track-meta">Client · 2023 · Serene · 0:20</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">II.</span>
+                <span class="track-title">Ident XII</span>
+                <span class="track-meta">Client · 2024 · Bold · 0:15</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">III.</span>
+                <span class="track-title">Campaign Theme XIII</span>
+                <span class="track-meta">Client · 2023 · Nostalgic · 0:55</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">IV.</span>
+                <span class="track-title">Brand Anthem XIV</span>
+                <span class="track-meta">Client · 2024 · Warm · 0:30</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">V.</span>
+                <span class="track-title">Ident XV</span>
+                <span class="track-meta">Client · 2023 · Uplifting · 0:20</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+            <div class="track">
+              <div class="track-info">
+                <span class="track-numeral">VI.</span>
+                <span class="track-title">Campaign Theme XVI</span>
+                <span class="track-meta">Client · 2024 · Cinematic · 0:40</span>
+              </div>
+              <div class="track-actions">
+                <a href="#">Preview</a>
+                <a href="#">Rent</a>
+              </div>
+            </div>
+
+          </div>
+        </details>
+
+      </div>
+
+      <div class="back-bottom">
+        <a href="rent" class="back-link">← Back to Rent</a>
+      </div>
+
     </div>
 
     <div class="signature">
@@ -1616,19 +1654,6 @@
 
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-    var groups = document.querySelectorAll('.mood-groups .mood-group');
-    groups.forEach(function(group) {
-      group.addEventListener('toggle', function() {
-        if (group.open) {
-          groups.forEach(function(other) {
-            if (other !== group && other.open) {
-              other.open = false;
-            }
-          });
-        }
-      });
-    });
   })();
 </script>
 
