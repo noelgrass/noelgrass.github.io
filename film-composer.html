@@ -326,6 +326,10 @@
     scrollbar-gutter: stable;
   }
 
+  html.no-scroll {
+    overflow: hidden;
+  }
+
   html, body {
     color: var(--offwhite);
     scroll-behavior: smooth;
@@ -338,15 +342,6 @@
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-  }
-
-  body.no-scroll {
-    overflow: hidden;
-  }
-  @supports not (scrollbar-gutter: stable) {
-    body.no-scroll {
-      padding-right: var(--scrollbar-width, 0px);
-    }
   }
 
   a {
@@ -1348,11 +1343,11 @@
     function lockScroll() {
       var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('no-scroll');
     }
 
     function unlockScroll() {
-      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('no-scroll');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
