@@ -5,18 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
-<title>Noel Grass — Discography | Kenya</title>
-<meta name="description" content="The discography of Noel Grass, neoclassical pianist and contemporary classical composer from Kenya. Latest release Into A Stillness That Answers, plus solo piano, orchestral, hybrid, and ambient works.">
+<title>Noel Grass — Discography | Full Catalogue &amp; Latest Release</title>
+<meta name="description" content="The discography of Noel Grass, neoclassical pianist and contemporary classical composer from Kenya. Latest release Into A Stillness That Answers, plus solo piano, orchestral, experimental, and ambient works, released internationally.">
 <meta name="keywords" content="Noel Grass discography, Noel Grass latest release, neoclassical piano albums, contemporary classical Kenya, solo piano Nairobi, Into A Stillness That Answers, The Impressionist album, Where I Begin Again, ambient piano Kenya, orchestral composer Nairobi, modern classical composer Kenya, sound art Kenya, experimental composer Africa, sonic branding Kenya, ambient composer Kenya">
 <link rel="canonical" href="https://noelgrass.github.io/discography">
 
 <meta property="og:type" content="profile">
-<meta property="og:title" content="Noel Grass — Discography">
-<meta property="og:description" content="Latest release Into A Stillness That Answers, plus the full catalogue: solo piano, orchestral, hybrid, and ambient works by Noel Grass.">
+<meta property="og:title" content="Noel Grass — Discography | Full Catalogue &amp; Latest Release">
+<meta property="og:description" content="Latest release Into A Stillness That Answers, plus the full catalogue: solo piano, orchestral, experimental, and ambient works by Noel Grass.">
 <meta property="og:url" content="https://noelgrass.github.io/discography">
 <meta property="og:image" content="https://noelgrass.github.io/images/discography/into-a-stillness.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Noel Grass — Discography">
+<meta name="twitter:title" content="Noel Grass — Discography | Full Catalogue &amp; Latest Release">
 <meta name="twitter:description" content="Latest release and full catalogue by Noel Grass.">
 <meta name="twitter:image" content="https://noelgrass.github.io/images/discography/into-a-stillness.jpg">
 
@@ -92,6 +92,7 @@
       "Solo Piano Composition",
       "Cinematic Instrumental Music",
       "Hybrid Scoring",
+      "Experimental Scoring",
       "African Instrumental Music",
       "Live Performance",
       "Live Performer",
@@ -188,10 +189,10 @@
     { "@type": "ListItem", "position": 1, "item": { "@type": "MusicAlbum", "name": "Into A Stillness That Answers", "genre": ["Solo Piano", "Neoclassical", "Contemporary Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 2, "item": { "@type": "MusicAlbum", "name": "When Stars Align", "genre": ["Ambient", "Modern Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 3, "item": { "@type": "MusicAlbum", "name": "Where I Begin Again", "genre": ["Solo Piano", "Neoclassical", "Contemporary Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
-    { "@type": "ListItem", "position": 4, "item": { "@type": "MusicAlbum", "name": "Agent 254", "genre": ["Hybrid", "Cinematic", "Modern Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
+    { "@type": "ListItem", "position": 4, "item": { "@type": "MusicAlbum", "name": "Agent 254", "genre": ["Hybrid", "Experimental", "Cinematic", "Modern Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 5, "item": { "@type": "MusicAlbum", "name": "The Impressionist", "genre": ["Solo Piano", "Neoclassical", "Contemporary Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 6, "item": { "@type": "MusicAlbum", "name": "The Impressionist II", "genre": ["Solo Piano", "Neoclassical", "Contemporary Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
-    { "@type": "ListItem", "position": 7, "item": { "@type": "MusicAlbum", "name": "The Impressionist III", "genre": ["Hybrid", "Cinematic", "Modern Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
+    { "@type": "ListItem", "position": 7, "item": { "@type": "MusicAlbum", "name": "The Impressionist III", "genre": ["Hybrid", "Experimental", "Cinematic", "Modern Classical"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 8, "item": { "@type": "MusicAlbum", "name": "Introspect", "genre": ["Orchestral", "Modern Classical", "Cinematic"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } },
     { "@type": "ListItem", "position": 9, "item": { "@type": "MusicAlbum", "name": "Seven Deadly Sins", "genre": ["Orchestral", "Modern Classical", "Cinematic"], "byArtist": { "@id": "https://noelgrass.github.io/#person" } } }
   ]
@@ -249,7 +250,7 @@
       "name": "What genres does Noel Grass work in?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Noel Grass works across solo piano, orchestral, hybrid, and ambient music. His catalogue includes modern classical, neoclassical, and contemporary classical compositions."
+        "text": "Noel Grass works across solo piano, orchestral, experimental, and ambient music. His catalogue includes modern classical, neoclassical, and contemporary classical compositions."
       }
     },
     {
@@ -278,13 +279,18 @@
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
+    --scrollbar-width: 0px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
     background: var(--bg);
-    scrollbar-gutter: stable;
+  }
+
+  html.menu-lock {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   html, body {
@@ -301,15 +307,6 @@
     overflow-x: hidden;
   }
 
-  body.no-scroll {
-    overflow: hidden;
-  }
-  @supports not (scrollbar-gutter: stable) {
-    body.no-scroll {
-      padding-right: var(--scrollbar-width, 0px);
-    }
-  }
-
   a {
     color: var(--gold);
     text-decoration: none;
@@ -323,14 +320,35 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes menuItemIn {
+  @keyframes menuFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes menuLineDraw {
+    from { transform: scaleX(0); transform-origin: left center; }
+    to   { transform: scaleX(1); transform-origin: left center; }
+  }
+
+  @keyframes menuLinkIn {
     from {
       opacity: 0;
-      transform: translate3d(10px, 0, 0);
+      transform: translate3d(-12px, 0, 0);
     }
     to {
       opacity: 1;
       transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes menuHeadingIn {
+    from {
+      opacity: 0;
+      letter-spacing: 0.5em;
+    }
+    to {
+      opacity: 1;
+      letter-spacing: 0.35em;
     }
   }
 
@@ -425,13 +443,12 @@
     top: 0;
     z-index: 300;
     background: var(--bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     padding: 22px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
+    contain: layout paint;
   }
 
   .wordmark {
@@ -526,13 +543,13 @@
   }
 
   .page-wrap {
-    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body.menu-open .page-wrap {
-    filter: blur(7px) brightness(0.55);
-    opacity: 0.9;
+    filter: blur(8px) brightness(0.4);
+    opacity: 0.6;
     pointer-events: none;
     user-select: none;
     will-change: filter, opacity;
@@ -540,158 +557,274 @@
 
   .menu-panel {
     position: fixed;
-    top: 78px;
-    right: 40px;
+    inset: 0;
     z-index: 400;
-    min-width: 260px;
     background: #000000;
-    border: 1px solid var(--gold-soft);
-    box-shadow:
-      0 18px 40px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(197, 168, 128, 0.06),
-      0 0 30px rgba(197, 168, 128, 0.08);
-    padding: 10px 0;
+    background-image: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(197, 168, 128, 0.07) 0%,
+      transparent 65%
+    );
     opacity: 0;
-    transform: translate3d(0, -12px, 0) scale(0.98);
-    transform-origin: top right;
-    transition:
-      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    will-change: auto;
+    transform: scale(1.02);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .menu-panel.open {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     pointer-events: auto;
-    will-change: transform, opacity;
   }
 
-  .menu-panel ul {
+  .menu-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 40px 80px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .menu-top {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .menu-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+  }
+
+  .menu-panel.open .menu-heading {
+    animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+
+  .menu-heading::after {
+    content: '';
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .menu-panel.open .menu-heading::after {
+    animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
+  .menu-close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 12px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-panel.open .menu-close {
+    animation: menuFadeIn 0.8s ease-out 1.2s forwards;
+  }
+
+  .menu-close:hover {
+    color: #FCFCF7;
+    letter-spacing: 0.45em;
+    text-shadow:
+      0 0 20px rgba(197, 168, 128, 0.7),
+      0 0 45px rgba(197, 168, 128, 0.3);
+  }
+
+  .menu-close .x {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-close:hover .x {
+    transform: rotate(90deg);
+  }
+
+  .menu-close .x::before,
+  .menu-close .x::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
+    transform-origin: center;
+  }
+
+  .menu-close .x::before { transform: rotate(45deg); }
+  .menu-close .x::after  { transform: rotate(-45deg); }
+
+  .menu-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    justify-content: center;
+    align-items: start;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .menu-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .menu-section {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.68em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 28px;
+    display: block;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  .menu-panel.open .menu-column:nth-child(1) .menu-section {
+    animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+
+  .menu-panel.open .menu-column:nth-child(2) .menu-section {
+    animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  }
+
+  .menu-links {
     list-style: none;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 0;
   }
 
-  .menu-panel li {
+  .menu-item {
     position: relative;
+    opacity: 0;
   }
 
-  .menu-panel a {
-    display: block;
-    padding: 13px 26px;
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards; }
+
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.06s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.42s forwards; }
+
+  .menu-link {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
-    font-size: 1.05em;
+    font-size: 1.5em;
     letter-spacing: 0.24em;
     text-transform: uppercase;
-    color: var(--gold);
-    position: relative;
-    overflow: hidden;
+    color: var(--gold-pale);
+    padding: 6px 0 6px 0;
     transition:
-      color 0.35s ease,
-      background 0.35s ease,
-      padding-left 0.35s ease,
-      text-shadow 0.5s ease;
-    opacity: 0;
+      color 0.6s ease,
+      opacity 0.5s ease,
+      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  .menu-panel.open li a {
-    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
-  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
-  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
-  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
-  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
-  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
-  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
-  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
-  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
-
-  .menu-panel a::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--gold);
-    transform: scaleY(0);
-    transform-origin: center;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .menu-panel a:hover {
+  .menu-link:hover {
     color: #FCFCF7;
-    background: rgba(197, 168, 128, 0.06);
-    padding-left: 34px;
-    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+    text-shadow:
+      0 0 10px rgba(197, 168, 128, 0.75),
+      0 0 25px rgba(197, 168, 128, 0.55),
+      0 0 55px rgba(197, 168, 128, 0.30),
+      0 0 100px rgba(197, 168, 128, 0.15);
   }
 
-  .menu-panel a:hover::before {
-    transform: scaleY(0.6);
-  }
-
-  .menu-panel li + li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 20px;
-    right: 20px;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(197, 168, 128, 0.22) 50%,
-      transparent 100%
-    );
-  }
-
-  .menu-panel li::after {
-    content: '◆';
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%) scale(0);
-    color: var(--gold);
-    font-size: 0.55em;
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-  }
-
-  .menu-panel li:hover::after {
-    opacity: 0.7;
-    transform: translateY(-50%) scale(1);
-  }
-
-  .menu-panel a.current {
+  .menu-link.current {
     color: var(--gold-dim);
-    background: rgba(197, 168, 128, 0.04);
-    padding-left: 34px;
+    pointer-events: none;
     cursor: default;
-    pointer-events: none;
-    text-shadow: none;
   }
 
-  .menu-panel a.current::before {
-    transform: scaleY(0.6);
-    background: var(--gold-dim);
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) {
+    opacity: 0.25;
   }
 
-  .menu-panel a.current:hover {
+  .menu-columns:has(.menu-link:hover) .menu-section {
+    opacity: 0.15;
+  }
+
+  .menu-bottom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
     color: var(--gold-dim);
-    background: rgba(197, 168, 128, 0.04);
-    text-shadow: none;
+    opacity: 0;
+    margin-top: 20px;
   }
 
-  .menu-panel li.is-current::after {
-    opacity: 0.85;
-    transform: translateY(-50%) scale(1);
-    color: var(--gold-dim);
+  .menu-panel.open .menu-bottom {
+    animation: menuFadeIn 1s ease-out 1.6s forwards;
+  }
+
+  .menu-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    cursor: pointer;
   }
 
   .page {
@@ -1203,24 +1336,49 @@
       transform: translateY(-5.75px) rotate(-45deg);
     }
 
-    .menu-panel {
-      top: 66px;
-      left: 12px;
-      right: 12px;
-      min-width: 0;
-      transform-origin: top right;
-      max-height: calc(100vh - 90px);
-      overflow-y: auto;
+    .menu-inner {
+      padding: 90px 24px 60px;
+      gap: 40px;
     }
 
-    .menu-panel a {
-      padding: 14px 24px;
-      font-size: 1.02em;
-      letter-spacing: 0.2em;
+    .menu-top {
+      top: 22px;
+      left: 24px;
+      right: 24px;
     }
 
-    .menu-panel a.current {
-      padding-left: 32px;
+    .menu-close {
+      font-size: 0.85em;
+      letter-spacing: 0.35em;
+      gap: 12px;
+    }
+
+    .menu-close .x {
+      width: 15px;
+      height: 15px;
+    }
+
+    .menu-columns {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      max-width: 100%;
+    }
+
+    .menu-column .menu-link {
+      font-size: 1.3em;
+      letter-spacing: 0.22em;
+    }
+
+    .menu-section {
+      margin-bottom: 20px;
+    }
+
+    .menu-links {
+      gap: 16px;
+    }
+
+    .menu-bottom {
+      margin-top: 10px;
     }
 
     .footer-cta { margin-top: 60px; padding-top: 30px; }
@@ -1241,6 +1399,11 @@
     }
     .menu-toggle::after {
       left: 30px;
+    }
+
+    .menu-link {
+      font-size: 1.15em;
+      letter-spacing: 0.18em;
     }
   }
 </style>
@@ -1273,17 +1436,46 @@
   aria-label="Primary"
   aria-hidden="true"
 >
-  <ul>
-    <li><a href="biography">Biography</a></li>
-    <li><a href="./">Home</a></li>
-    <li><a href="artist">Artist</a></li>
-    <li><a href="discography">Discography</a></li>
-    <li><a href="performances">Performances</a></li>
-    <li><a href="tour-dates">Tour Dates</a></li>
-    <li><a href="join">Join</a></li>
-    <li><a href="store">Store</a></li>
-    <li><a href="contact">Contact</a></li>
-  </ul>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <div class="menu-inner">
+
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
+        Close
+        <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="menu-columns">
+
+      <div class="menu-column">
+        <span class="menu-section">Music</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+        </ul>
+      </div>
+
+      <div class="menu-column">
+        <span class="menu-section">Elsewhere</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
+          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
+
+  </div>
 </nav>
 
 <div class="page-wrap" id="pageWrap">
@@ -1294,7 +1486,7 @@
 
     <p class="hero-subhead">Latest release and full catalogue.</p>
 
-    <p class="hero-formats">Solo Piano &nbsp;·&nbsp; Orchestral &nbsp;·&nbsp; Hybrid &nbsp;·&nbsp; Ambient</p>
+    <p class="hero-formats">Solo Piano &nbsp;·&nbsp; Orchestral &nbsp;·&nbsp; Experimental &nbsp;·&nbsp; Ambient</p>
 
     <div class="mood-groups">
 
@@ -1427,7 +1619,7 @@
 
       <details class="mood-group">
         <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Hybrid</span></span>
+          <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
           <span class="mood-count">2 releases</span>
         </summary>
 
@@ -1435,20 +1627,20 @@
 
           <a href="https://www.youtube.com/watch?v=z-LEJuI9u6A&list=OLAKuy_nJRC9a1p4jlkGTFAjdcGMNsVhvbokxrcE" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/agent-254.jpg" alt="Agent 254 — hybrid EP by Noel Grass" loading="lazy">
+              <img src="images/discography/agent-254.jpg" alt="Agent 254 — experimental EP by Noel Grass" loading="lazy">
               <span class="badge">EP</span>
             </div>
             <div class="caption">Agent 254</div>
-            <div class="format-label">Hybrid</div>
+            <div class="format-label">Experimental</div>
           </a>
 
           <a href="https://www.youtube.com/watch?v=iLW3pvDHahI&list=OLAKuy_n7ITXzNX6C0fZn7dZJchwNkTT-8ZkIvvE" target="_blank" rel="noopener" class="store-item">
             <div class="poster">
-              <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — hybrid album by Noel Grass" loading="lazy">
+              <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — experimental album by Noel Grass" loading="lazy">
               <span class="badge">Album</span>
             </div>
             <div class="caption">The Impressionist III</div>
-            <div class="format-label">Hybrid</div>
+            <div class="format-label">Experimental</div>
           </a>
 
         </div>
@@ -1500,7 +1692,8 @@
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
-    var pageWrap = document.getElementById('pageWrap');
+    var closeBtn = document.getElementById('menuClose');
+    var backdrop = document.getElementById('menuBackdrop');
 
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
@@ -1509,11 +1702,11 @@
     function lockScroll() {
       var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('menu-lock');
     }
 
     function unlockScroll() {
-      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
@@ -1544,17 +1737,13 @@
       }
     });
 
+    closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) {
         closeMenu();
       }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!panel.classList.contains('open')) return;
-      if (panel.contains(e.target)) return;
-      if (toggle.contains(e.target)) return;
-      closeMenu();
     });
 
     panel.querySelectorAll('a').forEach(function (link) {
@@ -1573,8 +1762,7 @@
     }
 
     var current = normalizePath(window.location.pathname);
-
-    var links = panel.querySelectorAll('a');
+    var links = panel.querySelectorAll('a.menu-link');
     var matched = null;
 
     links.forEach(function (link) {
@@ -1600,10 +1788,10 @@
     if (matched) {
       matched.classList.add('current');
       matched.setAttribute('aria-current', 'page');
-      if (matched.parentElement) {
-        matched.parentElement.classList.add('is-current');
-      }
     }
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 
   (function() {
