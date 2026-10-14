@@ -1,3 +1,7 @@
+
+### Updated Home Page
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -691,6 +695,7 @@
   .menu-panel.open .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
   .menu-panel.open .menu-item:nth-child(8) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards; }
   .menu-panel.open .menu-item:nth-child(9) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.44s forwards; }
+  .menu-panel.open .menu-item:nth-child(10) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.56s forwards; }
 
   .menu-link {
     display: inline-block;
@@ -703,45 +708,25 @@
     color: var(--gold-pale);
     padding: 8px 0 8px 0;
     transition:
-      color 0.4s ease,
-      letter-spacing 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-      text-shadow 0.6s ease;
-  }
-
-  .menu-link::before {
-    content: '';
-    position: absolute;
-    left: -48px;
-    top: 50%;
-    width: 32px;
-    height: 1px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transform-origin: right center;
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      color 0.6s ease,
+      letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .menu-link:hover {
     color: #FCFCF7;
     letter-spacing: 0.34em;
     text-shadow:
-      0 0 22px rgba(197, 168, 128, 0.65),
-      0 0 50px rgba(197, 168, 128, 0.30);
-  }
-
-  .menu-link:hover::before {
-    transform: scaleX(1);
+      0 0 12px rgba(197, 168, 128, 0.75),
+      0 0 30px rgba(197, 168, 128, 0.55),
+      0 0 70px rgba(197, 168, 128, 0.30),
+      0 0 130px rgba(197, 168, 128, 0.15);
   }
 
   .menu-link.current {
     color: var(--gold-dim);
     pointer-events: none;
     cursor: default;
-  }
-
-  .menu-link.current::before {
-    transform: scaleX(1);
-    background: var(--gold-dim);
   }
 
   .menu-bottom {
@@ -1502,13 +1487,12 @@
       letter-spacing: 0.22em;
     }
 
-    .menu-link::before {
-      left: -28px;
-      width: 18px;
-    }
-
     .menu-link:hover {
       letter-spacing: 0.26em;
+      text-shadow:
+        0 0 10px rgba(197, 168, 128, 0.65),
+        0 0 25px rgba(197, 168, 128, 0.4),
+        0 0 55px rgba(197, 168, 128, 0.2);
     }
 
     .menu-bottom {
