@@ -745,6 +745,7 @@
   .menu-link {
     display: inline-block;
     position: relative;
+    white-space: nowrap;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
     font-size: 1.5em;
@@ -1235,7 +1236,7 @@
 
     </div>
 
-    <div class="menu-bottom">Noel Grass · 2026</div>
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
 
   </div>
 </nav>
@@ -1434,6 +1435,9 @@
       matched.classList.add('current');
       matched.setAttribute('aria-current', 'page');
     }
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
