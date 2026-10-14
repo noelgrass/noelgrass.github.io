@@ -6,13 +6,13 @@
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
 <title>Noel Grass — Composer &amp; Neoclassical Pianist</title>
-<meta name="description" content="Noel Grass is a neoclassical pianist, contemporary classical composer, orchestrator, music arranger, and music producer. Solo piano, orchestral, hybrid, and ambient works for listeners and productions across East Africa and internationally.">
+<meta name="description" content="Noel Grass is a neoclassical pianist, contemporary classical composer, orchestrator, music arranger, and music producer. Solo piano, orchestral, experimental, and ambient works for listeners and productions across East Africa and internationally.">
 <meta name="keywords" content="Noel Grass artist, neoclassical pianist Nairobi, contemporary classical composer Kenya, modern classical pianist Kenya, African neoclassical pianist, orchestrator Nairobi, music arranger Kenya, music producer Nairobi, solo piano Kenya, orchestral composer East Africa, ambient composer Africa, sound art Kenya, experimental music Kenya">
 <link rel="canonical" href="https://noelgrass.github.io/artist">
 
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Noel Grass — Composer &amp; Neoclassical Pianist">
-<meta property="og:description" content="Contemporary classical composer, neoclassical pianist, orchestrator, and music arranger. Solo piano, orchestral, hybrid, and ambient works.">
+<meta property="og:description" content="Contemporary classical composer, neoclassical pianist, orchestrator, and music arranger. Solo piano, orchestral, experimental, and ambient works.">
 <meta property="og:url" content="https://noelgrass.github.io/artist">
 <meta property="og:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
 <meta name="twitter:card" content="summary_large_image">
@@ -92,6 +92,7 @@
       "Solo Piano Composition",
       "Cinematic Instrumental Music",
       "Hybrid Scoring",
+      "Experimental Scoring",
       "African Instrumental Music",
       "Live Performance",
       "Live Performer",
@@ -201,7 +202,7 @@
       "name": "What style of music does Noel Grass compose?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, hybrid, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements, without settling into a single school."
+        "text": "Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements, without settling into a single school."
       }
     },
     {
@@ -261,7 +262,11 @@
 
   html {
     background: var(--bg);
-    scrollbar-gutter: stable;
+  }
+
+  html.menu-lock {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   html, body {
@@ -276,15 +281,6 @@
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
-  }
-
-  body.no-scroll {
-    overflow: hidden;
-  }
-  @supports not (scrollbar-gutter: stable) {
-    body.no-scroll {
-      padding-right: var(--scrollbar-width, 0px);
-    }
   }
 
   a {
@@ -609,7 +605,6 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after  { transform: rotate(-45deg); }
 
-  /* Two-column layout */
   .menu-columns {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -639,6 +634,7 @@
     display: block;
     opacity: 0;
     text-align: center;
+    transition: opacity 0.5s ease;
   }
 
   .menu-panel.open .menu-column:nth-child(1) .menu-section {
@@ -664,7 +660,6 @@
     opacity: 0;
   }
 
-  /* Column 1 delays */
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
@@ -673,7 +668,6 @@
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards; }
 
-  /* Column 2 delays */
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards; }
@@ -685,6 +679,7 @@
   .menu-link {
     display: inline-block;
     position: relative;
+    white-space: nowrap;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
     font-size: 1.5em;
@@ -694,13 +689,12 @@
     padding: 6px 0 6px 0;
     transition:
       color 0.6s ease,
-      letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease,
       text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .menu-link:hover {
     color: #FCFCF7;
-    letter-spacing: 0.30em;
     text-shadow:
       0 0 10px rgba(197, 168, 128, 0.75),
       0 0 25px rgba(197, 168, 128, 0.55),
@@ -712,6 +706,14 @@
     color: var(--gold-dim);
     pointer-events: none;
     cursor: default;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) {
+    opacity: 0.25;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-section {
+    opacity: 0.15;
   }
 
   .menu-bottom {
@@ -1027,7 +1029,6 @@
       transform: translateY(-5.75px) rotate(-45deg);
     }
 
-    /* Menu overlay responsive */
     .menu-inner {
       padding: 90px 24px 60px;
       gap: 40px;
@@ -1059,14 +1060,6 @@
     .menu-column .menu-link {
       font-size: 1.3em;
       letter-spacing: 0.22em;
-    }
-
-    .menu-column .menu-link:hover {
-      letter-spacing: 0.26em;
-      text-shadow:
-        0 0 10px rgba(197, 168, 128, 0.65),
-        0 0 25px rgba(197, 168, 128, 0.4),
-        0 0 55px rgba(197, 168, 128, 0.2);
     }
 
     .menu-section {
@@ -1174,7 +1167,7 @@
 
     </div>
 
-    <div class="menu-bottom">Noel Grass · 2026</div>
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
 
   </div>
 </nav>
@@ -1223,7 +1216,7 @@
       <ul class="format-list">
         <li><strong>Solo Piano.</strong> Just the instrument, in a quiet room.</li>
         <li><strong>Orchestral.</strong> Full ensemble writing, from sweeping to still.</li>
-        <li><strong>Hybrid.</strong> Piano and orchestra woven with electronic textures.</li>
+        <li><strong>Experimental.</strong> Piano and orchestra woven with electronic textures.</li>
         <li><strong>Ambient.</strong> Layered atmosphere, built from tone and time.</li>
       </ul>
 
@@ -1279,11 +1272,11 @@
     function lockScroll() {
       var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('menu-lock');
     }
 
     function unlockScroll() {
-      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
@@ -1366,6 +1359,9 @@
       matched.classList.add('current');
       matched.setAttribute('aria-current', 'page');
     }
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 </script>
 
