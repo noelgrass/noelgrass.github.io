@@ -24,13 +24,18 @@
     --offwhite: #EDEAE3;
     --muted: #9a958c;
     --rule: #2a2a2a;
+    --scrollbar-width: 0px;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html {
     background: var(--bg);
-    scrollbar-gutter: stable;
+  }
+
+  html.menu-lock {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   html, body {
@@ -50,15 +55,6 @@
     flex-direction: column;
   }
 
-  body.no-scroll {
-    overflow: hidden;
-  }
-  @supports not (scrollbar-gutter: stable) {
-    body.no-scroll {
-      padding-right: var(--scrollbar-width, 0px);
-    }
-  }
-
   a {
     color: var(--gold);
     text-decoration: none;
@@ -72,14 +68,35 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  @keyframes menuItemIn {
+  @keyframes menuFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes menuLineDraw {
+    from { transform: scaleX(0); transform-origin: left center; }
+    to   { transform: scaleX(1); transform-origin: left center; }
+  }
+
+  @keyframes menuLinkIn {
     from {
       opacity: 0;
-      transform: translate3d(10px, 0, 0);
+      transform: translate3d(-12px, 0, 0);
     }
     to {
       opacity: 1;
       transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes menuHeadingIn {
+    from {
+      opacity: 0;
+      letter-spacing: 0.5em;
+    }
+    to {
+      opacity: 1;
+      letter-spacing: 0.35em;
     }
   }
 
@@ -118,13 +135,12 @@
     top: 0;
     z-index: 300;
     background: var(--bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     padding: 22px 40px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     animation: fadeUp 0.8s ease-out both;
+    contain: layout paint;
   }
 
   .wordmark {
@@ -222,174 +238,264 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    transition: filter 0.55s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body.menu-open .page-wrap {
-    filter: blur(7px) brightness(0.55);
-    opacity: 0.9;
+    filter: blur(8px) brightness(0.4);
+    opacity: 0.6;
     pointer-events: none;
     user-select: none;
     will-change: filter, opacity;
   }
 
+  /* ============================================================
+     CINEMATIC FULL-SCREEN OVERLAY MENU (single-column, Home-style)
+     ============================================================ */
   .menu-panel {
     position: fixed;
-    top: 78px;
-    right: 40px;
+    inset: 0;
     z-index: 400;
-    min-width: 260px;
     background: #000000;
-    border: 1px solid var(--gold-soft);
-    box-shadow:
-      0 18px 40px rgba(0, 0, 0, 0.75),
-      0 0 0 1px rgba(197, 168, 128, 0.06),
-      0 0 30px rgba(197, 168, 128, 0.08);
-    padding: 10px 0;
+    background-image: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(197, 168, 128, 0.07) 0%,
+      transparent 65%
+    );
     opacity: 0;
-    transform: translate3d(0, -12px, 0) scale(0.98);
-    transform-origin: top right;
-    transition:
-      opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
-    will-change: auto;
+    transform: scale(1.02);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
 
   .menu-panel.open {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: scale(1);
     pointer-events: auto;
-    will-change: transform, opacity;
   }
 
-  .menu-panel ul {
+  .menu-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 40px 80px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .menu-top {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .menu-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+  }
+
+  .menu-panel.open .menu-heading {
+    animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+
+  .menu-heading::after {
+    content: '';
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .menu-panel.open .menu-heading::after {
+    animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
+  .menu-close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 12px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-panel.open .menu-close {
+    animation: menuFadeIn 0.8s ease-out 1.2s forwards;
+  }
+
+  .menu-close:hover {
+    color: #FCFCF7;
+    letter-spacing: 0.45em;
+    text-shadow:
+      0 0 20px rgba(197, 168, 128, 0.7),
+      0 0 45px rgba(197, 168, 128, 0.3);
+  }
+
+  .menu-close .x {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-close:hover .x {
+    transform: rotate(90deg);
+  }
+
+  .menu-close .x::before,
+  .menu-close .x::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
+    transform-origin: center;
+  }
+
+  .menu-close .x::before { transform: rotate(45deg); }
+  .menu-close .x::after  { transform: rotate(-45deg); }
+
+  .menu-links {
     list-style: none;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    text-align: center;
+    padding-top: 20px;
+    margin: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 0;
   }
 
-  .menu-panel li {
-    position: relative;
-  }
-
-  .menu-panel a {
+  .menu-section {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.68em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 20px;
     display: block;
-    padding: 13px 26px;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  .menu-panel.open .menu-section {
+    animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+
+  .menu-item {
+    position: relative;
+    opacity: 0;
+  }
+
+  .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+  .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
+  .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
+  .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
+  .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-panel.open .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
+
+  .menu-link {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
-    font-size: 1.05em;
-    letter-spacing: 0.24em;
+    font-size: 2em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    color: var(--gold);
-    position: relative;
-    overflow: hidden;
+    color: var(--gold-pale);
+    padding: 8px 0 8px 0;
     transition:
-      color 0.35s ease,
-      background 0.35s ease,
-      padding-left 0.35s ease,
-      text-shadow 0.5s ease;
-    opacity: 0;
+      color 0.6s ease,
+      opacity 0.5s ease,
+      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Base animation for every menu item — future-proof */
-  .menu-panel.open li a {
-    animation: menuItemIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  /* Staggered delays for each item */
-  .menu-panel.open li:nth-child(1) a { animation-delay: 0.08s; }
-  .menu-panel.open li:nth-child(2) a { animation-delay: 0.14s; }
-  .menu-panel.open li:nth-child(3) a { animation-delay: 0.20s; }
-  .menu-panel.open li:nth-child(4) a { animation-delay: 0.26s; }
-  .menu-panel.open li:nth-child(5) a { animation-delay: 0.32s; }
-  .menu-panel.open li:nth-child(6) a { animation-delay: 0.38s; }
-  .menu-panel.open li:nth-child(7) a { animation-delay: 0.44s; }
-  .menu-panel.open li:nth-child(8) a { animation-delay: 0.50s; }
-  .menu-panel.open li:nth-child(9) a { animation-delay: 0.56s; }
-
-  .menu-panel a::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: var(--gold);
-    transform: scaleY(0);
-    transform-origin: center;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  }
-
-  .menu-panel a:hover {
+  .menu-link:hover {
     color: #FCFCF7;
-    background: rgba(197, 168, 128, 0.06);
-    padding-left: 34px;
-    text-shadow: 0 0 16px rgba(197, 168, 128, 0.4);
+    text-shadow:
+      0 0 12px rgba(197, 168, 128, 0.75),
+      0 0 30px rgba(197, 168, 128, 0.55),
+      0 0 70px rgba(197, 168, 128, 0.30),
+      0 0 130px rgba(197, 168, 128, 0.15);
   }
 
-  .menu-panel a:hover::before {
-    transform: scaleY(0.6);
-  }
-
-  .menu-panel li + li::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 20px;
-    right: 20px;
-    height: 1px;
-    background: linear-gradient(
-      to right,
-      transparent 0%,
-      rgba(197, 168, 128, 0.22) 50%,
-      transparent 100%
-    );
-  }
-
-  .menu-panel li::after {
-    content: '◆';
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%) scale(0);
-    color: var(--gold);
-    font-size: 0.55em;
-    opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-    pointer-events: none;
-  }
-
-  .menu-panel li:hover::after {
-    opacity: 0.7;
-    transform: translateY(-50%) scale(1);
-  }
-
-  .menu-panel a.current {
+  .menu-link.current {
     color: var(--gold-dim);
-    background: rgba(197, 168, 128, 0.04);
-    padding-left: 34px;
+    pointer-events: none;
     cursor: default;
-    pointer-events: none;
-    text-shadow: none;
   }
 
-  .menu-panel a.current::before {
-    transform: scaleY(0.6);
-    background: var(--gold-dim);
+  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) {
+    opacity: 0.25;
   }
 
-  .menu-panel a.current:hover {
+  .menu-links:has(.menu-link:hover) .menu-section {
+    opacity: 0.15;
+  }
+
+  .menu-bottom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
     color: var(--gold-dim);
-    background: rgba(197, 168, 128, 0.04);
-    text-shadow: none;
+    opacity: 0;
+    margin-top: 20px;
   }
 
-  .menu-panel li.is-current::after {
-    opacity: 0.85;
-    transform: translateY(-50%) scale(1);
-    color: var(--gold-dim);
+  .menu-panel.open .menu-bottom {
+    animation: menuFadeIn 1s ease-out 1.6s forwards;
+  }
+
+  .menu-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    cursor: pointer;
   }
 
   /* ============================================================
@@ -553,24 +659,40 @@
       transform: translateY(-5.75px) rotate(-45deg);
     }
 
-    .menu-panel {
-      top: 66px;
-      left: 12px;
-      right: 12px;
-      min-width: 0;
-      transform-origin: top right;
-      max-height: calc(100vh - 90px);
-      overflow-y: auto;
+    .menu-inner {
+      padding: 90px 24px 60px;
+      gap: 32px;
     }
 
-    .menu-panel a {
-      padding: 14px 24px;
-      font-size: 1.02em;
-      letter-spacing: 0.2em;
+    .menu-top {
+      top: 22px;
+      left: 24px;
+      right: 24px;
     }
 
-    .menu-panel a.current {
-      padding-left: 32px;
+    .menu-close {
+      font-size: 0.85em;
+      letter-spacing: 0.35em;
+      gap: 12px;
+    }
+
+    .menu-close .x {
+      width: 15px;
+      height: 15px;
+    }
+
+    .menu-links {
+      gap: 24px;
+      padding-top: 10px;
+    }
+
+    .menu-link {
+      font-size: 1.5em;
+      letter-spacing: 0.22em;
+    }
+
+    .menu-bottom {
+      margin-top: 10px;
     }
 
     .signature { margin-top: 80px; }
@@ -590,9 +712,9 @@
       left: 30px;
     }
 
-    .menu-panel a {
-      padding: 12px 20px;
-      font-size: 0.95em;
+    .menu-link {
+      font-size: 1.2em;
+      letter-spacing: 0.18em;
     }
   }
 </style>
@@ -620,24 +742,37 @@
   </button>
 </header>
 
-<!-- ===== DROPDOWN PANEL ===== -->
+<!-- ===== FULL-SCREEN OVERLAY MENU (Home-style) ===== -->
 <nav
   class="menu-panel"
   id="menuPanel"
   aria-label="Primary"
   aria-hidden="true"
 >
-  <ul>
-    <li><a href="biography">Biography</a></li>
-    <li><a href="./">Home</a></li>
-    <li><a href="artist">Artist</a></li>
-    <li><a href="discography">Discography</a></li>
-    <li><a href="performances">Performances</a></li>
-    <li><a href="tour-dates">Tour Dates</a></li>
-    <li><a href="join">Join</a></li>
-    <li><a href="store">Store</a></li>
-    <li><a href="contact">Contact</a></li>
-  </ul>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <div class="menu-inner">
+
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
+        Close
+        <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <ul class="menu-links">
+      <span class="menu-section">Explore</span>
+      <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
+      <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
+      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+      <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+      <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+    </ul>
+
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
+
+  </div>
 </nav>
 
 <!-- ===== PAGE ===== -->
@@ -675,7 +810,8 @@
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
-    var pageWrap = document.getElementById('pageWrap');
+    var closeBtn = document.getElementById('menuClose');
+    var backdrop = document.getElementById('menuBackdrop');
 
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
@@ -684,11 +820,11 @@
     function lockScroll() {
       var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('menu-lock');
     }
 
     function unlockScroll() {
-      document.body.classList.remove('no-scroll');
+      document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
@@ -719,17 +855,13 @@
       }
     });
 
+    closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) {
         closeMenu();
       }
-    });
-
-    document.addEventListener('click', function (e) {
-      if (!panel.classList.contains('open')) return;
-      if (panel.contains(e.target)) return;
-      if (toggle.contains(e.target)) return;
-      closeMenu();
     });
 
     panel.querySelectorAll('a').forEach(function (link) {
@@ -748,8 +880,7 @@
     }
 
     var current = normalizePath(window.location.pathname);
-
-    var links = panel.querySelectorAll('a');
+    var links = panel.querySelectorAll('a.menu-link');
     var matched = null;
 
     links.forEach(function (link) {
@@ -775,10 +906,10 @@
     if (matched) {
       matched.classList.add('current');
       matched.setAttribute('aria-current', 'page');
-      if (matched.parentElement) {
-        matched.parentElement.classList.add('is-current');
-      }
     }
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 </script>
 
