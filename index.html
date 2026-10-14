@@ -8,7 +8,6 @@
 
 <title>Noel Grass — Film Composer &amp; Neoclassical Pianist</title>
 <meta name="description" content="Noel Grass is a film composer, neoclassical pianist, and music producer from Kenya. Emotional cinematic music, contemporary neoclassical piano compositions, and custom original soundtracks for film, television, and visual media, released internationally.">
-<meta name="keywords" content="Noel Grass, film composer Nairobi, film composer Kenya, neoclassical pianist Nairobi, neoclassical pianist Kenya, modern classical composer Kenya, contemporary classical pianist Nairobi, music producer Nairobi, cinematic music Kenya, sound art Kenya, experimental composer Africa, sonic branding Kenya, jingle composer Kenya, ambient composer Kenya">
 <link rel="canonical" href="https://noelgrass.github.io/">
 
 <meta property="og:type" content="profile">
@@ -31,7 +30,7 @@
   "@type": "Person",
   "@id": "https://noelgrass.github.io/#person",
   "name": "Noel Grass",
-  "jobTitle": "Cinematic Film Composer, Modern Classical Pianist, Neoclassical Pianist, Contemporary Classical Pianist, Modern Classical Composer, Neoclassical Composer, Contemporary Classical Composer, Music Producer, Audio Producer, Sound Artist, Live Performer",
+  "jobTitle": "Cinematic Film Composer, Modern Classical Pianist, Neoclassical Pianist, Contemporary Classical Pianist, Modern Classical Composer, Neoclassical Composer, Contemporary Classical Composer, Orchestrator, Music Arranger, Music Producer, Audio Producer, Sound Artist, Live Performer",
   "url": "https://noelgrass.github.io/",
   "image": "https://noelgrass.github.io/images/noel-grass.jpeg",
   "description": "Noel Grass is a cinematic film composer, modern classical and contemporary classical pianist, sound artist, and music producer from Kenya. His work spans narrative-driven cinema scores, solo piano, orchestral composition, hybrid scoring, ambient sound design, sound art, and experimental music, released internationally.",
@@ -39,6 +38,8 @@
     "@type": "WebPage",
     "@id": "https://noelgrass.github.io/"
   },
+  "email": "noelgrassartist@gmail.com",
+  "telephone": "+254705872970",
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Nairobi",
@@ -69,10 +70,12 @@
     "Modern Classical Piano",
     "Neoclassical Piano",
     "Contemporary Classical Piano",
+    "Orchestral Piano",
     "Modern Classical Composition",
     "Neoclassical Composition",
     "Contemporary Classical Composition",
     "Impressionist Composition",
+    "Improvisation",
     "Sound Art",
     "Experimental Music",
     "Experimental Composition",
@@ -163,8 +166,25 @@
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Audio Production" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Solo Piano Performance" } },
       { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Ensemble Performance" } },
-      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orchestral Performance" } }
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orchestral Performance" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Live Performance Booking" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Music Commission" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Music Arrangement" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Orchestral Arrangement" } }
     ]
+  },
+  "award": [
+    "Two-time Kalasha International Film Awards nominee, Best Original Score",
+    "Ziwa (2023), Najib Ayyed Grand Prize, Khouribga International African Film Festival",
+    "Lost in Time (2019), Five Kalasha Awards including Best Feature Film",
+    "Kutu (2021), Kalasha Award for Best Short Film"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Live Performance Bookings, Commissions, Music Arrangement, Orchestral Arrangement, Music Production, and Business Inquiries",
+    "email": "noelgrassartist@gmail.com",
+    "telephone": "+254705872970",
+    "availableLanguage": ["English", "Swahili"]
   },
   "sameAs": [
     "https://www.wikidata.org/wiki/Q141263210",
@@ -183,6 +203,22 @@
     "https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403",
     "https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8"
   ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://noelgrass.github.io/#website",
+  "url": "https://noelgrass.github.io/",
+  "name": "Noel Grass",
+  "description": "Official website of Noel Grass — cinematic film composer, contemporary classical pianist, and music producer from Kenya.",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Person",
+    "@id": "https://noelgrass.github.io/#person"
+  }
 }
 </script>
 
@@ -522,9 +558,6 @@
     animation-play-state: paused;
   }
 
-  /* ============================================================
-     CINEMATIC FULL-SCREEN OVERLAY MENU (centered)
-     ============================================================ */
   .menu-panel {
     position: fixed;
     inset: 0;
@@ -769,9 +802,6 @@
     cursor: pointer;
   }
 
-  /* ============================================================
-     REST OF PAGE
-     ============================================================ */
   .hero {
     position: relative;
     width: 100%;
@@ -1373,6 +1403,41 @@
     opacity: 0.95;
   }
 
+  /* ============================================================
+     FOOTER LOCATION
+     ============================================================ */
+  .footer-location {
+    text-align: right;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-top: 24px;
+    padding-right: 6px;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-location a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .footer-location a:hover {
+    color: var(--gold-pale);
+    border-bottom-color: var(--gold-dim);
+  }
+
+  .footer-sep {
+    margin: 0 10px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
   @media (max-width: 900px) {
     .editorial {
       grid-template-columns: 1fr;
@@ -1469,7 +1534,6 @@
       transform: translateY(-5.75px) rotate(-45deg);
     }
 
-    /* Menu overlay responsive */
     .menu-inner {
       padding: 90px 24px 60px;
       gap: 32px;
@@ -1559,6 +1623,12 @@
       box-shadow:
         0 0 32px 5px rgba(197, 168, 128, 0.45),
         0 0 70px 14px rgba(197, 168, 128, 0.18);
+    }
+
+    .footer-location {
+      text-align: center;
+      padding-right: 0;
+      margin-top: 20px;
     }
   }
 
@@ -1746,6 +1816,12 @@
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
+
+    <p class="footer-location">
+      <a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Nairobi, Kenya</a>
+      <span class="footer-sep">·</span>
+      <span>Worldwide</span>
+    </p>
 
   </div>
 
