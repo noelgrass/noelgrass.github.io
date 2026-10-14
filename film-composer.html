@@ -696,6 +696,7 @@
     display: block;
     opacity: 0;
     text-align: center;
+    transition: opacity 0.5s ease;
   }
 
   .menu-panel.open .menu-column:nth-child(1) .menu-section {
@@ -750,13 +751,12 @@
     padding: 6px 0 6px 0;
     transition:
       color 0.6s ease,
-      letter-spacing 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.5s ease,
       text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .menu-link:hover {
     color: #FCFCF7;
-    letter-spacing: 0.30em;
     text-shadow:
       0 0 10px rgba(197, 168, 128, 0.75),
       0 0 25px rgba(197, 168, 128, 0.55),
@@ -768,6 +768,14 @@
     color: var(--gold-dim);
     pointer-events: none;
     cursor: default;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) {
+    opacity: 0.25;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-section {
+    opacity: 0.15;
   }
 
   .menu-bottom {
@@ -1117,14 +1125,6 @@
     .menu-column .menu-link {
       font-size: 1.3em;
       letter-spacing: 0.22em;
-    }
-
-    .menu-column .menu-link:hover {
-      letter-spacing: 0.26em;
-      text-shadow:
-        0 0 10px rgba(197, 168, 128, 0.65),
-        0 0 25px rgba(197, 168, 128, 0.4),
-        0 0 55px rgba(197, 168, 128, 0.2);
     }
 
     .menu-section {
