@@ -816,25 +816,54 @@
     opacity: 0.95;
   }
 
-  .contact-quiet {
+  .footer-cta {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
     text-align: center;
-    margin-top: 32px;
-    font-style: italic;
-    font-size: 1em;
     animation: fadeUp 1s ease-out both;
     animation-delay: 0.5s;
   }
 
-  .contact-quiet a {
-    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
-    padding-bottom: 2px;
-    transition: border-color 0.3s ease, color 0.3s ease, letter-spacing 0.4s ease;
+  .footer-cta .join-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--offwhite);
+    margin: 0 0 12px;
+    line-height: 1.75;
   }
 
-  .contact-quiet a:hover {
+  .footer-cta .join-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .footer-cta .join-line a:hover {
+    transform: translateX(4px);
     border-bottom-color: var(--gold);
     color: #FCFCF7;
-    letter-spacing: 0.05em;
+  }
+
+  .footer-cta .secondary-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.92em;
+    color: var(--muted);
+    margin: 24px 0 0;
+    line-height: 1.7;
+  }
+
+  .footer-cta .secondary-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
+    padding-bottom: 1px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .footer-cta .secondary-line a:hover {
+    border-bottom-color: var(--gold);
+    color: var(--gold-pale);
   }
 
   @media (max-width: 700px) {
@@ -895,9 +924,11 @@
     }
 
     .cross-link { margin-top: 50px; padding-top: 30px; }
-    .signature { margin-top: 60px; }
+    .footer-cta { margin-top: 60px; padding-top: 30px; }
+    .footer-cta .join-line { font-size: 1em; }
+    .footer-cta .secondary-line { font-size: 0.88em; }
+    .signature { margin-top: 50px; }
     .signature-logo { height: 55px; }
-    .contact-quiet { margin-top: 24px; }
   }
 
   @media (max-width: 380px) {
@@ -1033,9 +1064,17 @@
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
 
-    <p class="contact-quiet">
-      <a href="contact">Contact →</a>
-    </p>
+    <div class="footer-cta">
+
+      <p class="join-line">
+        New releases, live dates, and studio notes. <a href="join">Join the list →</a>
+      </p>
+
+      <p class="secondary-line">
+        For bookings and collaborations, see the <a href="contact">Contact page →</a>
+      </p>
+
+    </div>
 
   </div>
 
