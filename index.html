@@ -349,45 +349,6 @@
     }
   }
 
-  @keyframes releaseRestGlow {
-    0% {
-      box-shadow:
-        0 0 22px 3px rgba(185, 151, 92, 0.28),
-        0 0 50px 8px rgba(185, 151, 92, 0.12);
-    }
-    50% {
-      box-shadow:
-        0 0 32px 6px rgba(185, 151, 92, 0.52),
-        0 0 70px 14px rgba(185, 151, 92, 0.22);
-    }
-    100% {
-      box-shadow:
-        0 0 22px 3px rgba(185, 151, 92, 0.28),
-        0 0 50px 8px rgba(185, 151, 92, 0.12);
-    }
-  }
-
-  @keyframes releaseHoverGlow {
-    0% {
-      box-shadow:
-        0 0 40px 8px rgba(197, 168, 128, 0.55),
-        0 0 90px 20px rgba(197, 168, 128, 0.28),
-        0 0 140px 40px rgba(197, 168, 128, 0.10);
-    }
-    50% {
-      box-shadow:
-        0 0 55px 12px rgba(197, 168, 128, 0.75),
-        0 0 120px 35px rgba(197, 168, 128, 0.40),
-        0 0 180px 60px rgba(197, 168, 128, 0.16);
-    }
-    100% {
-      box-shadow:
-        0 0 40px 8px rgba(197, 168, 128, 0.55),
-        0 0 90px 20px rgba(197, 168, 128, 0.28),
-        0 0 140px 40px rgba(197, 168, 128, 0.10);
-    }
-  }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -517,8 +478,7 @@
   body.menu-open h1,
   body.menu-open .portrait img,
   body.menu-open .scroll-cue .line,
-  body.menu-open .fork-card,
-  body.menu-open .featured-release img {
+  body.menu-open .fork-card {
     animation-play-state: paused;
   }
 
@@ -734,7 +694,7 @@
   }
 
   .page:has(.fork-card:hover) .editorial,
-  .page:has(.fork-card:hover) .featured-release,
+  .page:has(.fork-card:hover) .icons,
   .page:has(.fork-card:hover) .rule-full,
   .page:has(.fork-card:hover) .footer-links,
   .page:has(.fork-card:hover) .signature,
@@ -749,15 +709,22 @@
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.featured-release:hover) .editorial,
-  .page:has(.featured-release:hover) .fork,
-  .page:has(.featured-release:hover) .scroll-cue,
-  .page:has(.featured-release:hover) .rule-full,
-  .page:has(.featured-release:hover) .footer-links,
-  .page:has(.featured-release:hover) .signature {
-    opacity: 0.15;
+  .page:has(.icons a:hover) .editorial,
+  .page:has(.icons a:hover) .fork,
+  .page:has(.icons a:hover) .scroll-cue,
+  .page:has(.icons a:hover) .rule-full,
+  .page:has(.icons a:hover) .footer-links,
+  .page:has(.icons a:hover) .signature {
+    opacity: 0.1;
     transition: opacity 0.7s ease;
   }
+
+  .page:has(.icons a:hover) .icon-item:not(:has(a:hover)) {
+    opacity: 0.1;
+    transition: opacity 0.7s ease;
+  }
+
+  .page:has(.icons a:hover) .icons { opacity: 1; }
 
   .editorial {
     display: grid;
@@ -1065,7 +1032,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    margin: 0 auto 40px;
+    margin: 0 auto 60px;
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.45s;
     transition: opacity 0.7s ease;
@@ -1091,49 +1058,92 @@
     animation: scrollPulse 3s ease-in-out infinite;
   }
 
-  .featured-release {
+  .icons {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: 0 auto 60px;
+    align-items: flex-start;
+    gap: 44px;
+    margin-bottom: 60px;
+    flex-wrap: wrap;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.6s;
+    animation-delay: 1.3s;
+    transition: opacity 0.7s ease;
+    position: relative;
+    z-index: 2;
+  }
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     transition: opacity 0.7s ease;
   }
 
-  .featured-release a {
-    display: inline-block;
-    width: 240px;
-    max-width: 70vw;
-    aspect-ratio: 1 / 1;
+  .icons a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: var(--gold-soft);
+    border-radius: 50%;
     position: relative;
-    border: 1px solid var(--gold-soft);
-    overflow: hidden;
-    transition: border-color 0.5s ease, transform 0.5s ease;
-    animation: releaseRestGlow 6s ease-in-out infinite;
-    animation-delay: 1.8s;
-    -webkit-tap-highlight-color: transparent;
-    backface-visibility: hidden;
+    transition: color 0.4s ease, transform 0.4s ease;
   }
 
-  .featured-release img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: brightness(0.85) contrast(1.05);
-    transition: filter 0.7s ease, transform 0.7s ease;
+  .icons a::before {
+    content: '';
+    position: absolute;
+    inset: -25px;
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgba(185, 151, 92, 0.48) 0%,
+      rgba(185, 151, 92, 0.18) 35%,
+      transparent 65%
+    );
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.8s ease;
   }
 
-  .featured-release a:hover {
-    border-color: var(--gold);
-    animation: releaseHoverGlow 4s ease-in-out infinite;
-    transform: scale(1.02);
+  .icons a::after {
+    content: '';
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    box-shadow: 0 0 40px 8px rgba(185, 151, 92, 0);
+    transition: box-shadow 0.8s ease;
+    pointer-events: none;
   }
 
-  .featured-release a:hover img {
-    filter: brightness(1) contrast(1.08);
-    transform: scale(1.03);
+  .icons a:hover {
+    color: #FCFCF7;
+    transform: scale(1.15);
+  }
+
+  .icons a:hover::before { opacity: 1; }
+
+  .icons a:hover::after {
+    box-shadow: 0 0 45px 10px rgba(185, 151, 92, 0.22);
+  }
+
+  .icons svg { width: 32px; height: 32px; fill: currentColor; }
+
+  .icon-label {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.72em;
+    letter-spacing: 0.04em;
+    text-transform: none;
+    color: var(--muted);
+    transition: color 0.4s ease;
+    pointer-events: none;
+  }
+
+  .icon-item:hover .icon-label {
+    color: var(--gold-pale);
   }
 
   .rule-full {
@@ -1144,7 +1154,7 @@
     margin: 20px auto 50px;
     opacity: 0.6;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.75s;
+    animation-delay: 1.4s;
     transition: opacity 0.7s ease;
   }
 
@@ -1161,7 +1171,7 @@
     color: #4E4E4E;
     margin-bottom: 50px;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.85s;
+    animation-delay: 1.5s;
     transition: opacity 0.7s ease;
   }
 
@@ -1179,7 +1189,7 @@
     text-align: center;
     margin-top: 40px;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.95s;
+    animation-delay: 1.6s;
     transition: opacity 0.7s ease;
   }
 
@@ -1304,18 +1314,13 @@
 
     .menu-panel a.current { padding-left: 32px; }
 
-    .featured-release a {
-      width: 200px;
-      max-width: 60vw;
-    }
-
-    .featured-release {
-      margin-bottom: 40px;
-    }
-
-    .scroll-cue .line { height: 30px; }
+    .icons { gap: 25px; }
+    .icon-label { font-size: 0.68em; }
+    .intro { font-size: 1.05em; }
+    .intro-body { font-size: 1em; }
     .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
+    .scroll-cue .line { height: 30px; }
 
     html, body {
       scroll-behavior: auto;
@@ -1362,20 +1367,6 @@
       box-shadow:
         0 0 32px 5px rgba(197, 168, 128, 0.45),
         0 0 70px 14px rgba(197, 168, 128, 0.18);
-    }
-
-    .featured-release a {
-      animation: none;
-      box-shadow:
-        0 0 24px 3px rgba(185, 151, 92, 0.32),
-        0 0 45px 6px rgba(185, 151, 92, 0.14);
-    }
-
-    .featured-release a:hover {
-      animation: none;
-      box-shadow:
-        0 0 34px 6px rgba(197, 168, 128, 0.55),
-        0 0 70px 15px rgba(197, 168, 128, 0.25);
     }
   }
 
@@ -1495,15 +1486,35 @@
       <span class="line"></span>
     </div>
 
-    <div class="featured-release">
-      <a
-        href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAKuy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g"
-        target="_blank"
-        rel="noopener"
-        aria-label="Listen to Into A Stillness That Answers on YouTube"
-      >
-        <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
-      </a>
+    <div class="icons">
+
+      <div class="icon-item">
+        <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAKuy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" title="YouTube" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on YouTube">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
+          </svg>
+        </a>
+        <span class="icon-label">YouTube</span>
+      </div>
+
+      <div class="icon-item">
+        <a href="https://open.spotify.com/album/5dglJq4fALStu3S6Jm46J4" title="Spotify" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on Spotify">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
+          </svg>
+        </a>
+        <span class="icon-label">Spotify</span>
+      </div>
+
+      <div class="icon-item">
+        <a href="https://music.apple.com/us/album/into-a-stillness-that-answers-ep/6773708812" title="Apple Music" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on Apple Music">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
+          </svg>
+        </a>
+        <span class="icon-label">Apple Music</span>
+      </div>
+
     </div>
 
     <div class="rule-full"></div>
