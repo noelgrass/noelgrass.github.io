@@ -323,11 +323,11 @@
 
   html {
     background: var(--bg);
-    scrollbar-gutter: stable;
   }
 
-  html.no-scroll {
+  html.menu-lock {
     overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
   }
 
   html, body {
@@ -1343,11 +1343,11 @@
     function lockScroll() {
       var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.documentElement.classList.add('no-scroll');
+      document.documentElement.classList.add('menu-lock');
     }
 
     function unlockScroll() {
-      document.documentElement.classList.remove('no-scroll');
+      document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
