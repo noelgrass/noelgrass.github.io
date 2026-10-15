@@ -733,7 +733,7 @@
     color: #FCFCF7;
   }
 
-  /* Master Collapsible Questions Section */
+  /* Master Collapsible Questions Section matching Film Composer typography */
   .questions-accordion {
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
@@ -747,7 +747,7 @@
     font-size: 0.72em;
     letter-spacing: 0.35em;
     text-transform: uppercase;
-    color: var(--gold-pale);
+    color: var(--muted);
     cursor: pointer;
     padding: 24px 0;
     list-style: none;
@@ -756,6 +756,11 @@
     justify-content: space-between;
     align-items: center;
     user-select: none;
+    transition: color 0.3s ease;
+  }
+
+  .questions-accordion summary:hover {
+    color: var(--gold-pale);
   }
 
   .questions-accordion summary::-webkit-details-marker {
@@ -766,8 +771,12 @@
     content: '›';
     font-family: 'Montserrat', sans-serif;
     font-size: 1.3em;
+    color: var(--muted);
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .questions-accordion summary:hover::after {
     color: var(--gold-pale);
-    transition: transform 0.3s ease;
   }
 
   .questions-accordion[open] summary::after {
@@ -776,21 +785,25 @@
 
   .questions-content {
     padding-bottom: 40px;
+    border-top: 1px solid var(--rule);
   }
 
   .questions-content h3 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-size: 1.35em;
-    color: var(--offwhite);
-    margin: 32px 0 12px;
-    font-weight: 500;
+    color: var(--gold);
+    margin: 36px 0 12px;
+    font-style: italic;
+    font-weight: 600;
+    text-align: left;
   }
 
   .questions-content p {
     font-size: 1.05em;
     line-height: 1.85;
-    color: var(--muted);
-    margin: 0 0 24px;
+    color: var(--offwhite);
+    margin: 0 0 20px;
+    text-align: left;
   }
 
   .cross-link {
