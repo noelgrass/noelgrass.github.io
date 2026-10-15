@@ -671,7 +671,7 @@
   .format-list li:last-child { border-bottom: none; }
 
   .format-list li::before {
-    content: '—';
+    content: "\2014";
     color: var(--gold);
     position: absolute;
     left: 0;
@@ -733,77 +733,103 @@
     color: #FCFCF7;
   }
 
-  /* Master Collapsible Questions Section matching Film Composer typography */
-  .questions-accordion {
+  /* FAQ accordion — matches Film Composer styling */
+  .faq-wrap {
+    text-align: left;
+    margin: 60px auto 0;
+    max-width: 720px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
     border-top: 1px solid var(--rule);
     border-bottom: 1px solid var(--rule);
-    margin-top: 60px;
-    text-align: left;
   }
 
-  .questions-accordion summary {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 300;
-    font-size: 0.72em;
-    letter-spacing: 0.35em;
-    text-transform: uppercase;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 24px 0;
-    list-style: none;
-    position: relative;
+  .faq-wrap summary {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    user-select: none;
+    justify-content: space-between;
+    padding: 16px 2px;
+    cursor: pointer;
+    list-style: none;
     transition: color 0.3s ease;
   }
 
-  .questions-accordion summary:hover {
-    color: var(--gold-pale);
-  }
+  .faq-wrap summary::-webkit-details-marker { display: none; }
+  .faq-wrap summary::marker { content: ''; }
 
-  .questions-accordion summary::-webkit-details-marker {
-    display: none;
-  }
-
-  .questions-accordion summary::after {
-    content: '›';
+  .faq-label {
     font-family: 'Montserrat', sans-serif;
-    font-size: 1.3em;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
     color: var(--muted);
-    transition: transform 0.3s ease, color 0.3s ease;
+    transition: color 0.3s ease;
   }
 
-  .questions-accordion summary:hover::after {
+  .faq-wrap summary:hover .faq-label {
     color: var(--gold-pale);
   }
 
-  .questions-accordion[open] summary::after {
-    transform: rotate(90deg);
+  .faq-indicator {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-right: 1px solid var(--gold-soft);
+    border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease;
+    flex: 0 0 auto;
   }
 
-  .questions-content {
-    padding-bottom: 40px;
-    border-top: 1px solid var(--rule);
+  .faq-wrap[open] .faq-indicator {
+    transform: rotate(45deg) translateY(-2px);
+    border-color: var(--gold);
   }
 
-  .questions-content h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.35em;
-    color: var(--gold);
-    margin: 36px 0 12px;
-    font-style: italic;
-    font-weight: 600;
-    text-align: left;
+  .faq-body {
+    padding: 4px 0 18px;
   }
 
-  .questions-content p {
-    font-size: 1.05em;
-    line-height: 1.85;
+  .faq-item {
+    padding: 12px 0;
+    border-top: 1px solid rgba(42, 42, 42, 0.7);
+  }
+
+  .faq-item:first-child {
+    border-top: none;
+    padding-top: 4px;
+  }
+
+  .faq-item h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 0.88em;
     color: var(--offwhite);
-    margin: 0 0 20px;
-    text-align: left;
+    letter-spacing: 0;
+    margin-bottom: 5px;
+    line-height: 1.5;
+    opacity: 0.9;
+  }
+
+  .faq-item p {
+    font-size: 0.82em;
+    line-height: 1.75;
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .faq-item p a {
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
+    padding-bottom: 1px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .faq-item p a:hover {
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
   }
 
   .cross-link {
@@ -1023,6 +1049,12 @@
       margin-top: 10px;
     }
 
+    .faq-wrap summary { padding: 14px 2px; }
+    .faq-label { font-size: 0.58em; }
+    .faq-item { padding: 11px 0; }
+    .faq-item h3 { font-size: 0.84em; }
+    .faq-item p { font-size: 0.78em; }
+
     .cross-link { margin-top: 50px; padding-top: 30px; }
     .footer-cta { margin-top: 60px; padding-top: 30px; }
     .footer-cta .join-line { font-size: 1em; }
@@ -1113,7 +1145,7 @@
 
       <div class="menu-column">
         <span class="menu-section">Elsewhere</span>
-        <ul class="menu-links">         
+        <ul class="menu-links">
           <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
           <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
           <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
@@ -1139,7 +1171,7 @@
 
     <div class="body-section">
 
-      <p>Noel Grass is a Kenyan pianist, composer, and music producer whose work explores the expressive possibilities of contemporary classical and neoclassical music. Moving between solo piano, orchestral writing, ambient soundscapes, and experimental composition, his practice brings together musical sensitivity, cinematic atmosphere, and a considered approach to sound. Based in Nairobi, Kenya, he works across composition, orchestration, arrangement, and music production for artistic projects and productions in East Africa and internationally.</p>
+      <p>Noel Grass is a pianist, composer, and music producer based in Nairobi, Kenya, whose work explores the expressive possibilities of contemporary classical and neoclassical music. Moving between solo piano, orchestral writing, ambient soundscapes, and experimental composition, his practice brings together musical sensitivity, cinematic atmosphere, and a considered approach to sound. He works across composition, orchestration, arrangement, and music production for artistic projects and productions internationally.</p>
 
       <p>His solo works, <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, and <em>Where I Begin Again</em>, sit within the contemporary classical tradition. They lean on impressionism, cinematic texture, and the restraint of neoclassical form, without ever settling into a single school.</p>
 
@@ -1177,27 +1209,43 @@
 
     </div>
 
-    <details class="questions-accordion">
-      <summary>QUESTIONS</summary>
-      <div class="questions-content">
+    <details class="faq-wrap">
+      <summary>
+        <span class="faq-label">Questions</span>
+        <span class="faq-indicator" aria-hidden="true"></span>
+      </summary>
 
-        <h3>Is Noel Grass a neoclassical pianist?</h3>
-        <p>Yes. Noel Grass is a neoclassical and contemporary classical pianist from Kenya. His solo works include <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, <em>Where I Begin Again</em>, and <em>Introspect</em>.</p>
+      <div class="faq-body">
 
-        <h3>What style of music does Noel Grass compose?</h3>
-        <p>Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements without settling into a single school.</p>
+        <div class="faq-item">
+          <h3>Is Noel Grass a neoclassical pianist?</h3>
+          <p>Yes. Noel Grass is a neoclassical and contemporary classical pianist from Kenya. His solo works include <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, <em>Where I Begin Again</em>, and <em>Introspect</em>.</p>
+        </div>
 
-        <h3>Does Noel Grass work as an orchestrator and music arranger?</h3>
-        <p>Yes. Noel Grass works as an orchestrator and music arranger across solo, ensemble, and cinematic contexts. He arranges for traditional orchestral instruments and blends them with ambient textures and African instrumental elements.</p>
+        <div class="faq-item">
+          <h3>What style of music does Noel Grass compose?</h3>
+          <p>Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements without settling into a single school.</p>
+        </div>
 
-        <h3>Is Noel Grass a music producer?</h3>
-        <p>Yes. Noel Grass produces his own releases, building arrangements, layering textures, and shaping the final work. He also works on collaborative projects.</p>
+        <div class="faq-item">
+          <h3>Does Noel Grass work as an orchestrator and music arranger?</h3>
+          <p>Yes. Noel Grass works as an orchestrator and music arranger across solo, ensemble, and cinematic contexts. He arranges for traditional orchestral instruments and blends them with ambient textures and African instrumental elements.</p>
+        </div>
 
-        <h3>Does Noel Grass perform live?</h3>
-        <p>Yes. Noel Grass performs his own compositions live, from solo piano to ensemble settings. His performances range from intimate rooms to festival stages.</p>
+        <div class="faq-item">
+          <h3>Is Noel Grass a music producer?</h3>
+          <p>Yes. Noel Grass produces his own releases, building arrangements, layering textures, and shaping the final work. He also works on collaborative projects.</p>
+        </div>
 
-        <h3>Who are contemporary classical composers in Kenya?</h3>
-        <p>Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa and beyond.</p>
+        <div class="faq-item">
+          <h3>Does Noel Grass perform live?</h3>
+          <p>Yes. Noel Grass performs his own compositions live, from solo piano to ensemble settings. His performances range from intimate rooms to festival stages.</p>
+        </div>
+
+        <div class="faq-item">
+          <h3>Who are contemporary classical composers in Kenya?</h3>
+          <p>Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa and beyond.</p>
+        </div>
 
       </div>
     </details>
