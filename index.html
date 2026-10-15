@@ -33,7 +33,7 @@
   "jobTitle": "Cinematic Film Composer, Modern Classical Pianist, Neoclassical Pianist, Contemporary Classical Pianist, Modern Classical Composer, Neoclassical Composer, Contemporary Classical Composer, Orchestrator, Music Arranger, Music Producer, Audio Producer, Sound Artist, Live Performer",
   "url": "https://noelgrass.github.io/",
   "image": "https://noelgrass.github.io/images/noel-grass.jpeg",
-  "description": "Noel Grass is a cinematic film composer, modern classical and contemporary classical pianist, sound artist, and music producer from Kenya. His work spans narrative-driven cinema scores, solo piano, orchestral composition, hybrid scoring, ambient sound design, sound art, and experimental music, released internationally.",
+  "description": "Noel Grass is a film composer, neoclassical pianist, and music producer from Kenya working across cinema, contemporary classical composition, and audio production.",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://noelgrass.github.io/"
@@ -106,6 +106,8 @@
     "Concert Pianist",
     "Live Pianist",
     "Ensemble Performer",
+    "Session Musician",
+    "Cross-Genre Performance",
     "Chamber Musician",
     "Collaborative Pianist",
     "Neoclassical Live Performer",
@@ -152,6 +154,28 @@
     "Sound Designer",
     "Sound Engineer",
     "Orchestrator"
+  ],
+  "hasOccupation": [
+    {
+      "@type": "Occupation",
+      "name": "Composer",
+      "occupationLocation": { "@type": "Country", "name": "Kenya" }
+    },
+    {
+      "@type": "Occupation",
+      "name": "Pianist",
+      "occupationLocation": { "@type": "Country", "name": "Kenya" }
+    },
+    {
+      "@type": "Occupation",
+      "name": "Session Musician",
+      "occupationLocation": { "@type": "Country", "name": "Kenya" }
+    },
+    {
+      "@type": "Occupation",
+      "name": "Music Producer",
+      "occupationLocation": { "@type": "Country", "name": "Kenya" }
+    }
   ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
@@ -1403,9 +1427,6 @@
     opacity: 0.95;
   }
 
-  /* ============================================================
-     FOOTER LOCATION
-     ============================================================ */
   .footer-location {
     text-align: right;
     font-family: 'Montserrat', sans-serif;
@@ -1942,13 +1963,11 @@
 
       var linkPath = normalizePath(href);
 
-      // Home link: match whenever we're on the homepage
       if (isHome && (linkPath === '/' || linkPath === '/home' || linkPath === '/index')) {
         matched = link;
         return;
       }
 
-      // All other links: exact path match
       if (!isHome && linkPath === current) {
         matched = link;
       }
