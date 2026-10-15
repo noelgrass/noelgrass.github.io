@@ -25,7 +25,7 @@
   "@type": "ProfilePage",
   "@id": "https://noelgrass.github.io/artist#profile",
   "url": "https://noelgrass.github.io/artist",
-  "name": "Noel Grass — Modern Classical Pianist, Neoclassical Pianist, Contemporary Classical Pianist, Composer, Sound Artist, Music Producer",
+  "name": "Noel Grass — Composer & Neoclassical Pianist",
   "mainEntity": {
     "@type": "Person",
     "@id": "https://noelgrass.github.io/#person"
@@ -51,7 +51,7 @@
       "name": "What style of music does Noel Grass compose?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements, without settling into a single school."
+        "text": "Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements without settling into a single school."
       }
     },
     {
@@ -67,7 +67,7 @@
       "name": "Is Noel Grass a music producer?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Noel Grass produces his own releases from the studio, building arrangements, layering textures, and shaping the final work. He works as a music producer for his solo catalogue and for collaborative projects."
+        "text": "Yes. Noel Grass produces his own releases, building arrangements, layering textures, and shaping the final work. He also works on collaborative projects."
       }
     },
     {
@@ -75,7 +75,7 @@
       "name": "Does Noel Grass perform live?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Noel Grass performs live in solo piano, ensemble, and orchestral settings. His performances range from intimate venues and private events to film festivals, cultural programmes, and international stages."
+        "text": "Yes. Noel Grass performs his own compositions live, from solo piano to ensemble settings. His performances range from intimate rooms to festival stages."
       }
     },
     {
@@ -83,7 +83,7 @@
       "name": "Who are contemporary classical composers in Kenya?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa, pan-African markets, and beyond."
+        "text": "Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa and beyond."
       }
     }
   ]
@@ -990,6 +990,77 @@
       letter-spacing: 0.18em;
     }
   }
+
+  /* FAQ-only styling: deliberately subtle and separate from the original CSS. */
+  .faq-section,
+  .faq-section p,
+  .faq-section strong {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .faq-section p {
+    line-height: 1.7;
+    text-align: left;
+  }
+
+  .faq-section strong {
+    font-weight: 400;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.18);
+    padding: 10px 0;
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid rgba(197, 168, 128, 0.18);
+  }
+
+  .faq-item summary {
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1.7;
+    list-style: none;
+    position: relative;
+    padding-right: 22px;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: "+";
+    position: absolute;
+    right: 2px;
+    top: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .faq-item[open] summary::after {
+    content: "−";
+  }
+
+  .faq-item p {
+    margin: 9px 0 2px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: left;
+  }
+
+  .faq-item summary:focus-visible {
+    outline: 1px solid var(--muted);
+    outline-offset: 4px;
+  }
+
+
+  .faq-title {
+    font-size: 16px;
+  }
 </style>
 </head>
 <body>
@@ -1070,11 +1141,11 @@
 
     <p class="hero-roles">Neoclassical Pianist &nbsp;·&nbsp; Contemporary Classical Composer &nbsp;·&nbsp; Orchestrator &nbsp;·&nbsp; Music Arranger &nbsp;·&nbsp; Music Producer</p>
 
-    <span class="subhead">About the Artist</span>
+    <h2 class="subhead">About the Artist</h2>
 
     <div class="body-section">
 
-      <p>Noel Grass writes music for piano and for orchestra, for a single instrument and for a full ensemble. His work moves between the quiet of solo piano and the expanse of cinematic sound, always searching for the space where emotion and architecture meet.</p>
+      <p>Noel Grass is a Kenyan pianist, composer, and music producer whose work explores the expressive possibilities of contemporary classical and neoclassical music. Moving between solo piano, orchestral writing, ambient soundscapes, and experimental composition, his practice brings together musical sensitivity, cinematic atmosphere, and a considered approach to sound. Based in Nairobi, Kenya, he works across composition, orchestration, arrangement, and music production for artistic projects and productions in East Africa and internationally.</p>
 
       <p>His solo works, <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, and <em>Where I Begin Again</em>, sit within the contemporary classical tradition. They lean on impressionism, cinematic texture, and the restraint of neoclassical form, without ever settling into a single school.</p>
 
@@ -1082,7 +1153,7 @@
 
     </div>
 
-    <span class="subhead">Live Performance</span>
+    <h2 class="subhead">Live Performance</h2>
 
     <div class="body-section">
 
@@ -1097,7 +1168,7 @@
 
     </div>
 
-    <span class="subhead">Four Rooms</span>
+    <h2 class="subhead">Four Rooms</h2>
 
     <div class="body-section">
 
@@ -1112,20 +1183,65 @@
 
     </div>
 
-    <span class="subhead">Where He Works</span>
 
-    <div class="body-section">
 
-      <p>Noel Grass writes, records, and produces from Kenya. His work is released internationally, licensed across East Africa, pan-African markets, and beyond, and commissioned for film, television, and broadcast. He is equally at home in the studio and on an international stage.</p>
+      <a href="discography" class="to-discography">Explore Noel Grass&#39;s Discography →</a>
 
-      <p>The catalogue is available for streaming worldwide, and individual works can be licensed for film, television, brand, and broadcast productions.</p>
+    </div>
 
-      <a href="discography" class="to-discography">Explore the Discography →</a>
+    <h2 class="subhead faq-title">Frequently Asked Questions</h2>
+
+    <div class="body-section faq-section">
+
+      <details class="faq-item">
+        <summary>Is Noel Grass a neoclassical pianist?</summary>
+        <p>Yes. Noel Grass is a neoclassical and contemporary classical pianist
+        from Kenya. His solo works include <em>Into A Stillness That Answers</em>,
+        <em>The Impressionist</em> trilogy, <em>Where I Begin Again</em>,
+        and <em>Introspect</em>.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>What style of music does Noel Grass compose?</summary>
+        <p>Noel Grass composes contemporary classical, modern classical,
+        neoclassical, orchestral, experimental, and ambient music. His work
+        draws on impressionism, cinematic texture, and African instrumental
+        elements without settling into a single school.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does Noel Grass work as an orchestrator and music arranger?</summary>
+        <p>Yes. Noel Grass works as an orchestrator and music arranger across
+        solo, ensemble, and cinematic contexts. He arranges for traditional
+        orchestral instruments and blends them with ambient textures and
+        African instrumental elements.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is Noel Grass a music producer?</summary>
+        <p>Yes. Noel Grass produces his own releases, building arrangements,
+        layering textures, and shaping the final work. He also works on
+        collaborative projects.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does Noel Grass perform live?</summary>
+        <p>Yes. Noel Grass performs his own compositions live, from solo piano
+        to ensemble settings. His performances range from intimate rooms
+        to festival stages.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Who are contemporary classical composers in Kenya?</summary>
+        <p>Noel Grass is a contemporary classical composer and neoclassical
+        pianist from Kenya. His work is released internationally and licensed
+        for productions across East Africa and beyond.</p>
+      </details>
 
     </div>
 
     <div class="cross-link">
-      For stories on screen, see the <a href="film-composer">Film Composer →</a> page.
+      For cinematic work and film scoring, see the <a href="film-composer">Film Composer page →</a>
     </div>
 
     <div class="signature">
