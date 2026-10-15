@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
+
+<title>Noel Grass — Composer &amp; Neoclassical Pianist</title>
+<meta name="description" content="Noel Grass is a neoclassical pianist, contemporary classical composer, orchestrator, music arranger, and music producer. Solo piano, orchestral, experimental, and ambient works for listeners and productions across East Africa and internationally.">
+<link rel="canonical" href="https://noelgrass.github.io/artist">
+
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Noel Grass — Composer &amp; Neoclassical Pianist">
+<meta property="og:description" content="Contemporary classical composer, neoclassical pianist, orchestrator, and music arranger. Solo piano, orchestral, experimental, and ambient works.">
+<meta property="og:url" content="https://noelgrass.github.io/artist">
+<meta property="og:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Noel Grass — Composer &amp; Neoclassical Pianist">
+<meta name="twitter:description" content="Contemporary classical composer and neoclassical pianist.">
+<meta name="twitter:image" content="https://noelgrass.github.io/images/noel-grass.jpeg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "@id": "https://noelgrass.github.io/artist#profile",
+  "url": "https://noelgrass.github.io/artist",
+  "name": "Noel Grass — Modern Classical Pianist, Neoclassical Pianist, Contemporary Classical Pianist, Composer, Sound Artist, Music Producer",
+  "mainEntity": {
+    "@type": "Person",
+    "@id": "https://noelgrass.github.io/#person"
+  }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is Noel Grass a neoclassical pianist?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass is a neoclassical and contemporary classical pianist from Kenya. His solo works include Into A Stillness That Answers, The Impressionist trilogy, Where I Begin Again, and Introspect."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What style of music does Noel Grass compose?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements, without settling into a single school."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Noel Grass work as an orchestrator and music arranger?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass works as an orchestrator and music arranger across solo, ensemble, and cinematic contexts. He arranges for traditional orchestral instruments and blends them with ambient textures and African instrumental elements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Noel Grass a music producer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass produces his own releases from the studio, building arrangements, layering textures, and shaping the final work. He works as a music producer for his solo catalogue and for collaborative projects."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Noel Grass perform live?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass performs live in solo piano, ensemble, and orchestral settings. His performances range from intimate venues and private events to film festivals, cultural programmes, and international stages."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who are contemporary classical composers in Kenya?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa, pan-African markets, and beyond."
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #000000;
+    --gold: #C5A880;
+    --gold-soft: #B9975C;
+    --gold-pale: #E8D5B5;
+    --gold-dim: #7a6b4f;
+    --offwhite: #EDEAE3;
+    --muted: #9a958c;
+    --rule: #2a2a2a;
+    --scrollbar-width: 0px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    background: var(--bg);
+  }
+
+  html.menu-lock {
+    overflow: hidden;
+    padding-right: var(--scrollbar-width, 0px);
+  }
+
+  html, body {
+    color: var(--offwhite);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  a {
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.25s ease;
+  }
+
+  a:hover { color: #FCFCF7; }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes menuFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes menuLineDraw {
+    from { transform: scaleX(0); transform-origin: left center; }
+    to   { transform: scaleX(1); transform-origin: left center; }
+  }
+
+  @keyframes menuLinkIn {
+    from {
+      opacity: 0;
+      transform: translate3d(-12px, 0, 0);
+    }
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @keyframes menuHeadingIn {
+    from {
+      opacity: 0;
+      letter-spacing: 0.5em;
+    }
+    to {
+      opacity: 1;
+      letter-spacing: 0.35em;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 300;
+    background: var(--bg);
+    padding: 22px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: fadeUp 0.8s ease-out both;
+    contain: layout paint;
+  }
+
+  .wordmark {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: color 0.3s ease, text-shadow 0.5s ease;
+    position: relative;
+    padding-bottom: 2px;
+  }
+
+  .wordmark:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 18px rgba(197, 168, 128, 0.55),
+      0 0 40px rgba(197, 168, 128, 0.25);
+  }
+
+  .menu-toggle {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 8px 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.75em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    transition: color 0.3s ease;
+    -webkit-tap-highlight-color: transparent;
+    position: relative;
+  }
+
+  .menu-toggle:hover { color: #FBFAFC; }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 22px;
+    height: 14px;
+    position: relative;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    transform-origin: center;
+    transition:
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease,
+      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+    transform: translateY(6.25px) rotate(45deg);
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
+    opacity: 0;
+    width: 0;
+  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+    transform: translateY(-6.25px) rotate(-45deg);
+  }
+
+  .menu-toggle::after {
+    content: '';
+    position: absolute;
+    left: 34px;
+    right: 4px;
+    bottom: 2px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: right center;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-toggle:hover::after {
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+
+  .page-wrap {
+    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  body.menu-open .page-wrap {
+    filter: blur(8px) brightness(0.4);
+    opacity: 0.6;
+    pointer-events: none;
+    user-select: none;
+    will-change: filter, opacity;
+  }
+
+  /* ============================================================
+     CINEMATIC FULL-SCREEN OVERLAY MENU (two-column)
+     ============================================================ */
+  .menu-panel {
+    position: fixed;
+    inset: 0;
+    z-index: 400;
+    background: #000000;
+    background-image: radial-gradient(
+      ellipse at 50% 50%,
+      rgba(197, 168, 128, 0.07) 0%,
+      transparent 65%
+    );
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(1.02);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .menu-panel.open {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+  }
+
+  .menu-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 120px 40px 80px;
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .menu-top {
+    position: absolute;
+    top: 32px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+  }
+
+  .menu-heading {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+  }
+
+  .menu-panel.open .menu-heading {
+    animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+  }
+
+  .menu-heading::after {
+    content: '';
+    display: inline-block;
+    width: 60px;
+    height: 1px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left center;
+  }
+
+  .menu-panel.open .menu-heading::after {
+    animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+  }
+
+  .menu-close {
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 1em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 12px 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    opacity: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .menu-panel.open .menu-close {
+    animation: menuFadeIn 0.8s ease-out 1.2s forwards;
+  }
+
+  .menu-close:hover {
+    color: #FCFCF7;
+    letter-spacing: 0.45em;
+    text-shadow:
+      0 0 20px rgba(197, 168, 128, 0.7),
+      0 0 45px rgba(197, 168, 128, 0.3);
+  }
+
+  .menu-close .x {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    transition: transform 0.4s ease;
+  }
+
+  .menu-close:hover .x {
+    transform: rotate(90deg);
+  }
+
+  .menu-close .x::before,
+  .menu-close .x::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: currentColor;
+    transform-origin: center;
+  }
+
+  .menu-close .x::before { transform: rotate(45deg); }
+  .menu-close .x::after  { transform: rotate(-45deg); }
+
+  .menu-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    justify-content: center;
+    align-items: start;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  .menu-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .menu-section {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.68em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 28px;
+    display: block;
+    opacity: 0;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  .menu-panel.open .menu-column:nth-child(1) .menu-section {
+    animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
+  }
+
+  .menu-panel.open .menu-column:nth-child(2) .menu-section {
+    animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
+  }
+
+  .menu-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    text-align: center;
+    padding: 0;
+  }
+
+  .menu-item {
+    position: relative;
+    opacity: 0;
+  }
+
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards; }
+
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.06s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.42s forwards; }
+
+  .menu-link {
+    display: inline-block;
+    position: relative;
+    white-space: nowrap;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.5em;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 6px 0 6px 0;
+    transition:
+      color 0.6s ease,
+      opacity 0.5s ease,
+      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .menu-link:hover {
+    color: #FCFCF7;
+    text-shadow:
+      0 0 10px rgba(197, 168, 128, 0.75),
+      0 0 25px rgba(197, 168, 128, 0.55),
+      0 0 55px rgba(197, 168, 128, 0.30),
+      0 0 100px rgba(197, 168, 128, 0.15);
+  }
+
+  .menu-link.current {
+    color: var(--gold-dim);
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) {
+    opacity: 0.25;
+  }
+
+  .menu-columns:has(.menu-link:hover) .menu-section {
+    opacity: 0.15;
+  }
+
+  .menu-bottom {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    opacity: 0;
+    margin-top: 20px;
+  }
+
+  .menu-panel.open .menu-bottom {
+    animation: menuFadeIn 1s ease-out 1.6s forwards;
+  }
+
+  .menu-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    cursor: pointer;
+  }
+
+  /* ============================================================
+     PAGE CONTENT
+     ============================================================ */
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: var(--gold);
+    font-size: 3em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
+  }
+
+  .hero-roles {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.25em;
+    color: var(--gold-pale);
+    margin-bottom: 70px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.35s;
+  }
+
+  .subhead {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.25em;
+    color: var(--gold-pale);
+    text-decoration: underline;
+    text-underline-offset: 6px;
+    text-decoration-thickness: 1px;
+    margin: 60px 0 24px;
+    display: block;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
+  }
+
+  .subhead:first-of-type {
+    margin-top: 0;
+  }
+
+  p {
+    font-size: 1.05em;
+    line-height: 1.85;
+    margin: 0 0 22px;
+    text-align: left;
+  }
+
+  .intro-text {
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.55s;
+  }
+
+  .intro-text + .intro-text {
+    animation-delay: 0.7s;
+  }
+
+  .body-section {
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
+  }
+
+  .format-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 30px;
+    text-align: left;
+  }
+
+  .format-list li {
+    padding: 14px 0 14px 26px;
+    position: relative;
+    border-bottom: 1px solid var(--rule);
+    font-size: 1.05em;
+    line-height: 1.7;
+  }
+
+  .format-list li:last-child { border-bottom: none; }
+
+  .format-list li::before {
+    content: '—';
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .format-list strong {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: var(--gold-pale);
+    font-size: 1.05em;
+    letter-spacing: 0.02em;
+  }
+
+  .live-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin: 30px 0 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.9s;
+  }
+
+  .live-links a {
+    display: inline-block;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .live-links a:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  .booking-line {
+    text-align: left;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--muted);
+    margin: 24px 0 0;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
+  }
+
+  .booking-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .booking-line a:hover {
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  .cross-link {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    font-style: italic;
+    font-size: 1em;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.7s;
+  }
+
+  .cross-link a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .cross-link a:hover {
+    border-bottom-color: var(--gold);
+  }
+
+  .to-discography {
+    display: inline-block;
+    margin: 30px 0 0;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--gold-pale);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.9s;
+  }
+
+  .to-discography:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  .signature {
+    margin-top: 90px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
+  .signature-logo {
+    display: inline-block;
+    height: 70px;
+    width: auto;
+    opacity: 0.95;
+  }
+
+  .footer-cta {
+    margin-top: 80px;
+    padding-top: 40px;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.5s;
+  }
+
+  .footer-cta .join-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.05em;
+    color: var(--offwhite);
+    margin: 0 0 12px;
+    line-height: 1.75;
+  }
+
+  .footer-cta .join-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.5);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .footer-cta .join-line a:hover {
+    transform: translateX(4px);
+    border-bottom-color: var(--gold);
+    color: #FCFCF7;
+  }
+
+  .footer-cta .secondary-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.92em;
+    color: var(--muted);
+    margin: 24px 0 0;
+    line-height: 1.7;
+  }
+
+  .footer-cta .secondary-line a {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
+    padding-bottom: 1px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .footer-cta .secondary-line a:hover {
+    border-bottom-color: var(--gold);
+    color: var(--gold-pale);
+  }
+
+  /* ============================================================
+     FOOTER LOCATION
+     ============================================================ */
+  .footer-location {
+    text-align: right;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.6;
+    margin-top: 24px;
+    padding-right: 6px;
+    transition: opacity 0.3s ease;
+  }
+
+  .footer-location a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .footer-location a:hover {
+    color: var(--gold-pale);
+    border-bottom-color: var(--gold-dim);
+  }
+
+  .footer-sep {
+    margin: 0 10px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 700px) {
+    .page { padding: 60px 22px 60px; }
+    h1 { font-size: 2em; letter-spacing: 0.1em; margin-bottom: 24px; }
+    .hero-roles { font-size: 1.05em; margin-bottom: 50px; }
+    .subhead { font-size: 1.1em; margin: 48px 0 20px; }
+    p { font-size: 1em; }
+    .format-list li { font-size: 1em; padding-left: 22px; }
+
+    .live-links { gap: 20px; }
+    .live-links a { font-size: 1em; }
+
+    .topnav { padding: 18px 22px; }
+
+    .wordmark {
+      font-size: 0.95em;
+      letter-spacing: 0.28em;
+    }
+
+    .menu-toggle {
+      font-size: 0.7em;
+      letter-spacing: 0.22em;
+      gap: 10px;
+    }
+
+    .hamburger {
+      width: 20px;
+      height: 13px;
+    }
+
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
+      transform: translateY(5.75px) rotate(45deg);
+    }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
+      transform: translateY(-5.75px) rotate(-45deg);
+    }
+
+    .menu-inner {
+      padding: 90px 24px 60px;
+      gap: 40px;
+    }
+
+    .menu-top {
+      top: 22px;
+      left: 24px;
+      right: 24px;
+    }
+
+    .menu-close {
+      font-size: 0.85em;
+      letter-spacing: 0.35em;
+      gap: 12px;
+    }
+
+    .menu-close .x {
+      width: 15px;
+      height: 15px;
+    }
+
+    .menu-columns {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      max-width: 100%;
+    }
+
+    .menu-column .menu-link {
+      font-size: 1.3em;
+      letter-spacing: 0.22em;
+    }
+
+    .menu-section {
+      margin-bottom: 20px;
+    }
+
+    .menu-links {
+      gap: 16px;
+    }
+
+    .menu-bottom {
+      margin-top: 10px;
+    }
+
+    .cross-link { margin-top: 50px; padding-top: 30px; }
+    .footer-cta { margin-top: 60px; padding-top: 30px; }
+    .footer-cta .join-line { font-size: 1em; }
+    .footer-cta .secondary-line { font-size: 0.88em; }
+    .signature { margin-top: 50px; }
+    .signature-logo { height: 55px; }
+
+    .footer-location {
+      text-align: center;
+      padding-right: 0;
+      margin-top: 20px;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .wordmark {
+      font-size: 0.8em;
+      letter-spacing: 0.22em;
+    }
+    .menu-toggle {
+      font-size: 0.65em;
+      letter-spacing: 0.18em;
+    }
+    .menu-toggle::after {
+      left: 30px;
+    }
+
+    .menu-link {
+      font-size: 1.15em;
+      letter-spacing: 0.18em;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    aria-label="Open menu"
+    aria-expanded="false"
+    aria-controls="menuPanel"
+    type="button"
+  >
+    <span class="hamburger" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+    </span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<nav
+  class="menu-panel"
+  id="menuPanel"
+  aria-label="Primary"
+  aria-hidden="true"
+>
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <div class="menu-inner">
+
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
+        Close
+        <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="menu-columns">
+
+      <div class="menu-column">
+        <span class="menu-section">Music</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+        </ul>
+      </div>
+
+      <div class="menu-column">
+        <span class="menu-section">Elsewhere</span>
+        <ul class="menu-links">         
+          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
+          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+          <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
+
+  </div>
+</nav>
+
+<div class="page-wrap" id="pageWrap">
+
+  <div class="page">
+
+    <h1>Noel Grass<span class="visually-hidden"> — Neoclassical Pianist, Contemporary Classical Composer, Orchestrator, Music Arranger &amp; Music Producer</span></h1>
+
+    <p class="hero-roles">Neoclassical Pianist &nbsp;·&nbsp; Contemporary Classical Composer &nbsp;·&nbsp; Orchestrator &nbsp;·&nbsp; Music Arranger &nbsp;·&nbsp; Music Producer</p>
+
+    <span class="subhead">About the Artist</span>
+
+    <div class="body-section">
+
+      <p>Noel Grass writes music for piano and for orchestra, for a single instrument and for a full ensemble. His work moves between the quiet of solo piano and the expanse of cinematic sound, always searching for the space where emotion and architecture meet.</p>
+
+      <p>His solo works, <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, and <em>Where I Begin Again</em>, sit within the contemporary classical tradition. They lean on impressionism, cinematic texture, and the restraint of neoclassical form, without ever settling into a single school.</p>
+
+      <p>In the studio, he shapes each release himself, layering traditional orchestral instruments with ambient textures and African instrumental elements. His practice is built on a single principle: emotion directs the architecture.</p>
+
+    </div>
+
+    <span class="subhead">Live Performance</span>
+
+    <div class="body-section">
+
+      <p>Noel Grass performs his own compositions live, from solo piano to full ensemble. Sets range from intimate rooms to festival stages.</p>
+
+      <div class="live-links">
+        <a href="performances">See Performances →</a>
+        <a href="tour-dates">See Tour Dates →</a>
+      </div>
+
+      <p class="booking-line">For bookings and collaborations, visit the <a href="contact">Contact</a> page.</p>
+
+    </div>
+
+    <span class="subhead">Four Rooms</span>
+
+    <div class="body-section">
+
+      <p>His catalogue moves through four sonic spaces:</p>
+
+      <ul class="format-list">
+        <li><strong>Solo Piano.</strong> Just the instrument, in a quiet room.</li>
+        <li><strong>Orchestral.</strong> Full ensemble writing, from sweeping to still.</li>
+        <li><strong>Experimental.</strong> Piano and orchestra woven with electronic textures.</li>
+        <li><strong>Ambient.</strong> Layered atmosphere, built from tone and time.</li>
+      </ul>
+
+    </div>
+
+    <span class="subhead">Where He Works</span>
+
+    <div class="body-section">
+
+      <p>Noel Grass writes, records, and produces from Kenya. His work is released internationally, licensed across East Africa, pan-African markets, and beyond, and commissioned for film, television, and broadcast. He is equally at home in the studio and on an international stage.</p>
+
+      <p>The catalogue is available for streaming worldwide, and individual works can be licensed for film, television, brand, and broadcast productions.</p>
+
+      <a href="discography" class="to-discography">Explore the Discography →</a>
+
+    </div>
+
+    <div class="cross-link">
+      For stories on screen, see the <a href="film-composer">Film Composer →</a> page.
+    </div>
+
+    <div class="signature">
+      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    </div>
+
+    <div class="footer-cta">
+
+      <p class="join-line">
+        New releases, live dates, and studio notes. <a href="join">Join the list →</a>
+      </p>
+
+      <p class="secondary-line">
+        For bookings and collaborations, see the <a href="contact">Contact page →</a>
+      </p>
+
+    </div>
+
+    <p class="footer-location">
+      <a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Nairobi, Kenya</a>
+      <span class="footer-sep">·</span>
+      <span>Worldwide</span>
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+  (function () {
+    var toggle   = document.getElementById('menuToggle');
+    var panel    = document.getElementById('menuPanel');
+    var closeBtn = document.getElementById('menuClose');
+    var backdrop = document.getElementById('menuBackdrop');
+
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
+
+    function lockScroll() {
+      var sw = getScrollbarWidth();
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.documentElement.classList.add('menu-lock');
+    }
+
+    function unlockScroll() {
+      document.documentElement.classList.remove('menu-lock');
+      document.documentElement.style.removeProperty('--scrollbar-width');
+    }
+
+    function openMenu() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('menu-open');
+      lockScroll();
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
+    }
+
+    function closeMenu() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('menu-open');
+      unlockScroll();
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
+    }
+
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) {
+        closeMenu();
+      } else {
+        openMenu();
+      }
+    });
+
+    closeBtn.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) {
+        closeMenu();
+      }
+    });
+
+    panel.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', closeMenu);
+    });
+
+    function normalizePath(path) {
+      path = path.split('?')[0].split('#')[0];
+      path = path.replace(/\.html?$/i, '');
+      if (path.length > 1 && path.endsWith('/')) {
+        path = path.slice(0, -1);
+      }
+      path = path.replace(/\/index$/i, '/');
+      if (!path.startsWith('/')) path = '/' + path;
+      return path;
+    }
+
+    var current = normalizePath(window.location.pathname);
+    var links = panel.querySelectorAll('a.menu-link');
+    var matched = null;
+
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (!href) return;
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+
+      var linkPath = normalizePath(href);
+      if (linkPath === current) {
+        matched = link;
+      }
+    });
+
+    if (!matched && (current === '/' || current === '')) {
+      links.forEach(function (link) {
+        var href = link.getAttribute('href');
+        if (href === './' || href === '/' || href === 'index.html') {
+          matched = link;
+        }
+      });
+    }
+
+    if (matched) {
+      matched.classList.add('current');
+      matched.setAttribute('aria-current', 'page');
+    }
+
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  })();
+</script>
+
+</body>
+</html>
