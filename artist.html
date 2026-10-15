@@ -733,30 +733,6 @@
     color: #FCFCF7;
   }
 
-  /* FAQ styling matching Film Composer */
-  .faq-section {
-    margin-top: 20px;
-    text-align: left;
-  }
-
-  .faq-section h3 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.35em;
-    color: var(--gold);
-    margin: 36px 0 12px;
-    font-style: italic;
-    font-weight: 600;
-    text-align: left;
-  }
-
-  .faq-section p {
-    font-size: 1.05em;
-    line-height: 1.85;
-    color: var(--offwhite);
-    margin: 0 0 20px;
-    text-align: left;
-  }
-
   .cross-link {
     margin-top: 60px;
     padding-top: 40px;
@@ -1006,6 +982,73 @@
       letter-spacing: 0.18em;
     }
   }
+
+  /* FAQ styling maintaining subtle, small drop-down aesthetics */
+  .faq-section,
+  .faq-section p,
+  .faq-section strong {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .faq-section p {
+    line-height: 1.7;
+    text-align: left;
+  }
+
+  .faq-section strong {
+    font-weight: 400;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid rgba(197, 168, 128, 0.18);
+    padding: 10px 0;
+  }
+
+  .faq-item:first-child {
+    border-top: 1px solid rgba(197, 168, 128, 0.18);
+  }
+
+  .faq-item summary {
+    color: var(--muted);
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1.7;
+    list-style: none;
+    position: relative;
+    padding-right: 22px;
+    text-align: left;
+  }
+
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: "+";
+    position: absolute;
+    right: 2px;
+    top: 0;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .faq-item[open] summary::after {
+    content: "−";
+  }
+
+  .faq-item p {
+    margin: 9px 0 2px;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--muted);
+    text-align: left;
+  }
+
+  .faq-item summary:focus-visible {
+    outline: 1px solid var(--muted);
+    outline-offset: 4px;
+  }
 </style>
 </head>
 <body>
@@ -1128,27 +1171,54 @@
 
     </div>
 
-    <h2 class="subhead">Frequently Asked Questions</h2>
+    <h2 class="subhead">Questions</h2>
 
     <div class="body-section faq-section">
 
-      <h3>Is Noel Grass a neoclassical pianist?</h3>
-      <p>Yes. Noel Grass is a neoclassical and contemporary classical pianist from Kenya. His solo works include <em>Into A Stillness That Answers</em>, <em>The Impressionist</em> trilogy, <em>Where I Begin Again</em>, and <em>Introspect</em>.</p>
+      <details class="faq-item">
+        <summary>Is Noel Grass a neoclassical pianist?</summary>
+        <p>Yes. Noel Grass is a neoclassical and contemporary classical pianist
+        from Kenya. His solo works include <em>Into A Stillness That Answers</em>,
+        <em>The Impressionist</em> trilogy, <em>Where I Begin Again</em>,
+        and <em>Introspect</em>.</p>
+      </details>
 
-      <h3>What style of music does Noel Grass compose?</h3>
-      <p>Noel Grass composes contemporary classical, modern classical, neoclassical, orchestral, experimental, and ambient music. His work draws on impressionism, cinematic texture, and African instrumental elements without settling into a single school.</p>
+      <details class="faq-item">
+        <summary>What style of music does Noel Grass compose?</summary>
+        <p>Noel Grass composes contemporary classical, modern classical,
+        neoclassical, orchestral, experimental, and ambient music. His work
+        draws on impressionism, cinematic texture, and African instrumental
+        elements without settling into a single school.</p>
+      </details>
 
-      <h3>Does Noel Grass work as an orchestrator and music arranger?</h3>
-      <p>Yes. Noel Grass works as an orchestrator and music arranger across solo, ensemble, and cinematic contexts. He arranges for traditional orchestral instruments and blends them with ambient textures and African instrumental elements.</p>
+      <details class="faq-item">
+        <summary>Does Noel Grass work as an orchestrator and music arranger?</summary>
+        <p>Yes. Noel Grass works as an orchestrator and music arranger across
+        solo, ensemble, and cinematic contexts. He arranges for traditional
+        orchestral instruments and blends them with ambient textures and
+        African instrumental elements.</p>
+      </details>
 
-      <h3>Is Noel Grass a music producer?</h3>
-      <p>Yes. Noel Grass produces his own releases, building arrangements, layering textures, and shaping the final work. He also works on collaborative projects.</p>
+      <details class="faq-item">
+        <summary>Is Noel Grass a music producer?</summary>
+        <p>Yes. Noel Grass produces his own releases, building arrangements,
+        layering textures, and shaping the final work. He also works on
+        collaborative projects.</p>
+      </details>
 
-      <h3>Does Noel Grass perform live?</h3>
-      <p>Yes. Noel Grass performs his own compositions live, from solo piano to ensemble settings. His performances range from intimate rooms to festival stages.</p>
+      <details class="faq-item">
+        <summary>Does Noel Grass perform live?</summary>
+        <p>Yes. Noel Grass performs his own compositions live, from solo piano
+        to ensemble settings. His performances range from intimate rooms
+        to festival stages.</p>
+      </details>
 
-      <h3>Who are contemporary classical composers in Kenya?</h3>
-      <p>Noel Grass is a contemporary classical composer and neoclassical pianist from Kenya. His work is released internationally and licensed for productions across East Africa and beyond.</p>
+      <details class="faq-item">
+        <summary>Who are contemporary classical composers in Kenya?</summary>
+        <p>Noel Grass is a contemporary classical composer and neoclassical
+        pianist from Kenya. His work is released internationally and licensed
+        for productions across East Africa and beyond.</p>
+      </details>
 
     </div>
 
