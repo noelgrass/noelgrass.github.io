@@ -28,7 +28,8 @@
   "name": "Noel Grass — Composer & Neoclassical Pianist",
   "mainEntity": {
     "@type": "Person",
-    "@id": "https://noelgrass.github.io/#person"
+    "@id": "https://noelgrass.github.io/#person",
+    "name": "Noel Grass"
   }
 }
 </script>
@@ -1180,12 +1181,6 @@
         <li><strong>Experimental.</strong> Piano and orchestra woven with electronic textures.</li>
         <li><strong>Ambient.</strong> Layered atmosphere, built from tone and time.</li>
       </ul>
-
-    </div>
-
-
-
-      <a href="discography" class="to-discography">Explore Noel Grass&#39;s Discography →</a>
 
     </div>
 
