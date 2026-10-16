@@ -1094,6 +1094,216 @@
     text-shadow: 0 0 14px rgba(197, 168, 128, 0.5);
   }
 
+  /* ============================================================
+     EMAIL CHECKOUT MODAL (Paystack pre-flight)
+     ============================================================ */
+  .checkout-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .checkout-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .checkout-inner {
+    position: relative;
+    width: 100%;
+    max-width: 460px;
+    background: #0a0a0a;
+    border: 1px solid var(--gold-soft);
+    padding: 48px 40px 40px;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.85),
+      0 0 60px rgba(197, 168, 128, 0.15);
+    transform: scale(0.96);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    text-align: center;
+  }
+
+  .checkout-modal.open .checkout-inner {
+    transform: scale(1);
+  }
+
+  .checkout-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.65em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .checkout-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    letter-spacing: 0.05em;
+    color: var(--gold-pale);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  .checkout-price {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    margin-bottom: 34px;
+  }
+
+  .checkout-divider {
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      rgba(197, 168, 128, 0.4) 50%,
+      transparent 100%
+    );
+    margin: 0 0 30px;
+  }
+
+  .checkout-field-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  .checkout-input {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid rgba(185, 151, 92, 0.4);
+    color: var(--offwhite);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    padding: 10px 0;
+    outline: none;
+    transition: border-color 0.3s ease;
+    text-align: left;
+  }
+
+  .checkout-input::placeholder {
+    color: rgba(154, 149, 140, 0.55);
+    font-style: italic;
+  }
+
+  .checkout-input:focus {
+    border-bottom-color: var(--gold);
+  }
+
+  .checkout-error {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.15em;
+    color: #e08b7a;
+    text-align: left;
+    margin-top: 8px;
+    min-height: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .checkout-error.visible {
+    opacity: 1;
+  }
+
+  .checkout-submit {
+    display: block;
+    width: 100%;
+    margin-top: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.72em;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    padding: 14px 20px;
+    cursor: pointer;
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      background 0.35s ease,
+      box-shadow 0.5s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .checkout-submit:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.08);
+    box-shadow: 0 0 22px rgba(197, 168, 128, 0.30);
+  }
+
+  .checkout-cancel {
+    display: inline-block;
+    margin-top: 22px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.6em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 6px 4px;
+    transition: color 0.3s ease;
+  }
+
+  .checkout-cancel:hover {
+    color: var(--gold-pale);
+  }
+
+  .checkout-close {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font-size: 1.1em;
+    line-height: 1;
+    padding: 6px 8px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+
+  .checkout-close:hover {
+    color: var(--gold-pale);
+  }
+
+  @media (max-width: 520px) {
+    .checkout-inner { padding: 40px 26px 32px; }
+    .checkout-title { font-size: 1.3em; }
+  }
+
   .footer-cta {
     margin-top: 90px;
     padding-top: 50px;
@@ -1676,6 +1886,33 @@
   </div>
 </div>
 
+<div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
+  <div class="checkout-inner">
+    <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
+
+    <span class="checkout-label">Checkout</span>
+    <p class="checkout-title" id="checkoutTitle">Album</p>
+    <p class="checkout-price" id="checkoutPrice">KES 0</p>
+
+    <div class="checkout-divider"></div>
+
+    <label for="checkoutEmail" class="checkout-field-label">Email — for your download link</label>
+    <input
+      type="email"
+      id="checkoutEmail"
+      class="checkout-input"
+      placeholder="you@example.com"
+      autocomplete="email"
+      inputmode="email"
+      spellcheck="false"
+    >
+    <div class="checkout-error" id="checkoutError"></div>
+
+    <button type="button" class="checkout-submit" id="checkoutSubmit">Continue to payment →</button>
+    <button type="button" class="checkout-cancel" id="checkoutCancel">Cancel</button>
+  </div>
+</div>
+
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -1869,44 +2106,147 @@
 
   (function () {
     var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+    var STORAGE_KEY = "noelgrass_email";
+
+    var modal      = document.getElementById('checkoutModal');
+    var modalTitle = document.getElementById('checkoutTitle');
+    var modalPrice = document.getElementById('checkoutPrice');
+    var emailInput = document.getElementById('checkoutEmail');
+    var errorEl    = document.getElementById('checkoutError');
+    var submitBtn  = document.getElementById('checkoutSubmit');
+    var cancelBtn  = document.getElementById('checkoutCancel');
+    var closeBtn   = document.getElementById('checkoutClose');
+
+    var pendingBtn = null;
+
+    function formatPrice(amountSmallest, currency) {
+      var major = amountSmallest / 100;
+      return currency + ' ' + major.toLocaleString();
+    }
+
+    function showError(msg) {
+      errorEl.textContent = msg;
+      errorEl.classList.add('visible');
+    }
+
+    function clearError() {
+      errorEl.textContent = '';
+      errorEl.classList.remove('visible');
+    }
+
+    function openCheckout(btn) {
+      pendingBtn = btn;
+
+      var title    = btn.getAttribute('data-title')    || 'Noel Grass';
+      var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+      var currency = btn.getAttribute('data-currency') || 'KES';
+
+      modalTitle.textContent = title;
+      modalPrice.textContent = formatPrice(amount, currency);
+
+      clearError();
+
+      var saved = '';
+      try { saved = localStorage.getItem(STORAGE_KEY) || ''; } catch (e) {}
+      emailInput.value = saved;
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+
+      setTimeout(function () {
+        emailInput.focus();
+        if (saved) emailInput.select();
+      }, 120);
+    }
+
+    function closeCheckout() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      clearError();
+      pendingBtn = null;
+    }
+
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    }
+
+    function proceedToPaystack() {
+      if (!pendingBtn) return;
+
+      var email = (emailInput.value || '').trim();
+
+      if (!email) {
+        showError('Please enter your email address.');
+        emailInput.focus();
+        return;
+      }
+      if (!isValidEmail(email)) {
+        showError('That email doesn\'t look right. Please check.');
+        emailInput.focus();
+        return;
+      }
+
+      try { localStorage.setItem(STORAGE_KEY, email); } catch (e) {}
+
+      var btn      = pendingBtn;
+      var title    = btn.getAttribute('data-title')    || 'Noel Grass';
+      var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+      var currency = btn.getAttribute('data-currency') || 'KES';
+
+      closeCheckout();
+
+      var handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: email,
+        amount: amount,
+        currency: currency,
+        metadata: {
+          custom_fields: [
+            { display_name: "Product", variable_name: "product", value: title }
+          ]
+        },
+        callback: function (response) {
+          alert('Payment received. Your download link is on its way to ' + email + '.');
+        },
+        onClose: function () {
+          // user closed Paystack without paying
+        }
+      });
+
+      handler.openIframe();
+    }
 
     document.querySelectorAll('.js-buy').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-
-        var title    = btn.getAttribute('data-title')    || 'Noel Grass';
-        var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
-        var currency = btn.getAttribute('data-currency') || 'KES';
-
-        var email = prompt("Enter your email address to receive your download link:");
-        if (!email) return;
-
-        email = email.trim();
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-          alert("Please enter a valid email address.");
-          return;
-        }
-
-        var handler = PaystackPop.setup({
-          key: PAYSTACK_PUBLIC_KEY,
-          email: email,
-          amount: amount,
-          currency: currency,
-          metadata: {
-            custom_fields: [
-              { display_name: "Product", variable_name: "product", value: title }
-            ]
-          },
-          callback: function (response) {
-            alert('Payment received. Your download link is on its way to ' + email + '.');
-          },
-          onClose: function () {
-            // user closed without paying
-          }
-        });
-
-        handler.openIframe();
+        openCheckout(btn);
       });
+    });
+
+    submitBtn.addEventListener('click', proceedToPaystack);
+
+    emailInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        proceedToPaystack();
+      }
+    });
+
+    emailInput.addEventListener('input', clearError);
+
+    cancelBtn.addEventListener('click', closeCheckout);
+    closeBtn.addEventListener('click', closeCheckout);
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeCheckout();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeCheckout();
+      }
     });
   })();
 </script>
