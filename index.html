@@ -36,7 +36,7 @@
   "description": "Noel Grass is a film composer, neoclassical pianist, and music producer from Kenya working across cinema, contemporary classical composition, and audio production.",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://noelgrass.github.io/"
+    "@id": "https://noelgrass.github.io/",
     "name": "Noel Grass"
   },
   "email": "noelgrassartist@gmail.com",
@@ -760,10 +760,6 @@
   .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
   .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
   .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
-  .menu-panel.open .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
-  .menu-panel.open .menu-item:nth-child(8) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards; }
-  .menu-panel.open .menu-item:nth-child(9) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.44s forwards; }
-  .menu-panel.open .menu-item:nth-child(10) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.56s forwards; }
 
   .menu-link {
     display: inline-block;
@@ -930,7 +926,8 @@
   .page:has(.fork-card:hover) .footer-links,
   .page:has(.fork-card:hover) .signature,
   .page:has(.fork-card:hover) .scroll-cue,
-  .page:has(.fork-card:hover) .fork-intro {
+  .page:has(.fork-card:hover) .fork-intro,
+  .page:has(.fork-card:hover) .follow-link {
     opacity: 0.15;
     transition: opacity 0.7s ease;
   }
@@ -945,7 +942,8 @@
   .page:has(.icons a:hover) .scroll-cue,
   .page:has(.icons a:hover) .rule-full,
   .page:has(.icons a:hover) .footer-links,
-  .page:has(.icons a:hover) .signature {
+  .page:has(.icons a:hover) .signature,
+  .page:has(.icons a:hover) .follow-link {
     opacity: 0.1;
     transition: opacity 0.7s ease;
   }
@@ -1271,11 +1269,11 @@
   .scroll-cue .label {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 0.6em;
+    font-size: 0.65em;
     letter-spacing: 0.4em;
     text-transform: uppercase;
-    color: var(--muted);
-    opacity: 0.7;
+    color: var(--gold-pale);
+    opacity: 0.85;
   }
 
   .scroll-cue .line {
@@ -1291,7 +1289,7 @@
     justify-content: center;
     align-items: flex-start;
     gap: 44px;
-    margin-bottom: 60px;
+    margin-bottom: 30px;
     flex-wrap: wrap;
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.3s;
@@ -1308,19 +1306,24 @@
     transition: opacity 0.7s ease;
   }
 
-  .icons a {
+  .icons button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 50px;
     height: 50px;
     color: var(--gold-soft);
+    background: transparent;
+    border: 0;
+    padding: 0;
     border-radius: 50%;
+    cursor: pointer;
     position: relative;
     transition: color 0.4s ease, transform 0.4s ease;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .icons a::before {
+  .icons button::before {
     content: '';
     position: absolute;
     inset: -25px;
@@ -1336,7 +1339,7 @@
     transition: opacity 0.8s ease;
   }
 
-  .icons a::after {
+  .icons button::after {
     content: '';
     position: absolute;
     inset: -12px;
@@ -1346,14 +1349,14 @@
     pointer-events: none;
   }
 
-  .icons a:hover {
+  .icons button:hover {
     color: #FCFCF7;
     transform: scale(1.15);
   }
 
-  .icons a:hover::before { opacity: 1; }
+  .icons button:hover::before { opacity: 1; }
 
-  .icons a:hover::after {
+  .icons button:hover::after {
     box-shadow: 0 0 45px 10px rgba(185, 151, 92, 0.22);
   }
 
@@ -1372,6 +1375,31 @@
 
   .icon-item:hover .icon-label {
     color: var(--gold-pale);
+  }
+
+  .follow-link {
+    text-align: center;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.85em;
+    color: var(--muted);
+    margin: 0 auto 60px;
+    opacity: 0.75;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1.35s;
+    transition: opacity 0.7s ease;
+  }
+
+  .follow-link a {
+    color: var(--muted);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
+    padding-bottom: 1px;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .follow-link a:hover {
+    color: var(--gold-pale);
+    border-bottom-color: var(--gold);
   }
 
   .rule-full {
@@ -1458,6 +1486,83 @@
     margin: 0 10px;
     color: var(--muted);
     opacity: 0.6;
+  }
+
+  /* ============================================================
+     MODAL (YouTube / Apple Music / Spotify)
+     ============================================================ */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .video-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--gold-soft);
+    background: #000;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.85),
+      0 0 60px rgba(197, 168, 128, 0.15);
+    transform: scale(0.94);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .video-modal.open .video-modal-inner {
+    transform: scale(1);
+  }
+
+  .video-modal-inner.compact {
+    max-width: 400px;
+    aspect-ratio: 400 / 580;
+  }
+
+  .video-modal-inner iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-close {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: transparent;
+    border: 0;
+    color: var(--gold-pale);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 2px;
+    transition: color 0.3s ease, text-shadow 0.4s ease;
+  }
+
+  .video-close:hover {
+    color: #FCFCF7;
+    text-shadow: 0 0 14px rgba(197, 168, 128, 0.5);
   }
 
   @media (max-width: 900px) {
@@ -1599,6 +1704,7 @@
     .footer-links { font-size: 0.65em; gap: 10px 20px; }
     .signature-logo { height: 55px; }
     .scroll-cue .line { height: 30px; }
+    .follow-link { font-size: 0.8em; margin-bottom: 45px; }
 
     html, body {
       scroll-behavior: auto;
@@ -1652,6 +1758,8 @@
       padding-right: 0;
       margin-top: 20px;
     }
+
+    .video-close { top: -40px; }
   }
 
   @media (max-width: 380px) {
@@ -1784,40 +1892,65 @@
     </div>
 
     <div class="scroll-cue" aria-hidden="true">
-      <span class="label">Latest Release</span>
+      <span class="label">Listen &amp; Follow</span>
       <span class="line"></span>
     </div>
 
     <div class="icons">
 
       <div class="icon-item">
-        <a href="https://www.youtube.com/watch?v=T6jDLG2Acbk&list=OLAKuy_kXdPwu4ScHqRl3edsKtO9oDptt_8NIb2g" title="YouTube" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on YouTube">
+        <button
+          type="button"
+          class="js-embed"
+          data-embed="https://www.youtube.com/embed/T6jDLG2Acbk?autoplay=1&rel=0"
+          data-mode="video"
+          title="YouTube"
+          aria-label="Listen to Noel Grass on YouTube"
+        >
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.3.5C1.6 4.3.8 5.1.5 6.2.0 8.0 0 12 0 12s0 4 .5 5.8c.3 1.1 1.1 1.9 2.2 2.2 1.8.5 9.3.5 9.3.5s7.5 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2.5-1.8.5-5.8.5-5.8s0-4-.5-5.8zM9.5 15.6V8.4l6.3 3.6-6.3 3.6z"/>
           </svg>
-        </a>
+        </button>
         <span class="icon-label">YouTube</span>
       </div>
 
       <div class="icon-item">
-        <a href="https://open.spotify.com/album/5dglJq4fALStu3S6Jm46J4" title="Spotify" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on Spotify">
+        <button
+          type="button"
+          class="js-embed"
+          data-embed="https://open.spotify.com/embed/artist/1a6i0GGbOBR2MQykr2H1vG"
+          data-mode="compact"
+          title="Spotify"
+          aria-label="Listen to Noel Grass on Spotify"
+        >
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm5.5 17.3c-.2.3-.7.4-1 .2-2.8-1.7-6.3-2.1-10.5-1.2-.4.1-.7-.2-.8-.5-.1-.4.2-.7.5-.8 4.6-1 8.5-.6 11.6 1.3.4.3.5.7.2 1zm1.5-3.3c-.3.4-.8.5-1.3.3-3.2-2-8.1-2.5-11.9-1.4-.5.1-1-.2-1.1-.7-.1-.5.2-1 .7-1.1 4.3-1.3 9.7-.7 13.4 1.6.4.3.5.9.2 1.3zm.1-3.4C15.4 8.3 9 8.1 5.4 9.2c-.6.2-1.2-.2-1.4-.8-.2-.6.2-1.2.8-1.4 4.1-1.3 11.2-1 15.6 1.6.6.3.7 1 .4 1.5-.3.5-1 .7-1.5.4z"/>
           </svg>
-        </a>
+        </button>
         <span class="icon-label">Spotify</span>
       </div>
 
       <div class="icon-item">
-        <a href="https://music.apple.com/us/album/into-a-stillness-that-answers-ep/6773708812" title="Apple Music" target="_blank" rel="noopener" aria-label="Listen to Into A Stillness That Answers on Apple Music">
+        <button
+          type="button"
+          class="js-embed"
+          data-embed="https://embed.music.apple.com/us/artist/noel-grass/1451933028"
+          data-mode="compact"
+          title="Apple Music"
+          aria-label="Listen to Noel Grass on Apple Music"
+        >
           <svg viewBox="0 0 24 24" fill="currentColor">
             <path d="M18.7 4.4c-1.2-.4-2.5-.3-3.7.2L9.5 6.8c-.9.4-1.5 1.3-1.5 2.3v8.2c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V9.4l5.5-2.2v6.5c-.5-.2-1-.3-1.6-.3-2.2 0-4 1.4-4 3.2s1.8 3.2 4 3.2 4-1.4 4-3.2V6.3c0-.9-.5-1.6-1.6-1.9z"/>
           </svg>
-        </a>
+        </button>
         <span class="icon-label">Apple Music</span>
       </div>
 
     </div>
+
+    <p class="follow-link">
+      <a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">Follow on YouTube →</a>
+    </p>
 
     <div class="rule-full"></div>
 
@@ -1848,6 +1981,19 @@
 
   </div>
 
+</div>
+
+<div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Media player">
+  <div class="video-modal-inner" id="videoModalInner">
+    <button type="button" class="video-close" id="videoClose">Close ✕</button>
+    <iframe
+      id="videoFrame"
+      src=""
+      title="Media player"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
 </div>
 
 <script>
@@ -1981,6 +2127,56 @@
 
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+  })();
+
+  (function() {
+    var modal      = document.getElementById('videoModal');
+    var modalInner = document.getElementById('videoModalInner');
+    var frame      = document.getElementById('videoFrame');
+    var closeBtn   = document.getElementById('videoClose');
+
+    function openModal(src, mode) {
+      frame.src = src;
+
+      if (mode === 'compact') {
+        modalInner.classList.add('compact');
+      } else {
+        modalInner.classList.remove('compact');
+      }
+
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      modalInner.classList.remove('compact');
+      document.body.classList.remove('no-scroll');
+    }
+
+    document.querySelectorAll('.js-embed').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var src  = btn.getAttribute('data-embed');
+        var mode = btn.getAttribute('data-mode') || 'video';
+        if (src) openModal(src, mode);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
   })();
 </script>
 
