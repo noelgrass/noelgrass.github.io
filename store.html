@@ -1878,9 +1878,18 @@
         var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
         var currency = btn.getAttribute('data-currency') || 'KES';
 
+        var email = prompt("Enter your email address to receive your download link:");
+        if (!email) return;
+
+        email = email.trim();
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          alert("Please enter a valid email address.");
+          return;
+        }
+
         var handler = PaystackPop.setup({
           key: PAYSTACK_PUBLIC_KEY,
-          email: '',
+          email: email,
           amount: amount,
           currency: currency,
           metadata: {
@@ -1889,7 +1898,7 @@
             ]
           },
           callback: function (response) {
-            alert('Payment received. Your download link is on its way to your inbox.');
+            alert('Payment received. Your download link is on its way to ' + email + '.');
           },
           onClose: function () {
             // user closed without paying
