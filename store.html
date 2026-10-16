@@ -37,6 +37,8 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
+<script src="https://js.paystack.co/v1/inline.js"></script>
+
 <style>
   :root {
     --bg: #000000;
@@ -1411,13 +1413,14 @@
               aria-label="Preview Into A Stillness That Answers"
             >Preview</button>
 
-            <a
-              href="https://selar.com/22128d1207"
-              target="_blank"
-              rel="noopener"
-              class="action-link"
-              aria-label="Buy Into A Stillness That Answers on Selar"
-            >Buy</a>
+            <button
+              type="button"
+              class="action-link js-buy"
+              data-title="Into A Stillness That Answers"
+              data-amount="50000"
+              data-currency="KES"
+              aria-label="Buy Into A Stillness That Answers"
+            >Buy</button>
           </div>
 
         </div>
@@ -1440,7 +1443,7 @@
             <div class="format-label">Solo Piano</div>
             <div class="item-actions">
               <button type="button" class="action-link js-preview" data-video="T6jDLG2Acbk" aria-label="Preview Into A Stillness That Answers">Preview</button>
-              <a href="https://selar.com/22128d1207" target="_blank" rel="noopener" class="action-link" aria-label="Buy Into A Stillness That Answers on Selar">Buy</a>
+              <button type="button" class="action-link js-buy" data-title="Into A Stillness That Answers" data-amount="50000" data-currency="KES" aria-label="Buy Into A Stillness That Answers">Buy</button>
             </div>
           </div>
 
@@ -1861,6 +1864,40 @@
       if (e.key === 'Escape' && modal.classList.contains('open')) {
         closeModal();
       }
+    });
+  })();
+
+  (function () {
+    var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+
+    document.querySelectorAll('.js-buy').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        var title    = btn.getAttribute('data-title')    || 'Noel Grass';
+        var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+        var currency = btn.getAttribute('data-currency') || 'KES';
+
+        var handler = PaystackPop.setup({
+          key: PAYSTACK_PUBLIC_KEY,
+          email: '',
+          amount: amount,
+          currency: currency,
+          metadata: {
+            custom_fields: [
+              { display_name: "Product", variable_name: "product", value: title }
+            ]
+          },
+          callback: function (response) {
+            alert('Payment received. Your download link is on its way to your inbox.');
+          },
+          onClose: function () {
+            // user closed without paying
+          }
+        });
+
+        handler.openIframe();
+      });
     });
   })();
 </script>
