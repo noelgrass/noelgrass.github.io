@@ -875,6 +875,45 @@
     animation: tileHoverGlow 4s ease-in-out infinite;
   }
 
+  /* --- Preview button (same as Store) --- */
+  .item-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .action-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.68em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: 1px solid rgba(185, 151, 92, 0.45);
+    padding: 8px 18px;
+    cursor: pointer;
+    position: relative;
+    transition:
+      color 0.35s ease,
+      border-color 0.35s ease,
+      background 0.35s ease,
+      box-shadow 0.5s ease,
+      transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .action-link:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.08);
+    box-shadow: 0 0 18px rgba(197, 168, 128, 0.28);
+    transform: translateY(-1px);
+  }
+
   .clients-block {
     margin-top: 130px;
   }
@@ -994,6 +1033,78 @@
     height: 70px;
     width: auto;
     opacity: 0.95;
+  }
+
+  /* ============================================================
+     VIDEO MODAL (same as Store)
+     ============================================================ */
+  .video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+
+  .video-modal.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .video-modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    aspect-ratio: 16 / 9;
+    border: 1px solid var(--gold-soft);
+    background: #000;
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.85),
+      0 0 60px rgba(197, 168, 128, 0.15);
+    transform: scale(0.94);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .video-modal.open .video-modal-inner {
+    transform: scale(1);
+  }
+
+  .video-modal-inner iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  .video-close {
+    position: absolute;
+    top: -46px;
+    right: 0;
+    background: transparent;
+    border: 0;
+    color: var(--gold-pale);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.7em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 6px 2px;
+    transition: color 0.3s ease, text-shadow 0.4s ease;
+  }
+
+  .video-close:hover {
+    color: #FCFCF7;
+    text-shadow: 0 0 14px rgba(197, 168, 128, 0.5);
   }
 
   /* ============================================================
@@ -1170,6 +1281,8 @@
       padding-right: 0;
       margin-top: 20px;
     }
+
+    .video-close { top: -40px; }
   }
 
   @media (max-width: 380px) {
@@ -1286,54 +1399,75 @@
 
       <div class="gallery">
 
-        <a href="https://www.youtube.com/watch?v=3Z-w6QgqBKY&list=OLAK5uy_kvKzR3CXCC-Qb7raAuWgGss7dX62olQrA" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/thief.jpg" alt="Thief — Original Motion Picture Score by Noel Grass" loading="lazy">
           </div>
           <div class="caption">Thief</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="3Z-w6QgqBKY" aria-label="Preview Thief">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=gULOHcdoCTY&list=OLAK5uy_lAsdj6nQMX34oX4-6M_oNQB70F-XjX2rY" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/on-air.jpg" alt="On Air — Original Motion Picture Score by Noel Grass" loading="lazy">
           </div>
           <div class="caption">On Air</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="gULOHcdoCTY" aria-label="Preview On Air">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=jogjMXagK1o&list=OLAK5uy_nSDQNSiPAO2wDLpvt9lfdGXywyKfjyRwI" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/nyumba-ya-mburi.jpg" alt="Nyumba Ya Mburi — Original Motion Picture Score by Noel Grass" loading="lazy">
           </div>
           <div class="caption">NYUMBA YA MBURI</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="jogjMXagK1o" aria-label="Preview Nyumba Ya Mburi">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=IDAe-88vjSc&list=OLAK5uy_lrHuCkh7yvlfnISCLnGvjiY1nkPggSFPw" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/ziwa.jpg" alt="Ziwa — Original Motion Picture Soundtrack by Noel Grass" loading="lazy">
           </div>
           <div class="caption">Ziwa</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="IDAe-88vjSc" aria-label="Preview Ziwa">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=_Rbu80VIllg&list=OLAK5uy_nogDRbXS9EaKgcWP2CzGuEjlFk5Eq_6Zo" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/kutu.jpg" alt="Kutu — Original Motion Picture Score by Noel Grass. Kalasha Award winner for Best Short Film" loading="lazy">
           </div>
           <div class="caption">Kutu</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="_Rbu80VIllg" aria-label="Preview Kutu">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=H2wKXKmqUfQ&list=OLAK5uy_lb3ttlm7LwRO6rC4Y2OWCx_aibnD_ck1k" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/lost-in-time.jpg" alt="Lost in Time — Original Motion Picture Score by Noel Grass. Award winner for Best Feature Film" loading="lazy">
           </div>
           <div class="caption">Lost in Time</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="H2wKXKmqUfQ" aria-label="Preview Lost in Time">Preview</button>
+          </div>
+        </div>
 
-        <a href="https://www.youtube.com/watch?v=XTHrG3tUT2k&list=OLAK5uy_n3BZOQzgdo4zK9uiaLm99dS6COPLqM7d0" target="_blank" rel="noopener" class="gallery-item">
+        <div class="gallery-item">
           <div class="poster">
             <img src="images/film/parliament-of-owls.jpg" alt="The Parliament of Owls — Original Motion Picture Score by Noel Grass" loading="lazy">
           </div>
           <div class="caption">The Parliament of Owls</div>
-        </a>
+          <div class="item-actions">
+            <button type="button" class="action-link js-preview" data-video="XTHrG3tUT2k" aria-label="Preview The Parliament of Owls">Preview</button>
+          </div>
+        </div>
 
       </div>
 
@@ -1417,6 +1551,19 @@
 
   </div>
 
+</div>
+
+<div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video preview">
+  <div class="video-modal-inner">
+    <button type="button" class="video-close" id="videoClose">Close ✕</button>
+    <iframe
+      id="videoFrame"
+      src=""
+      title="YouTube video preview"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+    ></iframe>
+  </div>
 </div>
 
 <script>
@@ -1543,6 +1690,46 @@
         el.classList.add('lit');
       });
     }
+  })();
+
+  (function() {
+    var modal    = document.getElementById('videoModal');
+    var frame    = document.getElementById('videoFrame');
+    var closeBtn = document.getElementById('videoClose');
+
+    function openModal(videoId) {
+      frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      frame.src = '';
+      document.body.classList.remove('no-scroll');
+    }
+
+    document.querySelectorAll('.js-preview').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = btn.getAttribute('data-video');
+        if (id) openModal(id);
+      });
+    });
+
+    closeBtn.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) {
+        closeModal();
+      }
+    });
   })();
 </script>
 
