@@ -482,6 +482,8 @@
     position: relative;
     padding-bottom: 2px;
     animation: wordmarkGlow 7s ease-in-out infinite;
+    transform: translateZ(0);
+    will-change: text-shadow;
   }
 
   .wordmark:hover {
@@ -832,6 +834,7 @@
     text-align: center;
     overflow: hidden;
     isolation: isolate;
+    contain: layout paint;
   }
 
   .hero-bg {
@@ -900,6 +903,8 @@
       fadeUp 1s ease-out both,
       nameGlow 6s ease-in-out infinite;
     animation-delay: 0.25s, 1.3s;
+    transform: translateZ(0);
+    will-change: text-shadow;
   }
 
   .rule-small {
@@ -937,23 +942,23 @@
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.icons a:hover) .editorial,
-  .page:has(.icons a:hover) .fork,
-  .page:has(.icons a:hover) .scroll-cue,
-  .page:has(.icons a:hover) .rule-full,
-  .page:has(.icons a:hover) .footer-links,
-  .page:has(.icons a:hover) .signature,
-  .page:has(.icons a:hover) .follow-link {
+  .page:has(.icons button:hover) .editorial,
+  .page:has(.icons button:hover) .fork,
+  .page:has(.icons button:hover) .scroll-cue,
+  .page:has(.icons button:hover) .rule-full,
+  .page:has(.icons button:hover) .footer-links,
+  .page:has(.icons button:hover) .signature,
+  .page:has(.icons button:hover) .follow-link {
     opacity: 0.1;
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.icons a:hover) .icon-item:not(:has(a:hover)) {
+  .page:has(.icons button:hover) .icon-item:not(:has(button:hover)) {
     opacity: 0.1;
     transition: opacity 0.7s ease;
   }
 
-  .page:has(.icons a:hover) .icons { opacity: 1; }
+  .page:has(.icons button:hover) .icons { opacity: 1; }
 
   .editorial {
     display: grid;
@@ -971,6 +976,9 @@
     top: 120px;
     animation: portraitIn 1.4s ease-out both;
     animation-delay: 0.4s;
+    will-change: transform;
+    transform: translateZ(0);
+    contain: layout paint;
   }
 
   .portrait img {
@@ -984,6 +992,8 @@
     transition: filter 0.7s ease, transform 0.6s ease;
     animation: portraitGlow 6s ease-in-out infinite;
     animation-delay: 1.3s;
+    transform: translateZ(0);
+    will-change: box-shadow, transform;
   }
 
   .portrait img:hover {
@@ -1039,6 +1049,8 @@
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.15s;
     transition: opacity 0.7s ease;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 480px;
   }
 
   .fork-intro {
@@ -1090,6 +1102,8 @@
     animation: doorRestGlow 6s ease-in-out infinite;
     animation-delay: 1.4s;
     backface-visibility: hidden;
+    will-change: transform, opacity;
+    contain: layout paint;
   }
 
   .fork-card:nth-child(1) { transform: translate3d(-70px, 0, 0); }
@@ -1123,6 +1137,7 @@
     transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
                 filter 0.8s ease,
                 opacity 0.8s ease;
+    backface-visibility: hidden;
   }
 
   .fork-bg--artist img {
@@ -1282,6 +1297,8 @@
     background: linear-gradient(to bottom, var(--gold-soft) 0%, transparent 100%);
     opacity: 0.5;
     animation: scrollPulse 3s ease-in-out infinite;
+    transform: translateZ(0);
+    will-change: transform, opacity;
   }
 
   .icons {
@@ -1321,6 +1338,8 @@
     position: relative;
     transition: color 0.4s ease, transform 0.4s ease;
     -webkit-tap-highlight-color: transparent;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   .icons button::before {
@@ -1429,6 +1448,8 @@
     animation: fadeUp 1s ease-out both;
     animation-delay: 1.5s;
     transition: opacity 0.7s ease;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 120px;
   }
 
   .footer-links a {
@@ -1949,7 +1970,7 @@
     </div>
 
     <p class="follow-link">
-      <a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">Follow on YouTube →</a>
+      <a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">Subscribe on YouTube →</a>
     </p>
 
     <div class="rule-full"></div>
@@ -2172,7 +2193,7 @@
       if (e.target === modal) closeModal();
     });
 
-    document.addEventListener('keydown', function(e) {
+    document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('open')) {
         closeModal();
       }
