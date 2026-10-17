@@ -361,9 +361,10 @@
 
     <a href="rent" class="back-link">← Back to Rent</a>
     <a href="license" class="license-link">What you own when you rent →</a>
+    
     <br style="display: block; margin: 20px 0; content: '';">
 
-    <a href="#recovery-box-anchor" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
+    <a href="javascript:void(0);" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
     <div class="mood-groups">
 
@@ -720,7 +721,7 @@
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         <strong>Want to download this again later?</strong><br>
         <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <a href="#recovery-box-anchor" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box at the bottom of the page to get a fresh download link.</span>
+        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <a href="javascript:void(0);" id="successRecoveryLink" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box at the bottom of the page to get a fresh download link.</span>
       </p>
     </div>
 
@@ -1027,6 +1028,18 @@
     if (topLink) {
       topLink.addEventListener('click', function(e) {
         e.preventDefault();
+        var target = document.getElementById('recovery-box-anchor');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+
+    var successRecLink = document.getElementById('successRecoveryLink');
+    if (successRecLink) {
+      successRecLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        hideSuccess();
         var target = document.getElementById('recovery-box-anchor');
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
