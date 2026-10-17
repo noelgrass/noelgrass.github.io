@@ -364,7 +364,7 @@
     
     <br style="display: block; margin: 20px 0; content: '';">
 
-    <a href="javascript:void(0);" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
+    <span class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</span>
 
     <div class="mood-groups">
 
@@ -627,7 +627,7 @@
     </div>
 
     <!-- RECOVERY BOX -->
-    <div class="recovery-box" id="recovery-box-anchor" style="margin-top: 80px;">
+    <div class="recovery-box" id="recovery-anchor" style="margin-top: 80px;">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
       <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7em; font-style: normal; color: var(--muted); margin-top: -10px; margin-bottom: 24px; letter-spacing: 0.05em;">(You can find this reference number on the receipt sent to your email by Paystack).</p>
@@ -721,7 +721,7 @@
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         <strong>Want to download this again later?</strong><br>
         <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <a href="javascript:void(0);" id="successRecoveryLink" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box at the bottom of the page to get a fresh download link.</span>
+        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <span id="successRecoveryLink" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px; cursor:pointer;">"Already Purchased?"</span> box at the bottom of the page to get a fresh download link.</span>
       </p>
     </div>
 
@@ -1028,7 +1028,7 @@
     if (topLink) {
       topLink.addEventListener('click', function(e) {
         e.preventDefault();
-        var target = document.getElementById('recovery-box-anchor');
+        var target = document.getElementById('recovery-anchor');
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
         }
@@ -1040,11 +1040,16 @@
       successRecLink.addEventListener('click', function(e) {
         e.preventDefault();
         hideSuccess();
-        var target = document.getElementById('recovery-box-anchor');
+        var target = document.getElementById('recovery-anchor');
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
         }
       });
+    }
+
+    // Force the page to load at the top, ignoring any hash in the URL
+    if (window.location.hash) {
+      window.scrollTo(0, 0);
     }
   })();
 </script>
