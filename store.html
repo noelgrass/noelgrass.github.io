@@ -587,7 +587,7 @@
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center;">Already Purchased?</p>
       <p>If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
-      <input type="text" id="recoveryRef" class="recovery-input" placeholder="e.g. T264694693459299" spellcheck="false">
+      <input type="text" id="recoveryRef" class="recovery-input" placeholder="e.g. T2688-2746-0354-316" spellcheck="false">
       <button type="button" id="recoveryBtn" class="checkout-submit" style="margin-top:0;">Generate Fresh Link</button>
       <div id="recoveryError" style="font-family:'Montserrat';font-size:0.65em;color:#e08b7a;margin-top:12px;display:none;"></div>
     </div>
@@ -641,17 +641,24 @@
       Thank you! Your download is ready.
     </p>
     
-    <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.9em; padding: 18px 20px;">
+    <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
 
-    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.2); padding: 20px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
-      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 12px;">Keep your receipt:</p>
-      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 10px; line-height: 1.5;">
-        Your transaction reference is <strong id="successRef" style="font-style: normal; font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.1em; display: inline-block; margin-top: 4px;"></strong>
+    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
+      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 16px;">Save your receipt:</p>
+      
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px; line-height: 1.5;">
+        Your transaction reference is:
       </p>
-      <p style="font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.65em; letter-spacing: 0.05em; line-height: 1.6; color: var(--muted); margin: 0;">
-        If you close this window, you can return to this store at any time, scroll to the bottom, and paste this reference into the <a href="#already-purchased" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box to get a fresh download link.
+      <div style="margin-bottom: 20px;">
+        <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.3em; display: inline-block; background: rgba(197,168,128,0.1); padding: 8px 12px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
+      </div>
+
+      <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
+        <strong>Want to download this again later?</strong><br>
+        <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
+        <span style="color: var(--muted);">2. <strong>Or use this website:</strong> Scroll down and click the <a href="#already-purchased" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> link below to jump to the recovery box.</span>
       </p>
     </div>
 
@@ -828,7 +835,11 @@
         },
         callback: function (response) { 
           showSuccess();
-          successRefEl.textContent = response.reference;
+          
+          // Format the reference with dashes for readability
+          var ref = response.reference;
+          var formattedRef = ref.match(/.{1,4}/g).join('-');
+          successRefEl.textContent = formattedRef;
           
           downloadBtn.innerText = "Generating link...";
           downloadBtn.style.opacity = "0.5";
