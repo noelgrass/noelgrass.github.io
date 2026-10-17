@@ -134,7 +134,12 @@
   .page { max-width: 1200px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.6em; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.15em; color: var(--offwhite); margin-bottom: 14px; max-width: 780px; margin-left: auto; margin-right: auto; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-  .hero-line { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 80px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
+  .hero-line { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
+  
+  /* NEW TOP LINK */
+  .hero-top-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); margin-bottom: 80px; display: inline-block; animation: fadeUp 1s ease-out both; animation-delay: 0.6s; transition: color 0.3s ease; }
+  .hero-top-link:hover { color: var(--gold-pale); }
+
   .section-divider { display: flex; align-items: center; justify-content: center; gap: 20px; margin: 70px 0 14px; animation: fadeUp 1s ease-out both; }
   .section-divider:first-of-type { margin-top: 20px; }
   .section-divider::before, .section-divider::after { content: ''; flex: 1 1 auto; height: 1px; }
@@ -251,7 +256,8 @@
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 24px; }
     .hero-subhead { font-size: 1em; }
-    .hero-line { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 50px; }
+    .hero-line { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 16px; }
+    .hero-top-link { font-size: 0.65em; letter-spacing: 0.05em; margin-bottom: 50px; }
     .section-divider { margin: 50px 0 12px; gap: 14px; }
     .section-divider span { font-size: 1.05em; letter-spacing: 0.22em; }
     .section-note { font-size: 0.9em; margin-bottom: 18px; }
@@ -359,6 +365,9 @@
     <h1>Store</h1>
     <p class="hero-subhead">Music, tickets, merchandise, and digital products.</p>
     <p class="hero-line">Digital &amp; physical &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Secure checkout</p>
+    
+    <!-- TOP LINK -->
+    <a href="#already-purchased" class="hero-top-link">Already purchased? Retrieve your download →</a>
 
     <div class="section-divider"><span>Music</span></div>
     <p class="section-note">Solo Piano · Orchestral · Experimental · Ambient</p>
@@ -585,12 +594,11 @@
     </div>
 
     <!-- RECOVERY BOX -->
-       <!-- RECOVERY BOX -->
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
       <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7em; font-style: normal; color: var(--muted); margin-top: -10px; margin-bottom: 24px; letter-spacing: 0.05em;">(You can find this reference number on the receipt sent to your email by Paystack).</p>
-      <input type="text" id="recoveryRef" class="recovery-input" placeholder="e.g. T2688-2746-0354-316" spellcheck="false">
+      <input type="text" id="recoveryRef" class="recovery-input" placeholder="e.g. T268-8274-6035-4316" spellcheck="false">
       <button type="button" id="recoveryBtn" class="checkout-submit" style="margin-top:0;">Generate Fresh Link</button>
       <div id="recoveryError" style="font-family:'Montserrat';font-size:0.65em;color:#e08b7a;margin-top:12px;display:none;"></div>
     </div>
@@ -661,7 +669,7 @@
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         <strong>Want to download this again later?</strong><br>
         <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Or use this website:</strong> Scroll down and click the <a href="#already-purchased" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> link below to jump to the recovery box.</span>
+        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <a href="#already-purchased" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box at the bottom of the page to get a fresh download link.</span>
       </p>
     </div>
 
@@ -839,9 +847,9 @@
         callback: function (response) { 
           showSuccess();
           
-          // Format the reference with dashes for readability
+          // Format the reference with dashes
           var ref = response.reference;
-          var formattedRef = ref.match(/.{1,4}/g).join('-');
+          var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           successRefEl.textContent = formattedRef;
           
           downloadBtn.innerText = "Generating link...";
@@ -891,6 +899,17 @@
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
+
+    // Auto-format input with dashes
+    recInput.addEventListener('input', function(e) {
+      var val = this.value.replace(/-/g, '');
+      var newVal = val.match(/.{1,4}/g);
+      if (newVal) {
+        this.value = newVal.join('-');
+      } else {
+        this.value = val;
+      }
+    });
 
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
