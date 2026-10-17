@@ -1,0 +1,84 @@
+Here is a clean, step-by-step Markdown guide you can save as `LIVE-SETUP.md` in your GitHub repository (or keep in a notes app) for when you are ready to flip the switch to Live Mode.
+
+***
+
+# 🚀 Going Live: Noel Grass Store
+
+This is the exact checklist to move the store from **Test Mode** (fake money) to **Live Mode** (real money). 
+
+Please do these steps in order. Do not skip any steps.
+
+---
+
+### Step 1: Get Your Live Paystack Keys
+1. Log in to your [Paystack Dashboard](https://dashboard.paystack.com).
+2. Toggle the switch at the top right of the screen from **Test Mode** to **Live Mode**.
+3. Go to **Settings** → **API Keys & Webhooks**.
+4. Copy your **Live Public Key** (it starts with `pk_live_...`).
+5. Copy your **Live Secret Key** (it starts with `sk_live_...`).
+6. Keep this tab open; you will need them in the next steps.
+
+---
+
+### Step 2: Update the Cloudflare Worker (Secret Key)
+Your Worker needs the Live Secret Key to verify that real payments actually happened.
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com) → **Workers & Pages**.
+2. Click on your Worker: `my-store-backend`.
+3. Go to **Settings** → **Variables and Secrets**.
+4. Find `PAYSTACK_SECRET_KEY` and click the **Edit (pencil)** icon.
+5. Delete the old `sk_test_...` key and paste your new `sk_live_...` key.
+6. Click **Save and Deploy** (or Save).
+
+---
+
+### Step 3: Update the Website (Public Key)
+Your website needs the Live Public Key so the Paystack popup opens in Live Mode.
+
+1. Go to your GitHub repository.
+2. Open `store.html` and click the **Edit (pencil)** icon.
+3. Scroll down to the very bottom of the file, inside the `<script>` tag.
+4. Find this line:
+   ```javascript
+   var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+   ```
+5. Replace the `pk_test_...` key with your new `pk_live_...` key.
+6. Click **Commit changes**.
+
+---
+
+### Step 4: Update the Paystack Webhook
+Paystack needs to know where to send the "Payment Successful" messages in Live Mode.
+
+1. Go back to your Paystack Dashboard (make sure you are still in **Live Mode**).
+2. Go to **Settings** → **API Keys & Webhooks**.
+3. Scroll down to **Webhook URL**.
+4. Make sure it is set to exactly this:
+   `https://my-store-backend.noelgrass.workers.dev/`
+5. Click **Save**.
+
+---
+
+### Step 5: The Final Test (Real Money)
+You cannot use fake test cards anymore. You have to make one real purchase to confirm the whole system works.
+
+1. Wait 2-3 minutes for GitHub Pages and Cloudflare to update.
+2. Go to your live store (`https://noelgrass.github.io/store`).
+3. Click **Buy** on an album. 
+4. Enter your real email and click **Continue**.
+5. Pay using **M-PESA** (it's the fastest and cheapest for you in Kenya).
+6. **Watch the screen:** Does the "Generating link..." button turn into the Download button?
+7. **Check your email:** Did you receive the Paystack receipt with the reference number?
+
+*(Don't worry, Paystack will deposit that money into your bank account, minus a small transaction fee. If anything goes wrong, you can refund yourself instantly from the Paystack dashboard).*
+
+---
+
+### ⚠️ Important Notes
+- **Test Data:** Any test transactions you did earlier will **not** show up in Live Mode. The Live dashboard starts with a clean slate.
+- **Apple Pay:** Because you are using a `github.io` domain, Apple Pay will not show up for iPhone users. Regular Visa and Mastercard payments will work perfectly for your international customers.
+- **The "Already Purchased?" Box:** If you need to test the recovery box, you must use a **Live** reference number from a real purchase. It will not accept the test reference numbers anymore.
+
+***
+
+You can save that as a file or copy it into a note. When you are ready to go live, just follow it from top to bottom!
