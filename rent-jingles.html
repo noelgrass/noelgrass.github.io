@@ -189,13 +189,15 @@
   .action-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 8px 18px; cursor: pointer; position: relative; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
-  .video-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-  .video-modal.open { opacity: 1; pointer-events: auto; }
-  .video-modal-inner { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16 / 9; border: 1px solid var(--gold-soft); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-  .video-modal.open .video-modal-inner { transform: scale(1); }
-  .video-modal-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .video-close { position: absolute; top: -46px; right: 0; background: transparent; border: 0; color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; padding: 6px 2px; transition: color 0.3s ease, text-shadow 0.4s ease; }
-  .video-close:hover { color: #FCFCF7; text-shadow: 0 0 14px rgba(197,168,128,0.5); }
+  /* Preview Player Modal */
+  .player-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+  .player-modal.open { opacity: 1; pointer-events: auto; }
+  .player-inner { position: relative; width: 100%; max-width: 500px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 40px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); text-align: center; }
+  .player-modal.open .player-inner { transform: scale(1); }
+  .player-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5em; color: var(--gold-pale); margin-bottom: 24px; }
+  .player-inner audio { width: 100%; outline: none; }
+  .player-close { position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; line-height: 1; padding: 6px 8px; cursor: pointer; transition: color 0.3s ease; }
+  .player-close:hover { color: var(--gold-pale); }
 
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
@@ -360,7 +362,7 @@
     <a href="rent" class="back-link">← Back to Rent</a>
     <a href="license" class="license-link">What you own when you rent →</a>
 
-    <a href="#recovery-box-anchor" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer;">Already purchased? Retrieve your download →</a>
+    <a href="#recovery-box-anchor" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
     <div class="mood-groups">
 
@@ -377,6 +379,7 @@
               <span class="track-meta">Anthem · 0:59</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AC01.mp3&folder=ac" data-title="AC01 — Theme 1">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AC01" data-title="AC01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -396,6 +399,7 @@
               <span class="track-meta">African · 0:32</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF01.mp3&folder=af" data-title="AF01 — Theme 1">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF01" data-title="AF01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -406,6 +410,7 @@
               <span class="track-meta">African · 0:40</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF02.mp3&folder=af" data-title="AF02 — Theme 2">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF02" data-title="AF02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -416,6 +421,7 @@
               <span class="track-meta">African · 0:34</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF03.mp3&folder=af" data-title="AF03 — Theme 3">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF03" data-title="AF03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -426,6 +432,7 @@
               <span class="track-meta">African · 0:40</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF04.mp3&folder=af" data-title="AF04 — Theme 4">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF04" data-title="AF04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -436,6 +443,7 @@
               <span class="track-meta">African · 1:38</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF05.mp3&folder=af" data-title="AF05 — Theme 5">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF05" data-title="AF05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -446,6 +454,7 @@
               <span class="track-meta">African · 0:40</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF06.mp3&folder=af" data-title="AF06 — Theme 6">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF06" data-title="AF06 — Theme 6" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -456,6 +465,7 @@
               <span class="track-meta">African · 0:40</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF07.mp3&folder=af" data-title="AF07 — Theme 7">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF07" data-title="AF07 — Theme 7" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -466,6 +476,7 @@
               <span class="track-meta">African · 1:29</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF08.mp3&folder=af" data-title="AF08 — Theme 8">Preview</button>
               <button type="button" class="action-link js-buy" data-id="AF08" data-title="AF08 — Theme 8" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -485,6 +496,7 @@
               <span class="track-meta">Cinematic · 1:26</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR01.mp3&folder=cr" data-title="CR01 — Theme 1">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR01" data-title="CR01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -495,6 +507,7 @@
               <span class="track-meta">Cinematic · 2:12</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR02.mp3&folder=cr" data-title="CR02 — Theme 2">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR02" data-title="CR02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -505,6 +518,7 @@
               <span class="track-meta">Cinematic · 1:04</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR03.mp3&folder=cr" data-title="CR03 — Theme 3">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR03" data-title="CR03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -515,6 +529,7 @@
               <span class="track-meta">Cinematic · 0:44</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR04.mp3&folder=cr" data-title="CR04 — Theme 4">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR04" data-title="CR04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -525,6 +540,7 @@
               <span class="track-meta">Cinematic · 1:35</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR05.mp3&folder=cr" data-title="CR05 — Theme 5">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR05" data-title="CR05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -535,6 +551,7 @@
               <span class="track-meta">Cinematic · 0:44</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR06.mp3&folder=cr" data-title="CR06 — Theme 6">Preview</button>
               <button type="button" class="action-link js-buy" data-id="CR06" data-title="CR06 — Theme 6" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -554,6 +571,7 @@
               <span class="track-meta">Modern · 1:36</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC01.mp3&folder=mc" data-title="MC01 — Theme 1">Preview</button>
               <button type="button" class="action-link js-buy" data-id="MC01" data-title="MC01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -564,6 +582,7 @@
               <span class="track-meta">Modern · 0:34</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC02.mp3&folder=mc" data-title="MC02 — Theme 2">Preview</button>
               <button type="button" class="action-link js-buy" data-id="MC02" data-title="MC02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -574,6 +593,7 @@
               <span class="track-meta">Modern · 2:04</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC03.mp3&folder=mc" data-title="MC03 — Theme 3">Preview</button>
               <button type="button" class="action-link js-buy" data-id="MC03" data-title="MC03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -584,6 +604,7 @@
               <span class="track-meta">Modern · 2:03</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC04.mp3&folder=mc" data-title="MC04 — Theme 4">Preview</button>
               <button type="button" class="action-link js-buy" data-id="MC04" data-title="MC04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -594,6 +615,7 @@
               <span class="track-meta">Modern · 2:04</span>
             </div>
             <div class="track-actions">
+              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC05.mp3&folder=mc" data-title="MC05 — Theme 5">Preview</button>
               <button type="button" class="action-link js-buy" data-id="MC05" data-title="MC05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
             </div>
           </div>
@@ -641,6 +663,18 @@
       <span>Worldwide</span>
     </p>
 
+  </div>
+</div>
+
+<!-- PREVIEW PLAYER MODAL -->
+<div class="player-modal" id="playerModal" aria-hidden="true" role="dialog" aria-label="Audio preview">
+  <div class="player-inner">
+    <button type="button" class="player-close" id="playerClose" aria-label="Close">✕</button>
+    <p class="player-title" id="playerTitle">Preview</p>
+    <audio id="audioPlayer" controls preload="none">
+      <source id="audioSource" src="" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
 </div>
 
@@ -766,6 +800,46 @@
   })();
 
   (function () {
+    // Preview Player Logic
+    var playerModal = document.getElementById('playerModal');
+    var playerTitle = document.getElementById('playerTitle');
+    var audioPlayer = document.getElementById('audioPlayer');
+    var audioSource = document.getElementById('audioSource');
+    var playerClose = document.getElementById('playerClose');
+
+    function openPlayer(url, title) {
+      audioSource.src = url;
+      audioPlayer.load();
+      playerTitle.textContent = title;
+      playerModal.classList.add('open');
+      playerModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      audioPlayer.play().catch(function(e) { console.log("Autoplay prevented by browser"); });
+    }
+
+    function closePlayer() {
+      playerModal.classList.remove('open');
+      playerModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      audioPlayer.pause();
+      audioSource.src = '';
+      audioPlayer.load();
+    }
+
+    document.querySelectorAll('.js-preview').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var url = btn.getAttribute('data-preview');
+        var title = btn.getAttribute('data-title');
+        if (url) openPlayer(url, title);
+      });
+    });
+
+    playerClose.addEventListener('click', closePlayer);
+    playerModal.addEventListener('click', function(e) { if (e.target === playerModal) closePlayer(); });
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && playerModal.classList.contains('open')) { closePlayer(); } });
+
+    // Paystack & Checkout Logic
     var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9"; // Replace with pk_live_ when ready
     var STORAGE_KEY = "noelgrass_email";
 
