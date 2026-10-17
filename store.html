@@ -764,6 +764,7 @@
 
   (function () {
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
+    var SALES_PAUSED = false; // Change to true to disable all Buy buttons
     var STORAGE_KEY = "noelgrass_email";
 
     var modal      = document.getElementById('checkoutModal');
@@ -884,6 +885,18 @@
     }
 
     document.querySelectorAll('.js-buy').forEach(function (btn) {
+      if (SALES_PAUSED) {
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+        btn.style.background = '#1a1a1a';
+        btn.style.color = '#555';
+        btn.style.borderColor = '#333';
+        btn.innerText = "Paused";
+        return;
+      }
       btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
     });
 
