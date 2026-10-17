@@ -373,4 +373,10 @@
       });
     }
     if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
-    var yearEl = document.getElementById
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  })();
+</script>
+
+</body>
+</html>
