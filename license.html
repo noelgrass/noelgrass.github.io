@@ -2,249 +2,450 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Master Recording License Agreement — Noel Grass</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
+
+<title>Master Recording License Agreement | Noel Grass — Kenya</title>
+<meta name="description" content="The master recording license agreement for rentals of original cinematic scores and jingles by Noel Grass. Terms for film, TV, and brand productions in Kenya, East Africa, and internationally.">
+<link rel="canonical" href="https://noelgrass.github.io/license">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "name": "Master Recording License Agreement",
+  "url": "https://noelgrass.github.io/license",
+  "description": "The master recording license agreement governing rentals of original cinematic scores and jingles by Noel Grass.",
+  "creator": {
+    "@type": "Person",
+    "@id": "https://noelgrass.github.io/#person"
+  },
+  "inLanguage": "en",
+  "license": "https://noelgrass.github.io/license"
+}
+</script>
 
 <style>
-  @page {
-    size: A4;
-    margin: 20mm 22mm 20mm 22mm;
-  }
-
   :root {
-    --ink: #1a1a1a;
-    --muted: #6b6b6b;
-    --gold: #8B6F3F;
-    --rule: #d4d4d4;
-    --bg: #ffffff;
+    --bg: #000000;
+    --gold: #C5A880;
+    --gold-soft: #B9975C;
+    --gold-pale: #E8D5B5;
+    --offwhite: #EDEAE3;
+    --muted: #9a958c;
+    --rule: #2a2a2a;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
     background: var(--bg);
-    color: var(--ink);
+    color: var(--offwhite);
+    scroll-behavior: smooth;
   }
 
   body {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: 10.5pt;
-    line-height: 1.55;
+    font-size: 17px;
+    line-height: 1.75;
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
   }
 
-  .document {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 40px 40px 60px;
-  }
-
-  /* ---------- HEADER ---------- */
-  .header {
-    text-align: center;
-    padding-bottom: 24px;
-    border-bottom: 1.5px solid var(--gold);
-    margin-bottom: 30px;
-  }
-
-  .header .logo {
-    display: inline-block;
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 700;
-    font-size: 18pt;
-    letter-spacing: 0.18em;
+  a {
     color: var(--gold);
-    text-transform: uppercase;
-    margin-bottom: 6px;
+    text-decoration: none;
+    transition: color 0.25s ease;
   }
 
-  .header h1 {
+  a:hover { color: #FCFCF7; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  .topnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    padding: 28px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+    animation: fadeUp 0.8s ease-out both;
+  }
+
+  .topnav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 34px;
+  }
+
+  .topnav a {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .topnav a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 1px;
+    background: var(--gold);
+    transition: width 0.35s ease;
+    pointer-events: none;
+  }
+
+  .topnav a:hover { color: #FBFAFC; }
+  .topnav a:hover::after { width: 100%; }
+
+  .topnav li { position: relative; }
+
+  .topnav li + li::before {
+    content: '';
+    position: absolute;
+    left: -18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 14px;
+    background: var(--gold-soft);
+    opacity: 0.6;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 100px 40px 80px;
+    text-align: center;
+  }
+
+  h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
-    font-size: 15pt;
-    letter-spacing: 0.12em;
-    color: var(--ink);
+    color: var(--gold);
+    font-size: 2.4em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    margin-top: 4px;
+    margin-bottom: 30px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.2s;
   }
 
-  /* ---------- PREAMBLE ---------- */
+  .hero-subhead {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.2em;
+    color: var(--offwhite);
+    margin-bottom: 60px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+
+  /* ---------- AGREEMENT BODY ---------- */
+  .agreement {
+    text-align: left;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.6s;
+  }
+
   .preamble {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 8pt;
-    letter-spacing: 0.12em;
+    font-size: 0.75em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--muted);
-    line-height: 1.9;
-    padding: 14px 0 16px;
-    margin-bottom: 24px;
-    border-bottom: 0.5px solid var(--rule);
+    line-height: 2;
+    margin-bottom: 50px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid var(--rule);
   }
 
   .preamble span {
-    color: var(--ink);
-    font-weight: 500;
+    color: var(--offwhite);
+    font-weight: 400;
   }
 
-  /* ---------- SECTIONS ---------- */
-  h2 {
+  .agreement h2 {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 600;
-    font-size: 10.5pt;
-    letter-spacing: 0.1em;
+    font-size: 1.15em;
+    color: var(--gold-pale);
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--gold);
-    margin-top: 18px;
-    margin-bottom: 6px;
+    margin-top: 40px;
+    margin-bottom: 14px;
   }
 
-  h2:first-of-type { margin-top: 0; }
-
-  p {
-    font-size: 10.5pt;
-    line-height: 1.6;
-    margin-bottom: 8px;
-    text-align: justify;
+  .agreement h2:first-of-type {
+    margin-top: 0;
   }
 
-  ul {
+  .agreement p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    margin-bottom: 16px;
+  }
+
+  .agreement ul {
     list-style: none;
     padding: 0;
-    margin: 4px 0 10px;
+    margin: 0 0 16px;
   }
 
-  ul li {
-    font-size: 10.5pt;
-    line-height: 1.6;
-    padding-left: 18px;
+  .agreement ul li {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    padding-left: 24px;
     position: relative;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 
-  ul li::before {
+  .agreement ul li::before {
     content: '—';
-    color: var(--gold);
+    color: var(--gold-soft);
     position: absolute;
     left: 0;
   }
 
-  strong {
-    color: var(--ink);
+  .agreement strong {
+    color: var(--gold-pale);
     font-weight: 600;
   }
 
   /* ---------- ACCEPTANCE ---------- */
   .acceptance {
-    margin-top: 30px;
-    padding-top: 18px;
+    margin-top: 60px;
+    padding-top: 40px;
     border-top: 1px solid var(--rule);
+    text-align: left;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
     font-style: italic;
-    font-size: 10.5pt;
-    line-height: 1.7;
-    color: var(--ink);
+    color: var(--offwhite);
+    line-height: 1.85;
   }
 
   .acceptance strong {
     font-style: normal;
-    display: inline-block;
-    margin-bottom: 2px;
+    color: var(--gold-pale);
+    font-weight: 600;
   }
 
-  /* ---------- FOOTER ---------- */
-  .footer {
-    margin-top: 40px;
-    padding-top: 16px;
-    border-top: 0.5px solid var(--rule);
+  /* ---------- BACK LINK ---------- */
+  .back-bottom {
+    text-align: center;
+    margin-top: 70px;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.8s;
+  }
+
+  .back-bottom a {
+    display: inline-block;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1em;
+    color: var(--gold-pale);
+    padding-bottom: 2px;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .back-bottom a:hover {
+    transform: translateX(-4px);
+    color: #FCFCF7;
+  }
+
+  /* ---------- SIGNATURE ---------- */
+  .signature {
+    margin-top: 60px;
+    text-align: center;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 1s;
+  }
+
+  .signature-logo {
+    display: inline-block;
+    height: 70px;
+    width: auto;
+    opacity: 0.95;
+  }
+
+  .footer-location {
+    text-align: right;
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
-    font-size: 7.5pt;
+    font-size: 0.7em;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--muted);
-    text-align: center;
+    opacity: 0.6;
+    margin-top: 24px;
+    padding-right: 6px;
+    transition: opacity 0.3s ease;
+  }
+  .footer-location a {
+    color: var(--muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color 0.3s ease, border-color 0.3s ease;
+  }
+  .footer-location a:hover {
+    color: var(--gold-pale);
+    border-bottom-color: var(--gold-dim);
+  }
+  .footer-sep {
+    margin: 0 10px;
+    color: var(--muted);
+    opacity: 0.6;
+  }
+  @media (max-width: 700px) {
+    .footer-location {
+      text-align: center;
+      padding-right: 0;
+      margin-top: 20px;
+    }
   }
 
-  /* ---------- PRINT ---------- */
-  @media print {
-    body { background: #fff; }
-    .document { padding: 0; }
-    a { color: var(--gold); text-decoration: none; }
+  @media (max-width: 700px) {
+    .page { padding: 60px 22px 60px; }
+    h1 { font-size: 1.7em; letter-spacing: 0.18em; margin-bottom: 24px; }
+    .hero-subhead { font-size: 1.05em; margin-bottom: 40px; }
+    .agreement h2 { font-size: 1.05em; margin-top: 32px; }
+    .agreement p, .agreement ul li { font-size: 0.95em; }
+    .preamble { font-size: 0.7em; letter-spacing: 0.12em; line-height: 1.9; margin-bottom: 36px; padding-bottom: 24px; }
+    .topnav { padding: 20px 14px; }
+    .topnav a { font-size: 0.7em; letter-spacing: 0.15em; }
+    .topnav ul { gap: 10px 22px; }
+    .topnav li + li::before { left: -12px; height: 10px; }
+    .back-bottom { margin-top: 50px; }
+    .signature { margin-top: 40px; }
+    .signature-logo { height: 55px; }
   }
 </style>
 </head>
 <body>
 
-<div class="document">
-
-  <header class="header">
-    <span class="logo">Noel Grass</span>
-    <h1>Master Recording License Agreement</h1>
-  </header>
-
-  <div class="preamble">
-    Licensor: <span>Noel Grass</span><br>
-    Licensee: <span>The purchaser named in the transaction record</span><br>
-    Effective Date: <span>The date the transaction is completed</span>
-  </div>
-
-  <h2>1. The Work</h2>
-  <p>Noel Grass (the <strong>Composer</strong>) grants the purchaser (the <strong>Producer</strong>) a license to use the master recording titled <strong>[Track Title]</strong> (the <strong>Master</strong>) in the production titled <strong>[Project Name]</strong> (the <strong>Production</strong>).</p>
-
-  <h2>2. Rights Granted</h2>
-  <p>The Producer is granted a <strong>non-exclusive, non-transferable</strong> license to synchronise the Master with the Production and to distribute the Production containing the Master.</p>
-
-  <h2>3. Term</h2>
-  <p>This license is granted for the <strong>life of the Production</strong>.</p>
-
-  <h2>4. Territory</h2>
-  <p>This license is granted for <strong>worldwide territory</strong>.</p>
-
-  <h2>5. Media</h2>
-  <p>The Master may be used in the Production across <strong>all media</strong>, including but not limited to film festivals, streaming platforms, broadcast television, and home video.</p>
-
-  <h2>6. Exclusivity</h2>
-  <p>This license is <strong>non-exclusive</strong>. The Composer retains the right to license the same Master to other productions and to continue to distribute the Master independently.</p>
-
-  <h2>7. Rights Retained</h2>
-  <p>The Composer retains all rights to the underlying musical composition — including melody, harmony, arrangement, and structure. This license covers the use of the <strong>master recording only</strong>. No ownership of the composition is transferred under this agreement.</p>
-
-  <h2>8. Delivery</h2>
-  <p>The Composer will deliver the Master as a high-quality audio file (WAV or equivalent). This license agreement accompanies the delivered file.</p>
-
-  <h2>9. Restrictions</h2>
-  <p>The Producer may not:</p>
+<nav class="topnav">
   <ul>
-    <li>Resell, sublicense, or redistribute the Master as a standalone work</li>
-    <li>Use the Master outside the Production named in Section 1</li>
-    <li>Register the Master or any portion of it as their own work</li>
-    <li>Claim authorship or ownership of the Master or the underlying composition</li>
+    <li><a href="biography">Biography</a></li>
+    <li><a href="./">Home</a></li>
+    <li><a href="film-composer">About</a></li>
+    <li><a href="commission">Commission a Scene</a></li>
+    <li><a href="film-gallery">Gallery</a></li>
+    <li><a href="rent">Rent</a></li>
+    <li><a href="contact">Contact</a></li>
   </ul>
+</nav>
 
-  <h2>10. Public Performance Royalties</h2>
-  <p>Any public performance royalties collected for the broadcast or public performance of the composition are payable to the Composer and are not included in this license. Collecting these royalties does not require any action from the Producer.</p>
+<div class="page">
 
-  <h2>11. Collective Management</h2>
-  <p>This is a direct license issued by the Composer, who owns all rights to the Master. No collective management organisation is involved.</p>
+  <h1>License</h1>
+  <p class="hero-subhead">Master Recording License Agreement</p>
 
-  <h2>12. Governing Law</h2>
-  <p>This agreement is governed by the laws of the Republic of Kenya.</p>
+  <div class="agreement">
 
-  <h2>13. Acceptance</h2>
-  <p>By completing the purchase of this license, the Producer accepts all terms stated in this agreement.</p>
+    <p class="preamble">
+      Licensor: <span>Noel Grass</span><br>
+      Licensee: <span>The purchaser named in the transaction record</span><br>
+      Effective Date: <span>The date the transaction is completed</span>
+    </p>
 
-  <div class="acceptance">
-    <strong>Noel Grass</strong><br>
-    Composer<br>
-    noelgrassmusic@gmail.com
+    <h2>1. The Work</h2>
+    <p>Noel Grass (the <strong>Composer</strong>) grants the purchaser (the <strong>Producer</strong>) a license to use the master recording titled <strong>[Track Title]</strong> (the <strong>Master</strong>) in the production titled <strong>[Project Name]</strong> (the <strong>Production</strong>).</p>
+
+    <h2>2. Rights Granted</h2>
+    <p>The Producer is granted a <strong>non-exclusive, non-transferable</strong> license to synchronise the Master with the Production and to distribute the Production containing the Master.</p>
+
+    <h2>3. Term</h2>
+    <p>This license is granted for the <strong>life of the Production</strong>.</p>
+
+    <h2>4. Territory</h2>
+    <p>This license is granted for <strong>worldwide territory</strong>.</p>
+
+    <h2>5. Media</h2>
+    <p>The Master may be used in the Production across <strong>all media</strong>, including but not limited to film festivals, streaming platforms, broadcast television, and home video.</p>
+
+    <h2>6. Exclusivity</h2>
+    <p>This license is <strong>non-exclusive</strong>. The Composer retains the right to license the same Master to other productions and to continue to distribute the Master independently.</p>
+
+    <h2>7. Rights Retained</h2>
+    <p>The Composer retains all rights to the underlying musical composition — including melody, harmony, arrangement, and structure. This license covers the use of the <strong>master recording only</strong>. No ownership of the composition is transferred under this agreement.</p>
+
+    <h2>8. Delivery</h2>
+    <p>The Composer will deliver the Master as a high-quality audio file (WAV or equivalent). This license agreement accompanies the delivered file.</p>
+
+    <h2>9. Restrictions</h2>
+    <p>The Producer may not:</p>
+    <ul>
+      <li>Resell, sublicense, or redistribute the Master as a standalone work</li>
+      <li>Use the Master outside the Production named in Section 1</li>
+      <li>Register the Master or any portion of it as their own work</li>
+      <li>Claim authorship or ownership of the Master or the underlying composition</li>
+    </ul>
+
+    <h2>10. Public Performance Royalties</h2>
+    <p>Any public performance royalties collected for the broadcast or public performance of the composition are payable to the Composer and are not included in this license. Collecting these royalties does not require any action from the Producer.</p>
+
+    <h2>11. Collective Management</h2>
+    <p>This is a direct license issued by the Composer, who owns all rights to the Master. No collective management organisation is involved.</p>
+
+    <h2>12. Governing Law</h2>
+    <p>This agreement is governed by the laws of the Republic of Kenya.</p>
+
+    <h2>13. Acceptance</h2>
+    <p>By completing the purchase of this license, the Producer accepts all terms stated in this agreement.</p>
+
+    <p class="acceptance">
+      <strong>Noel Grass</strong><br>
+      Composer<br>
+      noelgrassmusic@gmail.com
+    </p>
+
   </div>
 
-  <div class="footer">
-    Nairobi, Kenya
+  <div class="back-bottom">
+    <a href="rent">← Back to Rent</a>
   </div>
+
+  <div class="signature">
+    <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+  </div>
+
+  <p class="footer-location">
+    <a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Nairobi, Kenya</a>
+    <span class="footer-sep">·</span>
+    <span>Worldwide</span>
+  </p>
 
 </div>
 
