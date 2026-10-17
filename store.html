@@ -367,7 +367,7 @@
     <p class="hero-line">Digital &amp; physical &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Secure checkout</p>
     
     <!-- TOP LINK -->
-    <a href="#already-purchased" class="hero-top-link">Already purchased? Retrieve your download →</a>
+    <a href="#already-purchased" class="hero-top-link" id="heroTopLink">Already purchased? Retrieve your download →</a>
 
     <div class="section-divider"><span>Music</span></div>
     <p class="section-note">Solo Piano · Orchestral · Experimental · Ambient</p>
@@ -765,6 +765,19 @@
   (function () {
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var SALES_PAUSED = false; // Change to true to disable all Buy buttons
+
+    // Update the top link if sales are paused
+    if (SALES_PAUSED) {
+      var topLink = document.getElementById('heroTopLink');
+      if (topLink) {
+        topLink.href = "#";
+        topLink.style.pointerEvents = "none";
+        topLink.style.color = "var(--muted)";
+        topLink.style.fontStyle = "italic";
+        topLink.innerText = "We are currently updating our store. Sales will resume shortly.";
+      }
+    }
+
     var STORAGE_KEY = "noelgrass_email";
 
     var modal      = document.getElementById('checkoutModal');
