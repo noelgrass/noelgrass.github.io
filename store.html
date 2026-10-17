@@ -638,13 +638,22 @@
     <span class="success-label">Confirmed</span>
     <p class="success-title">Payment received</p>
     <p class="success-body">
-      Thank you! Your download is ready.<br>
-      <span style="font-size:0.85em; opacity:0.8;">Save your Paystack reference:<br><strong id="successRef" style="word-break:break-all;"></strong></span>
+      Thank you! Your download is ready.
     </p>
     
-    <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 20px; opacity:0.5; pointer-events:none;">
+    <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.9em; padding: 18px 20px;">
       Generating link...
     </a>
+
+    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.2); padding: 20px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
+      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 12px;">Keep your receipt:</p>
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 10px; line-height: 1.5;">
+        Your transaction reference is <strong id="successRef" style="font-style: normal; font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.1em; display: inline-block; margin-top: 4px;"></strong>
+      </p>
+      <p style="font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.65em; letter-spacing: 0.05em; line-height: 1.6; color: var(--muted); margin: 0;">
+        If you close this window, you can return to this store at any time, scroll to the bottom, and paste this reference into the "Already Purchased?" box to get a fresh download link.
+      </p>
+    </div>
 
     <button type="button" class="success-done" id="successDone">Done</button>
   </div>
