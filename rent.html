@@ -152,7 +152,7 @@
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--offwhite); margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
   .hero-line { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; color: var(--offwhite); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
-  .licensing-intro { display: block; text-align: left; margin: 60px auto 60px; max-width: 720px; padding: 0; border: 1px solid var(--gold-soft); background: rgba(197, 168, 128, 0.02); animation: fadeUp 1s ease-out both, licensingPulse 6s ease-in-out infinite; animation-delay: 0.7s, 1.7s; transition: border-color 0.4s ease, background 0.4s ease; }
+  .licensing-intro { display: block; text-align: left; margin: 0 auto 60px; max-width: 720px; padding: 0; border: 1px solid var(--gold-soft); background: rgba(197, 168, 128, 0.02); animation: fadeUp 1s ease-out both, licensingPulse 6s ease-in-out infinite; animation-delay: 0.7s, 1.7s; transition: border-color 0.4s ease, background 0.4s ease; }
   .licensing-intro:hover { border-color: var(--gold); background: rgba(197, 168, 128, 0.04); animation: fadeUp 1s ease-out both, licensingPulseHover 6s ease-in-out infinite; animation-delay: 0.7s, 0s; }
   .licensing-intro > summary { list-style: none; cursor: pointer; padding: 42px 44px 30px; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "eyebrow toggle" "headline headline" "leadpara leadpara"; gap: 0 24px; align-items: start; }
   .licensing-intro > summary::-webkit-details-marker { display: none; }
@@ -329,7 +329,7 @@
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
     .hero-subhead { font-size: 1.1em; }
     .hero-line { font-size: 1em; }
-    .licensing-intro { margin: 40px auto 40px; }
+    .licensing-intro { margin: 0 auto 40px; }
     .licensing-intro > summary { padding: 32px 24px 24px; gap: 0 16px; }
     .licensing-content { padding: 0 24px 36px; }
     .licensing-intro .intro-eyebrow { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 14px; }
@@ -443,29 +443,14 @@
     <p class="hero-subhead">Original music for productions in Kenya, East Africa, pan-Africa, and worldwide.</p>
     <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
-    <!-- 1. JINGLES SECTION -->
-    <div class="section" id="jingles">
-      <h2 class="section-heading">Jingles</h2>
-      <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
-      <p class="section-pricing">From Ksh 5,000</p>
-
-      <div id="hubTrackList">
-        <!-- JS will inject the category groups and tracks here -->
-      </div>
-
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="rent-jingles" class="view-all-btn">View more categories and full catalogue →</a>
-      </div>
-    </div>
-
-    <!-- 2. THE EDUCATIONAL BOX -->
+    <!-- 1. THE EDUCATIONAL BOX (Moved to the top) -->
     <details class="licensing-intro">
       <summary>
         <span class="intro-eyebrow">New to Licensing?</span>
         <span class="licensing-toggle-icon" aria-hidden="true"></span>
-        <span class="intro-headline">Renting music isn't buying it. Here's what it actually means.</span>
+        <span class="intro-headline">Renting / licensing music isn't buying it. Here's what it actually means.</span>
         <span class="intro-lead">
-          When you rent music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>license</strong>. You do not own the music. Noel Grass still owns it. But you receive a signed, legal permission to use the track exactly as agreed. When you complete your download, your license is included with your files. You can <a href="license" style="color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 1px;">check the full licensing terms</a> anytime to review the details of your agreement.
+          When you rent / license music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>license</strong>. You do not own the music. Noel Grass still owns it. But you receive a signed, legal permission to use the track exactly as agreed. When you complete your download, your license is included with your files. You can <a href="license" style="color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 1px;">check the full licensing terms</a> anytime to review the details of your agreement.
         </span>
       </summary>
 
@@ -511,6 +496,21 @@
         </div>
       </div>
     </details>
+
+    <!-- 2. JINGLES SECTION -->
+    <div class="section" id="jingles">
+      <h2 class="section-heading">Jingles</h2>
+      <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
+      <p class="section-pricing">From Ksh 5,000</p>
+
+      <div id="hubTrackList">
+        <!-- JS will inject the category groups and tracks here -->
+      </div>
+
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="rent-jingles" class="view-all-btn">View more categories and full catalogue →</a>
+      </div>
+    </div>
 
     <!-- 3. FILM SCORES (Muted) -->
     <div class="section muted-section" id="scores">
@@ -691,7 +691,7 @@
             '</div>' +
             '<div class="track-actions">' +
               '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
-              '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+              '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent / License</button>' +
             '</div>' +
             '<div class="inline-player" id="player-' + t.code + '">' +
               '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
