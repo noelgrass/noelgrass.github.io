@@ -283,10 +283,38 @@
   }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
+  /* ===== UPDATED PROGRESS BAR (DRAG-FRIENDLY) ===== */
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
-  .player-progress-wrap { flex-grow: 1; height: 3px; background: rgba(255,255,255,0.08); cursor: pointer; position: relative; border-radius: 2px; }
-  .player-progress-bar { height: 100%; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; }
+
+  .player-progress-wrap { 
+    flex-grow: 1; 
+    height: 16px; 
+    display: flex;
+    align-items: center;
+    cursor: pointer; 
+    position: relative; 
+    touch-action: none;
+  }
+  .player-progress-wrap::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .player-progress-bar { 
+    height: 3px; 
+    width: 0%; 
+    background: var(--gold-soft); 
+    border-radius: 2px; 
+    pointer-events: none; 
+    position: relative; 
+    z-index: 1; 
+  }
   .player-progress-bar::after { content: ''; position: absolute; right: -4px; top: -3px; width: 9px; height: 9px; background: var(--gold-pale); border-radius: 50%; opacity: 0; transition: opacity 0.2s ease; }
   .player-progress-wrap:hover .player-progress-bar::after { opacity: 1; }
   .player-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
@@ -733,27 +761,63 @@
     var audio = document.getElementById('mainAudio');
     var currentTrackId = null;
 
+    // Helper: stop and reset the currently playing track
+    function stopCurrentTrack() {
+      if (!audio || !currentTrackId) return;
+      audio.pause();
+      audio.currentTime = 0;
+      
+      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+      if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
+      
+      var player = document.getElementById('player-' + currentTrackId);
+      if (player) {
+        var bar = player.querySelector('.player-progress-bar');
+        var time = player.querySelector('.player-time');
+        if (bar) bar.style.width = '0%';
+        if (time) time.innerText = '0:00';
+        player.classList.remove('active');
+      }
+      currentTrackId = null;
+    }
+
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.action-play');
-      if (!btn) return;
-      e.preventDefault();
-      var code = btn.getAttribute('data-code');
-      var url = btn.getAttribute('data-url');
+      if (btn) {
+        e.preventDefault();
+        var code = btn.getAttribute('data-code');
+        var url = btn.getAttribute('data-url');
 
-      if (currentTrackId === code) {
-        audio.paused ? audio.play() : audio.pause();
-        return;
+        if (currentTrackId === code) {
+          audio.paused ? audio.play() : audio.pause();
+          return;
+        }
+
+        stopCurrentTrack();
+        currentTrackId = code;
+        audio.src = url;
+        audio.play().catch(function() {});
+        var player = document.getElementById('player-' + code);
+        if (player) player.classList.add('active');
+      } else {
+        // Click-outside logic: if they clicked anything other than the play button
+        // or the progress bar, pause the track.
+        var isProgressBar = e.target.closest('.player-progress-wrap');
+        if (!isProgressBar && currentTrackId) {
+          stopCurrentTrack();
+        }
       }
-
-      document.querySelectorAll('.action-play').forEach(function (b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-      document.querySelectorAll('.inline-player').forEach(function (p) { p.classList.remove('active'); });
-
-      currentTrackId = code;
-      audio.src = url;
-      audio.play().catch(function() {});
-      var player = document.getElementById('player-' + code);
-      if (player) player.classList.add('active');
     });
+
+    // Pause audio when the licensing box is opened
+    var licensingBox = document.querySelector('.licensing-intro');
+    if (licensingBox) {
+      licensingBox.addEventListener('toggle', function () {
+        if (licensingBox.open) {
+          stopCurrentTrack();
+        }
+      });
+    }
 
     if (audio) {
       audio.addEventListener('play', function () {
@@ -775,15 +839,65 @@
         if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
       });
       audio.addEventListener('ended', function () {
-        var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-        var player = document.getElementById('player-' + currentTrackId);
-        if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
-        if (player) {
-          player.querySelector('.player-progress-bar').style.width = '0%';
-          player.querySelector('.player-time').innerText = '0:00';
-          player.classList.remove('active');
+        stopCurrentTrack();
+      });
+
+      // ==========================================
+      // DRAG & SEEK LOGIC FOR PROGRESS BAR
+      // ==========================================
+      var isDragging = false;
+      var activeProgressWrap = null;
+
+      function seekToEvent(e, wrap) {
+        if (!audio.duration) return;
+        var rect = wrap.getBoundingClientRect();
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clickX = clientX - rect.left;
+        var pct = Math.max(0, Math.min(1, clickX / rect.width));
+        audio.currentTime = pct * audio.duration;
+        var bar = wrap.querySelector('.player-progress-bar');
+        if (bar) bar.style.width = (pct * 100) + '%';
+      }
+
+      document.addEventListener('mousedown', function(e) {
+        var wrap = e.target.closest('.player-progress-wrap');
+        if (wrap) {
+          isDragging = true;
+          activeProgressWrap = wrap;
+          seekToEvent(e, wrap);
+          e.preventDefault();
         }
-        currentTrackId = null;
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging && activeProgressWrap) {
+          seekToEvent(e, activeProgressWrap);
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+        activeProgressWrap = null;
+      });
+
+      document.addEventListener('touchstart', function(e) {
+        var wrap = e.target.closest('.player-progress-wrap');
+        if (wrap) {
+          isDragging = true;
+          activeProgressWrap = wrap;
+          seekToEvent(e, wrap);
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (isDragging && activeProgressWrap) {
+          seekToEvent(e, activeProgressWrap);
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', function() {
+        isDragging = false;
+        activeProgressWrap = null;
       });
     }
 
