@@ -452,7 +452,11 @@
 
     <br style="display: block; margin: 20px 0; content: '';">
 
-    <span class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</span>
+    <!-- ═══════════════════════════════════════════════════════════
+         🔗 TOP RECOVERY LINK — scrolls down to the recovery box
+         Only meaningful for RETURNING customers whose link expired.
+         ═══════════════════════════════════════════════════════════ -->
+    <a href="#recoveryBox" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
     <div class="mood-groups">
 
@@ -490,7 +494,12 @@
 
     </div>
 
-    <div class="recovery-box" style="margin-top: 80px;">
+    <!-- ═══════════════════════════════════════════════════════════
+         🔑 RECOVERY BOX — for returning customers
+         Target of the top "Already purchased?" link (id="recoveryBox")
+         Server: rent-jingles.noelgrass.workers.dev/verify
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="recovery-box" id="recoveryBox" style="margin-top: 80px;">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
       <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7em; font-style: normal; color: var(--muted); margin-top: -10px; margin-bottom: 24px; letter-spacing: 0.05em;">(You can find this reference number on the receipt sent to your email by Paystack).</p>
@@ -499,6 +508,9 @@
       <div id="recoveryError" style="font-family:'Montserrat';font-size:0.65em;color:#e08b7a;margin-top:12px;display:none;"></div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
+         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -569,10 +581,14 @@
         <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.3em; display: inline-block; background: rgba(197,168,128,0.1); padding: 8px 12px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
       </div>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           ℹ️ INFO FOR LATER — not a live link (you just paid!)
+           Tells the customer where the recovery box is, for future visits.
+           ═══════════════════════════════════════════════════════════ -->
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         <strong>Want to download this again later?</strong><br>
         <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <span id="successRecoveryLink" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px; cursor:pointer;">"Already Purchased?"</span> box at the bottom of the page to get a fresh download link.</span>
+        <span style="color: var(--muted);">2. <strong>Come back to this page at any time:</strong> Scroll down to the <em style="color: var(--gold-pale); font-style: italic;">"Already Purchased?"</em> box at the bottom of the page to get a fresh download link.</span>
       </p>
     </div>
 
@@ -583,7 +599,9 @@
 <audio id="mainAudio"></audio>
 
 <script>
-  // ---------- MENU ----------
+  // ═══════════════════════════════════════════════════════════════
+  // 🧭 MENU — hamburger, scroll lock, active-page highlight
+  // ═══════════════════════════════════════════════════════════════
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
@@ -664,10 +682,35 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 
-  // ---------- APP LOGIC ----------
+  // ═══════════════════════════════════════════════════════════════
+  // 🎵 TRACK ENGINE + CHECKOUT — everything to do with the tracks
+  // ═══════════════════════════════════════════════════════════════
   document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
+    /* ═══════════════════════════════════════════════════════════════
+       🎵 TRACKS ARRAY — ADD / DELETE / EDIT TRACKS HERE
+       
+       📁 Audio files live on the server at: /audio/{folder}/{file}
+          Example: /audio/af/AF01.mp3, /audio/cr/CR01.mp3
+       
+       ➕ To ADD a track   → paste one line below
+       ➖ To DELETE        → delete its line
+       🔁 To REORDER       → move the line up/down
+       📝 To EDIT          → change the line in place
+       
+       Fields:
+         cat       = category key (must match data-category in HTML above)
+                     valid values: "anthems" | "african" | "cinematic" | "modern"
+         code      = unique ID (e.g. "AF01") — used for the Buy button + player
+         title     = track title
+         desc      = instrumentation notes (shown in parentheses)
+         duration  = "Category · 0:32" (display label)
+         file      = filename, e.g. "AF01.mp3"
+         folder    = audio subfolder, e.g. "af" | "cr" | "mc" | "ac"
+         amount    = price in smallest currency unit
+                     (500000 = KSh 5,000)
+       ═══════════════════════════════════════════════════════════════ */
     var TRACKS = [
       { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
       { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
@@ -691,6 +734,11 @@
       { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
     ];
 
+    /* ═══════════════════════════════════════════════════════════════
+       ⚙️ PREVIEW URL — where audio previews are served from
+       ⚠️  If you upload a NEW version of an audio file and it still
+           sounds like the old one, bump the v= value (e.g. final5 → final6)
+       ═══════════════════════════════════════════════════════════════ */
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) { 
       return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; 
@@ -860,6 +908,11 @@
       });
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       💳 PAYSTACK — payment configuration
+       ⚠️  Only the PUBLIC key belongs here. Never put your secret key
+           in any file that ends up on the website.
+       ═══════════════════════════════════════════════════════════════ */
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
     var modal      = document.getElementById('checkoutModal');
@@ -935,6 +988,11 @@
             successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
             downloadBtn.innerText = "Generating link...";
             downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
+            /* ═══════════════════════════════════════════════════════════
+               🔐 VERIFY ENDPOINT — backend that checks the reference
+               and returns a download link. Do not change unless you
+               change the server.
+               ═══════════════════════════════════════════════════════════ */
             fetch("https://rent-jingles.noelgrass.workers.dev/verify", {
               method: "POST", headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ reference: response.reference })
@@ -961,6 +1019,10 @@
     });
     if (successModal) successModal.addEventListener('click', function (e) { if (e.target === successModal) successModal.classList.remove('open'); });
 
+    /* ═══════════════════════════════════════════════════════════════
+       🔑 RECOVERY BOX — for returning customers whose link expired
+       Uses the same /verify endpoint as checkout, above.
+       ═══════════════════════════════════════════════════════════════ */
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
