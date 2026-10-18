@@ -259,8 +259,29 @@
   .track-text-container { display: flex; flex-direction: column; gap: 4px; }
   .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
   .track:hover .track-title { color: #FCFCF7; }
-  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; line-height: 1.4; }
-  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
+  
+  /* ===== UPDATED: READABLE DESCRIPTION ===== */
+  .track-desc { 
+    font-family: 'Playfair Display', Georgia, serif; 
+    font-size: 0.95em; 
+    font-style: italic; 
+    font-weight: 400; 
+    color: #a8a39a; /* Lighter for readability */
+    line-height: 1.4; 
+  }
+  
+  /* ===== UPDATED: SLIGHTLY THICKER META ===== */
+  .track-meta { 
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 400; 
+    font-size: 0.72em; 
+    letter-spacing: 0.15em; 
+    text-transform: uppercase; 
+    color: var(--muted); 
+    margin-top: 4px; 
+    display: block; 
+  }
+  
   .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
   
   .action-play { 
@@ -397,7 +418,7 @@
     .track { gap: 12px; padding: 20px 0; }
     .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
-    .track-desc { font-size: 0.8em; }
+    .track-desc { font-size: 0.9em; }
     .track-meta { font-size: 0.7em; }
     .track-actions { gap: 8px; }
     .action-play { width: 34px; height: 34px; font-size: 0.7em; }
