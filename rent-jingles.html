@@ -180,25 +180,80 @@
   .mood-group .track-list { padding-bottom: 10px; }
   .track-list { text-align: left; }
 
-  .track { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
+  /* ===== UPDATED TRACK LAYOUT FOR PERFECT UNIFORMITY ===== */
+  .track { 
+    display: grid; 
+    grid-template-columns: 1fr auto; 
+    gap: 20px; 
+    align-items: center; 
+    padding: 26px 0; 
+    border-bottom: 1px solid var(--rule); 
+    transition: border-color 0.4s ease; 
+  }
   .track:last-of-type { border-bottom: none; }
   .track:hover { border-bottom-color: var(--gold-soft); }
 
-  .track-info { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .track-info { 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 16px; 
+  }
 
-  .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--gold-soft); min-width: 42px; }
-  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; transition: color 0.3s ease; }
+  .track-numeral { 
+    font-family: 'Cormorant Garamond', Georgia, serif; 
+    font-style: italic; 
+    font-size: 1.3em; 
+    color: var(--gold-soft); 
+    min-width: 50px; /* Fixed width so titles always align */
+    line-height: 1.4;
+  }
+
+  .track-text-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .track-title { 
+    font-family: 'Cormorant Garamond', Georgia, serif; 
+    font-weight: 600; 
+    font-size: 1.5em; 
+    color: var(--offwhite); 
+    letter-spacing: 0.02em; 
+    line-height: 1.3;
+  }
   
-  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; letter-spacing: 0; display: inline-block; margin-left: 2px; }
+  .track-desc { 
+    font-family: 'Playfair Display', Georgia, serif; 
+    font-size: 0.85em; 
+    font-style: italic; 
+    font-weight: 400; 
+    color: #6b655c; 
+    line-height: 1.4;
+  }
 
-  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); width: 100%; padding-left: 58px; margin-top: -8px; }
+  .track-meta { 
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 300; 
+    font-size: 0.75em; 
+    letter-spacing: 0.15em; 
+    text-transform: uppercase; 
+    color: var(--muted); 
+    margin-top: 4px;
+    display: block;
+  }
 
-  .track-actions { display: flex; gap: 12px; align-items: center; }
+  .track-actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 12px; 
+    align-items: center; 
+  }
   
   .action-play { 
     display: inline-flex; justify-content: center; align-items: center;
     background: transparent; border: 1px solid rgba(185,151,92,0.3); 
-    border-radius: 50%; width: 34px; height: 34px; padding-left: 2px;
+    border-radius: 50%; width: 38px; height: 38px; padding-left: 3px;
     font-size: 0.8em; color: var(--gold-soft); cursor: pointer; 
     transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
   }
@@ -215,7 +270,7 @@
   }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
-  .inline-player { display: none; width: 100%; padding: 16px 0 8px 58px; }
+  .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
   .player-progress-wrap { flex-grow: 1; height: 3px; background: rgba(255,255,255,0.08); cursor: pointer; position: relative; border-radius: 2px; }
   .player-progress-bar { height: 100%; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; }
@@ -291,14 +346,18 @@
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
-    .track { grid-template-columns: 1fr auto; gap: 12px; padding: 20px 0; align-items: start; }
-    .track-info { gap: 10px; }
+    
+    /* Mobile adjustments to ensure perfect spacing */
+    .track { gap: 12px; padding: 20px 0; }
+    .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
-    .track-numeral { min-width: 36px; }
-    .track-desc { display: block; width: 100%; margin-top: -4px; }
-    .track-meta { padding-left: 58px; }
-    .inline-player { padding-left: 58px; }
-    .track-actions { flex-direction: column; gap: 10px; padding-top: 4px; }
+    .track-desc { font-size: 0.8em; }
+    .track-meta { font-size: 0.7em; }
+    .track-actions { gap: 8px; }
+    .action-play { width: 34px; height: 34px; font-size: 0.7em; }
+    .action-link { font-size: 0.65em; padding: 7px 14px; }
+    .inline-player { padding: 12px 0 8px 58px; }
+    
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -647,8 +706,11 @@
           return '<div class="track" id="track-' + t.code + '">' +
             '<div class="track-info">' +
               '<span class="track-numeral">' + t.code + '</span>' +
-              '<span class="track-title">' + t.title + ' <span class="track-desc">(' + t.desc + ')</span></span>' +
-              '<span class="track-meta">' + t.duration + '</span>' +
+              '<div class="track-text-container">' +
+                '<span class="track-title">' + t.title + '</span>' +
+                '<span class="track-desc">(' + t.desc + ')</span>' +
+                '<span class="track-meta">' + t.duration + '</span>' +
+              '</div>' +
             '</div>' +
             '<div class="track-actions">' +
               '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
