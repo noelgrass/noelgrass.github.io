@@ -164,6 +164,20 @@
   .licensing-intro .intro-lead { grid-area: leadpara; font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; line-height: 1.85; color: var(--offwhite); margin: 0; display: block; }
   .licensing-intro .intro-lead strong { color: var(--gold-pale); font-weight: 600; }
 
+  .open-notice {
+    display: block;
+    margin-top: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    transition: opacity 0.3s ease;
+  }
+  .licensing-intro[open] .open-notice {
+    display: none;
+  }
+
   .licensing-toggle-icon { grid-area: toggle; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 9px; flex-shrink: 0; position: relative; margin-top: 6px; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
   .licensing-toggle-icon::before { content: ''; display: block; width: 10px; height: 10px; border-right: 1.5px solid var(--gold-soft); border-bottom: 1.5px solid var(--gold-soft); transform: rotate(45deg) translate(-1px, -1px); transition: border-color 0.3s ease; }
   .licensing-toggle-icon::after { content: none; }
@@ -335,6 +349,7 @@
     .licensing-intro .intro-eyebrow { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 14px; }
     .licensing-intro .intro-headline { font-size: 1.25em; margin-bottom: 18px; }
     .licensing-intro .intro-lead { font-size: 1em; }
+    .open-notice { font-size: 0.65em; margin-top: 16px; }
     .licensing-content .divider { margin: 0 0 24px; }
     .licensing-content .mini-heading { font-size: 0.65em; letter-spacing: 0.22em; }
     .licensing-list li, .licensing-steps li { font-size: 1em; }
@@ -450,16 +465,19 @@
         <span class="licensing-toggle-icon" aria-hidden="true"></span>
         <span class="intro-headline">Renting / licensing music isn't buying it. Here's what it actually means.</span>
         <span class="intro-lead">
-          When you rent / license music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>license</strong>. You do not own the music. Noel Grass still owns it. But you receive a signed, legal permission to use the track exactly as agreed. When you complete your download, your license is included with your files. You can <a href="license" style="color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 1px;">check the full licensing terms</a> anytime to review the details of your agreement.
+          When you rent / license music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>license</strong>. You do not own the music. Noel Grass still owns it. But you receive a signed, legal permission to use the track exactly as agreed.
+          <span class="open-notice">↓ Click to open — what's included and what you can do with it</span>
         </span>
       </summary>
 
       <div class="licensing-content">
+        <p style="margin-bottom: 32px;">When you complete your download, your license is included with your files. You can <a href="license" style="color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 1px;">check the full licensing terms</a> anytime to review the details of your agreement.</p>
+
         <span class="divider"></span>
         <span class="mini-heading">What You Receive</span>
         <ul class="licensing-list">
           <li>The high-quality audio file, the <strong>master</strong>, ready to drop into your edit.</li>
-          <li>A written licence stating exactly what you can and cannot do with it.</li>
+          <li>A written license stating exactly what you can and cannot do with it.</li>
           <li>Confirmation of the terms: duration, territory, and permitted uses.</li>
         </ul>
 
@@ -475,20 +493,20 @@
         <ul class="licensing-list">
           <li>Resell the music on its own as a standalone track.</li>
           <li>Claim the composition as your own work.</li>
-          <li>Use it in more projects than your licence covers.</li>
+          <li>Use it in more projects than your license covers.</li>
         </ul>
 
         <span class="divider"></span>
         <span class="mini-heading">How It Works</span>
         <ol class="licensing-steps">
           <li>Browse the catalogue and preview the tracks.</li>
-          <li>Choose the track and confirm the licence terms for your project.</li>
-          <li>Pay, then you receive the master file and the written licence.</li>
+          <li>Choose the track and confirm the license terms for your project.</li>
+          <li>Pay, then you receive the master file and the written license.</li>
           <li>Drop it into your production. Credit Noel Grass where reasonable.</li>
         </ol>
 
-        <p>That's the whole process. If you're unsure what licence fits your project, tell me what you're making and I'll guide you.</p>
-        <a href="license" class="intro-cta">Read the full licence terms →</a>
+        <p>That's the whole process. If you're unsure what license fits your project, tell me what you're making and I'll guide you.</p>
+        <a href="license" class="intro-cta">Read the full license terms →</a>
 
         <div class="commission-link">
           <p>Prefer something made just for your project?</p>
