@@ -180,7 +180,6 @@
   .mood-group .track-list { padding-bottom: 10px; }
   .track-list { text-align: left; }
 
-  /* ===== UPDATED TRACK LAYOUT FOR PERFECT UNIFORMITY ===== */
   .track { 
     display: grid; 
     grid-template-columns: 1fr auto; 
@@ -193,62 +192,14 @@
   .track:last-of-type { border-bottom: none; }
   .track:hover { border-bottom-color: var(--gold-soft); }
 
-  .track-info { 
-    display: flex; 
-    align-items: flex-start; 
-    gap: 16px; 
-  }
+  .track-info { display: flex; align-items: flex-start; gap: 16px; }
+  .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; line-height: 1.4; }
+  .track-text-container { display: flex; flex-direction: column; gap: 4px; }
+  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
+  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; line-height: 1.4; }
+  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
 
-  .track-numeral { 
-    font-family: 'Cormorant Garamond', Georgia, serif; 
-    font-style: italic; 
-    font-size: 1.3em; 
-    color: var(--gold-soft); 
-    min-width: 50px; /* Fixed width so titles always align */
-    line-height: 1.4;
-  }
-
-  .track-text-container {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-
-  .track-title { 
-    font-family: 'Cormorant Garamond', Georgia, serif; 
-    font-weight: 600; 
-    font-size: 1.5em; 
-    color: var(--offwhite); 
-    letter-spacing: 0.02em; 
-    line-height: 1.3;
-  }
-  
-  .track-desc { 
-    font-family: 'Playfair Display', Georgia, serif; 
-    font-size: 0.85em; 
-    font-style: italic; 
-    font-weight: 400; 
-    color: #6b655c; 
-    line-height: 1.4;
-  }
-
-  .track-meta { 
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 300; 
-    font-size: 0.75em; 
-    letter-spacing: 0.15em; 
-    text-transform: uppercase; 
-    color: var(--muted); 
-    margin-top: 4px;
-    display: block;
-  }
-
-  .track-actions { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; 
-    align-items: center; 
-  }
+  .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
   
   .action-play { 
     display: inline-flex; justify-content: center; align-items: center;
@@ -270,10 +221,38 @@
   }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
+  /* ===== UPDATED PROGRESS BAR (DRAG-FRIENDLY) ===== */
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
-  .player-progress-wrap { flex-grow: 1; height: 3px; background: rgba(255,255,255,0.08); cursor: pointer; position: relative; border-radius: 2px; }
-  .player-progress-bar { height: 100%; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; }
+
+  .player-progress-wrap { 
+    flex-grow: 1; 
+    height: 16px; 
+    display: flex;
+    align-items: center;
+    cursor: pointer; 
+    position: relative; 
+    touch-action: none;
+  }
+  .player-progress-wrap::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    pointer-events: none;
+  }
+  .player-progress-bar { 
+    height: 3px; 
+    width: 0%; 
+    background: var(--gold-soft); 
+    border-radius: 2px; 
+    pointer-events: none; 
+    position: relative; 
+    z-index: 1; 
+  }
   .player-progress-bar::after { content: ''; position: absolute; right: -4px; top: -3px; width: 9px; height: 9px; background: var(--gold-pale); border-radius: 50%; opacity: 0; transition: opacity 0.2s ease; }
   .player-progress-wrap:hover .player-progress-bar::after { opacity: 1; }
   .player-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
@@ -347,7 +326,6 @@
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
     
-    /* Mobile adjustments to ensure perfect spacing */
     .track { gap: 12px; padding: 20px 0; }
     .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
@@ -694,7 +672,6 @@
     ];
 
     var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
-    // CHANGED TO &v=final5 TO FORCE THE BROWSER TO DOWNLOAD THE NEW LONG FILES
     function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -782,6 +759,64 @@
           player.classList.remove('active');
         }
         currentTrackId = null;
+      });
+
+      // ==========================================
+      // DRAG & SEEK LOGIC FOR PROGRESS BAR
+      // ==========================================
+      var isDragging = false;
+      var activeProgressWrap = null;
+
+      function seekToEvent(e, wrap) {
+        if (!audio.duration) return;
+        var rect = wrap.getBoundingClientRect();
+        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clickX = clientX - rect.left;
+        var pct = Math.max(0, Math.min(1, clickX / rect.width));
+        audio.currentTime = pct * audio.duration;
+        var bar = wrap.querySelector('.player-progress-bar');
+        if (bar) bar.style.width = (pct * 100) + '%';
+      }
+
+      document.addEventListener('mousedown', function(e) {
+        var wrap = e.target.closest('.player-progress-wrap');
+        if (wrap) {
+          isDragging = true;
+          activeProgressWrap = wrap;
+          seekToEvent(e, wrap);
+          e.preventDefault();
+        }
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (isDragging && activeProgressWrap) {
+          seekToEvent(e, activeProgressWrap);
+        }
+      });
+
+      document.addEventListener('mouseup', function() {
+        isDragging = false;
+        activeProgressWrap = null;
+      });
+
+      document.addEventListener('touchstart', function(e) {
+        var wrap = e.target.closest('.player-progress-wrap');
+        if (wrap) {
+          isDragging = true;
+          activeProgressWrap = wrap;
+          seekToEvent(e, wrap);
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function(e) {
+        if (isDragging && activeProgressWrap) {
+          seekToEvent(e, activeProgressWrap);
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchend', function() {
+        isDragging = false;
+        activeProgressWrap = null;
       });
     }
 
