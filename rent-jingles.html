@@ -664,7 +664,7 @@
   })();
 
   // ---------- APP LOGIC ----------
-  (function () {
+  document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
     var TRACKS = [
@@ -691,7 +691,9 @@
     ];
 
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
-    function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; }
+    function buildPreviewUrl(t) { 
+      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; 
+    }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
     function renderTracks() {
@@ -762,7 +764,7 @@
         stopCurrentTrack();
         currentTrackId = code;
         audio.src = url;
-        audio.play().catch(function() {});
+        audio.play().catch(function(err) { console.error("Playback failed:", err); });
         var player = document.getElementById('player-' + code);
         if (player) player.classList.add('active');
       } else {
@@ -857,7 +859,7 @@
       });
     }
 
-    var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
     var modal      = document.getElementById('checkoutModal');
     var modalTitle = document.getElementById('checkoutTitle');
@@ -1000,7 +1002,7 @@
     });
 
     if (window.location.hash) window.scrollTo(0, 0);
-  })();
+  });
 </script>
 
 </body>
