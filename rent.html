@@ -250,22 +250,21 @@
   .commission-link a { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
   .commission-link a:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
 
-  .anchors { display: flex; justify-content: center; align-items: center; gap: 24px; margin-bottom: 40px; }
-  .anchors a { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.4em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); position: relative; padding-bottom: 4px; transition: color 0.4s ease, text-shadow 0.4s ease; }
-  .anchors a::after { content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
-  .anchors a:hover { color: #FCFCF7; text-shadow: 0 0 20px rgba(197, 168, 128, 0.55), 0 0 45px rgba(197, 168, 128, 0.25); }
-  .anchors a:hover::after { width: 100%; }
-  .anchors .diamond { display: inline-block; width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); opacity: 0.9; }
-
-  .license-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; margin-bottom: 90px; transition: transform 0.3s ease, border-color 0.3s ease; }
-  .license-link:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
-
   .section { text-align: left; margin-bottom: 90px; scroll-margin-top: 120px; }
   .section-heading { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.6em; color: var(--offwhite); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gold-soft); }
   .section-poetic { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); margin-bottom: 10px; }
   .section-pricing { font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 50px; }
 
-  /* ===== UPDATED TRACK LAYOUT ===== */
+  /* Hub Category Styles */
+  .hub-category { margin-bottom: 50px; }
+  .hub-category-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 10px; }
+  .hub-category-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.3em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--offwhite); }
+  .hub-category-count { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+
+  .view-all { display: inline-block; margin-top: 10px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.05em; color: var(--gold-pale); border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; transition: transform 0.3s ease, border-color 0.3s ease; }
+  .view-all:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
+
+  /* ===== UNIFORM TRACK LAYOUT ===== */
   .track { 
     display: grid; 
     grid-template-columns: 1fr auto; 
@@ -325,7 +324,7 @@
   .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
   .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
 
-  /* Modals & Checkout */
+  /* Modals */
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -379,12 +378,12 @@
     .licensing-toggle-icon::before { width: 8px; height: 8px; }
     .commission-link { margin-top: 28px; padding-top: 22px; }
     .commission-link p { font-size: 0.98em; }
-    .anchors { gap: 16px; margin-bottom: 30px; }
-    .anchors a { font-size: 1.1em; letter-spacing: 0.22em; }
     .section-heading { font-size: 1.3em; letter-spacing: 0.2em; }
     .section-poetic { font-size: 1em; }
     
-    /* Mobile Track adjustments */
+    .hub-category-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .hub-category-title { font-size: 1.15em; }
+    
     .track { gap: 12px; padding: 20px 0; }
     .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
@@ -483,8 +482,8 @@
       <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
       <p class="section-pricing">From Ksh 5,000</p>
 
-      <div class="track-list" id="hubTrackList">
-        <!-- JS will inject the 2 tracks here -->
+      <div id="hubTrackList">
+        <!-- JS will inject the category groups and tracks here -->
       </div>
 
       <a href="rent-jingles" class="view-all">View all jingles →</a>
@@ -683,10 +682,20 @@
   (function () {
     "use strict";
 
-    // The first 2 tracks from the Jingles page
-    var TRACKS = [
-      { cat: "jingles", code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Anthem · 0:59", file: "AC01.mp3", folder: "ac", amount: "500000" },
-      { cat: "jingles", code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral", duration: "African · 0:32", file: "AF01.mp3", folder: "af", amount: "500000" }
+    // Group definitions and their first track
+    var HUB_DATA = [
+      {
+        cat: "anthems",
+        label: "Anthems & Campaigns",
+        count: "1 track",
+        track: { code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Anthem · 0:59", file: "AC01.mp3", folder: "ac", amount: "500000" }
+      },
+      {
+        cat: "african",
+        label: "African & Cultural",
+        count: "8 tracks",
+        track: { code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral", duration: "African · 0:32", file: "AF01.mp3", folder: "af", amount: "500000" }
+      }
     ];
 
     var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
@@ -697,25 +706,36 @@
       var list = document.getElementById('hubTrackList');
       if (!list) return;
 
-      list.innerHTML = TRACKS.map(function (t) {
+      list.innerHTML = HUB_DATA.map(function (group) {
+        var t = group.track;
         var url = buildPreviewUrl(t);
-        return '<div class="track" id="track-' + t.code + '">' +
-          '<div class="track-info">' +
-            '<span class="track-numeral">' + t.code + '</span>' +
-            '<div class="track-text-container">' +
-              '<span class="track-title">' + t.title + '</span>' +
-              '<span class="track-desc">(' + t.desc + ')</span>' +
-              '<span class="track-meta">' + t.duration + '</span>' +
+        
+        var trackHtml = 
+          '<div class="track" id="track-' + t.code + '">' +
+            '<div class="track-info">' +
+              '<span class="track-numeral">' + t.code + '</span>' +
+              '<div class="track-text-container">' +
+                '<span class="track-title">' + t.title + '</span>' +
+                '<span class="track-desc">(' + t.desc + ')</span>' +
+                '<span class="track-meta">' + t.duration + '</span>' +
+              '</div>' +
             '</div>' +
+            '<div class="track-actions">' +
+              '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
+              '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+            '</div>' +
+            '<div class="inline-player" id="player-' + t.code + '">' +
+              '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
+              '<div class="player-time">0:00</div>' +
+            '</div>' +
+          '</div>';
+
+        return '<div class="hub-category">' +
+          '<div class="hub-category-header">' +
+            '<span class="hub-category-title">' + group.label + '</span>' +
+            '<span class="hub-category-count">' + group.count + '</span>' +
           '</div>' +
-          '<div class="track-actions">' +
-            '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
-            '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
-          '</div>' +
-          '<div class="inline-player" id="player-' + t.code + '">' +
-            '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
-            '<div class="player-time">0:00</div>' +
-          '</div>' +
+          trackHtml +
         '</div>';
       }).join('');
     }
