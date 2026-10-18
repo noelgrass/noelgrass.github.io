@@ -135,8 +135,7 @@
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.6em; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.15em; color: var(--offwhite); margin-bottom: 14px; max-width: 780px; margin-left: auto; margin-right: auto; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
   .hero-line { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
-  
-  /* NEW TOP LINK */
+
   .hero-top-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); margin-bottom: 80px; display: inline-block; animation: fadeUp 1s ease-out both; animation-delay: 0.6s; transition: color 0.3s ease; }
   .hero-top-link:hover { color: var(--gold-pale); }
 
@@ -366,7 +365,6 @@
     <p class="hero-subhead">Music, tickets, merchandise, and digital products.</p>
     <p class="hero-line">Digital &amp; physical &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Secure checkout</p>
     
-    <!-- TOP LINK -->
     <a href="#already-purchased" class="hero-top-link" id="heroTopLink">Already purchased? Retrieve your download →</a>
 
     <div class="section-divider"><span>Music</span></div>
@@ -374,179 +372,45 @@
 
     <div class="mood-groups">
 
-      <details class="mood-group">
+      <!-- LATEST RELEASE — rendered from STORE_ITEMS.featured -->
+      <details class="mood-group" open>
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
-          <span class="mood-count">E.P.</span>
+          <span class="mood-count" data-featured-badge>—</span>
         </summary>
-        <div class="feature-release">
-          <div class="feature-cover">
-            <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — EP by Noel Grass" loading="lazy">
-            <span class="feature-badge">EP</span>
-          </div>
-          <p class="feature-title">Into A Stillness That Answers</p>
-          <div class="feature-actions">
-            <button type="button" class="action-link js-preview" data-video="T6jDLG2Acbk" aria-label="Preview Into A Stillness That Answers">Preview</button>
-            <button type="button" class="action-link js-buy" data-id="into-a-stillness" data-title="Into A Stillness That Answers" data-amount="50000" data-currency="KES" aria-label="Buy Into A Stillness That Answers">Buy</button>
-          </div>
-        </div>
+        <div class="feature-release" id="featuredRelease"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
-          <span class="mood-count">4 releases</span>
+          <span class="mood-count" data-count>0 releases</span>
         </summary>
-        <div class="store-gallery">
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/into-a-stillness.jpg" alt="Into A Stillness That Answers — solo piano EP by Noel Grass" loading="lazy">
-              <span class="badge">EP</span>
-            </div>
-            <div class="caption">Into A Stillness That Answers</div>
-            <div class="format-label">Solo Piano</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="T6jDLG2Acbk" aria-label="Preview Into A Stillness That Answers">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="into-a-stillness" data-title="Into A Stillness That Answers" data-amount="50000" data-currency="KES" aria-label="Buy Into A Stillness That Answers">Buy</button>
-            </div>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/where-i-begin-again.jpg" alt="Where I Begin Again — solo piano EP by Noel Grass" loading="lazy">
-              <span class="badge">EP</span>
-            </div>
-            <div class="caption">Where I Begin Again</div>
-            <div class="format-label">Solo Piano</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="dgQjOQKJwnw" aria-label="Preview Where I Begin Again">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="where-i-begin-again" data-title="Where I Begin Again" data-amount="50000" data-currency="KES" aria-label="Buy Where I Begin Again">Buy</button>
-            </div>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/the-impressionist.jpg" alt="The Impressionist — solo piano album by Noel Grass" loading="lazy">
-              <span class="badge">Album</span>
-            </div>
-            <div class="caption">The Impressionist</div>
-            <div class="format-label">Solo Piano</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="hQsG4VxJSws" aria-label="Preview The Impressionist">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="the-impressionist" data-title="The Impressionist" data-amount="90000" data-currency="KES" aria-label="Buy The Impressionist">Buy</button>
-            </div>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/the-impressionist-2.jpg" alt="The Impressionist II — solo piano album by Noel Grass" loading="lazy">
-              <span class="badge">Album</span>
-            </div>
-            <div class="caption">The Impressionist II</div>
-            <div class="format-label">Solo Piano</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="f9vpu1eTEYE" aria-label="Preview The Impressionist II">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="the-impressionist-2" data-title="The Impressionist II" data-amount="90000" data-currency="KES" aria-label="Buy The Impressionist II">Buy</button>
-            </div>
-          </div>
-
-        </div>
+        <div class="store-gallery" data-category="solo-piano"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-          <span class="mood-count">2 releases</span>
+          <span class="mood-count" data-count>0 releases</span>
         </summary>
-        <div class="store-gallery">
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/introspect.jpg" alt="Introspect — orchestral EP by Noel Grass" loading="lazy">
-              <span class="badge">EP</span>
-            </div>
-            <div class="caption">Introspect</div>
-            <div class="format-label">Orchestral</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="N6GS8OGD2GY" aria-label="Preview Introspect">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="introspect" data-title="Introspect" data-amount="50000" data-currency="KES" aria-label="Buy Introspect">Buy</button>
-            </div>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/seven-deadly-sins.jpg" alt="Seven Deadly Sins — orchestral album by Noel Grass" loading="lazy">
-              <span class="badge">Album</span>
-            </div>
-            <div class="caption">Seven Deadly Sins</div>
-            <div class="format-label">Orchestral</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="Ksw5e9IyGzs" aria-label="Preview Seven Deadly Sins">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="seven-deadly-sins" data-title="Seven Deadly Sins" data-amount="90000" data-currency="KES" aria-label="Buy Seven Deadly Sins">Buy</button>
-            </div>
-          </div>
-
-        </div>
+        <div class="store-gallery" data-category="orchestral"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
-          <span class="mood-count">2 releases</span>
+          <span class="mood-count" data-count>0 releases</span>
         </summary>
-        <div class="store-gallery">
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/agent-254.jpg" alt="Agent 254 — experimental EP by Noel Grass" loading="lazy">
-              <span class="badge">EP</span>
-            </div>
-            <div class="caption">Agent 254</div>
-            <div class="format-label">Experimental</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="z-LEJuI9u6A" aria-label="Preview Agent 254">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="agent-254" data-title="Agent 254" data-amount="50000" data-currency="KES" aria-label="Buy Agent 254">Buy</button>
-            </div>
-          </div>
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/the-impressionist-3.jpg" alt="The Impressionist III — experimental album by Noel Grass" loading="lazy">
-              <span class="badge">Album</span>
-            </div>
-            <div class="caption">The Impressionist III</div>
-            <div class="format-label">Experimental</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="iLW3pvDHahI" aria-label="Preview The Impressionist III">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="the-impressionist-3" data-title="The Impressionist III" data-amount="90000" data-currency="KES" aria-label="Buy The Impressionist III">Buy</button>
-            </div>
-          </div>
-
-        </div>
+        <div class="store-gallery" data-category="experimental"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-          <span class="mood-count">1 release</span>
+          <span class="mood-count" data-count>0 releases</span>
         </summary>
-        <div class="store-gallery">
-
-          <div class="store-item">
-            <div class="poster">
-              <img src="images/discography/when-stars-align.jpg" alt="When Stars Align — ambient single by Noel Grass" loading="lazy">
-              <span class="badge">Single</span>
-            </div>
-            <div class="caption">When Stars Align</div>
-            <div class="format-label">Ambient</div>
-            <div class="item-actions">
-              <button type="button" class="action-link js-preview" data-video="zNHjyFSfxuc" aria-label="Preview When Stars Align">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="when-stars-align" data-title="When Stars Align" data-amount="20000" data-currency="KES" aria-label="Buy When Stars Align">Buy</button>
-            </div>
-          </div>
-
-        </div>
+        <div class="store-gallery" data-category="ambient"></div>
       </details>
 
     </div>
@@ -593,7 +457,6 @@
       </details>
     </div>
 
-    <!-- RECOVERY BOX -->
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
@@ -648,9 +511,7 @@
     <div class="success-mark" aria-hidden="true">✓</div>
     <span class="success-label">Confirmed</span>
     <p class="success-title">Payment received</p>
-    <p class="success-body">
-      Thank you! Your download is ready.
-    </p>
+    <p class="success-body">Thank you! Your download is ready.</p>
     
     <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
@@ -658,14 +519,12 @@
 
     <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
       <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 16px;">Save your receipt:</p>
-      
       <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px; line-height: 1.5;">
         Your transaction reference is:
       </p>
       <div style="margin-bottom: 20px;">
         <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.3em; display: inline-block; background: rgba(197,168,128,0.1); padding: 8px 12px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
       </div>
-
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         <strong>Want to download this again later?</strong><br>
         <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
@@ -677,6 +536,9 @@
   </div>
 </div>
 
+<!-- ============================================================
+     SCRIPT 1: MENU + ACCORDION + VIDEO (unchanged behavior)
+     ============================================================ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -754,19 +616,27 @@
     var closeBtn = document.getElementById('videoClose');
     function openModal(videoId) { frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0'; modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
     function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); frame.src = ''; document.body.classList.remove('no-scroll'); }
-    document.querySelectorAll('.js-preview').forEach(function(btn) {
-      btn.addEventListener('click', function(e) { e.preventDefault(); var id = btn.getAttribute('data-video'); if (id) openModal(id); });
-    });
+    // Note: .js-preview listeners are attached in the render script below,
+    // because cards are dynamically created AFTER this script runs.
     closeBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeModal(); } });
-  })();
 
+    // Expose for the render script
+    window.openVideoModal = openModal;
+  })();
+</script>
+
+<!-- ============================================================
+     SCRIPT 2: CHECKOUT + RECOVERY (your existing logic, with
+     globals exposed so the render script can use them)
+     ============================================================ -->
+<script>
   (function () {
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
-    var SALES_PAUSED = false; // Change to true to disable all Buy buttons
+    var SALES_PAUSED = false;
+    window.SALES_PAUSED = SALES_PAUSED;
 
-    // Update the top link if sales are paused
     if (SALES_PAUSED) {
       var topLink = document.getElementById('heroTopLink');
       if (topLink) {
@@ -823,6 +693,9 @@
       setTimeout(function () { emailInput.focus(); if (saved) emailInput.select(); }, 120);
     }
 
+    // Expose so dynamically-rendered Buy buttons can call it
+    window.openCheckout = openCheckout;
+
     function closeCheckout() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
@@ -860,8 +733,6 @@
         },
         callback: function (response) { 
           showSuccess();
-          
-          // Format the reference with dashes
           var ref = response.reference;
           var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           successRefEl.textContent = formattedRef;
@@ -897,22 +768,6 @@
       handler.openIframe();
     }
 
-    document.querySelectorAll('.js-buy').forEach(function (btn) {
-      if (SALES_PAUSED) {
-        btn.disabled = true;
-        btn.setAttribute('aria-disabled', 'true');
-        btn.style.pointerEvents = 'none';
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
-        btn.style.background = '#1a1a1a';
-        btn.style.color = '#555';
-        btn.style.borderColor = '#333';
-        btn.innerText = "Paused";
-        return;
-      }
-      btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
-    });
-
     submitBtn.addEventListener('click', proceedToPaystack);
     emailInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); proceedToPaystack(); } });
     emailInput.addEventListener('input', clearError);
@@ -921,20 +776,15 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
 
-    // Recovery Box Logic
+    // Recovery Box
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
 
-    // Auto-format input with dashes
     recInput.addEventListener('input', function(e) {
       var val = this.value.replace(/-/g, '');
       var newVal = val.match(/.{1,4}/g);
-      if (newVal) {
-        this.value = newVal.join('-');
-      } else {
-        this.value = val;
-      }
+      if (newVal) { this.value = newVal.join('-'); } else { this.value = val; }
     });
 
     recBtn.addEventListener('click', function() {
@@ -953,12 +803,8 @@
       })
       .then(res => res.json())
       .then(data => {
-        if (data.success) {
-          window.location.href = data.downloadUrl;
-        } else {
-          recError.innerText = "Invalid reference or payment incomplete.";
-          recError.style.display = "block";
-        }
+        if (data.success) { window.location.href = data.downloadUrl; }
+        else { recError.innerText = "Invalid reference or payment incomplete."; recError.style.display = "block"; }
       })
       .catch(err => {
         recError.innerText = "Network error. Please try again.";
@@ -968,6 +814,138 @@
         recBtn.innerText = "Generate Fresh Link";
         recBtn.style.opacity = "1";
         recBtn.disabled = false;
+      });
+    });
+  })();
+</script>
+
+<!-- ============================================================
+     SCRIPT 3: STORE DATA + AUTO-RENDER
+     
+     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD NEW ITEMS.
+     Add ONE line to any category array and everything else
+     (card, buttons, count) updates automatically.
+     
+     To move a category's items between groups, just move the line.
+     To add a new release, add one line. Done.
+     ============================================================ -->
+<script>
+  var STORE_ITEMS = {
+    featured: {
+      img: "images/discography/into-a-stillness.jpg",
+      alt: "Into A Stillness That Answers — EP by Noel Grass",
+      title: "Into A Stillness That Answers",
+      badge: "EP",
+      video: "T6jDLG2Acbk",
+      id: "into-a-stillness",
+      amount: 50000,
+      currency: "KES"
+    },
+
+    "solo-piano": [
+      { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    video: "T6jDLG2Acbk", id: "into-a-stillness",    amount: 50000, currency: "KES" },
+      { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    video: "dgQjOQKJwnw", id: "where-i-begin-again", amount: 50000, currency: "KES" },
+      { img: "images/discography/the-impressionist.jpg",   alt: "The Impressionist",             title: "The Impressionist",             format: "Solo Piano",   badge: "Album", video: "hQsG4VxJSws", id: "the-impressionist",   amount: 90000, currency: "KES" },
+      { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", video: "f9vpu1eTEYE", id: "the-impressionist-2", amount: 90000, currency: "KES" }
+    ],
+
+    "orchestral": [
+      { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY", id: "introspect",        amount: 50000, currency: "KES" },
+      { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", video: "Ksw5e9IyGzs", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
+    ],
+
+    "experimental": [
+      { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A", id: "agent-254",           amount: 50000, currency: "KES" },
+      { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", video: "iLW3pvDHahI", id: "the-impressionist-3", amount: 90000, currency: "KES" }
+    ],
+
+    "ambient": [
+      { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", video: "zNHjyFSfxuc", id: "when-stars-align", amount: 20000, currency: "KES" }
+    ]
+  };
+
+  (function renderStore() {
+    // ---- 1. Render the featured / latest release block ----
+    var feat = STORE_ITEMS.featured;
+    var featMount = document.getElementById('featuredRelease');
+    var featBadge = document.querySelector('[data-featured-badge]');
+    if (feat && featMount) {
+      featMount.innerHTML =
+        '<div class="feature-cover">' +
+          '<img src="' + feat.img + '" alt="' + feat.alt + '" loading="lazy">' +
+          '<span class="feature-badge">' + feat.badge + '</span>' +
+        '</div>' +
+        '<p class="feature-title">' + feat.title + '</p>' +
+        '<div class="feature-actions">' +
+          '<button type="button" class="action-link js-preview" data-video="' + feat.video + '" aria-label="Preview ' + feat.title + '">Preview</button>' +
+          '<button type="button" class="action-link js-buy" ' +
+            'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
+            'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '" ' +
+            'aria-label="Buy ' + feat.title + '">Buy</button>' +
+        '</div>';
+      if (featBadge) featBadge.textContent = feat.badge;
+    }
+
+    // ---- 2. Render each category gallery + auto-count ----
+    Object.keys(STORE_ITEMS).forEach(function(category) {
+      if (category === 'featured') return;
+      var gallery = document.querySelector('.store-gallery[data-category="' + category + '"]');
+      if (!gallery) return;
+      var items = STORE_ITEMS[category] || [];
+
+      gallery.innerHTML = items.map(function(item) {
+        return (
+          '<div class="store-item">' +
+            '<div class="poster">' +
+              '<img src="' + item.img + '" alt="' + item.alt + '" loading="lazy">' +
+              '<span class="badge">' + item.badge + '</span>' +
+            '</div>' +
+            '<div class="caption">' + item.title + '</div>' +
+            '<div class="format-label">' + item.format + '</div>' +
+            '<div class="item-actions">' +
+              '<button type="button" class="action-link js-preview" data-video="' + item.video + '" aria-label="Preview ' + item.title + '">Preview</button>' +
+              '<button type="button" class="action-link js-buy" ' +
+                'data-id="' + item.id + '" data-title="' + item.title + '" ' +
+                'data-amount="' + item.amount + '" data-currency="' + item.currency + '" ' +
+                'aria-label="Buy ' + item.title + '">Buy</button>' +
+            '</div>' +
+          '</div>'
+        );
+      }).join('');
+
+      // Auto-update the "X releases" counter
+      var countEl = gallery.closest('.mood-group').querySelector('[data-count]');
+      if (countEl) {
+        var n = items.length;
+        countEl.textContent = n + (n === 1 ? ' release' : ' releases');
+      }
+    });
+
+    // ---- 3. Wire up dynamic buttons ----
+    document.querySelectorAll('.js-preview').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var id = btn.getAttribute('data-video');
+        if (id && window.openVideoModal) window.openVideoModal(id);
+      });
+    });
+
+    document.querySelectorAll('.js-buy').forEach(function(btn) {
+      if (window.SALES_PAUSED) {
+        btn.disabled = true;
+        btn.setAttribute('aria-disabled', 'true');
+        btn.style.pointerEvents = 'none';
+        btn.style.opacity = '0.5';
+        btn.style.cursor = 'not-allowed';
+        btn.style.background = '#1a1a1a';
+        btn.style.color = '#555';
+        btn.style.borderColor = '#333';
+        btn.innerText = "Paused";
+        return;
+      }
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (window.openCheckout) window.openCheckout(btn);
       });
     });
   })();
