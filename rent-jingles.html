@@ -197,7 +197,6 @@
   .track-text-container { display: flex; flex-direction: column; gap: 4px; }
   .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
   
-  /* ===== UPDATED: CLEAN & MODERN DESCRIPTION ===== */
   .track-desc { 
     font-family: 'Montserrat', sans-serif; 
     font-size: 0.68em; 
@@ -209,7 +208,6 @@
     line-height: 1.4; 
   }
   
-  /* ===== UPDATED: SLIGHTLY THICKER META ===== */
   .track-meta { 
     font-family: 'Montserrat', sans-serif; 
     font-weight: 400; 
@@ -243,7 +241,6 @@
   }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
-  /* ===== UPDATED PROGRESS BAR (DRAG-FRIENDLY) ===== */
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
 
@@ -693,7 +690,7 @@
       { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
     ];
 
-    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
+    var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -935,7 +932,7 @@
             successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
             downloadBtn.innerText = "Generating link...";
             downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
-            fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
+            fetch("https://rent-jingles.noelgrass.workers.dev/verify", {
               method: "POST", headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ reference: response.reference })
             }).then(function (r) { return r.json(); }).then(function (data) {
@@ -973,7 +970,7 @@
       var ref = recInput.value.trim();
       if (!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
       recBtn.innerText = "Verifying..."; recBtn.disabled = true; recError.style.display = "none";
-      fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
+      fetch("https://rent-jingles.noelgrass.workers.dev/verify", {
         method: "POST", headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ reference: ref })
       }).then(function (r) { return r.json(); }).then(function (data) {
