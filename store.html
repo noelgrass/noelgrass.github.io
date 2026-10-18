@@ -39,6 +39,12 @@
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     🎬 YOUTUBE IFRAME API — enables autoplay with sound on Preview
+     Do not remove. Required for the video modal to auto-play.
+     ═══════════════════════════════════════════════════════════════ -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
 <style>
   :root {
     --bg: #000000;
@@ -192,6 +198,22 @@
   .video-modal-inner { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16 / 9; border: 1px solid var(--gold-soft); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
   .video-modal.open .video-modal-inner { transform: scale(1); }
   .video-modal-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* YouTube IFrame API mount — same footprint as the old iframe */
+  #playerMount {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  #playerMount iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
   .video-close { position: absolute; top: -46px; right: 0; background: transparent; border: 0; color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; padding: 6px 2px; transition: color 0.3s ease, text-shadow 0.4s ease; }
   .video-close:hover { color: #FCFCF7; text-shadow: 0 0 14px rgba(197,168,128,0.5); }
 
@@ -314,11 +336,7 @@
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
-    <span class="hamburger" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-    </span>
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
     <span>Menu</span>
   </button>
 </header>
@@ -347,7 +365,7 @@
       </div>
       <div class="menu-column">
         <span class="menu-section">Elsewhere</span>
-        <ul class="menu-links">             
+        <ul class="menu-links">
           <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
           <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
           <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
@@ -364,7 +382,7 @@
     <h1>Store</h1>
     <p class="hero-subhead">Music, tickets, merchandise, and digital products.</p>
     <p class="hero-line">Digital &amp; physical &nbsp;·&nbsp; Worldwide &nbsp;·&nbsp; Secure checkout</p>
-    
+
     <a href="#already-purchased" class="hero-top-link" id="heroTopLink">Already purchased? Retrieve your download →</a>
 
     <div class="section-divider"><span>Music</span></div>
@@ -372,7 +390,11 @@
 
     <div class="mood-groups">
 
-      <!-- LATEST RELEASE — rendered from STORE_ITEMS.featured -->
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 LATEST RELEASE — rendered from STORE_ITEMS.featured
+           📁 Image lives in: images/discography/
+           ➕ To update it, edit STORE_ITEMS.featured (bottom of file)
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group" open>
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
@@ -381,6 +403,12 @@
         <div class="feature-release" id="featuredRelease"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 SOLO PIANO — rendered from STORE_ITEMS["solo-piano"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit STORE_ITEMS["solo-piano"] below.
+              The count, Preview, and Buy buttons update automatically.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
@@ -389,6 +417,11 @@
         <div class="store-gallery" data-category="solo-piano"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 ORCHESTRAL — rendered from STORE_ITEMS["orchestral"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit STORE_ITEMS["orchestral"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
@@ -397,6 +430,11 @@
         <div class="store-gallery" data-category="orchestral"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 EXPERIMENTAL — rendered from STORE_ITEMS["experimental"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit STORE_ITEMS["experimental"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
@@ -405,6 +443,11 @@
         <div class="store-gallery" data-category="experimental"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 AMBIENT — rendered from STORE_ITEMS["ambient"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit STORE_ITEMS["ambient"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
@@ -457,6 +500,11 @@
       </details>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         🔑 RECOVERY BOX — for returning customers
+         Target of the top "Already purchased?" link (id="already-purchased")
+         Server: my-store-backend.noelgrass.workers.dev/verify
+         ═══════════════════════════════════════════════════════════ -->
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
@@ -471,6 +519,9 @@
       <p class="secondary-line">For press, bookings, or commissions, see the <a href="contact">Contact page →</a></p>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
+         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -485,9 +536,13 @@
 </div>
 
 <div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video preview">
-  <div class="video-modal-inner">
+  <div class="video-modal-inner" id="videoModalInner">
     <button type="button" class="video-close" id="videoClose">Close ✕</button>
-    <iframe id="videoFrame" src="" title="YouTube video preview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <!-- ═══════════════════════════════════════════════════════════
+         ⚙️ MEDIA MOUNT — YouTube API player OR fallback iframe
+         Do not modify this element's id/structure.
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="playerMount"></div>
   </div>
 </div>
 
@@ -512,7 +567,7 @@
     <span class="success-label">Confirmed</span>
     <p class="success-title">Payment received</p>
     <p class="success-body">Thank you! Your download is ready.</p>
-    
+
     <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
@@ -536,25 +591,28 @@
   </div>
 </div>
 
-<!-- ============================================================
-     SCRIPT 1: MENU + ACCORDION + VIDEO (unchanged behavior)
-     ============================================================ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     🧭 SCRIPT 1 — MENU + ACCORDION + MEDIA MODAL (YT API + iframe)
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
     var backdrop = document.getElementById('menuBackdrop');
+
     function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
     function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
     function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
     function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
     function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
+
     toggle.addEventListener('click', function (e) { e.stopPropagation(); if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); } });
     closeBtn.addEventListener('click', closeMenu);
     backdrop.addEventListener('click', closeMenu);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
     panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -580,6 +638,7 @@
       });
     }
     if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
+
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
@@ -610,29 +669,127 @@
     });
   })();
 
-  (function() {
-    var modal    = document.getElementById('videoModal');
-    var frame    = document.getElementById('videoFrame');
-    var closeBtn = document.getElementById('videoClose');
-    function openModal(videoId) { frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0'; modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
-    function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); frame.src = ''; document.body.classList.remove('no-scroll'); }
-    // Note: .js-preview listeners are attached in the render script below,
-    // because cards are dynamically created AFTER this script runs.
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', function(e) { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeModal(); } });
+  /* ═══════════════════════════════════════════════════════════════
+     🎬 MEDIA MODAL — BULLETPROOF YOUTUBE AUTOPLAY
 
-    // Expose for the render script
-    window.openVideoModal = openModal;
+     Tries the YouTube IFrame API for real autoplay-with-sound.
+     Falls back to a plain iframe if the API fails or loads slowly.
+
+     Exposed as window.openVideoModal — used by the render script.
+     ═══════════════════════════════════════════════════════════════ */
+  (function() {
+    var modal       = document.getElementById('videoModal');
+    var playerMount = document.getElementById('playerMount');
+    var closeBtn    = document.getElementById('videoClose');
+
+    var ytPlayer = null;
+    var pendingVideoId = null;
+    var apiFallbackTimer = null;
+
+    function destroyYouTube() {
+      if (apiFallbackTimer) { clearTimeout(apiFallbackTimer); apiFallbackTimer = null; }
+      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+        try { ytPlayer.destroy(); } catch (e) {}
+      }
+      ytPlayer = null;
+    }
+
+    function mountPlainYouTubeIframe(videoId) {
+      destroyYouTube();
+      playerMount.innerHTML = '';
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1';
+      iframe.setAttribute('title', 'YouTube video preview');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+      iframe.setAttribute('allowfullscreen', '');
+      playerMount.appendChild(iframe);
+    }
+
+    function mountYouTube(videoId) {
+      destroyYouTube();
+      playerMount.innerHTML = '';
+
+      if (typeof YT === 'undefined' || typeof YT.Player !== 'function') {
+        pendingVideoId = videoId;
+        apiFallbackTimer = setTimeout(function() {
+          if (typeof YT === 'undefined' || typeof YT.Player !== 'function') {
+            pendingVideoId = null;
+            mountPlainYouTubeIframe(videoId);
+          }
+        }, 1200);
+        return;
+      }
+
+      try {
+        ytPlayer = new YT.Player('playerMount', {
+          videoId: videoId,
+          playerVars: { autoplay: 1, rel: 0, playsinline: 1, modestbranding: 1 },
+          events: {
+            onReady: function(event) {
+              try { event.target.playVideo(); } catch (e) {}
+            }
+          }
+        });
+
+        apiFallbackTimer = setTimeout(function() {
+          var hasIframe = playerMount.querySelector('iframe');
+          if (!hasIframe) mountPlainYouTubeIframe(videoId);
+        }, 1200);
+
+      } catch (err) {
+        console.warn('YT API player failed, using iframe fallback:', err);
+        mountPlainYouTubeIframe(videoId);
+      }
+    }
+
+    function openVideoModal(videoId) {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      mountYouTube(videoId);
+    }
+
+    function closeVideoModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      destroyYouTube();
+      playerMount.innerHTML = '';
+      pendingVideoId = null;
+    }
+
+    window.onYouTubeIframeAPIReady = function() {
+      if (pendingVideoId) {
+        var id = pendingVideoId;
+        pendingVideoId = null;
+        if (apiFallbackTimer) { clearTimeout(apiFallbackTimer); apiFallbackTimer = null; }
+        mountYouTube(id);
+      }
+    };
+
+    /* ═══════════════════════════════════════════════════════════
+       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
+       ═══════════════════════════════════════════════════════════ */
+    window.openVideoModal = openVideoModal;
+
+    closeBtn.addEventListener('click', closeVideoModal);
+    modal.addEventListener('click', function(e) { if (e.target === modal) closeVideoModal(); });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) closeVideoModal();
+    });
   })();
 </script>
 
-<!-- ============================================================
-     SCRIPT 2: CHECKOUT + RECOVERY (your existing logic, with
-     globals exposed so the render script can use them)
-     ============================================================ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     💳 SCRIPT 2 — CHECKOUT + RECOVERY (Paystack)
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
+    /* ═══════════════════════════════════════════════════════════
+       💳 PAYSTACK — payment configuration
+       ⚠️ Only the PUBLIC key belongs here. Never put your secret key
+          in any file that ends up on the website.
+       ═══════════════════════════════════════════════════════════ */
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var SALES_PAUSED = false;
     window.SALES_PAUSED = SALES_PAUSED;
@@ -693,7 +850,9 @@
       setTimeout(function () { emailInput.focus(); if (saved) emailInput.select(); }, 120);
     }
 
-    // Expose so dynamically-rendered Buy buttons can call it
+    /* ═══════════════════════════════════════════════════════════
+       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
+       ═══════════════════════════════════════════════════════════ */
     window.openCheckout = openCheckout;
 
     function closeCheckout() {
@@ -731,16 +890,21 @@
             { display_name: "Product", variable_name: "product", value: title }
           ]
         },
-        callback: function (response) { 
+        callback: function (response) {
           showSuccess();
           var ref = response.reference;
           var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           successRefEl.textContent = formattedRef;
-          
+
           downloadBtn.innerText = "Generating link...";
           downloadBtn.style.opacity = "0.5";
           downloadBtn.style.pointerEvents = "none";
-          
+
+          /* ═══════════════════════════════════════════════════════════
+             🔐 VERIFY ENDPOINT — backend that checks the reference
+             and returns a download link. Do not change unless you
+             change the server.
+             ═══════════════════════════════════════════════════════════ */
           fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -776,7 +940,10 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
 
-    // Recovery Box
+    /* ═══════════════════════════════════════════════════════════
+       🔑 RECOVERY BOX — for returning customers whose link expired
+       Uses the same /verify endpoint as checkout, above.
+       ═══════════════════════════════════════════════════════════ */
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
@@ -790,7 +957,7 @@
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
       if(!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
-      
+
       recBtn.innerText = "Verifying...";
       recBtn.style.opacity = "0.5";
       recBtn.disabled = true;
@@ -819,18 +986,39 @@
   })();
 </script>
 
-<!-- ============================================================
-     SCRIPT 3: STORE DATA + AUTO-RENDER
-     
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD NEW ITEMS.
-     Add ONE line to any category array and everything else
-     (card, buttons, count) updates automatically.
-     
-     To move a category's items between groups, just move the line.
-     To add a new release, add one line. Done.
-     ============================================================ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
+
+     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / DELETE / REORDER ITEMS.
+     Add ONE line to any category array. The card, Preview + Buy
+     buttons, and "X releases" count update automatically.
+
+     ➕ To ADD       → paste one line below
+     ➖ To DELETE    → delete its line
+     🔁 To REORDER   → move the line up/down
+     📝 To EDIT      → change the line in place
+
+     📁 Images live in: images/discography/
+
+     Item fields:
+       img      = path to cover image (images/discography/FILE.jpg)
+       alt      = accessibility / SEO text
+       title    = album / EP / single title
+       format   = "Solo Piano" | "Orchestral" | "Experimental" | "Ambient"
+       badge    = "Album" | "EP" | "Single"
+       video    = YouTube video ID (the part after v= in the URL)
+       id       = product slug (sent to Paystack + backend)
+       amount   = price in smallest currency unit (50000 = KSh 500)
+       currency = "KES" | "USD" | "GBP" | "EUR" ...
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var STORE_ITEMS = {
+
+    /* ═══════════════════════════════════════════════════════════
+       💿 FEATURED / LATEST RELEASE — top of the page
+       📁 Image in: images/discography/
+       ➕ To swap the featured release, edit this object only.
+       ═══════════════════════════════════════════════════════════ */
     featured: {
       img: "images/discography/into-a-stillness.jpg",
       alt: "Into A Stillness That Answers — EP by Noel Grass",
@@ -842,6 +1030,11 @@
       currency: "KES"
     },
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 SOLO PIANO — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "solo-piano": [
       { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    video: "T6jDLG2Acbk", id: "into-a-stillness",    amount: 50000, currency: "KES" },
       { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    video: "dgQjOQKJwnw", id: "where-i-begin-again", amount: 50000, currency: "KES" },
@@ -849,16 +1042,31 @@
       { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", video: "f9vpu1eTEYE", id: "the-impressionist-2", amount: 90000, currency: "KES" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 ORCHESTRAL — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "orchestral": [
       { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY", id: "introspect",        amount: 50000, currency: "KES" },
       { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", video: "Ksw5e9IyGzs", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 EXPERIMENTAL — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "experimental": [
       { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A", id: "agent-254",           amount: 50000, currency: "KES" },
       { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", video: "iLW3pvDHahI", id: "the-impressionist-3", amount: 90000, currency: "KES" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 AMBIENT — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "ambient": [
       { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", video: "zNHjyFSfxuc", id: "when-stars-align", amount: 20000, currency: "KES" }
     ]
@@ -913,7 +1121,6 @@
         );
       }).join('');
 
-      // Auto-update the "X releases" counter
       var countEl = gallery.closest('.mood-group').querySelector('[data-count]');
       if (countEl) {
         var n = items.length;
