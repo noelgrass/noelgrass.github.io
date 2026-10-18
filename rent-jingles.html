@@ -74,7 +74,7 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
-  
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -86,10 +86,10 @@
   .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
   .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; }
   .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55), 0 0 40px rgba(197,168,128,0.25); }
-  
+
   .menu-toggle { background: transparent; border: 0; cursor: pointer; padding: 8px 4px; display: inline-flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); transition: color 0.3s ease; -webkit-tap-highlight-color: transparent; position: relative; }
   .menu-toggle:hover { color: #FBFAFC; }
-  
+
   .hamburger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; position: relative; }
   .hamburger span { display: block; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transform-origin: center; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease, width 0.45s cubic-bezier(0.22,1,0.36,1); }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
@@ -105,7 +105,7 @@
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
   .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
   .menu-top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
-  
+
   .menu-heading { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: inline-flex; align-items: center; gap: 20px; opacity: 0; }
   .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s forwards; }
   .menu-heading::after { content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
@@ -125,7 +125,7 @@
   .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease; }
   .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
-  
+
   .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 0; }
   .menu-item { position: relative; opacity: 0; }
   .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
@@ -137,13 +137,13 @@
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.82s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.94s forwards; }
-  
+
   .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
   .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
   .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
   .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
-  
+
   .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
@@ -152,7 +152,12 @@
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--offwhite); margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
   .section-pricing { font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
-  
+
+  .info-box { max-width: 600px; margin: 0 auto 50px; animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
+  .info-box p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); margin-bottom: 12px; }
+  .info-box a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.3); padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease; }
+  .info-box a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
+
   .back-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); padding-bottom: 2px; margin-bottom: 60px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; transition: transform 0.3s ease, color 0.3s ease; }
   .back-link:hover { transform: translateX(-4px); color: #FCFCF7; }
   .license-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); padding-bottom: 2px; margin-bottom: 60px; margin-left: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; transition: transform 0.3s ease, color 0.3s ease; }
@@ -164,32 +169,39 @@
   .mood-group summary { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 28px 0 20px; cursor: pointer; list-style: none; transition: border-color 0.4s ease; }
   .mood-group summary::-webkit-details-marker { display: none; }
   .mood-group summary::marker { content: ''; }
-  
+
   .mood-label { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s ease; }
   .mood-group summary:hover .mood-label { color: #FCFCF7; }
   .mood-count { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-  
+
   .mood-indicator { display: inline-block; width: 8px; height: 8px; margin-right: 14px; border-right: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); transform: rotate(-45deg) translateY(-2px); transition: transform 0.4s ease, border-color 0.4s ease; vertical-align: middle; }
   .mood-group[open] .mood-indicator { transform: rotate(45deg) translateY(-2px); border-color: var(--gold); }
 
   .mood-group .track-list { padding-bottom: 10px; }
   .track-list { text-align: left; }
+
   .track { display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
   .track:last-of-type { border-bottom: none; }
   .track:hover { border-bottom-color: var(--gold-soft); }
-  
-  .track-info { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; }
+
+  .track-info { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+
+  .action-play { background: transparent; border: 0; padding: 0; margin: 0; font-size: 1.1em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; position: relative; top: 2px; }
+  .action-play:hover { color: var(--gold-pale); transform: scale(1.1); }
+
   .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--gold-soft); min-width: 42px; }
-  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; transition: color 0.3s ease; }
+  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; transition: color 0.3s ease; cursor: pointer; }
   .track:hover .track-title { color: #FCFCF7; }
-  
-  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); width: 100%; padding-left: 60px; margin-top: -8px; }
-  
+
+  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; letter-spacing: 0; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.3s ease, border-color 0.3s ease; display: inline-block; }
+  .track-desc:hover { color: var(--gold-soft); border-bottom-color: var(--gold-soft); }
+
+  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); width: 100%; padding-left: 82px; margin-top: -8px; }
+
   .track-actions { display: flex; gap: 24px; align-items: center; }
   .action-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 8px 18px; cursor: pointer; position: relative; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
-  /* Preview Player Modal */
   .player-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
   .player-modal.open { opacity: 1; pointer-events: auto; }
   .player-inner { position: relative; width: 100%; max-width: 500px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 40px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -271,8 +283,9 @@
     .track-info { gap: 10px; }
     .track-title { font-size: 1.25em; }
     .track-numeral { min-width: 36px; }
-    .track-meta { padding-left: 46px; }
-    .track-actions { padding-left: 46px; gap: 20px; }
+    .track-desc { display: block; width: 100%; margin-top: -4px; padding-left: 52px; }
+    .track-meta { padding-left: 52px; }
+    .track-actions { padding-left: 52px; gap: 20px; }
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -342,7 +355,7 @@
       <div class="menu-column">
         <span class="menu-section">Elsewhere</span>
         <ul class="menu-links">
-          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>      
+          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
           <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
           <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
         </ul>
@@ -359,9 +372,14 @@
     <p class="hero-subhead">Short-form music for brand, broadcast, and identity across Africa and worldwide.</p>
     <p class="section-pricing">Ksh 5,000 per track</p>
 
+    <div class="info-box">
+      <p><strong>What you get:</strong> The high-quality master recording and a written commercial license for broadcast, online, and brand use. <a href="license">Read the full terms →</a></p>
+      <p><em>Need something custom? <a href="commission">Commission a score →</a></em></p>
+    </div>
+
     <a href="rent" class="back-link">← Back to Rent</a>
     <a href="license" class="license-link">What you own when you rent →</a>
-    
+
     <br style="display: block; margin: 20px 0; content: '';">
 
     <span class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</span>
@@ -371,262 +389,37 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Anthems &amp; Campaigns</span></span>
-          <span class="mood-count">1 track</span>
+          <span class="mood-count" data-count-for="anthems">1 track</span>
         </summary>
-        <div class="track-list">
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AC01</span>
-              <span class="track-title">Theme 1</span>
-              <span class="track-meta">Anthem · 0:59</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AC01.mp3&folder=ac" data-title="AC01 — Theme 1">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AC01" data-title="AC01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-        </div>
+        <div class="track-list" data-category="anthems"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">African &amp; Cultural</span></span>
-          <span class="mood-count">8 tracks</span>
+          <span class="mood-count" data-count-for="african">8 tracks</span>
         </summary>
-        <div class="track-list">
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF01</span>
-              <span class="track-title">Theme 1</span>
-              <span class="track-meta">African · 0:32</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF01.mp3&folder=af" data-title="AF01 — Theme 1">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF01" data-title="AF01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF02</span>
-              <span class="track-title">Theme 2</span>
-              <span class="track-meta">African · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF02.mp3&folder=af" data-title="AF02 — Theme 2">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF02" data-title="AF02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF03</span>
-              <span class="track-title">Theme 3</span>
-              <span class="track-meta">African · 0:34</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF03.mp3&folder=af" data-title="AF03 — Theme 3">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF03" data-title="AF03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF04</span>
-              <span class="track-title">Theme 4</span>
-              <span class="track-meta">African · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF04.mp3&folder=af" data-title="AF04 — Theme 4">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF04" data-title="AF04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF05</span>
-              <span class="track-title">Theme 5</span>
-              <span class="track-meta">African · 1:38</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF05.mp3&folder=af" data-title="AF05 — Theme 5">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF05" data-title="AF05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF06</span>
-              <span class="track-title">Theme 6</span>
-              <span class="track-meta">African · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF06.mp3&folder=af" data-title="AF06 — Theme 6">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF06" data-title="AF06 — Theme 6" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF07</span>
-              <span class="track-title">Theme 7</span>
-              <span class="track-meta">African · 0:40</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF07.mp3&folder=af" data-title="AF07 — Theme 7">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF07" data-title="AF07 — Theme 7" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">AF08</span>
-              <span class="track-title">Theme 8</span>
-              <span class="track-meta">African · 1:29</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=AF08.mp3&folder=af" data-title="AF08 — Theme 8">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="AF08" data-title="AF08 — Theme 8" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-        </div>
+        <div class="track-list" data-category="african"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Cinematic &amp; Reflective</span></span>
-          <span class="mood-count">6 tracks</span>
+          <span class="mood-count" data-count-for="cinematic">6 tracks</span>
         </summary>
-        <div class="track-list">
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR01</span>
-              <span class="track-title">Theme 1</span>
-              <span class="track-meta">Cinematic · 1:26</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR01.mp3&folder=cr" data-title="CR01 — Theme 1">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR01" data-title="CR01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR02</span>
-              <span class="track-title">Theme 2</span>
-              <span class="track-meta">Cinematic · 2:12</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR02.mp3&folder=cr" data-title="CR02 — Theme 2">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR02" data-title="CR02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR03</span>
-              <span class="track-title">Theme 3</span>
-              <span class="track-meta">Cinematic · 1:04</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR03.mp3&folder=cr" data-title="CR03 — Theme 3">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR03" data-title="CR03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR04</span>
-              <span class="track-title">Theme 4</span>
-              <span class="track-meta">Cinematic · 0:44</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR04.mp3&folder=cr" data-title="CR04 — Theme 4">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR04" data-title="CR04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR05</span>
-              <span class="track-title">Theme 5</span>
-              <span class="track-meta">Cinematic · 1:35</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR05.mp3&folder=cr" data-title="CR05 — Theme 5">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR05" data-title="CR05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">CR06</span>
-              <span class="track-title">Theme 6</span>
-              <span class="track-meta">Cinematic · 0:44</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=CR06.mp3&folder=cr" data-title="CR06 — Theme 6">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="CR06" data-title="CR06 — Theme 6" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-        </div>
+        <div class="track-list" data-category="cinematic"></div>
       </details>
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Modern &amp; Corporate</span></span>
-          <span class="mood-count">5 tracks</span>
+          <span class="mood-count" data-count-for="modern">5 tracks</span>
         </summary>
-        <div class="track-list">
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">MC01</span>
-              <span class="track-title">Theme 1</span>
-              <span class="track-meta">Modern · 1:36</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC01.mp3&folder=mc" data-title="MC01 — Theme 1">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="MC01" data-title="MC01 — Theme 1" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">MC02</span>
-              <span class="track-title">Theme 2</span>
-              <span class="track-meta">Modern · 0:34</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC02.mp3&folder=mc" data-title="MC02 — Theme 2">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="MC02" data-title="MC02 — Theme 2" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">MC03</span>
-              <span class="track-title">Theme 3</span>
-              <span class="track-meta">Modern · 2:04</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC03.mp3&folder=mc" data-title="MC03 — Theme 3">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="MC03" data-title="MC03 — Theme 3" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">MC04</span>
-              <span class="track-title">Theme 4</span>
-              <span class="track-meta">Modern · 2:03</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC04.mp3&folder=mc" data-title="MC04 — Theme 4">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="MC04" data-title="MC04 — Theme 4" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-          <div class="track">
-            <div class="track-info">
-              <span class="track-numeral">MC05</span>
-              <span class="track-title">Theme 5</span>
-              <span class="track-meta">Modern · 2:04</span>
-            </div>
-            <div class="track-actions">
-              <button type="button" class="action-link js-preview" data-preview="https://my-store-backend.noelgrass.workers.dev/preview?file=MC05.mp3&folder=mc" data-title="MC05 — Theme 5">Preview</button>
-              <button type="button" class="action-link js-buy" data-id="MC05" data-title="MC05 — Theme 5" data-amount="500000" data-currency="KES">Rent</button>
-            </div>
-          </div>
-        </div>
+        <div class="track-list" data-category="modern"></div>
       </details>
 
     </div>
 
-    <!-- RECOVERY BOX -->
     <div class="recovery-box" style="margin-top: 80px;">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
@@ -668,7 +461,6 @@
   </div>
 </div>
 
-<!-- PREVIEW PLAYER MODAL -->
 <div class="player-modal" id="playerModal" aria-hidden="true" role="dialog" aria-label="Audio preview">
   <div class="player-inner">
     <button type="button" class="player-close" id="playerClose" aria-label="Close">✕</button>
@@ -703,14 +495,14 @@
     <p class="success-body">
       Thank you! Your download is ready.
     </p>
-    
+
     <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
 
     <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
       <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 16px;">Save your receipt:</p>
-      
+
       <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px; line-height: 1.5;">
         Your transaction reference is:
       </p>
@@ -802,7 +594,7 @@
   })();
 
   (function () {
-    // Preview Player Logic
+    // Preview Player
     var playerModal = document.getElementById('playerModal');
     var playerTitle = document.getElementById('playerTitle');
     var audioPlayer = document.getElementById('audioPlayer');
@@ -828,21 +620,78 @@
       audioPlayer.load();
     }
 
-    document.querySelectorAll('.js-preview').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        var url = btn.getAttribute('data-preview');
-        var title = btn.getAttribute('data-title');
-        if (url) openPlayer(url, title);
-      });
-    });
-
     playerClose.addEventListener('click', closePlayer);
     playerModal.addEventListener('click', function(e) { if (e.target === playerModal) closePlayer(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && playerModal.classList.contains('open')) { closePlayer(); } });
 
-    // Paystack & Checkout Logic
-    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd"; // Replace with pk_live_ when ready
+    // ─────────────────────────────────────────────────────────
+    //  TRACK LIST — add one line per jingle
+    //  cat: anthems | african | cinematic | modern
+    // ─────────────────────────────────────────────────────────
+    var TRACKS = [
+      { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
+
+      { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF04", title: "Theme 4", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF04.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF05", title: "Theme 5", desc: "Ethnic and Orchestral",    duration: "African · 1:38",   file: "AF05.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
+      { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
+
+      { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
+      { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
+      { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
+      { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
+      { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
+      { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
+
+      { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
+      { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
+      { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
+      { cat: "modern",    code: "MC04", title: "Theme 4", desc: "Ethnic and Orchestral",    duration: "Modern · 2:03",    file: "MC04.mp3", folder: "mc", amount: "500000" },
+      { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
+    ];
+
+    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
+
+    function buildPreviewUrl(t) {
+      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
+    }
+
+    function renderTracks() {
+      document.querySelectorAll('.track-list[data-category]').forEach(function(list) {
+        var cat = list.getAttribute('data-category');
+        var items = TRACKS.filter(function(t) { return t.cat === cat; });
+        list.innerHTML = items.map(function(t) {
+          var url = buildPreviewUrl(t);
+          var label = t.code + " — " + t.title;
+          return '' +
+            '<div class="track">' +
+              '<div class="track-info">' +
+                '<button type="button" class="action-play js-preview" data-preview="' + url + '" data-title="' + label + '">▶</button>' +
+                '<span class="track-numeral">' + t.code + '</span>' +
+                '<span class="track-title js-preview" data-preview="' + url + '" data-title="' + label + '">' + t.title +
+                  ' <a href="#" class="track-desc js-preview" data-preview="' + url + '" data-title="' + label + '">— ' + t.desc + '</a>' +
+                '</span>' +
+                '<span class="track-meta">' + t.duration + '</span>' +
+              '</div>' +
+              '<div class="track-actions">' +
+                '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + label + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+              '</div>' +
+            '</div>';
+        }).join('');
+        var countEl = document.querySelector('.mood-count[data-count-for="' + cat + '"]');
+        if (countEl) {
+          var n = items.length;
+          countEl.textContent = n + (n === 1 ? " track" : " tracks");
+        }
+      });
+    }
+
+    // Paystack & Checkout
+    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
 
     var modal      = document.getElementById('checkoutModal');
@@ -923,17 +772,16 @@
             { display_name: "Product", variable_name: "product", value: title }
           ]
         },
-        callback: function (response) { 
+        callback: function (response) {
           showSuccess();
-          
           var ref = response.reference;
           var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           successRefEl.textContent = formattedRef;
-          
+
           downloadBtn.innerText = "Generating link...";
           downloadBtn.style.opacity = "0.5";
           downloadBtn.style.pointerEvents = "none";
-          
+
           fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -961,9 +809,22 @@
       handler.openIframe();
     }
 
-    document.querySelectorAll('.js-buy').forEach(function (btn) {
-      btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
-    });
+    function attachHandlers() {
+      document.querySelectorAll('.js-preview').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var url = btn.getAttribute('data-preview');
+          var title = btn.getAttribute('data-title');
+          if (url) openPlayer(url, title);
+        });
+      });
+      document.querySelectorAll('.js-buy').forEach(function (btn) {
+        btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
+      });
+    }
+
+    renderTracks();
+    attachHandlers();
 
     submitBtn.addEventListener('click', proceedToPaystack);
     emailInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); proceedToPaystack(); } });
@@ -973,26 +834,21 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
 
-    // Recovery Box Logic
+    // Recovery Box
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
 
-    // Auto-format input with dashes
     recInput.addEventListener('input', function(e) {
       var val = this.value.replace(/-/g, '');
       var newVal = val.match(/.{1,4}/g);
-      if (newVal) {
-        this.value = newVal.join('-');
-      } else {
-        this.value = val;
-      }
+      if (newVal) { this.value = newVal.join('-'); } else { this.value = val; }
     });
 
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
       if(!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
-      
+
       recBtn.innerText = "Verifying...";
       recBtn.style.opacity = "0.5";
       recBtn.disabled = true;
@@ -1023,15 +879,13 @@
       });
     });
 
-    // Smooth scroll to recovery box only when clicked
+    // Smooth scroll helpers
     var topLink = document.getElementById('heroTopLink');
     if (topLink) {
       topLink.addEventListener('click', function(e) {
         e.preventDefault();
         var target = document.querySelector('.recovery-box');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     }
 
@@ -1041,13 +895,10 @@
         e.preventDefault();
         hideSuccess();
         var target = document.querySelector('.recovery-box');
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
       });
     }
 
-    // Force the page to load at the top, ignoring any hash in the URL
     if (window.location.hash) {
       window.scrollTo(0, 0);
     }
