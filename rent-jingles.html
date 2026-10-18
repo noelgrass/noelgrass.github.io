@@ -186,31 +186,53 @@
 
   .track-info { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
 
-  .action-play { background: transparent; border: 0; padding: 0; margin: 0; font-size: 1.1em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; position: relative; top: 2px; }
-  .action-play:hover { color: var(--gold-pale); transform: scale(1.1); }
-
   .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--gold-soft); min-width: 42px; }
-  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; transition: color 0.3s ease; cursor: pointer; }
-  .track:hover .track-title { color: #FCFCF7; }
+  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; transition: color 0.3s ease; }
+  
+  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; letter-spacing: 0; display: inline-block; margin-left: 2px; }
 
-  .track-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 0.85em; font-style: italic; font-weight: 400; color: #6b655c; letter-spacing: 0; text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.3s ease, border-color 0.3s ease; display: inline-block; }
-  .track-desc:hover { color: var(--gold-soft); border-bottom-color: var(--gold-soft); }
+  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); width: 100%; padding-left: 58px; margin-top: -8px; }
 
-  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); width: 100%; padding-left: 82px; margin-top: -8px; }
+  .track-actions { display: flex; gap: 12px; align-items: center; }
+  
+  /* Play Button - Option 3 Style */
+  .action-play { 
+    display: inline-flex; justify-content: center; align-items: center;
+    background: transparent; border: 1px solid rgba(185,151,92,0.3); 
+    border-radius: 50%; width: 34px; height: 34px; padding-left: 2px;
+    font-size: 0.8em; color: var(--gold-soft); cursor: pointer; 
+    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+  }
+  .action-play:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
+  .action-play.playing { color: var(--gold-pale); border-color: var(--gold); }
 
-  .track-actions { display: flex; gap: 24px; align-items: center; }
-  .action-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 8px 18px; cursor: pointer; position: relative; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
+  .action-link { 
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; 
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); 
+    background: transparent; border: 1px solid rgba(185,151,92,0.45); 
+    padding: 9px 18px; cursor: pointer; position: relative; 
+    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; 
+    -webkit-tap-highlight-color: transparent; 
+  }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
-  .player-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-  .player-modal.open { opacity: 1; pointer-events: auto; }
-  .player-inner { position: relative; width: 100%; max-width: 500px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 40px 30px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); text-align: center; }
-  .player-modal.open .player-inner { transform: scale(1); }
-  .player-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.5em; color: var(--gold-pale); margin-bottom: 24px; }
-  .player-inner audio { width: 100%; outline: none; }
-  .player-close { position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; line-height: 1; padding: 6px 8px; cursor: pointer; transition: color 0.3s ease; }
-  .player-close:hover { color: var(--gold-pale); }
+  /* Inline Player */
+  .inline-player { display: none; width: 100%; padding: 16px 0 8px 58px; }
+  .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
+  .player-progress-wrap { flex-grow: 1; height: 3px; background: rgba(255,255,255,0.08); cursor: pointer; position: relative; border-radius: 2px; }
+  .player-progress-bar { height: 100%; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; }
+  .player-progress-bar::after { content: ''; position: absolute; right: -4px; top: -3px; width: 9px; height: 9px; background: var(--gold-pale); border-radius: 50%; opacity: 0; transition: opacity 0.2s ease; }
+  .player-progress-wrap:hover .player-progress-bar::after { opacity: 1; }
+  .player-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
+  
+  @media (max-width: 700px) {
+    .track-meta { padding-left: 58px; }
+    .inline-player { padding-left: 58px; }
+    .track { grid-template-columns: 1fr auto; align-items: start; }
+    .track-actions { flex-direction: column; gap: 10px; padding-top: 4px; }
+  }
 
+  /* --- Modals and Footer --- */
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -279,13 +301,14 @@
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
-    .track { grid-template-columns: 1fr; gap: 12px; padding: 20px 0; }
+    .track { grid-template-columns: 1fr auto; gap: 12px; padding: 20px 0; align-items: start; }
     .track-info { gap: 10px; }
     .track-title { font-size: 1.25em; }
     .track-numeral { min-width: 36px; }
-    .track-desc { display: block; width: 100%; margin-top: -4px; padding-left: 52px; }
-    .track-meta { padding-left: 52px; }
-    .track-actions { padding-left: 52px; gap: 20px; }
+    .track-desc { display: block; width: 100%; margin-top: -4px; }
+    .track-meta { padding-left: 58px; }
+    .inline-player { padding-left: 58px; }
+    .track-actions { flex-direction: column; gap: 10px; padding-top: 4px; }
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -461,17 +484,6 @@
   </div>
 </div>
 
-<div class="player-modal" id="playerModal" aria-hidden="true" role="dialog" aria-label="Audio preview">
-  <div class="player-inner">
-    <button type="button" class="player-close" id="playerClose" aria-label="Close">✕</button>
-    <p class="player-title" id="playerTitle">Preview</p>
-    <audio id="audioPlayer" controls preload="none">
-      <source id="audioSource" src="" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-  </div>
-</div>
-
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
     <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
@@ -520,6 +532,8 @@
     <button type="button" class="success-done" id="successDone">Done</button>
   </div>
 </div>
+
+<audio id="mainAudio"></audio>
 
 <script>
   (function () {
@@ -594,43 +608,12 @@
   })();
 
   (function () {
-    // Preview Player
-    var playerModal = document.getElementById('playerModal');
-    var playerTitle = document.getElementById('playerTitle');
-    var audioPlayer = document.getElementById('audioPlayer');
-    var audioSource = document.getElementById('audioSource');
-    var playerClose = document.getElementById('playerClose');
+    var audio = document.getElementById('mainAudio');
+    var currentTrackId = null;
+    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
 
-    function openPlayer(url, title) {
-      audioSource.src = url;
-      audioPlayer.load();
-      playerTitle.textContent = title;
-      playerModal.classList.add('open');
-      playerModal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      audioPlayer.play().catch(function(e) { console.log("Autoplay prevented by browser"); });
-    }
-
-    function closePlayer() {
-      playerModal.classList.remove('open');
-      playerModal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('no-scroll');
-      audioPlayer.pause();
-      audioSource.src = '';
-      audioPlayer.load();
-    }
-
-    playerClose.addEventListener('click', closePlayer);
-    playerModal.addEventListener('click', function(e) { if (e.target === playerModal) closePlayer(); });
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && playerModal.classList.contains('open')) { closePlayer(); } });
-
-    // ─────────────────────────────────────────────────────────
-    //  TRACK LIST — add one line per jingle
-    //  cat: anthems | african | cinematic | modern
-    // ─────────────────────────────────────────────────────────
     var TRACKS = [
       { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
-
       { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
@@ -639,14 +622,12 @@
       { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
-
       { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
-
       { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
@@ -654,34 +635,42 @@
       { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
     ];
 
-    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
-
     function buildPreviewUrl(t) {
       return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
+    }
+
+    function formatTime(seconds) {
+      if (isNaN(seconds)) return "0:00";
+      var m = Math.floor(seconds / 60);
+      var s = Math.floor(seconds % 60);
+      return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
     function renderTracks() {
       document.querySelectorAll('.track-list[data-category]').forEach(function(list) {
         var cat = list.getAttribute('data-category');
         var items = TRACKS.filter(function(t) { return t.cat === cat; });
+        
         list.innerHTML = items.map(function(t) {
           var url = buildPreviewUrl(t);
-          var label = t.code + " — " + t.title;
           return '' +
-            '<div class="track">' +
+            '<div class="track" id="track-' + t.code + '">' +
               '<div class="track-info">' +
-                '<button type="button" class="action-play js-preview" data-preview="' + url + '" data-title="' + label + '">▶</button>' +
                 '<span class="track-numeral">' + t.code + '</span>' +
-                '<span class="track-title js-preview" data-preview="' + url + '" data-title="' + label + '">' + t.title +
-                  ' <a href="#" class="track-desc js-preview" data-preview="' + url + '" data-title="' + label + '">— ' + t.desc + '</a>' +
-                '</span>' +
+                '<span class="track-title">' + t.title + ' <span class="track-desc">(' + t.desc + ')</span></span>' +
                 '<span class="track-meta">' + t.duration + '</span>' +
               '</div>' +
               '<div class="track-actions">' +
-                '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + label + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+                '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
+                '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+              '</div>' +
+              '<div class="inline-player" id="player-' + t.code + '">' +
+                '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
+                '<div class="player-time">0:00</div>' +
               '</div>' +
             '</div>';
         }).join('');
+
         var countEl = document.querySelector('.mood-count[data-count-for="' + cat + '"]');
         if (countEl) {
           var n = items.length;
@@ -690,10 +679,69 @@
       });
     }
 
-    // Paystack & Checkout
+    function attachHandlers() {
+      document.querySelectorAll('.action-play').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var code = this.getAttribute('data-code');
+          var url = this.getAttribute('data-url');
+          
+          if (currentTrackId === code) {
+            if (audio.paused) {
+              audio.play();
+            } else {
+              audio.pause();
+            }
+          } else {
+            document.querySelectorAll('.action-play').forEach(function(b) { 
+              b.innerHTML = '▶'; 
+              b.classList.remove('playing'); 
+            });
+            document.querySelectorAll('.inline-player').forEach(function(p) { 
+              p.classList.remove('active'); 
+            });
+            
+            currentTrackId = code;
+            audio.src = url;
+            audio.play().catch(function(e) { console.log("Autoplay blocked"); });
+            
+            this.innerHTML = '❚❚';
+            this.classList.add('playing');
+            document.getElementById('player-' + code).classList.add('active');
+          }
+        });
+      });
+
+      document.querySelectorAll('.js-buy').forEach(function (btn) {
+        btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
+      });
+    }
+
+    audio.addEventListener('timeupdate', function() {
+      if (!currentTrackId) return;
+      var player = document.getElementById('player-' + currentTrackId);
+      if (!player) return;
+      var pct = (audio.currentTime / audio.duration) * 100;
+      player.querySelector('.player-progress-bar').style.width = pct + '%';
+      player.querySelector('.player-time').innerText = formatTime(audio.duration - audio.currentTime);
+    });
+
+    audio.addEventListener('ended', function() {
+      if (!currentTrackId) return;
+      var btn = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+      var player = document.getElementById('player-' + currentTrackId);
+      if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
+      if (player) { 
+        player.querySelector('.player-progress-bar').style.width = '0%'; 
+        player.querySelector('.player-time').innerText = '0:00';
+        player.classList.remove('active');
+      }
+      currentTrackId = null;
+    });
+
+    // --- Checkout Logic ---
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
-
     var modal      = document.getElementById('checkoutModal');
     var modalTitle = document.getElementById('checkoutTitle');
     var modalPrice = document.getElementById('checkoutPrice');
@@ -702,12 +750,10 @@
     var submitBtn  = document.getElementById('checkoutSubmit');
     var cancelBtn  = document.getElementById('checkoutCancel');
     var closeBtn   = document.getElementById('checkoutClose');
-
     var successModal   = document.getElementById('successModal');
     var successDoneBtn = document.getElementById('successDone');
     var successRefEl   = document.getElementById('successRef');
     var downloadBtn    = document.getElementById('downloadLinkBtn');
-
     var pendingBtn = null;
 
     function showSuccess() { successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
@@ -768,16 +814,13 @@
         currency: currency,
         metadata: {
           product_id: productId,
-          custom_fields: [
-            { display_name: "Product", variable_name: "product", value: title }
-          ]
+          custom_fields: [{ display_name: "Product", variable_name: "product", value: title }]
         },
         callback: function (response) {
           showSuccess();
           var ref = response.reference;
           var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           successRefEl.textContent = formattedRef;
-
           downloadBtn.innerText = "Generating link...";
           downloadBtn.style.opacity = "0.5";
           downloadBtn.style.pointerEvents = "none";
@@ -809,23 +852,6 @@
       handler.openIframe();
     }
 
-    function attachHandlers() {
-      document.querySelectorAll('.js-preview').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var url = btn.getAttribute('data-preview');
-          var title = btn.getAttribute('data-title');
-          if (url) openPlayer(url, title);
-        });
-      });
-      document.querySelectorAll('.js-buy').forEach(function (btn) {
-        btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
-      });
-    }
-
-    renderTracks();
-    attachHandlers();
-
     submitBtn.addEventListener('click', proceedToPaystack);
     emailInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); proceedToPaystack(); } });
     emailInput.addEventListener('input', clearError);
@@ -834,7 +860,7 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
 
-    // Recovery Box
+    // --- Recovery Box Logic ---
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
@@ -879,7 +905,7 @@
       });
     });
 
-    // Smooth scroll helpers
+    // --- Smooth scroll helpers ---
     var topLink = document.getElementById('heroTopLink');
     if (topLink) {
       topLink.addEventListener('click', function(e) {
@@ -902,6 +928,10 @@
     if (window.location.hash) {
       window.scrollTo(0, 0);
     }
+
+    // --- Initialization ---
+    renderTracks();
+    attachHandlers();
   })();
 </script>
 
