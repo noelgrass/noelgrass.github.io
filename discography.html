@@ -1387,7 +1387,11 @@
 
     <div class="mood-groups">
 
-      <!-- LATEST RELEASE — rendered from DISCOGRAPHY.featured -->
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 LATEST RELEASE — rendered from DISCOGRAPHY.featured
+           📁 Image lives in: images/discography/
+           ➕ To update it, edit DISCOGRAPHY.featured (bottom of file)
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group" open>
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
@@ -1396,6 +1400,12 @@
         <div class="feature-release" id="featuredRelease"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 SOLO PIANO — rendered from DISCOGRAPHY["solo-piano"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit DISCOGRAPHY["solo-piano"] below.
+              The count and Preview button update automatically.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
@@ -1404,6 +1414,11 @@
         <div class="store-gallery" data-category="solo-piano"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 ORCHESTRAL — rendered from DISCOGRAPHY["orchestral"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit DISCOGRAPHY["orchestral"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
@@ -1412,6 +1427,11 @@
         <div class="store-gallery" data-category="orchestral"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 EXPERIMENTAL — rendered from DISCOGRAPHY["experimental"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit DISCOGRAPHY["experimental"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
@@ -1420,6 +1440,11 @@
         <div class="store-gallery" data-category="experimental"></div>
       </details>
 
+      <!-- ═══════════════════════════════════════════════════════════
+           💿 AMBIENT — rendered from DISCOGRAPHY["ambient"]
+           📁 Images live in: images/discography/
+           ➕ To add a release, edit DISCOGRAPHY["ambient"] below.
+           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
@@ -1439,6 +1464,9 @@
       </p>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
+         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -1465,9 +1493,9 @@
   </div>
 </div>
 
-<!-- ============================================================
-     SCRIPT 1: MENU + ACCORDION + MEDIA MODAL
-     ============================================================ -->
+<!-- ═══════════════════════════════════════════════════════════════
+     🧭 SCRIPT 1 — MENU + ACCORDION + MEDIA MODAL
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -1569,7 +1597,11 @@
       document.body.classList.remove('no-scroll');
     }
 
-    // Expose for the render script (cards are built dynamically)
+    /* ═══════════════════════════════════════════════════════════
+       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
+       The render script (below) calls window.openMediaModal
+       because Preview/embed buttons are built dynamically.
+       ═══════════════════════════════════════════════════════════ */
     window.openMediaModal = openModal;
 
     closeBtn.addEventListener('click', closeModal);
@@ -1578,18 +1610,43 @@
   })();
 </script>
 
-<!-- ============================================================
-     SCRIPT 2: DISCOGRAPHY DATA + AUTO-RENDER
-     
+<!-- ═══════════════════════════════════════════════════════════════
+     💿 SCRIPT 2 — DISCOGRAPHY DATA + AUTO-RENDER
+
      ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD A NEW RELEASE.
      Add ONE line to any category array. The card, badge,
      Preview button, and "X releases" count update automatically.
-     
-     Fields: img · alt · title · format · badge · video
-     (No amount/currency — this page is listen-only.)
-     ============================================================ -->
+
+     ➕ To ADD       → paste one line below
+     ➖ To DELETE    → delete its line
+     🔁 To REORDER   → move the line up/down
+     📝 To EDIT      → change the line in place
+
+     📁 Images live in: images/discography/
+
+     Item fields:
+       img    = path to cover image (images/discography/FILE.jpg)
+       alt    = accessibility / SEO text
+       title  = album / EP / single title
+       format = "Solo Piano" | "Orchestral" | "Experimental" | "Ambient"
+       badge  = "Album" | "EP" | "Single"
+       video  = YouTube video ID (the part after v= in the URL)
+
+     Featured block extra fields:
+       youtube = full YouTube embed URL
+       apple   = full Apple Music embed URL
+       spotify = full Spotify embed URL
+
+     ⚠️ No amount/currency — this page is listen-only.
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var DISCOGRAPHY = {
+
+    /* ═══════════════════════════════════════════════════════════
+       💿 FEATURED / LATEST RELEASE — top of the page
+       📁 Image in: images/discography/
+       ➕ To swap the featured release, edit this object only.
+       ═══════════════════════════════════════════════════════════ */
     featured: {
       img: "images/discography/into-a-stillness.jpg",
       alt: "Into A Stillness That Answers — EP by Noel Grass",
@@ -1601,6 +1658,11 @@
       spotify: "https://open.spotify.com/embed/album/5dglJq4fALStu3S6Jm46J4"
     },
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 SOLO PIANO — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "solo-piano": [
       { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers — solo piano EP by Noel Grass", title: "Into A Stillness That Answers", format: "Solo Piano", badge: "EP",    video: "T6jDLG2Acbk" },
       { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again — solo piano EP by Noel Grass",           title: "Where I Begin Again",           format: "Solo Piano", badge: "EP",    video: "dgQjOQKJwnw" },
@@ -1608,16 +1670,31 @@
       { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II — solo piano album by Noel Grass",       title: "The Impressionist II",          format: "Solo Piano", badge: "Album", video: "f9vpu1eTEYE" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 ORCHESTRAL — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "orchestral": [
-      { img: "images/discography/introspect.jpg",        alt: "Introspect — orchestral EP by Noel Grass",         title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY" },
+      { img: "images/discography/introspect.jpg",        alt: "Introspect — orchestral EP by Noel Grass",           title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY" },
       { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins — orchestral album by Noel Grass", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", video: "Ksw5e9IyGzs" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 EXPERIMENTAL — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "experimental": [
-      { img: "images/discography/agent-254.jpg",           alt: "Agent 254 — experimental EP by Noel Grass",             title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A" },
+      { img: "images/discography/agent-254.jpg",           alt: "Agent 254 — experimental EP by Noel Grass",                title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A" },
       { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III — experimental album by Noel Grass", title: "The Impressionist III", format: "Experimental", badge: "Album", video: "iLW3pvDHahI" }
     ],
 
+    /* ═══════════════════════════════════════════════════════════
+       💿 AMBIENT — images in: images/discography/
+       ➕ ADD a release  → paste one line below
+       ➖ DELETE         → delete its line
+       ═══════════════════════════════════════════════════════════ */
     "ambient": [
       { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align — ambient single by Noel Grass", title: "When Stars Align", format: "Ambient", badge: "Single", video: "zNHjyFSfxuc" }
     ]
