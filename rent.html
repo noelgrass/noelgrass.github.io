@@ -48,63 +48,6 @@
 }
 </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "How does music licensing work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Music licensing grants legal permission to use a track in your production. You choose a track, confirm the licence terms for your project, pay the fee, and receive the master file plus a written licence stating exactly what you can and cannot do with the track."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is a sync licence?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "A sync licence grants the right to synchronise music with visual media, such as film, TV, advertising, or online video. It is the standard licence type for productions that pair music with picture."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I use Noel Grass's music in my film or commercial?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. Noel Grass's catalogue includes film scores and jingles available for direct licensing. Choose a track, confirm the licence terms for your project, and complete the rental. For custom work, see the Commission a Score page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What rights do I receive when I rent a track?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You receive a signed, legal licence to use the track for a specific project, in a specific territory, for a specific period. You receive the master audio file. Authorship remains with Noel Grass."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the difference between renting and commissioning?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Renting licenses an existing track from the catalogue. Faster and typically lower cost. Commissioning creates a new original score built for your project. For commissioning, see the Commission a Score page."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What territories does the licence cover?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Licence territories are set per project. Options typically include Kenya, East Africa, pan-African, or worldwide. The territory is confirmed in the written licence."
-      }
-    }
-  ]
-}
-</script>
-
 <style>
   :root {
     --bg: #000000;
@@ -259,10 +202,31 @@
   .hub-category { margin-bottom: 50px; }
   .hub-category-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 10px; }
   .hub-category-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.3em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--offwhite); }
-  .hub-category-count { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .hub-category-meta { display: flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .hub-category-link { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; letter-spacing: 0; text-transform: none; color: var(--gold-pale); border-bottom: 1px solid rgba(197, 168, 128, 0.4); padding-bottom: 1px; transition: color 0.3s ease, border-color 0.3s ease; }
+  .hub-category-link:hover { color: #FCFCF7; border-bottom-color: var(--gold); }
 
-  .view-all { display: inline-block; margin-top: 10px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.05em; color: var(--gold-pale); border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; transition: transform 0.3s ease, border-color 0.3s ease; }
-  .view-all:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
+  /* Large Bottom CTA Button */
+  .view-all-btn {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.75em;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    padding: 16px 32px;
+    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease;
+  }
+  .view-all-btn:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197, 168, 128, 0.08);
+    box-shadow: 0 0 22px rgba(197, 168, 128, 0.30);
+    transform: translateY(-1px);
+  }
 
   /* ===== UNIFORM TRACK LAYOUT ===== */
   .track { 
@@ -324,7 +288,7 @@
   .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
   .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
 
-  /* Modals */
+  /* Modals & Checkout */
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -381,9 +345,12 @@
     .section-heading { font-size: 1.3em; letter-spacing: 0.2em; }
     .section-poetic { font-size: 1em; }
     
-    .hub-category-header { flex-direction: column; align-items: flex-start; gap: 6px; }
+    .hub-category-header { flex-direction: column; align-items: flex-start; gap: 8px; }
     .hub-category-title { font-size: 1.15em; }
+    .hub-category-meta { width: 100%; justify-content: space-between; }
     
+    .view-all-btn { font-size: 0.65em; padding: 14px 20px; width: 100%; text-align: center; }
+
     .track { gap: 12px; padding: 20px 0; }
     .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
@@ -486,7 +453,9 @@
         <!-- JS will inject the category groups and tracks here -->
       </div>
 
-      <a href="rent-jingles" class="view-all">View all jingles →</a>
+      <div style="text-align: center; margin-top: 40px;">
+        <a href="rent-jingles" class="view-all-btn">View more categories and full catalogue →</a>
+      </div>
     </div>
 
     <!-- 2. THE EDUCATIONAL BOX -->
@@ -733,7 +702,10 @@
         return '<div class="hub-category">' +
           '<div class="hub-category-header">' +
             '<span class="hub-category-title">' + group.label + '</span>' +
-            '<span class="hub-category-count">' + group.count + '</span>' +
+            '<span class="hub-category-meta">' + 
+              group.count + ' <span style="opacity:0.5;">·</span> ' +
+              '<a href="rent-jingles" class="hub-category-link">View all &rarr;</a>' +
+            '</span>' +
           '</div>' +
           trackHtml +
         '</div>';
