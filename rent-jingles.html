@@ -847,6 +847,20 @@
     });
 
     renderTracks();
+
+    // ---------- ACCORDION: only one group open at a time ----------
+    var moodGroups = document.querySelectorAll('.mood-groups details.mood-group');
+    moodGroups.forEach(function (group) {
+      group.addEventListener('toggle', function () {
+        if (!group.open) return;
+        moodGroups.forEach(function (other) {
+          if (other !== group && other.open) {
+            other.open = false;
+          }
+        });
+      });
+    });
+
     if (window.location.hash) window.scrollTo(0, 0);
   })();
 </script>
