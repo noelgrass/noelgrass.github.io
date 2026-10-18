@@ -694,7 +694,8 @@
     ];
 
     var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
-    function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=2"; }
+    // CHANGED TO &v=final5 TO FORCE THE BROWSER TO DOWNLOAD THE NEW LONG FILES
+    function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
     function renderTracks() {
