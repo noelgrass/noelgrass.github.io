@@ -732,7 +732,7 @@
       }
     ];
 
-    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
+    var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder); }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
