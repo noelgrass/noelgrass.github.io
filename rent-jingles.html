@@ -526,413 +526,253 @@
 <audio id="mainAudio"></audio>
 
 <script>
-  (function () {
-    // Menu Logic
-    var toggle   = document.getElementById('menuToggle');
-    var panel    = document.getElementById('menuPanel');
-    var closeBtn = document.getElementById('menuClose');
-    var backdrop = document.getElementById('menuBackdrop');
-    function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
-    function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
-    function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
-    function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
-    function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
-    toggle.addEventListener('click', function (e) { e.stopPropagation(); if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); } });
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
-    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
-    function normalizePath(path) {
-      path = path.split('?')[0].split('#')[0];
-      path = path.replace(/\.html?$/i, '');
-      if (path.length > 1 && path.endsWith('/')) { path = path.slice(0, -1); }
-      path = path.replace(/\/index$/i, '/');
-      if (!path.startsWith('/')) path = '/' + path;
-      return path;
-    }
-    var current = normalizePath(window.location.pathname);
-    var links = panel.querySelectorAll('a.menu-link');
-    var matched = null;
-    links.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-      var linkPath = normalizePath(href);
-      if (linkPath === current) { matched = link; }
+(function () {
+  "use strict";
+
+  // ---------- TRACK DATA ----------
+  var TRACKS = [
+    { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
+    { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF04", title: "Theme 4", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF04.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF05", title: "Theme 5", desc: "Ethnic and Orchestral",    duration: "African · 1:38",   file: "AF05.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
+    { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
+    { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
+    { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
+    { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
+    { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
+    { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
+    { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
+    { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
+    { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
+    { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
+    { cat: "modern",    code: "MC04", title: "Theme 4", desc: "Ethnic and Orchestral",    duration: "Modern · 2:03",    file: "MC04.mp3", folder: "mc", amount: "500000" },
+    { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
+  ];
+
+  var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
+  function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder); }
+  function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
+
+  // ---------- RENDER TRACKS ----------
+  function renderTracks() {
+    document.querySelectorAll('.track-list[data-category]').forEach(function (list) {
+      var cat = list.getAttribute('data-category');
+      var items = TRACKS.filter(function (t) { return t.cat === cat; });
+      list.innerHTML = items.map(function (t) {
+        var url = buildPreviewUrl(t);
+        return '<div class="track" id="track-' + t.code + '">' +
+          '<div class="track-info">' +
+            '<span class="track-numeral">' + t.code + '</span>' +
+            '<span class="track-title">' + t.title + ' <span class="track-desc">(' + t.desc + ')</span></span>' +
+            '<span class="track-meta">' + t.duration + '</span>' +
+          '</div>' +
+          '<div class="track-actions">' +
+            '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
+            '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
+          '</div>' +
+          '<div class="inline-player" id="player-' + t.code + '">' +
+            '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
+            '<div class="player-time">0:00</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+      var countEl = document.querySelector('.mood-count[data-count-for="' + cat + '"]');
+      if (countEl) { var n = items.length; countEl.textContent = n + (n === 1 ? " track" : " tracks"); }
     });
-    if (!matched && (current === '/' || current === '')) {
-      links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (href === './' || href === '/' || href === 'index.html') { matched = link; }
-      });
-    }
-    if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
-    var yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  })();
+  }
 
-  (function() {
-    var groups = document.querySelectorAll('.mood-groups > .mood-group');
-    var closingProgrammatically = false;
-    groups.forEach(function(group) {
-      group.addEventListener('toggle', function() {
-        var summary = group.querySelector('summary');
-        if (group.open) {
-          closingProgrammatically = true;
-          groups.forEach(function(other) { if (other !== group && other.open) { other.open = false; } });
-          closingProgrammatically = false;
-          setTimeout(function() {
-            var rect = summary.getBoundingClientRect();
-            var targetTop = 130;
-            if (rect.top < 0 || rect.top > window.innerHeight * 0.4) { window.scrollTo({ top: window.scrollY + rect.top - targetTop, behavior: 'smooth' }); }
-          }, 20);
-        } else if (!closingProgrammatically) {
-          setTimeout(function() {
-            var rect = summary.getBoundingClientRect();
-            var targetTop = 130;
-            if (rect.top < 0 || rect.top > window.innerHeight * 0.5) { window.scrollTo({ top: window.scrollY + rect.top - targetTop, behavior: 'smooth' }); }
-          }, 20);
-        }
-      });
+  // ---------- PLAYER ----------
+  var audio = document.getElementById('mainAudio');
+  var currentTrackId = null;
+
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.action-play');
+    if (!btn) return;
+    e.preventDefault();
+    var code = btn.getAttribute('data-code');
+    var url = btn.getAttribute('data-url');
+
+    if (currentTrackId === code) {
+      audio.paused ? audio.play() : audio.pause();
+      return;
+    }
+
+    document.querySelectorAll('.action-play').forEach(function (b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
+    document.querySelectorAll('.inline-player').forEach(function (p) { p.classList.remove('active'); });
+
+    currentTrackId = code;
+    audio.src = url;
+    audio.play().catch(function() {});
+    var player = document.getElementById('player-' + code);
+    if (player) player.classList.add('active');
+  });
+
+  if (audio) {
+    audio.addEventListener('play', function () {
+      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+      if (b) { b.innerHTML = '❚❚'; b.classList.add('playing'); }
     });
-  })();
-
-  (function () {
-    var audio = document.getElementById('mainAudio');
-    var currentTrackId = null;
-    var PREVIEW_BASE = "https://my-store-backend.noelgrass.workers.dev/preview";
-
-    var TRACKS = [
-      { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
-      { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF04", title: "Theme 4", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF04.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF05", title: "Theme 5", desc: "Ethnic and Orchestral",    duration: "African · 1:38",   file: "AF05.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
-      { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
-      { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC04", title: "Theme 4", desc: "Ethnic and Orchestral",    duration: "Modern · 2:03",    file: "MC04.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
-    ];
-
-    function buildPreviewUrl(t) {
-      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
-    }
-
-    function formatTime(seconds) {
-      if (isNaN(seconds)) return "0:00";
-      var m = Math.floor(seconds / 60);
-      var s = Math.floor(seconds % 60);
-      return m + ":" + (s < 10 ? "0" : "") + s;
-    }
-
-    function renderTracks() {
-      document.querySelectorAll('.track-list[data-category]').forEach(function(list) {
-        var cat = list.getAttribute('data-category');
-        var items = TRACKS.filter(function(t) { return t.cat === cat; });
-        
-        list.innerHTML = items.map(function(t) {
-          var url = buildPreviewUrl(t);
-          return '' +
-            '<div class="track" id="track-' + t.code + '">' +
-              '<div class="track-info">' +
-                '<span class="track-numeral">' + t.code + '</span>' +
-                '<span class="track-title">' + t.title + ' <span class="track-desc">(' + t.desc + ')</span></span>' +
-                '<span class="track-meta">' + t.duration + '</span>' +
-              '</div>' +
-              '<div class="track-actions">' +
-                '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
-                '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Rent</button>' +
-              '</div>' +
-              '<div class="inline-player" id="player-' + t.code + '">' +
-                '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
-                '<div class="player-time">0:00</div>' +
-              '</div>' +
-            '</div>';
-        }).join('');
-
-        var countEl = document.querySelector('.mood-count[data-count-for="' + cat + '"]');
-        if (countEl) {
-          var n = items.length;
-          countEl.textContent = n + (n === 1 ? " track" : " tracks");
-        }
-      });
-    }
-
-    function attachHandlers() {
-      document.querySelectorAll('.action-play').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-          e.preventDefault();
-          var code = this.getAttribute('data-code');
-          var url = this.getAttribute('data-url');
-          
-          if (currentTrackId === code) {
-            if (audio.paused) {
-              audio.play();
-            } else {
-              audio.pause();
-            }
-          } else {
-            document.querySelectorAll('.action-play').forEach(function(b) { 
-              b.innerHTML = '▶'; 
-              b.classList.remove('playing'); 
-            });
-            document.querySelectorAll('.inline-player').forEach(function(p) { 
-              p.classList.remove('active'); 
-            });
-            
-            currentTrackId = code;
-            audio.src = url;
-            audio.play().catch(function(e) { console.log("Autoplay blocked"); });
-            
-            document.getElementById('player-' + code).classList.add('active');
-          }
-        });
-      });
-
-      document.querySelectorAll('.js-buy').forEach(function (btn) {
-        btn.addEventListener('click', function (e) { e.preventDefault(); openCheckout(btn); });
-      });
-    }
-
-    audio.addEventListener('play', function() {
-      if (!currentTrackId) return;
-      var btn = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-      if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
+    audio.addEventListener('pause', function () {
+      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+      if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
     });
-
-    audio.addEventListener('pause', function() {
-      if (!currentTrackId) return;
-      var btn = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-      if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
-    });
-
-    audio.addEventListener('timeupdate', function() {
+    audio.addEventListener('timeupdate', function () {
       if (!currentTrackId) return;
       var player = document.getElementById('player-' + currentTrackId);
       if (!player) return;
-      var pct = (audio.currentTime / audio.duration) * 100;
-      player.querySelector('.player-progress-bar').style.width = pct + '%';
-      player.querySelector('.player-time').innerText = formatTime(audio.duration - audio.currentTime);
+      var pct = (audio.currentTime / (audio.duration || 1)) * 100;
+      var bar = player.querySelector('.player-progress-bar');
+      var time = player.querySelector('.player-time');
+      if (bar) bar.style.width = pct + '%';
+      if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
     });
-
-    audio.addEventListener('ended', function() {
-      if (!currentTrackId) return;
-      var btn = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+    audio.addEventListener('ended', function () {
+      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
       var player = document.getElementById('player-' + currentTrackId);
-      if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
-      if (player) { 
-        player.querySelector('.player-progress-bar').style.width = '0%'; 
+      if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
+      if (player) {
+        player.querySelector('.player-progress-bar').style.width = '0%';
         player.querySelector('.player-time').innerText = '0:00';
         player.classList.remove('active');
       }
       currentTrackId = null;
     });
+  }
 
-    // --- Checkout Logic ---
-    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
-    var STORAGE_KEY = "noelgrass_email";
-    var modal      = document.getElementById('checkoutModal');
-    var modalTitle = document.getElementById('checkoutTitle');
-    var modalPrice = document.getElementById('checkoutPrice');
-    var emailInput = document.getElementById('checkoutEmail');
-    var errorEl    = document.getElementById('checkoutError');
-    var submitBtn  = document.getElementById('checkoutSubmit');
-    var cancelBtn  = document.getElementById('checkoutCancel');
-    var closeBtn   = document.getElementById('checkoutClose');
-    var successModal   = document.getElementById('successModal');
-    var successDoneBtn = document.getElementById('successDone');
-    var successRefEl   = document.getElementById('successRef');
-    var downloadBtn    = document.getElementById('downloadLinkBtn');
-    var pendingBtn = null;
+  // ---------- CHECKOUT ----------
+  var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
+  var STORAGE_KEY = "noelgrass_email";
+  var modal      = document.getElementById('checkoutModal');
+  var modalTitle = document.getElementById('checkoutTitle');
+  var modalPrice = document.getElementById('checkoutPrice');
+  var emailInput = document.getElementById('checkoutEmail');
+  var errorEl    = document.getElementById('checkoutError');
+  var submitBtn  = document.getElementById('checkoutSubmit');
+  var cancelBtn  = document.getElementById('checkoutCancel');
+  var closeBtn   = document.getElementById('checkoutClose');
+  var successModal   = document.getElementById('successModal');
+  var successDoneBtn = document.getElementById('successDone');
+  var successRefEl   = document.getElementById('successRef');
+  var downloadBtn    = document.getElementById('downloadLinkBtn');
+  var pendingBtn = null;
 
-    function showSuccess() { successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
-    function hideSuccess() { successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
-    successDoneBtn.addEventListener('click', hideSuccess);
-    successModal.addEventListener('click', function (e) { if (e.target === successModal) hideSuccess(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && successModal.classList.contains('open')) { hideSuccess(); } });
+  function showError(m) { if (errorEl) { errorEl.textContent = m; errorEl.classList.add('visible'); } }
+  function clearError() { if (errorEl) { errorEl.textContent = ''; errorEl.classList.remove('visible'); } }
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-    function formatPrice(amountSmallest, currency) { var major = amountSmallest / 100; return currency + ' ' + major.toLocaleString(); }
-    function showError(msg) { errorEl.textContent = msg; errorEl.classList.add('visible'); }
-    function clearError() { errorEl.textContent = ''; errorEl.classList.remove('visible'); }
+  function openCheckout(btn) {
+    pendingBtn = btn;
+    modalTitle.textContent = btn.getAttribute('data-title') || 'Jingle';
+    var amt = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+    var cur = btn.getAttribute('data-currency') || 'KES';
+    modalPrice.textContent = cur + ' ' + (amt / 100).toLocaleString();
+    clearError();
+    var saved = ''; try { saved = localStorage.getItem(STORAGE_KEY) || ''; } catch (e) {}
+    emailInput.value = saved;
+    modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('no-scroll');
+    setTimeout(function () { emailInput.focus(); }, 120);
+  }
 
-    function openCheckout(btn) {
-      pendingBtn = btn;
-      var title    = btn.getAttribute('data-title')    || 'Jingle';
-      var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
-      var currency = btn.getAttribute('data-currency') || 'KES';
-      modalTitle.textContent = title;
-      modalPrice.textContent = formatPrice(amount, currency);
-      clearError();
-      var saved = '';
-      try { saved = localStorage.getItem(STORAGE_KEY) || ''; } catch (e) {}
-      emailInput.value = saved;
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      setTimeout(function () { emailInput.focus(); if (saved) emailInput.select(); }, 120);
+  function closeCheckout() {
+    modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll'); clearError();
+  }
+
+  document.addEventListener('click', function (e) {
+    var buyBtn = e.target.closest('.js-buy');
+    if (buyBtn) { e.preventDefault(); openCheckout(buyBtn); }
+  });
+
+  if (submitBtn) submitBtn.addEventListener('click', function () {
+    if (!pendingBtn) return;
+    var email = (emailInput.value || '').trim();
+    if (!email) { showError('Please enter your email address.'); emailInput.focus(); return; }
+    if (!isValidEmail(email)) { showError("That email doesn't look right."); emailInput.focus(); return; }
+    try { localStorage.setItem(STORAGE_KEY, email); } catch (e) {}
+
+    var btn = pendingBtn;
+    var title = btn.getAttribute('data-title') || 'Jingle';
+    var amount = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+    var currency = btn.getAttribute('data-currency') || 'KES';
+    var productId = btn.getAttribute('data-id') || '';
+
+    closeCheckout();
+
+    if (typeof PaystackPop === 'undefined') {
+      alert("Payment system failed to load. Please refresh.");
+      return;
     }
 
-    function closeCheckout() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('no-scroll');
-      clearError();
-    }
-
-    function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
-
-    function proceedToPaystack() {
-      if (!pendingBtn) return;
-      var email = (emailInput.value || '').trim();
-      if (!email) { showError('Please enter your email address.'); emailInput.focus(); return; }
-      if (!isValidEmail(email)) { showError('That email doesn\'t look right. Please check.'); emailInput.focus(); return; }
-      try { localStorage.setItem(STORAGE_KEY, email); } catch (e) {}
-
-      var btn      = pendingBtn;
-      var title    = btn.getAttribute('data-title')    || 'Jingle';
-      var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
-      var currency = btn.getAttribute('data-currency') || 'KES';
-      var productId = btn.getAttribute('data-id') || '';
-
-      closeCheckout();
-
+    try {
       var handler = PaystackPop.setup({
-        key: PAYSTACK_PUBLIC_KEY,
-        email: email,
-        amount: amount,
-        currency: currency,
-        metadata: {
-          product_id: productId,
-          custom_fields: [{ display_name: "Product", variable_name: "product", value: title }]
-        },
+        key: PAYSTACK_PUBLIC_KEY, email: email, amount: amount, currency: currency,
+        metadata: { product_id: productId, custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
         callback: function (response) {
-          showSuccess();
+          successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false');
+          document.body.classList.add('no-scroll');
           var ref = response.reference;
-          var formattedRef = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
-          successRefEl.textContent = formattedRef;
+          successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
           downloadBtn.innerText = "Generating link...";
-          downloadBtn.style.opacity = "0.5";
-          downloadBtn.style.pointerEvents = "none";
-
+          downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
           fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
+            method: "POST", headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ reference: response.reference })
-          })
-          .then(res => res.json())
-          .then(data => {
+          }).then(function (r) { return r.json(); }).then(function (data) {
             if (data.success) {
               downloadBtn.href = data.downloadUrl;
               downloadBtn.innerText = "Download " + data.title + ".zip";
-              downloadBtn.style.opacity = "1";
-              downloadBtn.style.pointerEvents = "auto";
-            } else {
-              alert("Could not generate download link. Please use the 'Already Purchased' box.");
-            }
-          })
-          .catch(err => {
-            console.error(err);
-            alert("Network error. Please use the 'Already Purchased' box.");
-          });
+              downloadBtn.style.opacity = "1"; downloadBtn.style.pointerEvents = "auto";
+            } else { alert("Could not generate download link."); }
+          }).catch(function () { alert("Network error."); });
         },
         onClose: function () {}
       });
-
       handler.openIframe();
-    }
+    } catch (err) { alert("Payment error: " + err.message); }
+  });
 
-    submitBtn.addEventListener('click', proceedToPaystack);
-    emailInput.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); proceedToPaystack(); } });
-    emailInput.addEventListener('input', clearError);
-    cancelBtn.addEventListener('click', closeCheckout);
-    closeBtn.addEventListener('click', closeCheckout);
-    modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
+  if (cancelBtn) cancelBtn.addEventListener('click', closeCheckout);
+  if (closeBtn) closeBtn.addEventListener('click', closeCheckout);
+  if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
+  if (successDoneBtn) successDoneBtn.addEventListener('click', function () {
+    successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('no-scroll');
+  });
+  if (successModal) successModal.addEventListener('click', function (e) { if (e.target === successModal) successModal.classList.remove('open'); });
 
-    // --- Recovery Box Logic ---
-    var recBtn = document.getElementById('recoveryBtn');
-    var recInput = document.getElementById('recoveryRef');
-    var recError = document.getElementById('recoveryError');
+  // ---------- RECOVERY ----------
+  var recBtn = document.getElementById('recoveryBtn');
+  var recInput = document.getElementById('recoveryRef');
+  var recError = document.getElementById('recoveryError');
+  if (recInput) recInput.addEventListener('input', function () {
+    var val = this.value.replace(/-/g, '');
+    var parts = val.match(/.{1,4}/g);
+    this.value = parts ? parts.join('-') : val;
+  });
+  if (recBtn) recBtn.addEventListener('click', function () {
+    var ref = recInput.value.trim();
+    if (!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
+    recBtn.innerText = "Verifying..."; recBtn.disabled = true; recError.style.display = "none";
+    fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ reference: ref })
+    }).then(function (r) { return r.json(); }).then(function (data) {
+      if (data.success) window.location.href = data.downloadUrl;
+      else { recError.innerText = "Invalid reference or payment incomplete."; recError.style.display = "block"; }
+    }).catch(function () {
+      recError.innerText = "Network error. Please try again."; recError.style.display = "block";
+    }).finally(function () { recBtn.innerText = "Generate Fresh Link"; recBtn.disabled = false; });
+  });
 
-    recInput.addEventListener('input', function(e) {
-      var val = this.value.replace(/-/g, '');
-      var newVal = val.match(/.{1,4}/g);
-      if (newVal) { this.value = newVal.join('-'); } else { this.value = val; }
-    });
-
-    recBtn.addEventListener('click', function() {
-      var ref = recInput.value.trim();
-      if(!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
-
-      recBtn.innerText = "Verifying...";
-      recBtn.style.opacity = "0.5";
-      recBtn.disabled = true;
-      recError.style.display = "none";
-
-      fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reference: ref })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          window.location.href = data.downloadUrl;
-        } else {
-          recError.innerText = "Invalid reference or payment incomplete.";
-          recError.style.display = "block";
-        }
-      })
-      .catch(err => {
-        recError.innerText = "Network error. Please try again.";
-        recError.style.display = "block";
-      })
-      .finally(() => {
-        recBtn.innerText = "Generate Fresh Link";
-        recBtn.style.opacity = "1";
-        recBtn.disabled = false;
-      });
-    });
-
-    // --- Smooth scroll helpers ---
-    var topLink = document.getElementById('heroTopLink');
-    if (topLink) {
-      topLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        var target = document.querySelector('.recovery-box');
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-
-    var successRecLink = document.getElementById('successRecoveryLink');
-    if (successRecLink) {
-      successRecLink.addEventListener('click', function(e) {
-        e.preventDefault();
-        hideSuccess();
-        var target = document.querySelector('.recovery-box');
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
-      });
-    }
-
-    if (window.location.hash) {
-      window.scrollTo(0, 0);
-    }
-
-    // --- Initialization ---
-    renderTracks();
-    attachHandlers();
-  })();
+  // ---------- BOOT ----------
+  renderTracks();
+  if (window.location.hash) window.scrollTo(0, 0);
+})();
 </script>
 
 </body>
