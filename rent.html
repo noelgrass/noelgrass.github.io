@@ -505,7 +505,7 @@
     <p class="hero-subhead">Original music for productions in Kenya, East Africa, pan-Africa, and worldwide.</p>
     <p class="hero-line">Jingles and cinematic scores. Licensed directly.</p>
 
-    <!-- 1. THE EDUCATIONAL BOX (Moved to the top) -->
+    <!-- 1. THE EDUCATIONAL BOX -->
     <details class="licensing-intro">
       <summary>
         <span class="intro-eyebrow">New to Licensing?</span>
@@ -568,9 +568,12 @@
       <p class="section-poetic">Short-form music for brand, broadcast, and identity across Africa.</p>
       <p class="section-pricing">From Ksh 5,000</p>
 
-      <div id="hubTrackList">
-        <!-- JS will inject the category groups and tracks here -->
-      </div>
+      <!-- ═══════════════════════════════════════════════════════════════
+           🎵 HUB PREVIEW LIST — rendered from HUB_DATA (bottom of file)
+           ⚠️ Do NOT add categories or tracks here by hand.
+           ➕ To add a PREVIEW track, edit the HUB_DATA array below.
+           ═══════════════════════════════════════════════════════════════ -->
+      <div id="hubTrackList"></div>
 
       <div style="text-align: center; margin-top: 40px;">
         <a href="rent-jingles" class="view-all-btn">View more categories and full catalogue →</a>
@@ -586,6 +589,9 @@
       <p class="muted-message">The film score catalogue is currently being updated. Please check back soon.</p>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
+         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -653,7 +659,9 @@
 <audio id="mainAudio"></audio>
 
 <script>
-  // ---------- MENU & UI LOGIC ----------
+  // ═══════════════════════════════════════════════════════════════
+  // 🧭 MENU & UI LOGIC
+  // ═══════════════════════════════════════════════════════════════
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
@@ -712,11 +720,39 @@
     }
   })();
 
-  // ---------- APP LOGIC (RENT PAGE) ----------
+  // ═══════════════════════════════════════════════════════════════
+  // 🎵 APP LOGIC (RENT PAGE)
+  // ═══════════════════════════════════════════════════════════════
   (function () {
     "use strict";
 
-    // Group definitions and their first track
+    /* ═══════════════════════════════════════════════════════════════
+       🎵 HUB_DATA — the preview tracks shown on this page
+       
+       ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO CHANGE PREVIEW TRACKS.
+       
+       ➕ To ADD a category preview → paste one block below
+       ➖ To DELETE → delete its block
+       📝 To EDIT   → change the values in place
+
+       📁 Audio files live at: /audio/{folder}/{file}
+          Example: /audio/af/AF01.mp3
+       
+       Fields:
+         cat       = internal key (used for the id)
+         label     = category name shown above the track
+         count     = small text next to "View all" (e.g. "8 tracks")
+         track     = the actual preview track (see fields below)
+       
+       Track fields:
+         code      = unique ID (e.g. "AF01")
+         title     = track title
+         desc      = instrumentation notes
+         duration  = "Category · 0:32"
+         file      = "AF01.mp3"
+         folder    = audio subfolder ("af", "cr", "ac", "mc")
+         amount    = price in smallest currency unit (500000 = KSh 5,000)
+       ═══════════════════════════════════════════════════════════════ */
     var HUB_DATA = [
       {
         cat: "anthems",
@@ -732,6 +768,11 @@
       }
     ];
 
+    /* ═══════════════════════════════════════════════════════════════
+       ⚙️ PREVIEW URL — where audio previews are served from
+       ⚠️ If you upload a NEW version of an audio file and it still
+          sounds like the old one, bump the v= value (final5 → final6)
+       ═══════════════════════════════════════════════════════════════ */
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) { return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder); }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
@@ -819,8 +860,7 @@
         var player = document.getElementById('player-' + code);
         if (player) player.classList.add('active');
       } else {
-        // Click-outside logic: if they clicked anything other than the play button
-        // or the progress bar, pause the track.
+        // Click-outside logic
         var isProgressBar = e.target.closest('.player-progress-wrap');
         if (!isProgressBar && currentTrackId) {
           stopCurrentTrack();
@@ -920,6 +960,10 @@
       });
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       💳 PAYSTACK — payment configuration
+       ⚠️ Only the PUBLIC key belongs here.
+       ═══════════════════════════════════════════════════════════════ */
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
     var modal      = document.getElementById('checkoutModal');
@@ -995,6 +1039,9 @@
             successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
             downloadBtn.innerText = "Generating link...";
             downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
+            /* ═══════════════════════════════════════════════════════════
+               🔐 VERIFY ENDPOINT
+               ═══════════════════════════════════════════════════════════ */
             fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
               method: "POST", headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ reference: response.reference })
