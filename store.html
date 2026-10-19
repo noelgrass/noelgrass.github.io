@@ -39,12 +39,6 @@
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🎬 YOUTUBE IFRAME API — enables autoplay with sound on Preview
-     Do not remove. Required for the video modal to auto-play.
-     ═══════════════════════════════════════════════════════════════ -->
-<script src="https://www.youtube.com/iframe_api"></script>
-
 <style>
   :root {
     --bg: #000000;
@@ -193,30 +187,6 @@
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .format-label { color: rgba(154,149,140,0.3); }
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .badge { opacity: 0.35; }
 
-  .video-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
-  .video-modal.open { opacity: 1; pointer-events: auto; }
-  .video-modal-inner { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16 / 9; border: 1px solid var(--gold-soft); background: #000; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.94); transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); }
-  .video-modal.open .video-modal-inner { transform: scale(1); }
-  .video-modal-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-
-  /* YouTube IFrame API mount — same footprint as the old iframe */
-  #playerMount {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-  }
-  #playerMount iframe {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    border: 0;
-  }
-
-  .video-close { position: absolute; top: -46px; right: 0; background: transparent; border: 0; color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; padding: 6px 2px; transition: color 0.3s ease, text-shadow 0.4s ease; }
-  .video-close:hover { color: #FCFCF7; text-shadow: 0 0 14px rgba(197,168,128,0.5); }
-
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -315,7 +285,6 @@
     .menu-section { margin-bottom: 20px; }
     .menu-links { gap: 16px; }
     .menu-bottom { margin-top: 10px; }
-    .video-close { top: -40px; }
     .footer-cta { margin-top: 60px; padding-top: 40px; }
     .footer-cta .join-line { font-size: 1em; }
     .footer-cta .secondary-line { font-size: 0.88em; }
@@ -407,7 +376,7 @@
            💿 SOLO PIANO — rendered from STORE_ITEMS["solo-piano"]
            📁 Images live in: images/discography/
            ➕ To add a release, edit STORE_ITEMS["solo-piano"] below.
-              The count, Preview, and Buy buttons update automatically.
+              The count and Buy buttons update automatically.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
@@ -535,17 +504,6 @@
   </div>
 </div>
 
-<div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video preview">
-  <div class="video-modal-inner" id="videoModalInner">
-    <button type="button" class="video-close" id="videoClose">Close ✕</button>
-    <!-- ═══════════════════════════════════════════════════════════
-         ⚙️ MEDIA MOUNT — YouTube API player OR fallback iframe
-         Do not modify this element's id/structure.
-         ═══════════════════════════════════════════════════════════ -->
-    <div id="playerMount"></div>
-  </div>
-</div>
-
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
     <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
@@ -592,7 +550,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU + ACCORDION + MEDIA MODAL (YT API + iframe)
+     🧭 SCRIPT 1 — MENU + ACCORDION (YouTube modal removed)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -668,116 +626,6 @@
       });
     });
   })();
-
-  /* ═══════════════════════════════════════════════════════════════
-     🎬 MEDIA MODAL — BULLETPROOF YOUTUBE AUTOPLAY
-
-     Tries the YouTube IFrame API for real autoplay-with-sound.
-     Falls back to a plain iframe if the API fails or loads slowly.
-
-     Exposed as window.openVideoModal — used by the render script.
-     ═══════════════════════════════════════════════════════════════ */
-  (function() {
-    var modal       = document.getElementById('videoModal');
-    var playerMount = document.getElementById('playerMount');
-    var closeBtn    = document.getElementById('videoClose');
-
-    var ytPlayer = null;
-    var pendingVideoId = null;
-    var apiFallbackTimer = null;
-
-    function destroyYouTube() {
-      if (apiFallbackTimer) { clearTimeout(apiFallbackTimer); apiFallbackTimer = null; }
-      if (ytPlayer && typeof ytPlayer.destroy === 'function') {
-        try { ytPlayer.destroy(); } catch (e) {}
-      }
-      ytPlayer = null;
-    }
-
-    function mountPlainYouTubeIframe(videoId) {
-      destroyYouTube();
-      playerMount.innerHTML = '';
-      var iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1';
-      iframe.setAttribute('title', 'YouTube video preview');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
-      iframe.setAttribute('allowfullscreen', '');
-      playerMount.appendChild(iframe);
-    }
-
-    function mountYouTube(videoId) {
-      destroyYouTube();
-      playerMount.innerHTML = '';
-
-      if (typeof YT === 'undefined' || typeof YT.Player !== 'function') {
-        pendingVideoId = videoId;
-        apiFallbackTimer = setTimeout(function() {
-          if (typeof YT === 'undefined' || typeof YT.Player !== 'function') {
-            pendingVideoId = null;
-            mountPlainYouTubeIframe(videoId);
-          }
-        }, 1200);
-        return;
-      }
-
-      try {
-        ytPlayer = new YT.Player('playerMount', {
-          videoId: videoId,
-          playerVars: { autoplay: 1, rel: 0, playsinline: 1, modestbranding: 1 },
-          events: {
-            onReady: function(event) {
-              try { event.target.playVideo(); } catch (e) {}
-            }
-          }
-        });
-
-        apiFallbackTimer = setTimeout(function() {
-          var hasIframe = playerMount.querySelector('iframe');
-          if (!hasIframe) mountPlainYouTubeIframe(videoId);
-        }, 1200);
-
-      } catch (err) {
-        console.warn('YT API player failed, using iframe fallback:', err);
-        mountPlainYouTubeIframe(videoId);
-      }
-    }
-
-    function openVideoModal(videoId) {
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      mountYouTube(videoId);
-    }
-
-    function closeVideoModal() {
-      modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('no-scroll');
-      destroyYouTube();
-      playerMount.innerHTML = '';
-      pendingVideoId = null;
-    }
-
-    window.onYouTubeIframeAPIReady = function() {
-      if (pendingVideoId) {
-        var id = pendingVideoId;
-        pendingVideoId = null;
-        if (apiFallbackTimer) { clearTimeout(apiFallbackTimer); apiFallbackTimer = null; }
-        mountYouTube(id);
-      }
-    };
-
-    /* ═══════════════════════════════════════════════════════════
-       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
-       ═══════════════════════════════════════════════════════════ */
-    window.openVideoModal = openVideoModal;
-
-    closeBtn.addEventListener('click', closeVideoModal);
-    modal.addEventListener('click', function(e) { if (e.target === modal) closeVideoModal(); });
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape' && modal.classList.contains('open')) closeVideoModal();
-    });
-  })();
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
@@ -785,11 +633,6 @@
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
-    /* ═══════════════════════════════════════════════════════════
-       💳 PAYSTACK — payment configuration
-       ⚠️ Only the PUBLIC key belongs here. Never put your secret key
-          in any file that ends up on the website.
-       ═══════════════════════════════════════════════════════════ */
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var SALES_PAUSED = false;
     window.SALES_PAUSED = SALES_PAUSED;
@@ -850,9 +693,6 @@
       setTimeout(function () { emailInput.focus(); if (saved) emailInput.select(); }, 120);
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
-       ═══════════════════════════════════════════════════════════ */
     window.openCheckout = openCheckout;
 
     function closeCheckout() {
@@ -900,11 +740,6 @@
           downloadBtn.style.opacity = "0.5";
           downloadBtn.style.pointerEvents = "none";
 
-          /* ═══════════════════════════════════════════════════════════
-             🔐 VERIFY ENDPOINT — backend that checks the reference
-             and returns a download link. Do not change unless you
-             change the server.
-             ═══════════════════════════════════════════════════════════ */
           fetch("https://my-store-backend.noelgrass.workers.dev/verify", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -940,10 +775,7 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) { closeCheckout(); } });
 
-    /* ═══════════════════════════════════════════════════════════
-       🔑 RECOVERY BOX — for returning customers whose link expired
-       Uses the same /verify endpoint as checkout, above.
-       ═══════════════════════════════════════════════════════════ */
+    /* RECOVERY BOX */
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
@@ -988,92 +820,43 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
-
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / DELETE / REORDER ITEMS.
-     Add ONE line to any category array. The card, Preview + Buy
-     buttons, and "X releases" count update automatically.
-
-     ➕ To ADD       → paste one line below
-     ➖ To DELETE    → delete its line
-     🔁 To REORDER   → move the line up/down
-     📝 To EDIT      → change the line in place
-
-     📁 Images live in: images/discography/
-
-     Item fields:
-       img      = path to cover image (images/discography/FILE.jpg)
-       alt      = accessibility / SEO text
-       title    = album / EP / single title
-       format   = "Solo Piano" | "Orchestral" | "Experimental" | "Ambient"
-       badge    = "Album" | "EP" | "Single"
-       video    = YouTube video ID (the part after v= in the URL)
-       id       = product slug (sent to Paystack + backend)
-       amount   = price in smallest currency unit (50000 = KSh 500)
-       currency = "KES" | "USD" | "GBP" | "EUR" ...
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   var STORE_ITEMS = {
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 FEATURED / LATEST RELEASE — top of the page
-       📁 Image in: images/discography/
-       ➕ To swap the featured release, edit this object only.
-       ═══════════════════════════════════════════════════════════ */
     featured: {
       img: "images/discography/into-a-stillness.jpg",
       alt: "Into A Stillness That Answers — EP by Noel Grass",
       title: "Into A Stillness That Answers",
       badge: "EP",
-      video: "T6jDLG2Acbk",
       id: "into-a-stillness",
       amount: 50000,
       currency: "KES"
     },
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 SOLO PIANO — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
     "solo-piano": [
-      { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    video: "T6jDLG2Acbk", id: "into-a-stillness",    amount: 50000, currency: "KES" },
-      { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    video: "dgQjOQKJwnw", id: "where-i-begin-again", amount: 50000, currency: "KES" },
-      { img: "images/discography/the-impressionist.jpg",   alt: "The Impressionist",             title: "The Impressionist",             format: "Solo Piano",   badge: "Album", video: "hQsG4VxJSws", id: "the-impressionist",   amount: 90000, currency: "KES" },
-      { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", video: "f9vpu1eTEYE", id: "the-impressionist-2", amount: 90000, currency: "KES" }
+      { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    id: "into-a-stillness",    amount: 50000, currency: "KES" },
+      { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    id: "where-i-begin-again", amount: 50000, currency: "KES" },
+      { img: "images/discography/the-impressionist.jpg",   alt: "The Impressionist",             title: "The Impressionist",             format: "Solo Piano",   badge: "Album", id: "the-impressionist",   amount: 90000, currency: "KES" },
+      { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", id: "the-impressionist-2", amount: 90000, currency: "KES" }
     ],
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 ORCHESTRAL — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
     "orchestral": [
-      { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY", id: "introspect",        amount: 50000, currency: "KES" },
-      { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", video: "Ksw5e9IyGzs", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
+      { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    id: "introspect",        amount: 50000, currency: "KES" },
+      { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
     ],
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 EXPERIMENTAL — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
     "experimental": [
-      { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A", id: "agent-254",           amount: 50000, currency: "KES" },
-      { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", video: "iLW3pvDHahI", id: "the-impressionist-3", amount: 90000, currency: "KES" }
+      { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    id: "agent-254",           amount: 50000, currency: "KES" },
+      { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", id: "the-impressionist-3", amount: 90000, currency: "KES" }
     ],
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 AMBIENT — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
     "ambient": [
-      { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", video: "zNHjyFSfxuc", id: "when-stars-align", amount: 20000, currency: "KES" }
+      { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", id: "when-stars-align", amount: 20000, currency: "KES" }
     ]
   };
 
   (function renderStore() {
-    // ---- 1. Render the featured / latest release block ----
     var feat = STORE_ITEMS.featured;
     var featMount = document.getElementById('featuredRelease');
     var featBadge = document.querySelector('[data-featured-badge]');
@@ -1085,7 +868,6 @@
         '</div>' +
         '<p class="feature-title">' + feat.title + '</p>' +
         '<div class="feature-actions">' +
-          '<button type="button" class="action-link js-preview" data-video="' + feat.video + '" aria-label="Preview ' + feat.title + '">Preview</button>' +
           '<button type="button" class="action-link js-buy" ' +
             'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
             'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '" ' +
@@ -1094,7 +876,6 @@
       if (featBadge) featBadge.textContent = feat.badge;
     }
 
-    // ---- 2. Render each category gallery + auto-count ----
     Object.keys(STORE_ITEMS).forEach(function(category) {
       if (category === 'featured') return;
       var gallery = document.querySelector('.store-gallery[data-category="' + category + '"]');
@@ -1111,7 +892,6 @@
             '<div class="caption">' + item.title + '</div>' +
             '<div class="format-label">' + item.format + '</div>' +
             '<div class="item-actions">' +
-              '<button type="button" class="action-link js-preview" data-video="' + item.video + '" aria-label="Preview ' + item.title + '">Preview</button>' +
               '<button type="button" class="action-link js-buy" ' +
                 'data-id="' + item.id + '" data-title="' + item.title + '" ' +
                 'data-amount="' + item.amount + '" data-currency="' + item.currency + '" ' +
@@ -1126,15 +906,6 @@
         var n = items.length;
         countEl.textContent = n + (n === 1 ? ' release' : ' releases');
       }
-    });
-
-    // ---- 3. Wire up dynamic buttons ----
-    document.querySelectorAll('.js-preview').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
-        e.preventDefault();
-        var id = btn.getAttribute('data-video');
-        if (id && window.openVideoModal) window.openVideoModal(id);
-      });
     });
 
     document.querySelectorAll('.js-buy').forEach(function(btn) {
