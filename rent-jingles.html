@@ -193,7 +193,9 @@
   .page { max-width: 900px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--offwhite); margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-  .section-pricing { font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
+
+  /* Banner strip — matches the Rent Scores page. */
+  .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
   .info-box { max-width: 600px; margin: 0 auto 50px; animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
   .info-box p { font-family: 'Playfair Display', Georgia, serif; font-style: normal; font-size: 1em; line-height: 1.75; color: var(--muted); margin-bottom: 12px; }
@@ -381,6 +383,7 @@
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 30px; }
+    .section-banner { font-size: 0.6em; letter-spacing: 0.12em; margin-bottom: 30px; line-height: 1.6; }
     .hero-subhead { font-size: 1.1em; }
     .back-link { margin-bottom: 30px; }
     .license-link { margin-left: 0; margin-bottom: 30px; display: block; }
@@ -482,7 +485,12 @@
 
     <h1>Jingles</h1>
     <p class="hero-subhead">Short-form music for brand, broadcast, and identity across Africa and worldwide.</p>
-    <p class="section-pricing">Ksh 5,000 per track</p>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         📢 BANNER STRIP — matches the Rent Scores page.
+         Says what to do, how fast, how much, in one line.
+         ═══════════════════════════════════════════════════════════ -->
+    <p class="section-banner">Browse → Preview → License · Instant download · Ksh 5,000 per track</p>
 
     <div class="info-box">
       <p><strong>What you get:</strong> The high-quality master recording and a written commercial license for broadcast, online, and brand use. <a href="license">Read the full terms →</a></p>
