@@ -99,10 +99,12 @@
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
   .section-status { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 56px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
   
-  .how-it-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: left; max-width: 760px; margin: 0 auto 70px; padding: 44px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
+  .how-it-works { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: left; max-width: 760px; margin: 0 auto 30px; padding: 44px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
   .how-col { display: flex; flex-direction: column; gap: 8px; }
   .how-label { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.68em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-soft); }
   .how-text { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.95em; line-height: 1.6; color: var(--offwhite); margin: 0; }
+
+  .suite-explanation { max-width: 760px; margin: 0 auto 70px; font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; color: var(--offwhite); line-height: 1.7; animation: fadeUp 1s ease-out both; animation-delay: 0.75s; }
 
   .shelves { text-align: left; margin-top: 20px; }
   .shelf { border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
@@ -148,6 +150,10 @@
   .cue-play:hover { color: #FCFCF7; border-color: var(--gold); }
   .cue-play.playing { color: var(--gold-pale); border-color: var(--gold); }
 
+  .custom-link { text-align: center; margin: 60px 0 20px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); }
+  .custom-link a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; }
+  .custom-link a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
+
   /* CHECKOUT & SUCCESS MODALS */
   .checkout-modal, .success-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open, .success-modal.open { opacity: 1; pointer-events: auto; }
@@ -188,8 +194,9 @@
     h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 16px; }
     .hero-subhead { font-size: 1.02em; line-height: 1.6; }
     .section-status { font-size: 0.62em; letter-spacing: 0.15em; margin-bottom: 36px; }
-    .how-it-works { grid-template-columns: 1fr; gap: 26px; padding: 32px 0; margin-bottom: 50px; }
+    .how-it-works { grid-template-columns: 1fr; gap: 26px; padding: 32px 0; margin-bottom: 20px; }
     .how-text { font-size: 0.92em; }
+    .suite-explanation { font-size: 0.95em; margin-bottom: 50px; }
     .shelf summary { padding: 22px 0 16px; gap: 12px; }
     .shelf-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .shelf-indicator { margin-right: 10px; }
@@ -220,6 +227,7 @@
     .menu-section { margin-bottom: 20px; }
     .menu-links { gap: 16px; }
     .menu-bottom { margin-top: 10px; }
+    .custom-link { font-size: 1em; margin-top: 40px; }
     .signature { margin-top: 50px; }
     .signature-logo { height: 55px; }
     .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
@@ -289,14 +297,20 @@
       </div>
       <div class="how-col">
         <span class="how-label">License</span>
-        <p class="how-text">One price. Instant download.</p>
+        <p class="how-text">Ksh 8,000 per suite. Instant download.</p>
       </div>
     </div>
+
+    <p class="suite-explanation">Every score is licensed as a <strong>suite</strong> — a bundle of 3 distinct cues for that mood, available for a flat fee of <strong>Ksh 8,000</strong>.</p>
 
     <!-- ═══════════════════════════════════════════════════════════════
          🎼 SHELVES MOUNT — filled automatically by JavaScript
          ═══════════════════════════════════════════════════════════════ -->
     <div id="shelvesMount"></div>
+
+    <div class="custom-link">
+      Need something custom-made for your film? <a href="commission">Commission a Score →</a>
+    </div>
 
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
@@ -411,30 +425,43 @@
      🎵 SCRIPT 3 — SCORES ARRAY + AUTO-RENDER
      
      ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / DELETE SUITES.
+     
+     ➕ To ADD a suite → paste one line below
+     ➖ To DELETE      → delete its line
+     🔁 To REORDER     → move the line up/down
+     📝 To EDIT        → change the line in place
+     
+     Fields:
+       cat       = "tension" | "drama" | "place" | "quiet" | "modern" | "trailer"
+       code      = unique suite ID (e.g. "TN01") — used for file names
+       title     = display label (e.g. "Theme 1")
+       desc      = instrumentation notes in gold (e.g. "Synth · Cello · Violin")
+       duration  = display label (e.g. "Tension")
+       amount    = price in smallest currency unit (800000 = Ksh 8,000)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   var SCORES = [
     // ── TENSION & SUSPENSE ───────────────────────────────────────
-    { cat: "tension", code: "TN01", title: "Theme 1", desc: "Synth", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN02", title: "Theme 2", desc: "Synth · Cello · Violin · Percussion", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN03", title: "Theme 3", desc: "Cello · Percussion · Synth · Piano", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN04", title: "Theme 4", desc: "Synth · Piano · Cello", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN05", title: "Theme 5", desc: "Percussion · Cello", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN06", title: "Theme 6", desc: "Piano · Synth · Cello", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN07", title: "Theme 7", desc: "Strings · Percussion", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN08", title: "Theme 8", desc: "Violin · Percussion · Piano", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN09", title: "Theme 9", desc: "Synths", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN10", title: "Theme 10", desc: "Piano · Synth", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN11", title: "Theme 11", desc: "Percussions · Strings · Choir", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN12", title: "Theme 12", desc: "Synth · Piano", duration: "Tension", amount: "1000000" },
-    { cat: "tension", code: "TN13", title: "Theme 13", desc: "Synth · Piano", duration: "Tension", amount: "1000000" },
+    { cat: "tension", code: "TN01", title: "Theme 1", desc: "Synth", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN02", title: "Theme 2", desc: "Synth · Cello · Violin · Percussion", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN03", title: "Theme 3", desc: "Cello · Percussion · Synth · Piano", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN04", title: "Theme 4", desc: "Synth · Piano · Cello", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN05", title: "Theme 5", desc: "Percussion · Cello", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN06", title: "Theme 6", desc: "Piano · Synth · Cello", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN07", title: "Theme 7", desc: "Strings · Percussion", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN08", title: "Theme 8", desc: "Violin · Percussion · Piano", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN09", title: "Theme 9", desc: "Synths", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN10", title: "Theme 10", desc: "Piano · Synth", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN11", title: "Theme 11", desc: "Percussions · Strings · Choir", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN12", title: "Theme 12", desc: "Synth · Piano", duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN13", title: "Theme 13", desc: "Synth · Piano", duration: "Tension", amount: "800000" },
 
     // ── DRAMA & EMOTION ──────────────────────────────────────────
-    { cat: "drama", code: "DR01", title: "Theme 1", desc: "Synth · Cello", duration: "Drama", amount: "1000000" },
-    { cat: "drama", code: "DR02", title: "Theme 2", desc: "Synth · Piano · Strings", duration: "Drama", amount: "1000000" },
+    { cat: "drama", code: "DR01", title: "Theme 1", desc: "Synth · Cello", duration: "Drama", amount: "800000" },
+    { cat: "drama", code: "DR02", title: "Theme 2", desc: "Synth · Piano · Strings", duration: "Drama", amount: "800000" },
 
     // ── QUIET & STILL ────────────────────────────────────────────
-    { cat: "quiet", code: "QS01", title: "Theme 1", desc: "Synth · Piano", duration: "Quiet", amount: "1000000" }
+    { cat: "quiet", code: "QS01", title: "Theme 1", desc: "Synth · Piano", duration: "Quiet", amount: "800000" }
   ];
 
   /* ═══════════════════════════════════════════════════════════════
@@ -454,7 +481,7 @@
      🎬 SCRIPT 4 — RENDER + AUDIO ENGINE + PAYSTACK
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+  var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
   var VERIFY_ENDPOINT    = "https://rent-scores.noelgrass.workers.dev/verify";
   var STORAGE_KEY = "noelgrass_email";
 
@@ -550,7 +577,11 @@
       if (!currentCueId) return;
       var id = currentCueId;
       currentCueId = null;
-      if (audio) { audio.pause(); audio.currentTime = 0; }
+      if (audio) { 
+        audio.pause(); 
+        audio.src = "";
+        audio.load();
+      }
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       var cue = mount.querySelector('.cue[data-cue-id="' + id + '"]');
@@ -573,10 +604,25 @@
     }
 
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.suite')) {
+      if (!e.target.closest('.suite') && !e.target.closest('.action-preview')) {
         closeAllSuites();
       }
     });
+
+    function playCue(cueId, url) {
+      if (!audio) return;
+      
+      // Force stop and clear previous audio
+      audio.pause();
+      audio.src = "";
+      audio.load();
+
+      currentCueId = cueId;
+      audio.src = url;
+      audio.play().catch(function (err) { 
+        console.warn("Playback blocked:", err); 
+      });
+    }
 
     mount.addEventListener('click', function (e) {
       var previewBtn = e.target.closest('.action-preview');
@@ -597,12 +643,9 @@
           // Auto-play Cue 1
           var firstCueBtn = cues.querySelector('.cue-play');
           if (firstCueBtn) {
-            // Set up the audio source directly to bypass browser block
-            currentCueId = firstCueBtn.getAttribute('data-cue-id');
-            if (audio) {
-              audio.src = firstCueBtn.getAttribute('data-url');
-              audio.play().catch(function(err){ console.log("Audio blocked: ", err); });
-            }
+            var id = firstCueBtn.getAttribute('data-cue-id');
+            var url = firstCueBtn.getAttribute('data-url');
+            playCue(id, url);
           }
         } else {
           closeAllSuites();
@@ -619,12 +662,7 @@
           if (audio) audio.paused ? audio.play() : audio.pause();
           return;
         }
-        stopCue();
-        currentCueId = cueId;
-        if (audio) {
-          audio.src = url;
-          audio.play().catch(function (err) { console.error("Playback failed:", err); });
-        }
+        playCue(cueId, url);
         return;
       }
     });
