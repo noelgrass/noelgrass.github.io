@@ -394,13 +394,13 @@
   var PREVIEW_BASE = "https://rent-scores.noelgrass.workers.dev/preview";
   
   function buildPreviewUrl(code, cueNumber) {
-    // Lowercase the folder (e.g. 'TN01' -> 'tn')
+    // 1. Lowercase the prefix (e.g. 'TN01' -> 'tn')
     var prefix = code.substring(0, 2).toLowerCase();
     
-    // Build the folder path (e.g. 'tn/TN01')
+    // 2. Build the folder path exactly as it is in R2 (e.g. 'tn/TN01')
     var folder = prefix + "/" + code;
     
-    // Build the file name exactly as you named it (e.g. 'cue-1.mp3')
+    // 3. Build the filename exactly as you named it (e.g. 'cue-1.mp3')
     var file = "cue-" + cueNumber + ".mp3";
     
     return PREVIEW_BASE + "?folder=" + encodeURIComponent(folder) + "&file=" + encodeURIComponent(file) + "&v=final1";
@@ -539,7 +539,7 @@
     shelves.forEach(function (shelf) {
       shelf.addEventListener('toggle', function () {
         if (!shelf.open) return;
-        closeAllSuites(); // close suites when switching shelves
+        closeAllSuites();
         shelves.forEach(function (other) {
           if (other !== shelf && other.open) other.open = false;
         });
@@ -572,7 +572,6 @@
       });
     }
 
-    /* Click outside to collapse everything */
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.suite')) {
         closeAllSuites();
@@ -589,7 +588,6 @@
         
         var isOpen = cues.classList.contains('active');
         
-        // If clicking a new one, close any existing
         if (!isOpen) {
           closeAllSuites(); 
           
@@ -599,7 +597,12 @@
           // Auto-play Cue 1
           var firstCueBtn = cues.querySelector('.cue-play');
           if (firstCueBtn) {
-            firstCueBtn.click();
+            // Set up the audio source directly to bypass browser block
+            currentCueId = firstCueBtn.getAttribute('data-cue-id');
+            if (audio) {
+              audio.src = firstCueBtn.getAttribute('data-url');
+              audio.play().catch(function(err){ console.log("Audio blocked: ", err); });
+            }
           }
         } else {
           closeAllSuites();
@@ -644,7 +647,6 @@
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
         if (bar) bar.style.width = pct + '%';
         
-        // Auto-calculate time from audio file
         if (time && audio.duration) {
           time.textContent = fmt(audio.duration);
         }
