@@ -48,6 +48,47 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I rent a jingle for a Kenyan TV or radio commercial?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Noel Grass licenses original jingles directly to Kenyan brands, agencies, and production houses for TV, radio, online, and broadcast advertising campaigns. The catalogue is also licensed for East African, pan-African, and international productions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I own the jingle after renting it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You are granted a license to use the master recording in a specific campaign or project. The composition and master rights remain with the composer, Noel Grass."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I rent a jingle for an East African or international campaign?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The catalogue is licensed for campaigns across Kenya, East Africa, the wider African continent, and international markets."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How much does it cost to rent a jingle?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Jingle licensing starts at Ksh 5,000 per track for a single campaign. International licensing is available in USD, GBP, or EUR. Contact for rates. Full terms are available on the Rent page."
+      }
+    }
+  ]
+}
+</script>
+
 <style>
   :root {
     --bg: #000000;
@@ -66,6 +107,7 @@
   html.menu-lock { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
   html, body { color: var(--offwhite); scroll-behavior: smooth; }
   body { background: var(--bg); font-family: 'Playfair Display', Georgia, serif; font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body.no-scroll { overflow: hidden; }
   a { color: var(--gold); text-decoration: none; transition: color 0.25s ease; }
   a:hover { color: #FCFCF7; }
 
@@ -181,14 +223,14 @@
   .mood-group .track-list { padding-bottom: 10px; }
   .track-list { text-align: left; }
 
-  .track { 
-    display: grid; 
-    grid-template-columns: 1fr auto; 
-    gap: 20px; 
-    align-items: center; 
-    padding: 26px 0; 
-    border-bottom: 1px solid var(--rule); 
-    transition: border-color 0.4s ease; 
+  .track {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.4s ease;
   }
   .track:last-of-type { border-bottom: none; }
   .track:hover { border-bottom-color: var(--gold-soft); }
@@ -197,61 +239,61 @@
   .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; line-height: 1.4; }
   .track-text-container { display: flex; flex-direction: column; gap: 4px; }
   .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
-  
-  .track-desc { 
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 0.68em; 
-    font-style: normal; 
-    font-weight: 400; 
-    color: #a8a39a; 
+
+  .track-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68em;
+    font-style: normal;
+    font-weight: 400;
+    color: #a8a39a;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    line-height: 1.4; 
+    line-height: 1.4;
   }
-  
-  .track-meta { 
-    font-family: 'Montserrat', sans-serif; 
-    font-weight: 400; 
-    font-size: 0.72em; 
-    letter-spacing: 0.15em; 
-    text-transform: uppercase; 
-    color: var(--muted); 
-    margin-top: 4px; 
-    display: block; 
+
+  .track-meta {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.72em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+    display: block;
   }
 
   .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  
-  .action-play { 
+
+  .action-play {
     display: inline-flex; justify-content: center; align-items: center;
-    background: transparent; border: 1px solid rgba(185,151,92,0.3); 
+    background: transparent; border: 1px solid rgba(185,151,92,0.3);
     border-radius: 50%; width: 38px; height: 38px; padding-left: 3px;
-    font-size: 0.8em; color: var(--gold-soft); cursor: pointer; 
-    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    font-size: 0.8em; color: var(--gold-soft); cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
   }
   .action-play:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
   .action-play.playing { color: var(--gold-pale); border-color: var(--gold); }
 
-  .action-link { 
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; 
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); 
-    background: transparent; border: 1px solid rgba(185,151,92,0.45); 
-    padding: 9px 18px; cursor: pointer; position: relative; 
-    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; 
-    -webkit-tap-highlight-color: transparent; 
+  .action-link {
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);
+    background: transparent; border: 1px solid rgba(185,151,92,0.45);
+    padding: 9px 18px; cursor: pointer; position: relative;
+    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
   }
   .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
 
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
 
-  .player-progress-wrap { 
-    flex-grow: 1; 
-    height: 16px; 
+  .player-progress-wrap {
+    flex-grow: 1;
+    height: 16px;
     display: flex;
     align-items: center;
-    cursor: pointer; 
-    position: relative; 
+    cursor: pointer;
+    position: relative;
     touch-action: none;
   }
   .player-progress-wrap::before {
@@ -264,14 +306,14 @@
     border-radius: 2px;
     pointer-events: none;
   }
-  .player-progress-bar { 
-    height: 3px; 
-    width: 0%; 
-    background: var(--gold-soft); 
-    border-radius: 2px; 
-    pointer-events: none; 
-    position: relative; 
-    z-index: 1; 
+  .player-progress-bar {
+    height: 3px;
+    width: 0%;
+    background: var(--gold-soft);
+    border-radius: 2px;
+    pointer-events: none;
+    position: relative;
+    z-index: 1;
   }
   .player-progress-bar::after { content: ''; position: absolute; right: -4px; top: -3px; width: 9px; height: 9px; background: var(--gold-pale); border-radius: 50%; opacity: 0; transition: opacity 0.2s ease; }
   .player-progress-wrap:hover .player-progress-bar::after { opacity: 1; }
@@ -345,7 +387,7 @@
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
     .mood-label { font-size: 1.2em; letter-spacing: 0.1em; }
     .mood-indicator { margin-right: 10px; }
-    
+
     .track { gap: 12px; padding: 20px 0; }
     .track-numeral { min-width: 46px; font-size: 1.15em; }
     .track-title { font-size: 1.25em; }
@@ -355,7 +397,7 @@
     .action-play { width: 34px; height: 34px; font-size: 0.7em; }
     .action-link { font-size: 0.65em; padding: 7px 14px; }
     .inline-player { padding: 12px 0 8px 58px; }
-    
+
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -690,15 +732,15 @@
 
     /* ═══════════════════════════════════════════════════════════════
        🎵 TRACKS ARRAY — ADD / DELETE / EDIT TRACKS HERE
-       
+
        📁 Audio files live on the server at: /audio/{folder}/{file}
           Example: /audio/af/AF01.mp3, /audio/cr/CR01.mp3
-       
+
        ➕ To ADD a track   → paste one line below
        ➖ To DELETE        → delete its line
        🔁 To REORDER       → move the line up/down
        📝 To EDIT          → change the line in place
-       
+
        Fields:
          cat       = category key (must match data-category in HTML above)
                      valid values: "anthems" | "african" | "cinematic" | "modern"
@@ -712,7 +754,10 @@
                      (500000 = KSh 5,000)
        ═══════════════════════════════════════════════════════════════ */
     var TRACKS = [
+      // ── ANTHEMS & CAMPAIGNS ──────────────────────────────────
       { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
+
+      // ── AFRICAN & CULTURAL ───────────────────────────────────
       { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
@@ -721,12 +766,16 @@
       { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
+
+      // ── CINEMATIC & REFLECTIVE ───────────────────────────────
       { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
+
+      // ── MODERN & CORPORATE ───────────────────────────────────
       { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
@@ -740,8 +789,8 @@
            sounds like the old one, bump the v= value (e.g. final5 → final6)
        ═══════════════════════════════════════════════════════════════ */
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
-    function buildPreviewUrl(t) { 
-      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5"; 
+    function buildPreviewUrl(t) {
+      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5";
     }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -783,10 +832,10 @@
       if (!audio || !currentTrackId) return;
       audio.pause();
       audio.currentTime = 0;
-      
+
       var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
       if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
-      
+
       var player = document.getElementById('player-' + currentTrackId);
       if (player) {
         var bar = player.querySelector('.player-progress-bar');
@@ -817,7 +866,7 @@
         var player = document.getElementById('player-' + code);
         if (player) player.classList.add('active');
       } else {
-        // CLICK OUTSIDE LOGIC: If they didn't click the play button, 
+        // CLICK OUTSIDE LOGIC: If they didn't click the play button,
         // and didn't click the progress bar, pause the track.
         var isProgressBar = e.target.closest('.player-progress-wrap');
         if (!isProgressBar && currentTrackId) {
@@ -1026,6 +1075,70 @@
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
+
     if (recInput) recInput.addEventListener('input', function () {
       var val = this.value.replace(/-/g, '');
-      var 
+      var parts = val.match(/.{1,4}/g);
+      this.value = parts ? parts.join('-') : val;
+    });
+
+    if (recBtn) recBtn.addEventListener('click', function () {
+      var ref = recInput.value.trim();
+      if (!ref) {
+        recError.innerText = "Please enter a reference code.";
+        recError.style.display = "block";
+        return;
+      }
+      recBtn.innerText = "Verifying...";
+      recBtn.disabled = true;
+      recError.style.display = "none";
+
+      fetch("https://rent-jingles.noelgrass.workers.dev/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference: ref })
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        if (data.success) {
+          window.location.href = data.downloadUrl;
+        } else {
+          recError.innerText = "Invalid reference or payment incomplete.";
+          recError.style.display = "block";
+        }
+      })
+      .catch(function () {
+        recError.innerText = "Network error. Please try again.";
+        recError.style.display = "block";
+      })
+      .finally(function () {
+        recBtn.innerText = "Generate Fresh Link";
+        recBtn.disabled = false;
+      });
+    });
+
+    renderTracks();
+
+    // ─────────────────────────────────────────────────────────────
+    // ACCORDION: only one mood group open at a time.
+    // Also pauses audio when a new group opens.
+    // ─────────────────────────────────────────────────────────────
+    var moodGroups = document.querySelectorAll('.mood-groups details.mood-group');
+    moodGroups.forEach(function (group) {
+      group.addEventListener('toggle', function () {
+        if (!group.open) return;
+        stopCurrentTrack();
+        moodGroups.forEach(function (other) {
+          if (other !== group && other.open) {
+            other.open = false;
+          }
+        });
+      });
+    });
+
+    if (window.location.hash) window.scrollTo(0, 0);
+  });
+</script>
+
+</body>
+</html>
