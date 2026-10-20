@@ -575,18 +575,32 @@
 
   @media (max-width: 900px) {
     .editorial { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-top: 50px; }
-    .portrait { position: static; max-width: 320px; margin: 0 auto; }
+    .portrait {
+      position: static;
+      max-width: 320px;
+      margin: 0 auto;
+      animation: none;
+      transition: none;
+    }
     .editorial-text, .intro, .intro-body, .bio-link { text-align: center; }
 
-    /* Mobile portrait fix — pulse paused, no redundant grayscale filter, static glow */
+    /* Mobile portrait fix — fully stripped down for smooth scrolling */
     .portrait img {
       animation: none;
-      filter: brightness(0.75) contrast(1.05);
-      box-shadow: 0 0 18px 3px rgba(197, 168, 128, 0.35), 0 0 36px 7px rgba(197, 168, 128, 0.15);
+      transition: none;
+      filter: brightness(0.75);
+      box-shadow: 0 0 12px 2px rgba(197, 168, 128, 0.30);
+      transform: none;
     }
     .portrait img:hover {
-      filter: brightness(0.75) contrast(1.05);
+      filter: brightness(0.75);
+      box-shadow: 0 0 12px 2px rgba(197, 168, 128, 0.30);
       transform: none;
+    }
+
+    /* Lighten the hero background filter on mobile */
+    .hero-bg img {
+      filter: brightness(0.42) contrast(1.15);
     }
   }
 
