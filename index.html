@@ -312,6 +312,25 @@
     50% { text-shadow: 0 11px 15px rgba(0,0,0,0.27), 0 0 35px rgba(197, 168, 128, 0.55), 0 0 80px rgba(197, 168, 128, 0.28); }
     100% { text-shadow: 0 11px 15px rgba(0,0,0,0.27), 0 0 25px rgba(197, 168, 128, 0.25), 0 0 55px rgba(197, 168, 128, 0.12); }
   }
+  @keyframes wordmarkGlow {
+    0%, 100% { text-shadow: 0 0 10px rgba(197, 168, 128, 0.28), 0 0 22px rgba(197, 168, 128, 0.12); }
+    50% { text-shadow: 0 0 14px rgba(197, 168, 128, 0.50), 0 0 34px rgba(197, 168, 128, 0.22); }
+  }
+  @keyframes portraitGlow {
+    0% { box-shadow: 0 0 20px 2px rgba(185, 151, 92, 0.32), 0 0 40px 4px rgba(185, 151, 92, 0.14); }
+    50% { box-shadow: 0 0 30px 6px rgba(185, 151, 92, 0.62), 0 0 55px 10px rgba(185, 151, 92, 0.28); }
+    100% { box-shadow: 0 0 20px 2px rgba(185, 151, 92, 0.32), 0 0 40px 4px rgba(185, 151, 92, 0.14); }
+  }
+  @keyframes doorRestGlow {
+    0% { box-shadow: 0 0 20px 1px rgba(185, 151, 92, 0.14), 0 0 40px 4px rgba(185, 151, 92, 0.05); }
+    50% { box-shadow: 0 0 28px 3px rgba(185, 151, 92, 0.26), 0 0 55px 8px rgba(185, 151, 92, 0.10); }
+    100% { box-shadow: 0 0 20px 1px rgba(185, 151, 92, 0.14), 0 0 40px 4px rgba(185, 151, 92, 0.05); }
+  }
+  @keyframes doorHoverGlow {
+    0% { box-shadow: 0 0 30px 4px rgba(197, 168, 128, 0.42), 0 0 70px 15px rgba(197, 168, 128, 0.18); }
+    50% { box-shadow: 0 0 45px 10px rgba(197, 168, 128, 0.62), 0 0 100px 25px rgba(197, 168, 128, 0.28); }
+    100% { box-shadow: 0 0 30px 4px rgba(197, 168, 128, 0.42), 0 0 70px 15px rgba(197, 168, 128, 0.18); }
+  }
   @keyframes menuFadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
@@ -352,6 +371,7 @@
     font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em;
     text-transform: uppercase; color: var(--gold);
     transition: color 0.3s ease, text-shadow 0.5s ease;
+    animation: wordmarkGlow 7s ease-in-out infinite;
   }
   .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197, 168, 128, 0.55); }
   
@@ -491,8 +511,7 @@
     display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
     border: 1px solid var(--rule); filter: grayscale(100%) contrast(1.05) brightness(0.7);
     transition: filter 0.7s ease, transform 0.6s ease;
-    /* FIXED GLOW: Replaced animation with static visible box-shadow */
-    box-shadow: 0 0 25px 5px rgba(197,168,128,0.45), 0 0 55px 15px rgba(197,168,128,0.15);
+    animation: portraitGlow 6s ease-in-out infinite; /* RESTORED PULSING GLOW */
   }
   .portrait img:hover { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.015); }
   
@@ -514,22 +533,22 @@
   
   .fork-card {
     display: block; position: relative; text-align: center;
-    overflow: visible; /* FIXED: Allowed glow to escape the card boundaries */
+    overflow: visible; /* ALLOWS GLOW TO ESCAPE */
     opacity: 0;
-    /* FIXED: Changed slide animation to fade up so it doesn't cut off on mobile */
     transition: transform 1.6s ease, opacity 1.6s ease, box-shadow 0.6s ease;
-    animation: doorRestGlow 6s ease-in-out infinite;
-    box-shadow: 0 0 30px 4px rgba(197,168,128,0.3), 0 0 70px 15px rgba(197,168,128,0.1); /* Static glow */
+    animation: doorRestGlow 6s ease-in-out infinite; /* RESTORED PULSING GLOW */
   }
   
   .fork-card:nth-child(1) { transform: translate3d(0, 30px, 0) scale(0.95); }
   .fork-card:nth-child(2) { transform: translate3d(0, 30px, 0) scale(0.95); }
   .fork-card.in-view { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+  
+  /* HOVER EFFECT */
   .fork-card:hover { animation: doorHoverGlow 4s ease-in-out infinite; }
 
   .fork-bg {
     position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    overflow: hidden; /* FIXED: Moved clipping here so background image doesn't poke out */
+    overflow: hidden; /* CLIPS IMAGE SO IT DOESN'T LEAK */
     border-radius: inherit;
   }
   .fork-bg img {
@@ -544,16 +563,33 @@
                 linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 55%, rgba(0,0,0,0.75) 100%);
     z-index: 1;
   }
+  
+  /* HOVER EFFECT ON BACKGROUND IMAGE */
+  .fork-card:hover .fork-bg img {
+    transform: scale(1.08);
+    filter: grayscale(100%) brightness(0.55) contrast(1.15);
+    opacity: 1;
+  }
+  .fork-card:hover .fork-bg--artist img {
+    filter: grayscale(100%) brightness(0.35) contrast(1.15);
+  }
 
   .fork-content {
     position: relative; z-index: 2;
-    padding: 42px 30px 48px; /* FIXED: Added extra bottom padding */
+    padding: 42px 30px 48px; /* Extra bottom padding */
     display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 260px;
   }
   .fork-label {
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 2em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
     text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 18px rgba(197, 168, 128, 0.35);
+    transition: color 0.4s ease, text-shadow 0.5s ease;
+  }
+  
+  /* HOVER EFFECT ON TEXT */
+  .fork-card:hover .fork-label {
+    color: #FCFCF7;
+    text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 24px rgba(197, 168, 128, 0.65);
   }
   .fork-desc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); opacity: 0.85; margin-bottom: 24px; }
   .fork-enter { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); opacity: 0.65; }
