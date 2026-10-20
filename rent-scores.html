@@ -172,7 +172,7 @@
   /* Banner strip */
   .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
-  /* Info box — NOW UNIFORM WITH JINGLES (centered, italic, muted) */
+  /* Info box */
   .info-box { max-width: 600px; margin: 0 auto 50px; animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
   .info-box p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); margin-bottom: 12px; }
   .info-box p em { font-style: italic; }
@@ -180,7 +180,7 @@
   .info-box a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.3); padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease; }
   .info-box a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
 
-  /* Navigation links under the info box */
+  /* Navigation links */
   .back-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); padding-bottom: 2px; margin-bottom: 60px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; transition: transform 0.3s ease, color 0.3s ease; }
   .back-link:hover { transform: translateX(-4px); color: #FCFCF7; }
   .license-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); padding-bottom: 2px; margin-bottom: 60px; margin-left: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; transition: transform 0.3s ease, color 0.3s ease; }
@@ -223,6 +223,19 @@
   .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
   .cue-info { display: flex; align-items: center; gap: 12px; }
   .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); min-width: 70px; }
+  
+  .cue-desc { 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 0.62em; 
+    font-style: normal; 
+    color: var(--gold-soft); 
+    letter-spacing: 0.1em; 
+    text-transform: uppercase; 
+    margin-right: 12px;
+    white-space: nowrap;
+  }
+  @media (max-width: 700px) { .cue-desc { display: none; } }
+
   .cue-progress { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
   .cue-progress::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
   .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
@@ -533,30 +546,57 @@
 </script>
 
 <script>
+  /* ═══════════════════════════════════════════════════════════════
+     🎼 HOW TO EDIT THE CATALOGUE
+     
+     1. EDITING OR ADDING A SUITE:
+        - Each line is one Suite.
+        - desc: A list of 3 instruments (one for each cue). 
+                Put them inside [ ] and separate with commas.
+        - amount: 800000 = Ksh 8,000 (always multiply by 100).
+        
+        EXAMPLE:
+        { cat: "tension", code: "TN01", title: "Theme 1", 
+          desc: ["Cue 1 instruments", "Cue 2 instruments", "Cue 3 instruments"], 
+          duration: "Tension", amount: "800000" },
+
+     2. ADDING A BRAND NEW BLOCK (CATEGORY):
+        - Step A: Add a line to the SHELVES array below with a new 'cat' name.
+        - Step B: Add your new suites here with that exact same 'cat' name.
+        - ⚠️ IMPORTANT: The 'cat' name must match exactly (keep it lowercase).
+     ═══════════════════════════════════════════════════════════════ */
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
-    { cat: "tension", code: "TN01", title: "Theme 1",  desc: "Synth",                              duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN02", title: "Theme 2",  desc: "Synth · Cello · Violin · Percussion", duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN03", title: "Theme 3",  desc: "Cello · Percussion · Synth · Piano",  duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN04", title: "Theme 4",  desc: "Synth · Piano · Cello",               duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN05", title: "Theme 5",  desc: "Percussion · Cello",                  duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN06", title: "Theme 6",  desc: "Piano · Synth · Cello",               duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN07", title: "Theme 7",  desc: "Strings · Percussion",                duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN08", title: "Theme 8",  desc: "Violin · Percussion · Piano",         duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN09", title: "Theme 9",  desc: "Synths",                              duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN10", title: "Theme 10", desc: "Piano · Synth",                       duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN11", title: "Theme 11", desc: "Percussions · Strings · Choir",       duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN12", title: "Theme 12", desc: "Synth · Piano",                       duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN13", title: "Theme 13", desc: "Synth · Piano",                       duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN01", title: "Theme 1",  desc: ["Synth", "Synth", "Synth"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN02", title: "Theme 2",  desc: ["Synth · Cello", "Synth · Cello · Violin", "Synth · Cello · Violin · Percussion"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN03", title: "Theme 3",  desc: ["Cello · Percussion", "Cello · Percussion · Synth", "Cello · Percussion · Synth · Piano"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN04", title: "Theme 4",  desc: ["Synth · Piano", "Synth · Piano · Cello", "Synth · Piano · Cello"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN05", title: "Theme 5",  desc: ["Percussion", "Percussion · Cello", "Percussion · Cello"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN06", title: "Theme 6",  desc: ["Piano · Synth", "Piano · Synth · Cello", "Piano · Synth · Cello"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN07", title: "Theme 7",  desc: ["Strings", "Strings · Percussion", "Strings · Percussion"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN08", title: "Theme 8",  desc: ["Violin · Percussion", "Violin · Percussion · Piano", "Violin · Percussion · Piano"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN09", title: "Theme 9",  desc: ["Synths", "Synths", "Synths"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN10", title: "Theme 10", desc: ["Piano · Synth", "Piano · Synth", "Piano · Synth"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN11", title: "Theme 11", desc: ["Percussions · Strings", "Percussions · Strings · Choir", "Percussions · Strings · Choir"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN12", title: "Theme 12", desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN13", title: "Theme 13", desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Tension", amount: "800000" },
 
     // ── DRAMA & EMOTION ────────────────────────────────────────
-    { cat: "drama",   code: "DR01", title: "Theme 1",  desc: "Synth · Cello",                       duration: "Drama",   amount: "800000" },
-    { cat: "drama",   code: "DR02", title: "Theme 2",  desc: "Synth · Piano · Strings",             duration: "Drama",   amount: "800000" },
+    { cat: "drama",   code: "DR01", title: "Theme 1",  desc: ["Synth", "Synth · Cello", "Synth · Cello"], duration: "Drama",   amount: "800000" },
+    { cat: "drama",   code: "DR02", title: "Theme 2",  desc: ["Synth · Piano", "Synth · Piano · Strings", "Synth · Piano · Strings"], duration: "Drama",   amount: "800000" },
 
     // ── QUIET & STILL ──────────────────────────────────────────
-    { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: "Synth · Piano",                       duration: "Quiet",   amount: "800000" }
+    { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Quiet",   amount: "800000" }
   ];
 
+  /* ═══════════════════════════════════════════════════════════════
+     🗂️ SHELVES — THE CATEGORIES
+     
+     This controls the big accordion blocks on the page.
+     - cat: Must match the 'cat' in SCORES.
+     - label: The big text (e.g., "Tension & Suspense").
+     - desc: The small gray sentence under the label.
+     ═══════════════════════════════════════════════════════════════ */
   var SHELVES = [
     { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
     { cat: "drama",   label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
@@ -593,10 +633,12 @@
       for (var i = 1; i <= cueCount; i++) {
         var cueId = suite.code + '-' + i;
         var url = buildPreviewUrl(suite.code, i);
+        var cueDesc = suite.desc[i - 1] || '';
         cuesHtml +=
           '<div class="cue" data-cue-id="' + cueId + '">' +
             '<div class="cue-info">' +
               '<span class="cue-title">Cue ' + i + '</span>' +
+              '<span class="cue-desc">' + cueDesc + '</span>' +
               '<div class="cue-progress"><div class="cue-progress-bar"></div></div>' +
               '<span class="cue-time">0:00</span>' +
             '</div>' +
@@ -611,7 +653,7 @@
               '<span class="suite-code">' + suite.code + '</span>' +
               '<div class="suite-text">' +
                 '<span class="suite-title">' + suite.title + '</span>' +
-                '<div class="suite-tags">' + (suite.desc || '') + '</div>' +
+                '<div class="suite-tags">' + (suite.duration || '') + '</div>' +
               '</div>' +
             '</div>' +
             '<div class="suite-actions">' +
@@ -745,20 +787,26 @@
         var btn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
         if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
       });
+      
       audio.addEventListener('pause', function () {
         var btn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
         if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       });
+      
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId) return;
         var cue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
         if (!cue) return;
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
+        
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
         if (bar) bar.style.width = pct + '%';
-        if (time && audio.duration) { time.textContent = fmt(audio.duration); }
+        
+        // FIX: Count up instead of showing total duration
+        if (time) { time.textContent = fmt(audio.currentTime); }
       });
+      
       audio.addEventListener('ended', function () { stopCue(); });
 
       var isDragging = false;
