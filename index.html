@@ -351,21 +351,21 @@
     animation: projectorFlicker 9s ease-in-out infinite;
   }
 
-  /* Projector beam: tracks the cursor as a warm pool of light */
+  /* Projector beam: static warm pool of light on the wall */
   .projector-beam {
     position: absolute; inset: 0;
     pointer-events: none;
     z-index: 0;
     mix-blend-mode: screen;
     background: radial-gradient(
-      circle 58vmax at var(--mx, 30%) var(--my, 22%),
-      rgba(197, 168, 128, 0.18) 0%,
-      rgba(197, 168, 128, 0.07) 30%,
-      rgba(197, 168, 128, 0.02) 52%,
-      transparent 74%
+      circle 52vmax at 28% 22%,
+      rgba(197, 168, 128, 0.16) 0%,
+      rgba(197, 168, 128, 0.07) 32%,
+      rgba(197, 168, 128, 0.02) 55%,
+      transparent 76%
     );
-    animation: beamBreathe 11s ease-in-out infinite;
-    will-change: background;
+    animation: beamBreathe 14s ease-in-out infinite;
+    will-change: opacity;
   }
 
   /* Film grain overlay */
@@ -523,7 +523,7 @@
     letter-spacing: 0.28em; text-transform: uppercase;
     display: inline-block; position: relative; padding: 8px 0;
 
-    /* Layer 1: gold catching ambient light */
+    /* Gold catching ambient light */
     background: linear-gradient(
       100deg,
       var(--gold-dim) 0%,
@@ -536,19 +536,13 @@
     -webkit-text-fill-color: transparent;
     color: var(--gold-pale); /* fallback */
 
-    will-change: transform, letter-spacing, filter;
-    transform: translate3d(0, 0, 0);
-    transition:
-      transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-      letter-spacing 0.8s cubic-bezier(0.22, 1, 0.36, 1),
-      filter 0.4s ease;
+    will-change: filter;
+    transition: filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     isolation: isolate;
   }
 
-  /* The Hover State — typography breathes, light is handled by the room */
+  /* The Hover State — the word is lit, nothing else moves */
   .menu-link:hover {
-    letter-spacing: 0.34em;
-    transform: translate3d(14px, 0, 0) scale(1.015);
     background: linear-gradient(
       100deg,
       #FFFFFF 0%,
@@ -629,8 +623,7 @@
     .projector-beam { animation: none; opacity: 1; }
     .menu-panel.open { animation: none; }
     .menu-panel.open .menu-item { animation: menuLinkIn 0.01s forwards; filter: none; }
-    .menu-link { transition: color 0.2s ease; }
-    .menu-link:hover { transform: none; letter-spacing: 0.28em; }
+    .menu-link { transition: filter 0.2s ease; }
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -883,7 +876,7 @@
   <!-- Projector light: off-axis warm glow (upper-left bias) -->
   <div class="projector-light" aria-hidden="true"></div>
 
-  <!-- Projector beam: conic wedge, GPU-cheap, opacity-only animation -->
+  <!-- Projector beam: static warm pool of light on the wall -->
   <div class="projector-beam" aria-hidden="true"></div>
 
   <!-- Film grain overlay -->
@@ -1155,30 +1148,6 @@
 
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
-  })();
-
-  /* ═══════════════════════════════════════════════════════════════
-     💡 PROJECTOR BEAM — CURSOR-TRACKED LIGHT (menu only)
-     ═══════════════════════════════════════════════════════════════ */
-  (function() {
-    var panel = document.getElementById('menuPanel');
-    if (!panel) return;
-    var beam = panel.querySelector('.projector-beam');
-    if (!beam) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    var raf = null;
-    panel.addEventListener('mousemove', function(e) {
-      if (raf) return;
-      raf = requestAnimationFrame(function() {
-        var rect = panel.getBoundingClientRect();
-        var x = ((e.clientX - rect.left) / rect.width) * 100;
-        var y = ((e.clientY - rect.top) / rect.height) * 100;
-        beam.style.setProperty('--mx', x + '%');
-        beam.style.setProperty('--my', y + '%');
-        raf = null;
-      });
-    });
   })();
 
   /* ═══════════════════════════════════════════════════════════════
