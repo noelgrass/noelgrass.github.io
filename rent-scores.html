@@ -221,8 +221,8 @@
   .suite-cues { display: none; padding: 0 0 20px 66px; }
   .suite-cues.active { display: block; animation: fadeUp 0.4s ease both; }
   .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
-  .cue-info { display: flex; align-items: center; gap: 12px; }
-  .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); min-width: 70px; }
+  .cue-info { display: flex; flex-direction: column; gap: 4px; }
+  .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); }
   
   .cue-desc { 
     font-family: 'Montserrat', sans-serif; 
@@ -231,11 +231,10 @@
     color: var(--gold-soft); 
     letter-spacing: 0.1em; 
     text-transform: uppercase; 
-    margin-right: 12px;
-    white-space: nowrap;
+    margin-bottom: 6px;
   }
-  @media (max-width: 700px) { .cue-desc { display: none; } }
 
+  .cue-progress-container { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 4px; }
   .cue-progress { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
   .cue-progress::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
   .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
@@ -639,8 +638,10 @@
             '<div class="cue-info">' +
               '<span class="cue-title">Cue ' + i + '</span>' +
               '<span class="cue-desc">' + cueDesc + '</span>' +
-              '<div class="cue-progress"><div class="cue-progress-bar"></div></div>' +
-              '<span class="cue-time">0:00</span>' +
+              '<div class="cue-progress-container">' +
+                '<div class="cue-progress"><div class="cue-progress-bar"></div></div>' +
+                '<span class="cue-time">0:00</span>' +
+              '</div>' +
             '</div>' +
             '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '">▶</button>' +
           '</div>';
@@ -706,10 +707,13 @@
     function stopCue() {
       if (!currentCueId) return;
       var id = currentCueId;
-      currentCueId = null;
+      currentCueId = null; // Clear this FIRST
+      
       if (audio) { audio.pause(); audio.src = ""; audio.load(); }
+      
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
+      
       var cue = mount.querySelector('.cue[data-cue-id="' + id + '"]');
       if (cue) {
         var bar = cue.querySelector('.cue-progress-bar');
@@ -803,8 +807,10 @@
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
         if (bar) bar.style.width = pct + '%';
         
-        // FIX: Count up instead of showing total duration
-        if (time) { time.textContent = fmt(audio.currentTime); }
+        // FIX: Count down from total duration
+        if (time && audio.duration) { 
+          time.textContent = fmt(audio.duration - audio.currentTime); 
+        }
       });
       
       audio.addEventListener('ended', function () { stopCue(); });
