@@ -210,7 +210,18 @@
   .suite-code { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; line-height: 1.4; }
   .suite-text { display: flex; flex-direction: column; gap: 4px; }
   .suite-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); line-height: 1.3; }
-  .suite-tags { font-family: 'Montserrat', sans-serif; font-size: 0.68em; color: var(--gold-soft); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; margin: 4px 0; }
+  
+  /* Instrument tags replace the duration box */
+  .suite-instruments { 
+    font-family: 'Montserrat', sans-serif; 
+    font-size: 0.68em; 
+    color: var(--gold-soft); 
+    letter-spacing: 0.12em; 
+    text-transform: uppercase; 
+    line-height: 1.4; 
+    margin: 4px 0; 
+  }
+
   .suite-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
   .action-preview { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 38px; height: 38px; padding-left: 3px; font-size: 0.8em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
   .action-preview:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
@@ -224,6 +235,7 @@
   .cue-info { display: flex; flex-direction: column; gap: 4px; }
   .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); }
   
+  /* Cue-specific instruments shown in gold */
   .cue-desc { 
     font-family: 'Montserrat', sans-serif; 
     font-size: 0.62em; 
@@ -320,7 +332,7 @@
     .suite-head { gap: 12px; padding: 20px 0; }
     .suite-code { min-width: 46px; font-size: 1.15em; }
     .suite-title { font-size: 1.25em; }
-    .suite-tags { font-size: 0.65em; }
+    .suite-instruments { font-size: 0.65em; }
     .suite-actions { gap: 8px; }
     .action-preview { width: 34px; height: 34px; font-size: 0.7em; }
     .action-buy { font-size: 0.65em; padding: 7px 14px; }
@@ -566,35 +578,30 @@
      ═══════════════════════════════════════════════════════════════ */
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
-    { cat: "tension", code: "TN01", title: "Theme 1",  desc: ["Synth", "Synth", "Synth"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN02", title: "Theme 2",  desc: ["Synth · Cello", "Synth · Cello · Violin", "Synth · Cello · Violin · Percussion"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN03", title: "Theme 3",  desc: ["Cello · Percussion", "Cello · Percussion · Synth", "Cello · Percussion · Synth · Piano"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN04", title: "Theme 4",  desc: ["Synth · Piano", "Synth · Piano · Cello", "Synth · Piano · Cello"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN05", title: "Theme 5",  desc: ["Percussion", "Percussion · Cello", "Percussion · Cello"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN06", title: "Theme 6",  desc: ["Piano · Synth", "Piano · Synth · Cello", "Piano · Synth · Cello"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN07", title: "Theme 7",  desc: ["Strings", "Strings · Percussion", "Strings · Percussion"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN08", title: "Theme 8",  desc: ["Violin · Percussion", "Violin · Percussion · Piano", "Violin · Percussion · Piano"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN09", title: "Theme 9",  desc: ["Synths", "Synths", "Synths"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN10", title: "Theme 10", desc: ["Piano · Synth", "Piano · Synth", "Piano · Synth"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN11", title: "Theme 11", desc: ["Percussions · Strings", "Percussions · Strings · Choir", "Percussions · Strings · Choir"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN12", title: "Theme 12", desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Tension", amount: "800000" },
-    { cat: "tension", code: "TN13", title: "Theme 13", desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Tension", amount: "800000" },
+    { cat: "tension", code: "TN01", title: "Theme 1",  desc: ["Synth", "Synth · Piano", "Synth · Piano · Cello"], amount: "800000" },
+    { cat: "tension", code: "TN02", title: "Theme 2",  desc: ["Synth · Cello · Violin · Percussion", "Synth", "Percussion · Synth"], amount: "800000" },
+    { cat: "tension", code: "TN03", title: "Theme 3",  desc: ["Cello · Percussion · Synth · Piano", "Piano · Synth", "Cello · Percussion · Synth · Piano"], amount: "800000" },
+    { cat: "tension", code: "TN04", title: "Theme 4",  desc: ["Synth · Piano · Cello", "Synth · Piano", "Percussion · Cello · Piano"], amount: "800000" },
+    { cat: "tension", code: "TN05", title: "Theme 5",  desc: ["Percussion · Cello", "Piano · Cello · Synth", "Percussion · Synth"], amount: "800000" },
+    { cat: "tension", code: "TN06", title: "Theme 6",  desc: ["Piano · Synth · Cello", "Piano · Synth · Choir", "Piano · Synth"], amount: "800000" },
+    { cat: "tension", code: "TN07", title: "Theme 7",  desc: ["Strings · Percussion", "Synth · Choir · Cello", "Synth · Percussion"], amount: "800000" },
+    { cat: "tension", code: "TN08", title: "Theme 8",  desc: ["Violin · Percussion · Piano", "Strings · Synths", "Piano · Cello · Synth · Percussions"], amount: "800000" },
+    { cat: "tension", code: "TN09", title: "Theme 9",  desc: ["Synths", "Synth · Strings · Oboe", "Synth · Percussion · Choir"], amount: "800000" },
+    { cat: "tension", code: "TN10", title: "Theme 10", desc: ["Piano · Synth", "Cello · Synth", "Synth · Cello · Choir"], amount: "800000" },
+    { cat: "tension", code: "TN11", title: "Theme 11", desc: ["Percussions · Strings · Choir", "Percussions · Cello · Choir", "Percussion · Cello · Violin · Choir"], amount: "800000" },
+    { cat: "tension", code: "TN12", title: "Theme 12", desc: ["Synth · Piano", "Bass · Choir", "Piano · Violin · Synth · Percussions"], amount: "800000" },
+    { cat: "tension", code: "TN13", title: "Theme 13", desc: ["Synth · Piano", "Piano · Bass", "Synth · Strings · Choir · Percussions"], amount: "800000" },
 
     // ── DRAMA & EMOTION ────────────────────────────────────────
-    { cat: "drama",   code: "DR01", title: "Theme 1",  desc: ["Synth", "Synth · Cello", "Synth · Cello"], duration: "Drama",   amount: "800000" },
-    { cat: "drama",   code: "DR02", title: "Theme 2",  desc: ["Synth · Piano", "Synth · Piano · Strings", "Synth · Piano · Strings"], duration: "Drama",   amount: "800000" },
+    { cat: "drama",   code: "DR01", title: "Theme 1",  desc: ["Synth · Cello", "Piano · Strings", "Piano · Violin"], amount: "800000" },
+    { cat: "drama",   code: "DR02", title: "Theme 2",  desc: ["Synth · Piano · Strings", "Piano", "Piano"], amount: "800000" },
 
     // ── QUIET & STILL ──────────────────────────────────────────
-    { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], duration: "Quiet",   amount: "800000" }
+    { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], amount: "800000" }
   ];
 
   /* ═══════════════════════════════════════════════════════════════
      🗂️ SHELVES — THE CATEGORIES
-     
-     This controls the big accordion blocks on the page.
-     - cat: Must match the 'cat' in SCORES.
-     - label: The big text (e.g., "Tension & Suspense").
-     - desc: The small gray sentence under the label.
      ═══════════════════════════════════════════════════════════════ */
   var SHELVES = [
     { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
@@ -654,7 +661,7 @@
               '<span class="suite-code">' + suite.code + '</span>' +
               '<div class="suite-text">' +
                 '<span class="suite-title">' + suite.title + '</span>' +
-                '<div class="suite-tags">' + (suite.duration || '') + '</div>' +
+                '<div class="suite-instruments">' + (suite.desc[0] || '') + '</div>' +
               '</div>' +
             '</div>' +
             '<div class="suite-actions">' +
@@ -807,7 +814,6 @@
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
         if (bar) bar.style.width = pct + '%';
         
-        // FIX: Count down from total duration
         if (time && audio.duration) { 
           time.textContent = fmt(audio.duration - audio.currentTime); 
         }
