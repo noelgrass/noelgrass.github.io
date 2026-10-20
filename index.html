@@ -303,102 +303,196 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
-  /* MENU 2 STYLES START */
-  .page-wrap { transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
-  body.menu-open h1, body.menu-open .portrait img, body.menu-open .scroll-cue .line, body.menu-open .fork-card { animation-play-state: paused; }
+  /* FULLSCREEN MENU */
+  .page-wrap { transition: filter 1s cubic-bezier(0.16,1,0.3,1), opacity 1s ease; }
+  body.menu-open .page-wrap {
+    filter: blur(30px) brightness(0.06); opacity: 0.22; pointer-events: none;
+  }
 
   .menu-panel {
-    position: fixed; inset: 0; z-index: 400; background: #000000;
-    background-image: radial-gradient(ellipse at 50% 50%, rgba(197, 168, 128, 0.07) 0%, transparent 65%);
-    opacity: 0; pointer-events: none; transform: scale(1.02);
-    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-    overflow-y: auto; overscroll-behavior: contain;
+    position: fixed; inset: 0; z-index: 400;
+    background: #000;
+    opacity: 0; pointer-events: none;
+    transform: scale(1.015);
+    transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1),
+                transform 1.1s cubic-bezier(0.16,1,0.3,1);
+    overflow: hidden;
   }
-  .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu-panel.open {
+    opacity: 1; transform: scale(1); pointer-events: auto;
+    animation: panelDrift 16s ease-in-out forwards;
+  }
+
+  .projector-light {
+    position: absolute; inset: -20%; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 55% at 28% 22%, rgba(197, 168, 128, 0.16) 0%, rgba(197, 168, 128, 0.05) 38%, transparent 72%),
+      radial-gradient(ellipse 90% 80% at 50% 60%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%, #000 100%);
+    animation: projectorFlicker 9s ease-in-out infinite;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity;
+  }
+
+  .projector-beam {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0; mix-blend-mode: screen;
+    background: radial-gradient(circle 52vmax at 28% 22%, rgba(197, 168, 128, 0.16) 0%, rgba(197, 168, 128, 0.07) 32%, rgba(197, 168, 128, 0.02) 55%, transparent 76%);
+    animation: beamBreathe 14s ease-in-out infinite;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity;
+  }
+
+  .grain {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    opacity: 0.055; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    background-size: 160px 160px;
+    animation: grainShift 0.6s steps(6) infinite;
+  }
+
+  .letterbox-top, .letterbox-bottom {
+    position: absolute; left: 0; right: 0; height: 80px; background: #000; z-index: 500;
+    transform: scaleY(0);
+    transition: transform 1.15s cubic-bezier(0.16,1,0.3,1);
+  }
+  .letterbox-top { top: 0; transform-origin: top; }
+  .letterbox-bottom { bottom: 0; transform-origin: bottom; }
+  .menu-panel.open .letterbox-top,
+  .menu-panel.open .letterbox-bottom { transform: scaleY(1); }
+  .menu-panel.open .letterbox-top { transition-delay: 0.15s; }
+  .menu-panel.open .letterbox-bottom { transition-delay: 0.25s; }
+
+  .crop-frame {
+    width: min(560px, 80%); height: 1px;
+    background: linear-gradient(to right, transparent 0%, var(--gold-soft) 15%, var(--gold-soft) 85%, transparent 100%);
+    opacity: 0; transform: scaleX(0);
+    transform-origin: center center;
+    transition: opacity 0.6s ease, transform 1.4s cubic-bezier(0.16,1,0.3,1);
+    margin: 0 auto;
+  }
+  .menu-panel.open .crop-frame {
+    opacity: 0.35; transform: scaleX(1);
+  }
+  .menu-panel.open .crop-frame--top    { transition-delay: 0.7s; }
+  .menu-panel.open .crop-frame--bottom { transition-delay: 0.9s; }
 
   .menu-inner {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 48px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px;
-    min-height: 100vh; position: relative;
+    gap: 44px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
+    min-height: 100vh; position: relative; z-index: 2;
   }
   .menu-top {
-    position: absolute; top: 32px; left: 40px; right: 40px;
-    display: flex; align-items: center; justify-content: space-between; z-index: 2;
+    position: absolute; top: 100px; left: 40px; right: 40px;
+    display: flex; align-items: center; justify-content: space-between; z-index: 12;
   }
 
   .menu-heading {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em;
     letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale);
-    display: inline-flex; align-items: center; gap: 20px; opacity: 0;
+    opacity: 0; display: flex; align-items: center;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
-  .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
+  .menu-panel.open .menu-heading { animation: menuHeadingIn 0.6s ease 0.4s forwards; }
   .menu-heading::after {
     content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold);
-    transform: scaleX(0); transform-origin: left center;
+    transform: scaleX(0); transform-origin: left center; margin-left: 20px; vertical-align: middle;
   }
-  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
+  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
 
   .menu-close {
     background: transparent; border: 0; cursor: pointer;
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale);
-    padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px;
-    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
-    opacity: 0; -webkit-tap-highlight-color: transparent;
+    display: inline-flex; align-items: center; gap: 16px; opacity: 0;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1), color 0.3s ease;
   }
-  .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards; }
-  .menu-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197, 168, 128, 0.7), 0 0 45px rgba(197, 168, 128, 0.3); }
-  
-  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; transition: transform 0.4s ease; }
-  .menu-close:hover .x { transform: rotate(90deg); }
-  .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
+  .menu-panel.open .menu-close { animation: menuFadeIn 0.5s ease 1s forwards; }
+  .menu-close:hover { color: #FBFAFC; }
+  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; }
+  .menu-close .x::before, .menu-close .x::after {
+    content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor;
+    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
   .menu-close .x::before { transform: rotate(45deg); }
-  .menu-close .x::after  { transform: rotate(-45deg); }
+  .menu-close .x::after { transform: rotate(-45deg); }
+  .menu-close:hover .x::before { transform: rotate(135deg); }
+  .menu-close:hover .x::after { transform: rotate(45deg); }
 
   .menu-links {
     list-style: none; display: flex; flex-direction: column;
-    align-items: center; gap: 32px; text-align: center; padding-top: 20px;
+    align-items: flex-start; gap: 38px; text-align: left;
+    padding: 20px 0 20px 60px; margin-left: -60px; position: relative;
   }
+  .menu-links::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-soft), transparent);
+    opacity: 0.3; transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
   .menu-section {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    margin-bottom: 20px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease;
+    margin-bottom: 20px; display: block; opacity: 0; padding-left: 4px;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
-  .menu-panel.open .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+  .menu-panel.open .menu-section { animation: menuLinkIn 0.5s ease 0.4s forwards; }
 
-  .menu-item { position: relative; opacity: 0; }
-  .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
-  .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
-  .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
-  .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
-  .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-item {
+    opacity: 0; position: relative; display: block;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1), filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: filter, opacity;
+  }
+  .menu-item::before {
+    font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em;
+    color: var(--gold-dim); opacity: 0.5; position: absolute; left: -50px; top: 50%;
+    transform: translateY(-50%); transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .menu-item:nth-child(2)::before { content: '01'; }
+  .menu-item:nth-child(3)::before { content: '02'; }
+  .menu-item:nth-child(4)::before { content: '03'; }
+  .menu-item:nth-child(5)::before { content: '04'; }
+  .menu-item:nth-child(6)::before { content: '05'; }
+
+  .menu-panel.open .menu-item { animation: focusPullIn 1.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .menu-panel.open .menu-item:nth-child(2) { animation-delay: 0.55s; }
+  .menu-panel.open .menu-item:nth-child(3) { animation-delay: 0.75s; }
+  .menu-panel.open .menu-item:nth-child(4) { animation-delay: 0.95s; }
+  .menu-panel.open .menu-item:nth-child(5) { animation-delay: 1.15s; }
+  .menu-panel.open .menu-item:nth-child(6) { animation-delay: 1.35s; }
 
   .menu-link {
-    display: inline-block; position: relative; white-space: nowrap;
-    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2em;
-    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); padding: 8px 0 8px 0;
-    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
+    letter-spacing: 0.28em; text-transform: uppercase; display: inline-block; position: relative; padding: 8px 0;
+    background: linear-gradient(100deg, var(--gold-dim) 0%, var(--gold-pale) 45%, var(--gold-soft) 55%, var(--gold-dim) 100%);
+    -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--gold-pale);
+    will-change: filter, text-shadow; isolation: isolate;
+    transition: filter 0.6s cubic-bezier(0.19, 1, 0.22, 1), text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .menu-link:hover {
-    color: #FCFCF7;
-    text-shadow: 0 0 12px rgba(197, 168, 128, 0.75), 0 0 30px rgba(197, 168, 128, 0.55), 0 0 70px rgba(197, 168, 128, 0.30), 0 0 130px rgba(197, 168, 128, 0.15);
+    background: none; -webkit-text-fill-color: #FFFFFF; color: #FFFFFF;
+    text-shadow: 0 0 4px rgba(197, 168, 128, 0.55), 0 0 10px rgba(197, 168, 128, 0.35), 0 0 22px rgba(197, 168, 128, 0.18);
   }
-  .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
-
-  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
-  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
+  .menu-link.current { background: none; -webkit-text-fill-color: var(--gold-dim); color: var(--gold-dim); pointer-events: none; }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    opacity: 0; margin-top: 20px;
+    opacity: 0; margin-top: 40px; text-align: center; width: 100%;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
-  .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
+  .menu-panel.open .menu-bottom { animation: menuFadeIn 0.5s ease 1.1s forwards; }
 
-  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
-  /* MENU 2 STYLES END */
+  .menu-backdrop { position: absolute; inset: 0; z-index: 0; cursor: pointer; }
 
+  @media (prefers-reduced-motion: reduce) {
+    .projector-light { animation: none; }
+    .grain { animation: none; }
+    .projector-beam { animation: none; opacity: 1; }
+    .menu-panel.open { animation: none; }
+    .menu-panel.open .menu-item { animation: menuLinkIn 0.01s forwards; filter: none; }
+    .menu-link { transition: filter 0.2s ease, text-shadow 0.2s ease; }
+  }
+
+  /* HOME PAGE LAYOUT */
   .hero {
     position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
     padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate;
@@ -410,8 +504,7 @@
   }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.92) 95%),
-                linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 55%, var(--bg) 100%);
+    background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.92) 95%), linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 55%, var(--bg) 100%);
     z-index: 1;
   }
   .hero-content { position: relative; z-index: 2; }
@@ -428,6 +521,21 @@
 
   .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
 
+  .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; }
+  .portrait { position: sticky; top: 120px; animation: portraitIn 1.4s ease both; }
+  .portrait img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover;
+    border: 1px solid var(--rule); filter: grayscale(100%) contrast(1.05) brightness(0.7);
+    transition: filter 0.7s ease, transform 0.6s ease;
+    animation: portraitGlow 6s ease-in-out infinite;
+  }
+  .portrait img:hover { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.015); }
+  
+  .editorial-text { text-align: left; padding-top: 10px; }
+  .intro { font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 30px; }
+  .intro-body { font-size: 1.05em; color: var(--offwhite); margin-bottom: 36px; }
+  .bio-link a { border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; font-style: italic; }
+
   .fork { margin: 100px auto 70px; max-width: 960px; }
   .fork-intro { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--gold-pale); text-align: center; margin-bottom: 40px; }
   .fork-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; }
@@ -437,91 +545,50 @@
   }
   
   .fork-card {
-    display: block; position: relative; text-align: center;
-    border-radius: 4px;
-    opacity: 0;
-    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), 
-                opacity 1.6s ease;
+    display: block; position: relative; text-align: center; border-radius: 4px; opacity: 0;
+    transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.6s ease;
     background: var(--bg);
   }
-
   .fork-card::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    border-radius: 4px;
-    background: var(--gold-soft);
-    z-index: -1;
-    opacity: 0.3;
-    filter: blur(15px);
-    transition: opacity 0.4s ease, filter 0.4s ease;
+    content: ''; position: absolute; inset: -2px; border-radius: 4px; background: var(--gold-soft);
+    z-index: -1; opacity: 0.3; filter: blur(15px); transition: opacity 0.4s ease, filter 0.4s ease;
     animation: elegantPulse 4s ease-in-out infinite;
   }
-
   .fork-card:hover::before {
-    opacity: 0.8;
-    filter: blur(25px);
-    animation: elegantPulseHover 3s ease-in-out infinite;
+    opacity: 0.8; filter: blur(25px); animation: elegantPulseHover 3s ease-in-out infinite;
   }
-
   .fork-card:nth-child(1) { transform: translate3d(0, 30px, 0) scale(0.95); }
   .fork-card:nth-child(2) { transform: translate3d(0, 30px, 0) scale(0.95); }
   .fork-card.in-view { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  
-  .fork-card:hover {
-    transform: translateY(-12px) scale(1.02);
-  }
+  .fork-card:hover { transform: translateY(-12px) scale(1.02); }
 
-  .fork-bg {
-    position: absolute; inset: 0; z-index: 0; pointer-events: none;
-    overflow: hidden;
-    border-radius: 4px;
-  }
-  
+  .fork-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 4px; }
   .fork-bg img {
     width: 100%; height: 100%; object-fit: cover;
     filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.9;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
-                filter 0.4s ease, 
-                opacity 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease, opacity 0.4s ease;
   }
   .fork-bg--artist img { filter: grayscale(100%) brightness(0.28) contrast(1.15); }
-  
   .fork-bg::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.92) 95%),
-                linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 55%, rgba(0,0,0,0.75) 100%);
+    background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.92) 95%), linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 55%, rgba(0,0,0,0.75) 100%);
     z-index: 1;
   }
-  
-  .fork-card:hover .fork-bg img {
-    transform: scale(1.08);
-    filter: grayscale(100%) brightness(0.65) contrast(1.15);
-    opacity: 1;
-  }
-  .fork-card:hover .fork-bg--artist img {
-    filter: grayscale(100%) brightness(0.45) contrast(1.15);
-  }
+  .fork-card:hover .fork-bg img { transform: scale(1.08); filter: grayscale(100%) brightness(0.65) contrast(1.15); opacity: 1; }
+  .fork-card:hover .fork-bg--artist img { filter: grayscale(100%) brightness(0.45) contrast(1.15); }
 
   .fork-content {
-    position: relative; z-index: 2;
-    padding: 42px 30px 48px;
+    position: relative; z-index: 2; padding: 42px 30px 48px;
     display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 260px;
-    border-radius: 4px;
-    background: rgba(0,0,0,0.1);
+    border-radius: 4px; background: rgba(0,0,0,0.1);
   }
-  
   .fork-label {
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 2em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px;
     text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 18px rgba(197, 168, 128, 0.35);
     transition: color 0.4s ease, text-shadow 0.4s ease;
   }
-  
-  .fork-card:hover .fork-label {
-    color: #FCFCF7;
-    text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 24px rgba(197, 168, 128, 0.65);
-  }
+  .fork-card:hover .fork-label { color: #FCFCF7; text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 24px rgba(197, 168, 128, 0.65); }
   .fork-desc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); opacity: 0.85; margin-bottom: 24px; }
   .fork-enter { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); opacity: 0.65; }
 
@@ -538,11 +605,9 @@
 
   .follow-link { text-align: center; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.85em; color: var(--muted); margin-bottom: 60px; }
   .rule-full { width: 100%; max-width: 1000px; height: 1px; background: var(--gold-soft); margin: 20px auto 50px; opacity: 0.6; }
-  
   .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px 30px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.18em; text-transform: uppercase; color: #4E4E4E; margin-bottom: 50px; list-style: none; }
   .footer-links a { color: #4E4E4E; }
   .footer-links a:hover { color: #FBFAFC; }
-
   .signature { text-align: center; margin-top: 40px; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
   .footer-location { text-align: right; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 24px; padding-right: 6px; }
@@ -602,20 +667,30 @@
   </button>
 </header>
 
-<!-- MENU 2 START -->
+<!-- MENU PANEL (DISPLAYED WHEN YOU CLICK THE DOORS OR MENU) -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
+
+  <div class="projector-light" aria-hidden="true"></div>
+  <div class="projector-beam" aria-hidden="true"></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="letterbox-top"></div>
+  <div class="letterbox-bottom"></div>
 
   <div class="menu-inner">
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
       <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
-        Close
-        <span class="x" aria-hidden="true"></span>
+        Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
 
-    <ul class="menu-links">
+    <div class="crop-frame crop-frame--top" aria-hidden="true"></div>
+
+    <!-- MENU LINKS (DYNAMIC) -->
+    <ul class="menu-links" id="dynamicMenuLinks">
+      <!-- Default menu (Home) -->
       <span class="menu-section">Explore</span>
       <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
       <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
@@ -624,10 +699,11 @@
       <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
     </ul>
 
+    <div class="crop-frame crop-frame--bottom" aria-hidden="true"></div>
+
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
   </div>
 </nav>
-<!-- MENU 2 END -->
 
 <div class="page-wrap" id="pageWrap">
 
@@ -646,10 +722,23 @@
 
   <div class="page">
 
+    <div class="editorial">
+      <div class="portrait">
+        <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
+      </div>
+      <div class="editorial-text">
+        <p class="intro">Welcome to a world where music and sound become a space you can feel.</p>
+        <p class="intro-body">As a film composer based in Nairobi, Kenya, I score stories for the screen. As an artist, I compose, perform, and produce, across solo, ensemble, and orchestral settings.</p>
+        <p class="bio-link"><a href="biography">Read the full biography →</a></p>
+      </div>
+    </div>
+
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
       <div class="fork-row">
-        <a href="artist" class="fork-card" aria-label="Enter the Artist side">
+        
+        <!-- THE ARTIST DOOR (NOW A BUTTON) -->
+        <button type="button" class="fork-card" id="doorArtist" aria-label="Open Artist menu">
           <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
           </div>
@@ -658,8 +747,10 @@
             <span class="fork-desc">Music, live performances, releases, and more. Step into the world.</span>
             <span class="fork-enter">Enter</span>
           </div>
-        </a>
-        <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
+        </button>
+
+        <!-- THE FILM COMPOSER DOOR (NOW A BUTTON) -->
+        <button type="button" class="fork-card" id="doorFilm" aria-label="Open Film Composer menu">
           <div class="fork-bg" aria-hidden="true">
             <img src="images/film/film-strip.jpg" alt="" loading="lazy">
           </div>
@@ -668,7 +759,8 @@
             <span class="fork-desc">Score your film · original soundtracks, cinematic composition, and sonic branding.</span>
             <span class="fork-enter">Enter</span>
           </div>
-        </a>
+        </button>
+        
       </div>
     </div>
 
@@ -770,104 +862,97 @@
     var panel    = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
     var backdrop = document.getElementById('menuBackdrop');
+    var dynamicLinks = document.getElementById('dynamicMenuLinks');
 
-    function getScrollbarWidth() {
-      return window.innerWidth - document.documentElement.clientWidth;
-    }
+    // Default Home Menu HTML
+    var defaultHTML = dynamicLinks.innerHTML;
+    
+    // Custom Artist Menu HTML
+    var artistMenuHTML = `
+      <span class="menu-section">Artist</span>
+      <li class="menu-item"><a href="artist" class="menu-link">About the Artist</a></li>
+      <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+      <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+      <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+      <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+      <li class="menu-item"><a href="join" class="menu-link">Join the List</a></li>
+      <li class="menu-item"><a href="artist" class="menu-link">Go to Artist Page →</a></li>
+    `;
+
+    // Custom Film Composer Menu HTML
+    var filmMenuHTML = `
+      <span class="menu-section">Film Composer</span>
+      <li class="menu-item"><a href="film-composer" class="menu-link">About the Composer</a></li>
+      <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
+      <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
+      <li class="menu-item"><a href="rent" class="menu-link">Rent / License</a></li>
+      <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
+      <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
+      <li class="menu-item"><a href="film-composer" class="menu-link">Go to Film Page →</a></li>
+    `;
 
     function lockScroll() {
-      var sw = getScrollbarWidth();
+      var sw = window.innerWidth - document.documentElement.clientWidth;
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
       document.documentElement.classList.add('menu-lock');
     }
-
     function unlockScroll() {
       document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
-
     function openMenu() {
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
       document.body.classList.add('menu-open');
       lockScroll();
       toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
     }
-
     function closeMenu() {
       panel.classList.remove('open');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
       unlockScroll();
       toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
+      // Reset to default menu after closing
+      setTimeout(function() {
+        dynamicLinks.innerHTML = defaultHTML;
+      }, 500); 
     }
 
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (panel.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
+      if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); }
     });
-
     closeBtn.addEventListener('click', closeMenu);
     backdrop.addEventListener('click', closeMenu);
 
+    // HANDLE DOOR CLICKS
+    document.getElementById('doorArtist').addEventListener('click', function() {
+      dynamicLinks.innerHTML = artistMenuHTML;
+      openMenu();
+    });
+
+    document.getElementById('doorFilm').addEventListener('click', function() {
+      dynamicLinks.innerHTML = filmMenuHTML;
+      openMenu();
+    });
+
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) {
-        closeMenu();
-      }
+      if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); }
     });
 
-    panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
-    });
-
-    function normalizePath(path) {
-      path = path.split('?')[0].split('#')[0];
-      path = path.replace(/\.html?$/i, '');
-      if (path === './' || path === '.' || path === '') path = '/';
-      if (path.length > 1 && path.endsWith('/')) {
-        path = path.slice(0, -1);
-      }
-      path = path.replace(/\/index$/i, '/');
-      if (!path.startsWith('/')) path = '/' + path;
-      return path;
-    }
-
-    var current = normalizePath(window.location.pathname);
-    var isHome = (current === '/' || current === '' || current === '/index');
-
-    var links = panel.querySelectorAll('a.menu-link');
-    var matched = null;
-
-    links.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-
-      var linkPath = normalizePath(href);
-
-      if (isHome && (linkPath === '/' || linkPath === '/home' || linkPath === '/index')) {
-        matched = link;
-        return;
-      }
-
-      if (!isHome && linkPath === current) {
-        matched = link;
+    // Add close event to newly injected links
+    dynamicLinks.addEventListener('click', function(e) {
+      if (e.target.tagName.toLowerCase() === 'a') {
+        // If it's the "Go to Page" link, we let it navigate. 
+        // If it's a normal link, we close the menu.
+        if (e.target.textContent.includes('Go to') || e.target.textContent.includes('About')) {
+          // navigate
+        } else {
+          closeMenu();
+        }
       }
     });
-
-    if (matched) {
-      matched.classList.add('current');
-      matched.setAttribute('aria-current', 'page');
-    }
-
-    var yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 
   (function() {
@@ -878,13 +963,11 @@
 
     function openModal(src, mode) {
       frame.src = src;
-
       if (mode === 'compact') {
         modalInner.classList.add('compact');
       } else {
         modalInner.classList.remove('compact');
       }
-
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
