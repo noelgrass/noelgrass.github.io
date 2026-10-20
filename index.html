@@ -233,6 +233,10 @@
     from { opacity: 0; letter-spacing: 0.5em; }
     to   { opacity: 1; letter-spacing: 0.35em; }
   }
+  @keyframes portraitPulse {
+    0%, 100% { opacity: 0.25; }
+    50%      { opacity: 1; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -577,6 +581,24 @@
     .editorial { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-top: 50px; }
     .portrait { position: static; max-width: 320px; margin: 0 auto; }
     .editorial-text, .intro, .intro-body, .bio-link { text-align: center; }
+
+    /* Mobile portrait scroll fix — keep the glow but stop repainting the filtered image */
+    .portrait img {
+      animation: none;
+      box-shadow: 0 0 15px 2px rgba(197, 168, 128, 0.30), 0 0 35px 5px rgba(197, 168, 128, 0.12);
+    }
+
+    .portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: 2px;
+      box-shadow: 0 0 18px 3px rgba(197, 168, 128, 0.40), 0 0 36px 7px rgba(197, 168, 128, 0.15);
+      opacity: 0.3;
+      animation: portraitPulse 6s ease-in-out infinite;
+      will-change: opacity;
+    }
   }
 
   @media (max-width: 700px) {
