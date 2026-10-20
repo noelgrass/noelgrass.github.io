@@ -743,8 +743,18 @@
     }
 
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.suite') && !e.target.closest('.action-preview')) {
+      // If the click is outside any shelf AND outside any preview button
+      if (!e.target.closest('.shelf') && !e.target.closest('.action-preview')) {
+        
+        // 1. Stop any playing audio and reset cue buttons
         closeAllSuites();
+        
+        // 2. Close all the accordion shelves
+        shelves.forEach(function (shelf) {
+          if (shelf.open) {
+            shelf.open = false;
+          }
+        });
       }
     });
 
