@@ -59,7 +59,13 @@
     { "@type": "MusicInstrument", "name": "Keyboard" }
   ],
   "genre": [
-    "Modern Classical", "Neoclassical", "Contemporary Classical", "Ambient", "Cinematic", "Sound Art", "Experimental"
+    "Modern Classical",
+    "Neoclassical",
+    "Contemporary Classical",
+    "Ambient",
+    "Cinematic",
+    "Sound Art",
+    "Experimental"
   ],
   "knowsAbout": [
     "Modern Classical Piano", "Neoclassical Piano", "Contemporary Classical Piano", "Orchestral Piano", "Modern Classical Composition", "Neoclassical Composition", "Contemporary Classical Composition", "Impressionist Composition", "Improvisation", "Sound Art", "Experimental Music", "Experimental Composition", "Sound Design", "Textural Composition", "Field Recording", "Orchestration", "Music Arranging", "Music Production", "Audio Production", "Record Production", "Sound Production", "Neoclassical Music Production", "Contemporary Classical Production", "Modern Classical Production", "Ambient Music Production", "Cinematic Music Production", "Jingle Production", "Sonic Branding", "Ambient Composition", "Solo Piano Composition", "Cinematic Instrumental Music", "Hybrid Scoring", "African Instrumental Music", "Live Performance", "Live Performer", "Solo Pianist", "Concert Pianist", "Live Pianist", "Ensemble Performer", "Session Musician", "Cross-Genre Performance", "Chamber Musician", "Collaborative Pianist", "Neoclassical Live Performer", "Contemporary Classical Live Performer", "Modern Classical Live Performer", "Ambient Live Performer", "Cinematic Live Performer", "Private Event Performer", "Festival Performer", "Cultural Programme Performer", "Film Festival Performer", "Corporate Event Performer", "Live Solo Piano", "Live Orchestral Performance", "Film Composer", "Cinematic Composer", "Documentary Composer", "Media Composer", "Screen Composer", "Television Composer", "Film Scoring", "Television Scoring", "Documentary Scoring", "Series Composition", "Episodic Composition", "Broadcast Music", "Broadcast Music Composition", "Media Composition", "Original Soundtrack Composition", "Soundtrack Production", "Commercial Music Composition", "Commercial Scoring", "Advertising Music", "Corporate Music Composition", "Brand Music Composition", "Music Editing", "Score Mixing", "Choral Composition", "Vocal Arrangement", "Ensemble Writing", "Music Education", "Composition Instruction", "Guest Lectures", "Sound Designer", "Sound Engineer", "Orchestrator"
@@ -153,7 +159,6 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { background: var(--bg); }
   html.menu-lock { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
   html, body { color: var(--offwhite); scroll-behavior: smooth; }
@@ -180,9 +185,6 @@
     clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     MENU 2 ANIMATIONS & STYLES
-     ═══════════════════════════════════════════════════════════════ */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -246,9 +248,6 @@
     body { opacity: 1; }
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     MENU 2 NAVIGATION
-     ═══════════════════════════════════════════════════════════════ */
   .topnav {
     position: sticky; top: 0; z-index: 300;
     background: var(--bg); padding: 22px 40px;
@@ -382,12 +381,16 @@
 
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     HOME PAGE CONTENT (Unchanged)
-     ═══════════════════════════════════════════════════════════════ */
-  .hero { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate; contain: layout paint; }
+  .hero {
+    position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
+    padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate; contain: layout paint;
+  }
   .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.85; transform: scale(1.02); transition: transform 14s ease; backface-visibility: hidden; }
+  .hero-bg img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
+    filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.85;
+    transform: scale(1.02); transition: transform 14s ease; backface-visibility: hidden;
+  }
   .hero.loaded .hero-bg img { transform: scale(1.08); }
   .hero-bg::after {
     content: ''; position: absolute; inset: 0;
@@ -396,13 +399,21 @@
   }
   .hero-content { position: relative; z-index: 2; }
   .title-block { text-align: center; margin-bottom: 40px; transition: opacity 0.7s ease; }
-  .eyebrow { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: #E8D5B5; margin-bottom: 30px; line-height: 1.6; animation: fadeUp 1s ease-out both; animation-delay: 0.1s; }
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; color: var(--gold); font-size: 4.5em; line-height: 1.05; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 26px; display: inline-block; animation: fadeUp 1s ease-out both, nameGlow 6s ease-in-out infinite; animation-delay: 0.25s, 1.3s; transform: translateZ(0); will-change: text-shadow; }
+  .eyebrow {
+    font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em;
+    letter-spacing: 0.35em; text-transform: uppercase; color: #E8D5B5; margin-bottom: 30px; line-height: 1.6;
+    animation: fadeUp 1s ease-out both; animation-delay: 0.1s;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; color: var(--gold);
+    font-size: 4.5em; line-height: 1.05; letter-spacing: 0.12em; text-transform: uppercase;
+    margin-bottom: 26px; display: inline-block;
+    animation: fadeUp 1s ease-out both, nameGlow 6s ease-in-out infinite;
+    animation-delay: 0.25s, 1.3s; transform: translateZ(0); will-change: text-shadow;
+  }
   .rule-small { width: 48px; height: 3px; border-top: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); margin: 0 auto; animation: fadeUp 1s ease-out both; animation-delay: 0.5s; }
-  
-  .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
 
-  /* Hover effects for the main page content */
+  .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
   .page:has(.fork-card:hover) .editorial, .page:has(.fork-card:hover) .icons, .page:has(.fork-card:hover) .rule-full, .page:has(.fork-card:hover) .footer-links, .page:has(.fork-card:hover) .signature, .page:has(.fork-card:hover) .scroll-cue, .page:has(.fork-card:hover) .fork-intro, .page:has(.fork-card:hover) .follow-link { opacity: 0.15; transition: opacity 0.7s ease; }
   .page:has(.fork-card:hover) .fork-card:not(:hover) { opacity: 0.25; transition: opacity 0.7s ease; }
   .page:has(.icons button:hover) .editorial, .page:has(.icons button:hover) .fork, .page:has(.icons button:hover) .scroll-cue, .page:has(.icons button:hover) .rule-full, .page:has(.icons button:hover) .footer-links, .page:has(.icons button:hover) .signature, .page:has(.icons button:hover) .follow-link { opacity: 0.1; transition: opacity 0.7s ease; }
@@ -411,7 +422,11 @@
 
   .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; transition: opacity 0.7s ease; }
   .portrait { position: sticky; top: 120px; animation: portraitIn 1.4s ease-out both; animation-delay: 0.4s; will-change: transform; transform: translateZ(0); contain: layout paint; }
-  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--rule); filter: grayscale(100%) contrast(1.05) brightness(0.7); transition: filter 0.7s ease, transform 0.6s ease; animation: portraitGlow 6s ease-in-out infinite; animation-delay: 1.3s; transform: translateZ(0); will-change: box-shadow, transform; }
+  .portrait img {
+    display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--rule);
+    filter: grayscale(100%) contrast(1.05) brightness(0.7); transition: filter 0.7s ease, transform 0.6s ease;
+    animation: portraitGlow 6s ease-in-out infinite; animation-delay: 1.3s; transform: translateZ(0); will-change: box-shadow, transform;
+  }
   .portrait img:hover { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.015); }
   .editorial-text { text-align: left; padding-top: 10px; }
   .intro { font-style: italic; font-size: 1.2em; color: var(--offwhite); line-height: 1.75; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
@@ -425,7 +440,6 @@
   .fork-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; }
   .fork-row::before { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; background: var(--gold); transform: translate(-50%, -50%) rotate(45deg); z-index: 3; transition: opacity 0.7s ease; opacity: 0.85; }
   .page:has(.fork-card:hover) .fork-row::before { opacity: 0.15; }
-
   .fork-card { display: block; position: relative; padding: 0; background: transparent; text-align: center; overflow: hidden; opacity: 0; transition: transform 1.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.6s ease, box-shadow 0.6s ease; animation: doorRestGlow 6s ease-in-out infinite; animation-delay: 1.4s; backface-visibility: hidden; will-change: transform, opacity; contain: layout paint; }
   .fork-card:nth-child(1) { transform: translate3d(-70px, 0, 0); }
   .fork-card:nth-child(2) { transform: translate3d(70px, 0, 0); }
