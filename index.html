@@ -338,11 +338,13 @@
   .menu-links {
     list-style: none; display: flex; flex-direction: column;
     align-items: center; gap: 32px; text-align: center; padding-top: 20px;
+    transition: opacity 0.4s ease;
   }
   .menu-section {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
     margin-bottom: 20px; display: block; opacity: 0;
+    transition: opacity 0.4s ease;
   }
   .menu-panel.open .menu-section { animation: menuLinkIn 0.7s ease 0.5s forwards; }
   
@@ -356,9 +358,18 @@
   .menu-link {
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
+    transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
   }
-  .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 12px rgba(197, 168, 128, 0.75); }
+  .menu-link:hover { 
+    color: #FCFCF7; 
+    text-shadow: 0 0 12px rgba(197, 168, 128, 0.75); 
+  }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; }
+  
+  /* THE FORK-STYLE DIM EFFECT */
+  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
+  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
+
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -428,7 +439,6 @@
     display: block; position: relative; text-align: center;
     border-radius: 4px;
     opacity: 0;
-    /* The unified smooth transition for the card lift */
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
                 opacity 1.6s ease;
     background: var(--bg);
@@ -445,7 +455,6 @@
     opacity: 0.3;
     filter: blur(15px);
     transition: opacity 0.4s ease, filter 0.4s ease;
-    /* Gentle pulse on the resting state */
     animation: elegantPulse 4s ease-in-out infinite;
   }
 
@@ -453,7 +462,6 @@
   .fork-card:hover::before {
     opacity: 0.8;
     filter: blur(25px);
-    /* The pulse continues but with the brighter hover keyframes */
     animation: elegantPulseHover 3s ease-in-out infinite;
   }
 
@@ -476,7 +484,6 @@
   .fork-bg img {
     width: 100%; height: 100%; object-fit: cover;
     filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.9;
-    /* Matched transition speed for perfect smoothness */
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), 
                 filter 0.4s ease, 
                 opacity 0.4s ease;
