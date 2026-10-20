@@ -620,7 +620,6 @@
       return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
-    // Function to combine and deduplicate instruments
     function buildMasterInstrumentList(descArray) {
       if (!descArray || !Array.isArray(descArray)) return '';
       var all = [];
@@ -719,7 +718,6 @@
       var id = currentCueId;
       currentCueId = null; 
 
-      // Force the visual reset on the old cue
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       
@@ -753,13 +751,15 @@
     function playCue(cueId, url) {
       if (!audio) return;
       
-      audio.pause();
+      // Stop any existing audio silently
+      audio.pause(); 
+      
       currentCueId = cueId;
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
       
-      // Force the new button to show Pause immediately
+      // Force the new button to Pause
       var btn = mount.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
     }
@@ -794,7 +794,6 @@
         var cueId = cueBtn.getAttribute('data-cue-id');
         var url = cueBtn.getAttribute('data-url');
         
-        // If clicking the currently playing cue, just pause/resume it
         if (currentCueId === cueId) {
           if (audio.paused) {
             audio.play();
@@ -808,18 +807,26 @@
           return;
         }
         
-        // If clicking a different cue, switch to it
+        // Manually reset the OLD button before playing the new one
+        if (currentCueId) {
+          var oldBtn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
+          if (oldBtn) { oldBtn.innerHTML = '▶'; oldBtn.classList.remove('playing'); }
+          var oldCue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
+          if (oldCue) {
+            var oldBar = oldCue.querySelector('.cue-progress-bar');
+            var oldTime = oldCue.querySelector('.cue-time');
+            if (oldBar) oldBar.style.width = '0%';
+            if (oldTime) oldTime.textContent = '0:00';
+          }
+        }
+        
         playCue(cueId, url);
         return;
       }
     });
 
     if (audio) {
-      audio.addEventListener('play', function () {
-        var btn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
-        if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
-      });
-      
+      // Timer only. We removed the play/pause event listeners to stop browser interference.
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId) return;
         var cue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
