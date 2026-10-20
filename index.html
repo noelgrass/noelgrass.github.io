@@ -560,9 +560,9 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     filter:
-      drop-shadow(0 0 12px rgba(197, 168, 128, 0.55))
-      drop-shadow(0 0 32px rgba(197, 168, 128, 0.28))
-      drop-shadow(0 0 64px rgba(197, 168, 128, 0.12));
+      drop-shadow(0 0 4px rgba(197, 168, 128, 0.55))
+      drop-shadow(0 0 10px rgba(197, 168, 128, 0.35))
+      drop-shadow(0 0 22px rgba(197, 168, 128, 0.18));
   }
 
   /* Current page */
@@ -590,15 +590,27 @@
     transform: translateY(-50%) translateX(2px);
   }
 
-  /* Dim surrounding chrome — softer than before */
+  /* Gentle dim of the room when a title is hovered */
   .menu-panel:has(.menu-link:hover) .menu-close,
   .menu-panel:has(.menu-link:hover) .menu-heading,
   .menu-panel:has(.menu-link:hover) .menu-bottom,
   .menu-panel:has(.menu-link:hover) .crop-frame,
   .menu-panel:has(.menu-link:hover) .menu-links::before,
   .menu-panel:has(.menu-link:hover) .menu-section {
-    opacity: 0.12;
-    transition: opacity 0.7s ease;
+    opacity: 0.45;
+    transition: opacity 0.6s ease;
+  }
+
+  /* The beam itself dims slightly — the room gets darker */
+  .menu-panel:has(.menu-link:hover) .projector-beam {
+    opacity: 0.55;
+    transition: opacity 0.6s ease;
+  }
+
+  /* The projector light dims a touch too */
+  .menu-panel:has(.menu-link:hover) .projector-light {
+    opacity: 0.8;
+    transition: opacity 0.6s ease;
   }
 
   .menu-bottom {
