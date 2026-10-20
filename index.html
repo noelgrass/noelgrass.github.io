@@ -401,9 +401,9 @@
       transparent 0%, var(--gold-soft) 15%,
       var(--gold-soft) 85%, transparent 100%);
     opacity: 0; transform: scaleX(0);
-    transform-origin: left center; /* Changed to draw from the left */
+    transform-origin: left center;
     transition: opacity 0.6s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
-    margin-left: 10%; /* Align with the new left-shifted menu */
+    margin-left: 10%;
   }
   .menu-panel.open .crop-frame {
     opacity: 0.35; transform: scaleX(1);
@@ -412,7 +412,7 @@
   .menu-panel.open .crop-frame--bottom { transition-delay: 0.7s; }
 
   .menu-inner {
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: center; /* Left aligned */
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
     gap: 40px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
     min-height: 100vh; position: relative; z-index: 2;
   }
@@ -454,12 +454,12 @@
   .menu-links {
     list-style: none; 
     display: flex; flex-direction: column;
-    align-items: flex-start; /* Left align */
+    align-items: flex-start;
     gap: 38px; 
     text-align: left; 
-    padding: 20px 0 20px 60px; /* Indent for the spine */
+    padding: 20px 0 20px 60px;
     position: relative;
-    margin-left: 10%; /* Offset from dead center */
+    margin-left: 10%;
   }
 
   /* The vertical gold spine */
@@ -513,28 +513,34 @@
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-block; position: relative; padding: 8px 0;
-    transition: color 0.5s ease, opacity 0.5s ease, padding-left 0.4s ease;
+    transition: color 0.5s ease, opacity 0.5s ease, padding-left 0.4s cubic-bezier(0.16,1,0.3,1);
     isolation: isolate;
   }
 
-  /* Hard underline hover */
+  /* PROJECTOR BLEED HOVER EFFECT */
   .menu-link::before {
-    display: none; /* Hides the old halo */
-  }
-  .menu-link::after {
     content: '';
-    position: absolute; bottom: 0; left: 0; right: 100%;
-    height: 1px; background: var(--gold);
-    transition: right 0.4s cubic-bezier(0.16,1,0.3,1);
+    position: absolute;
+    inset: -10px -30px; /* Expands outward from the text */
+    z-index: -1;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(197, 168, 128, 0.25) 0%,
+      rgba(197, 168, 128, 0.08) 40%,
+      transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
   }
 
   /* The Hover State */
   .menu-link:hover { 
     color: #FFFFFF; 
-    padding-left: 12px; /* Nudge right */
+    padding-left: 12px;
   }
-  .menu-link:hover::after {
-    right: 0; /* Underline draws across */
+  .menu-link:hover::before {
+    opacity: 1;
   }
 
   /* Current page */
@@ -543,7 +549,7 @@
     pointer-events: none;
   }
 
-  /* Smarter Dimming: Dims the whole list, then brightens the hovered link */
+  /* Smarter Dimming */
   .menu-links:hover .menu-link {
     opacity: 0.15;
     transition: opacity 0.5s ease;
@@ -571,7 +577,7 @@
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    opacity: 0; margin-top: 40px; margin-left: 10%; /* Aligned with menu */
+    opacity: 0; margin-top: 40px; margin-left: 10%;
   }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 0.4s ease 0.8s forwards; }
 
