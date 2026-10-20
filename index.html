@@ -378,7 +378,7 @@
   
   .menu-item { opacity: 0; position: relative; }
   
-  /* Fast Cascade */
+  /* Fast Cascade - Added nth-child(6) for Contact */
   .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.4s ease 0.35s forwards; }
   .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.4s ease 0.40s forwards; }
   .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.4s ease 0.45s forwards; }
@@ -504,7 +504,7 @@
     background: var(--bg);
   }
 
-  /* THE ELEGANT GLOW LAYER (Hardware accelerated, no lag) */
+  /* THE ELEGANT GLOW LAYER */
   .fork-card::before {
     content: '';
     position: absolute;
@@ -518,7 +518,6 @@
     animation: elegantPulse 4s ease-in-out infinite;
   }
 
-  /* Hover state: Keep it pulsing, but brighter and wider */
   .fork-card:hover::before {
     opacity: 0.8;
     filter: blur(25px);
@@ -529,12 +528,10 @@
   .fork-card:nth-child(2) { transform: translate3d(0, 30px, 0) scale(0.95); }
   .fork-card.in-view { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
   
-  /* Hovering the CARD lifts the whole box gently */
   .fork-card:hover {
     transform: translateY(-12px) scale(1.02);
   }
 
-  /* Contains the image inside the card */
   .fork-bg {
     position: absolute; inset: 0; z-index: 0; pointer-events: none;
     overflow: hidden;
@@ -557,7 +554,6 @@
     z-index: 1;
   }
   
-  /* Hovering the card brightens the image inside */
   .fork-card:hover .fork-bg img {
     transform: scale(1.08);
     filter: grayscale(100%) brightness(0.65) contrast(1.15);
