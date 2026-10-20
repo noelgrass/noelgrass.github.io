@@ -483,7 +483,7 @@
   .menu-item { 
     opacity: 0; 
     position: relative; 
-    display: flex; align-items: baseline; gap: 24px;
+    display: block; /* Changed from flex to block to fix centering */
   }
 
   /* Cinematic Numbers */
@@ -494,6 +494,10 @@
     color: var(--gold-dim);
     opacity: 0.5;
     transition: color 0.5s ease, opacity 0.5s ease;
+    position: absolute;
+    left: -50px; /* Floats to the left of the link */
+    top: 50%;
+    transform: translateY(-50%);
   }
   .menu-item:nth-child(2)::before { content: '01'; }
   .menu-item:nth-child(3)::before { content: '02'; }
@@ -513,15 +517,16 @@
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-block; position: relative; padding: 8px 0;
-    transition: color 0.5s ease, opacity 0.5s ease, padding-left 0.4s cubic-bezier(0.16,1,0.3,1);
+    /* Smooth glide: using transform instead of padding */
+    transition: color 0.5s ease, opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
     isolation: isolate;
   }
 
-  /* PROJECTOR BLEED HOVER EFFECT */
+  /* 1. THE GLOW (Projector Bleed) */
   .menu-link::before {
     content: '';
     position: absolute;
-    inset: -10px -30px; /* Expands outward from the text */
+    inset: -15px -40px; /* Expands outward */
     z-index: -1;
     background: radial-gradient(
       ellipse at center,
@@ -534,13 +539,42 @@
     pointer-events: none;
   }
 
+  /* 2. THE VIEWFINDER (Crop Marks) */
+  .menu-link::after {
+    content: '';
+    position: absolute;
+    inset: -4px -12px; /* Snug around the text */
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    transform: scale(1.05); /* Starts slightly larger */
+    pointer-events: none;
+    z-index: 1; /* Sits above the glow */
+    
+    /* Draws the 4 corners */
+    background: 
+      linear-gradient(to right, var(--gold) 2px, transparent 2px) 0 0,
+      linear-gradient(to bottom, var(--gold) 2px, transparent 2px) 0 0,
+      linear-gradient(to left, var(--gold) 2px, transparent 2px) 100% 0,
+      linear-gradient(to bottom, var(--gold) 2px, transparent 2px) 100% 0,
+      linear-gradient(to right, var(--gold) 2px, transparent 2px) 0 100%,
+      linear-gradient(to top, var(--gold) 2px, transparent 2px) 0 100%,
+      linear-gradient(to left, var(--gold) 2px, transparent 2px) 100% 100%,
+      linear-gradient(to top, var(--gold) 2px, transparent 2px) 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 12px 12px;
+  }
+
   /* The Hover State */
   .menu-link:hover { 
     color: #FFFFFF; 
-    padding-left: 12px;
+    transform: translateX(12px); /* Smooth glide to the right */
   }
   .menu-link:hover::before {
-    opacity: 1;
+    opacity: 1; /* Glow fades in */
+  }
+  .menu-link:hover::after {
+    opacity: 1; /* Viewfinder snaps in */
+    transform: scale(1);
   }
 
   /* Current page */
