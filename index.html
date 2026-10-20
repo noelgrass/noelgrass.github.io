@@ -401,9 +401,9 @@
       transparent 0%, var(--gold-soft) 15%,
       var(--gold-soft) 85%, transparent 100%);
     opacity: 0; transform: scaleX(0);
-    transform-origin: center center; /* Changed to draw from center */
+    transform-origin: center center;
     transition: opacity 0.6s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
-    margin: 0 auto; /* Centered */
+    margin: 0 auto;
   }
   .menu-panel.open .crop-frame {
     opacity: 0.35; transform: scaleX(1);
@@ -412,7 +412,7 @@
   .menu-panel.open .crop-frame--bottom { transition-delay: 0.7s; }
 
   .menu-inner {
-    display: flex; flex-direction: column; align-items: center; justify-content: center; /* Centered */
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
     gap: 40px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
     min-height: 100vh; position: relative; z-index: 2;
   }
@@ -450,15 +450,15 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after { transform: rotate(-45deg); }
 
-  /* ── Menu Links (Centered & Smooth Glide) ── */
+  /* ── Menu Links (Centered, Smooth Glide & Cinematic Dimming) ── */
   .menu-links {
     list-style: none; 
     display: flex; flex-direction: column;
-    align-items: flex-start; /* Text stays left-aligned internally */
+    align-items: flex-start; 
     gap: 38px; 
     text-align: left; 
-    padding: 20px 0 20px 60px; /* Space for the numbers */
-    margin-left: -60px; /* Pulls it back so the TEXT is centered */
+    padding: 20px 0 20px 60px; 
+    margin-left: -60px; 
     position: relative;
   }
 
@@ -469,7 +469,7 @@
     width: 1px;
     background: linear-gradient(to bottom, transparent, var(--gold-soft), transparent);
     opacity: 0.3;
-    transition: opacity 0.5s ease;
+    transition: opacity 0.6s ease;
   }
 
   .menu-section {
@@ -477,6 +477,7 @@
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
     margin-bottom: 20px; display: block; opacity: 0;
     padding-left: 4px;
+    transition: opacity 0.6s ease;
   }
   .menu-panel.open .menu-section { animation: menuLinkIn 0.4s ease 0.3s forwards; }
 
@@ -493,11 +494,11 @@
     letter-spacing: 0.1em;
     color: var(--gold-dim);
     opacity: 0.5;
-    transition: opacity 0.5s ease;
     position: absolute;
     left: -50px; 
     top: 50%;
     transform: translateY(-50%);
+    transition: opacity 0.6s ease;
   }
   .menu-item:nth-child(2)::before { content: '01'; }
   .menu-item:nth-child(3)::before { content: '02'; }
@@ -517,8 +518,11 @@
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-block; position: relative; padding: 8px 0;
-    /* Unified smooth transition */
-    transition: color 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    
+    /* Force GPU Acceleration for Buttery Smooth Glide */
+    will-change: transform, opacity;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     isolation: isolate;
   }
 
@@ -566,7 +570,7 @@
   /* The Hover State */
   .menu-link:hover { 
     color: #FFFFFF; 
-    transform: translateX(12px); 
+    transform: translate3d(12px, 0, 0); 
   }
   .menu-link:hover::before {
     opacity: 1; 
@@ -582,28 +586,37 @@
     pointer-events: none;
   }
 
-  /* Smarter Dimming - Fixed to stop choppiness */
-  .menu-links:hover .menu-link {
-    color: var(--gold-dim); 
-    transition: color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+  /* ── THE CINEMATIC SPOTLIGHT DIMMING ── */
+  
+  /* When hovering the list, dim all items to 10% */
+  .menu-links:hover .menu-item {
+    opacity: 0.1;
+    transition: opacity 0.6s ease;
   }
+  
+  /* When hovering the list, dim the numbers too */
   .menu-links:hover .menu-item::before {
-    opacity: 0.15;
-  }
-  .menu-links:hover .menu-link:hover {
-    color: #FFFFFF; 
-  }
-  .menu-links:has(.menu-link:hover) .menu-section {
-    opacity: 0.05; 
+    opacity: 0.1;
+    transition: opacity 0.6s ease;
   }
 
-  /* Dim the UI chrome when hovering */
+  /* Force the specific item you are hovering back to 100% instantly */
+  .menu-links .menu-item:hover {
+    opacity: 1 !important;
+  }
+  .menu-links .menu-item:hover::before {
+    opacity: 0.5 !important; /* Returns to its default subtle state */
+  }
+
+  /* Dim the surrounding UI chrome (Close button, heading, etc) */
   .menu-panel:has(.menu-link:hover) .menu-close,
   .menu-panel:has(.menu-link:hover) .menu-heading,
   .menu-panel:has(.menu-link:hover) .menu-bottom,
   .menu-panel:has(.menu-link:hover) .crop-frame,
-  .menu-panel:has(.menu-link:hover) .menu-links::before {
-    opacity: 0.05; transition: opacity 0.5s ease;
+  .menu-panel:has(.menu-link:hover) .menu-links::before,
+  .menu-panel:has(.menu-link:hover) .menu-section {
+    opacity: 0.05; 
+    transition: opacity 0.6s ease;
   }
 
   .menu-bottom {
