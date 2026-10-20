@@ -211,7 +211,7 @@
   .suite-text { display: flex; flex-direction: column; gap: 4px; }
   .suite-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); line-height: 1.3; }
   
-  /* Instrument tags replace the duration box */
+  /* Master instrument list under title */
   .suite-instruments { 
     font-family: 'Montserrat', sans-serif; 
     font-size: 0.68em; 
@@ -565,16 +565,6 @@
         - desc: A list of 3 instruments (one for each cue). 
                 Put them inside [ ] and separate with commas.
         - amount: 800000 = Ksh 8,000 (always multiply by 100).
-        
-        EXAMPLE:
-        { cat: "tension", code: "TN01", title: "Theme 1", 
-          desc: ["Cue 1 instruments", "Cue 2 instruments", "Cue 3 instruments"], 
-          duration: "Tension", amount: "800000" },
-
-     2. ADDING A BRAND NEW BLOCK (CATEGORY):
-        - Step A: Add a line to the SHELVES array below with a new 'cat' name.
-        - Step B: Add your new suites here with that exact same 'cat' name.
-        - ⚠️ IMPORTANT: The 'cat' name must match exactly (keep it lowercase).
      ═══════════════════════════════════════════════════════════════ */
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
@@ -600,9 +590,6 @@
     { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], amount: "800000" }
   ];
 
-  /* ═══════════════════════════════════════════════════════════════
-     🗂️ SHELVES — THE CATEGORIES
-     ═══════════════════════════════════════════════════════════════ */
   var SHELVES = [
     { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
     { cat: "drama",   label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
@@ -633,6 +620,23 @@
       return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
+    // NEW: Function to combine and deduplicate instruments
+    function buildMasterInstrumentList(descArray) {
+      if (!descArray || !Array.isArray(descArray)) return '';
+      var all = [];
+      descArray.forEach(function (cueDesc) {
+        if (!cueDesc) return;
+        // Split by middot and trim whitespace
+        var parts = cueDesc.split('·').map(function (s) { return s.trim(); });
+        parts.forEach(function (part) {
+          if (part && all.indexOf(part) === -1) {
+            all.push(part);
+          }
+        });
+      });
+      return all.join(' · ');
+    }
+
     function buildSuiteHtml(suite) {
       var cueCount = 3;
       var cuesHtml = '';
@@ -661,7 +665,7 @@
               '<span class="suite-code">' + suite.code + '</span>' +
               '<div class="suite-text">' +
                 '<span class="suite-title">' + suite.title + '</span>' +
-                '<div class="suite-instruments">' + (suite.desc[0] || '') + '</div>' +
+                '<div class="suite-instruments">' + buildMasterInstrumentList(suite.desc) + '</div>' +
               '</div>' +
             '</div>' +
             '<div class="suite-actions">' +
@@ -714,10 +718,8 @@
     function stopCue() {
       if (!currentCueId) return;
       var id = currentCueId;
-      currentCueId = null; // Clear this FIRST
       
-      if (audio) { audio.pause(); audio.src = ""; audio.load(); }
-      
+      // 1. Force the visual reset on the OLD cue immediately
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       
@@ -728,6 +730,10 @@
         if (bar) bar.style.width = '0%';
         if (time) time.textContent = '0:00';
       }
+
+      // 2. Clear the ID and stop the audio
+      currentCueId = null;
+      if (audio) { audio.pause(); audio.src = ""; audio.load(); }
     }
 
     function closeAllSuites() {
@@ -748,11 +754,21 @@
 
     function playCue(cueId, url) {
       if (!audio) return;
+      
+      // Ensure any previous audio is completely stopped first
       audio.pause();
+      
+      // Set the new ID
       currentCueId = cueId;
+      
+      // Load and play
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
+      
+      // Force the new button to show "Pause" immediately
+      var btn = mount.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
+      if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
     }
 
     mount.addEventListener('click', function (e) {
