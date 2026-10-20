@@ -378,7 +378,7 @@
   
   .menu-item { opacity: 0; position: relative; }
   
-  /* Fast Cascade - Added nth-child(6) for Contact */
+  /* Fast Cascade */
   .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.4s ease 0.35s forwards; }
   .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.4s ease 0.40s forwards; }
   .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.4s ease 0.45s forwards; }
@@ -386,22 +386,28 @@
   .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.4s ease 0.55s forwards; }
 
   .menu-link {
-    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2.2em;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
-    display: inline-block; position: relative; padding: 8px 20px;
+    display: inline-block; position: relative; padding: 8px 0;
     transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
   }
   
-  /* The Line Draw Effect (Hover only) */
+  /* The Underline */
   .menu-link::after {
-    content: ''; position: absolute; bottom: 0; left: 50%; right: 50%;
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
     height: 1px; background: var(--gold);
-    transition: left 0.5s cubic-bezier(0.22, 1, 0.36, 1), right 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease;
-    opacity: 0;
-    display: block;
+    transform: scaleX(0); transform-origin: left center;
+    transition: transform 0.4s ease;
   }
-  .menu-link:not(.current):hover::after {
-    left: 15%; right: 15%; opacity: 0.8;
+  
+  /* Hover: Draw the line */
+  .menu-link:hover::after {
+    transform: scaleX(1);
+  }
+  
+  /* Current page: No line */
+  .menu-link.current::after {
+    display: none;
   }
   
   .menu-link:hover { 
@@ -413,9 +419,6 @@
   .menu-link.current {
     color: var(--gold-dim);
     pointer-events: none;
-  }
-  .menu-link.current::after {
-    display: none;
   }
   
   /* Dimming effect on siblings */
