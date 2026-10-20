@@ -777,144 +777,145 @@
     var currentTrackId = null;
 
     function stopCurrentTrack() {
-      if (!audio || !currentTrackId) return;
+      if (!audio) return;
+      
       audio.pause();
       audio.currentTime = 0;
       
-      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-      if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
+      // Reset ALL main play buttons
+      document.querySelectorAll('.action-play').forEach(function(b) {
+        var isSuite = b.getAttribute('data-issuite') === 'true';
+        b.innerHTML = isSuite ? '▶' : '▶';
+        b.classList.remove('playing');
+      });
       
-      // Reset single player
-      var player = document.getElementById('player-' + currentTrackId);
-      if (player) {
-        var bar = player.querySelector('.player-progress-bar');
-        var time = player.querySelector('.player-time');
-        if (bar) bar.style.width = '0%';
-        if (time) time.innerText = '0:00';
-        player.classList.remove('active');
-      }
+      // Reset ALL cue buttons
+      document.querySelectorAll('.cue-play').forEach(function(b) {
+        b.innerHTML = '▶';
+        b.classList.remove('playing');
+      });
       
-      // Reset suite cues
-      var suite = document.getElementById('suite-' + currentTrackId);
-      if (suite) {
-        suite.classList.remove('active');
-        suite.querySelectorAll('.cue-play').forEach(function(btn) {
-          btn.innerHTML = '▶';
-          btn.classList.remove('playing');
-        });
-        suite.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
-        suite.querySelectorAll('.cue-time').forEach(function(time) { time.innerText = '0:00'; });
-      }
+      // Hide all players
+      document.querySelectorAll('.inline-player').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.suite-cues').forEach(function(s) { s.classList.remove('active'); });
+      
+      // Reset all progress bars
+      document.querySelectorAll('.player-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
+      document.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
+      document.querySelectorAll('.player-time').forEach(function(t) { t.innerText = '0:00'; });
+      document.querySelectorAll('.cue-time').forEach(function(t) { t.innerText = '0:00'; });
 
       currentTrackId = null;
     }
 
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('.action-play');
-      if (btn) {
+      // 1. Check if they clicked a main suite/jingle play button
+      var mainPlayBtn = e.target.closest('.action-play');
+      if (mainPlayBtn) {
         e.preventDefault();
-        var code = btn.getAttribute('data-code');
-        var url = btn.getAttribute('data-url');
-        var isSuite = btn.getAttribute('data-issuite') === 'true';
+        var code = mainPlayBtn.getAttribute('data-code');
+        var url = mainPlayBtn.getAttribute('data-url');
+        var isSuite = mainPlayBtn.getAttribute('data-issuite') === 'true';
         
         if (currentTrackId === code) {
-          // If already playing, pause/resume
+          // Toggle pause/play
           if (audio.paused) {
             audio.play();
-            btn.innerHTML = '❚❚';
-            btn.classList.add('playing');
+            mainPlayBtn.innerHTML = isSuite ? '✕' : '❚❚';
+            mainPlayBtn.classList.add('playing');
           } else {
             audio.pause();
-            btn.innerHTML = '▶';
-            btn.classList.remove('playing');
+            mainPlayBtn.innerHTML = '▶';
+            mainPlayBtn.classList.remove('playing');
           }
           return;
         }
         
+        // If it's a new track, stop the old one and play the new one
         stopCurrentTrack();
         currentTrackId = code;
         
         if (isSuite) {
-          // Open suite and play cue 1
           var suite = document.getElementById('suite-' + code);
           if (suite) {
             suite.classList.add('active');
             var firstCueBtn = suite.querySelector('.cue-play');
             if (firstCueBtn) {
-              var firstCueId = firstCueBtn.getAttribute('data-cue-id');
-              var firstUrl = firstCueBtn.getAttribute('data-url');
-              
-              // Stop the main audio, let cue play handle it
-              audio.pause();
-              
-              // We need a separate function for playing cues to keep it clean
-              playCue(firstCueId, firstUrl);
+              playCue(firstCueBtn.getAttribute('data-cue-id'), firstCueBtn.getAttribute('data-url'));
             }
           }
-          btn.innerHTML = '✕';
-          btn.classList.add('playing');
+          mainPlayBtn.innerHTML = '✕';
+          mainPlayBtn.classList.add('playing');
         } else {
-          // Play single jingle
           audio.src = url;
           audio.play().catch(function() {});
-          btn.innerHTML = '❚❚';
-          btn.classList.add('playing');
+          mainPlayBtn.innerHTML = '❚❚';
+          mainPlayBtn.classList.add('playing');
           var player = document.getElementById('player-' + code);
           if (player) player.classList.add('active');
         }
-      } else {
-        // Click outside logic
-        var isProgress = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
-        if (!isProgress && currentTrackId) stopCurrentTrack();
+        return;
+      }
+
+      // 2. Check if they clicked a cue play button
+      var cuePlayBtn = e.target.closest('.cue-play');
+      if (cuePlayBtn) {
+        e.preventDefault();
+        var cueId = cuePlayBtn.getAttribute('data-cue-id');
+        var url = cuePlayBtn.getAttribute('data-url');
+        
+        if (currentTrackId === cueId) {
+          // Toggle pause/play
+          if (audio.paused) {
+            audio.play();
+            cuePlayBtn.innerHTML = '❚❚';
+            cuePlayBtn.classList.add('playing');
+          } else {
+            audio.pause();
+            cuePlayBtn.innerHTML = '▶';
+            cuePlayBtn.classList.remove('playing');
+          }
+          return;
+        }
+        
+        playCue(cueId, url);
+        return;
+      }
+
+      // 3. Click outside logic
+      var isProgress = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
+      if (!isProgress && currentTrackId) {
+        stopCurrentTrack();
+        
+        // Collapse all suites
+        document.querySelectorAll('.suite-cues').forEach(function(s) {
+          s.classList.remove('active');
+        });
+        document.querySelectorAll('.action-play').forEach(function(b) {
+          b.innerHTML = b.getAttribute('data-issuite') === 'true' ? '▶' : '▶';
+        });
       }
     });
 
-    // Separate function for playing cues
     function playCue(cueId, url) {
       if (!audio) return;
       audio.pause();
       
-      // Reset ALL cue buttons and progress bars
+      // Reset ALL cue buttons
       document.querySelectorAll('.cue-play').forEach(function(b) {
         b.innerHTML = '▶';
         b.classList.remove('playing');
       });
-      document.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
       
       audio.src = url;
       audio.load();
       audio.play().catch(function() {});
       
-      // Update the specific cue button
       var btn = document.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
       
-      // Update currentTrackId to the cue ID so progress tracking works
       currentTrackId = cueId;
     }
-
-    // Handle cue play button clicks
-    document.addEventListener('click', function(e) {
-      var cueBtn = e.target.closest('.cue-play');
-      if (!cueBtn) return;
-      e.preventDefault();
-      
-      var cueId = cueBtn.getAttribute('data-cue-id');
-      var url = cueBtn.getAttribute('data-url');
-      
-      if (currentTrackId === cueId) {
-        if (audio.paused) {
-          audio.play();
-          cueBtn.innerHTML = '❚❚';
-        } else {
-          audio.pause();
-          cueBtn.innerHTML = '▶';
-        }
-        return;
-      }
-      
-      playCue(cueId, url);
-    });
 
     var licensingBox = document.querySelector('.licensing-intro');
     if (licensingBox) {
@@ -924,22 +925,6 @@
     }
 
     if (audio) {
-      audio.addEventListener('play', function () {
-        // Play icon is managed manually, so we only handle cues
-        if (currentTrackId && currentTrackId.includes('-')) {
-          // This is a cue, find its button
-          var btn = document.querySelector('.cue-play[data-cue-id="' + currentTrackId + '"]');
-          if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
-        }
-      });
-      audio.addEventListener('pause', function () {
-        // Play icon is managed manually, so we only handle cues
-        if (currentTrackId && currentTrackId.includes('-')) {
-          var btn = document.querySelector('.cue-play[data-cue-id="' + currentTrackId + '"]');
-          if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
-        }
-      });
-      
       audio.addEventListener('timeupdate', function () {
         if (!currentTrackId) return;
         
