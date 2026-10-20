@@ -529,11 +529,7 @@
     -webkit-text-fill-color: transparent;
     color: var(--gold-pale);
 
-    will-change: filter, text-shadow;
     isolation: isolate;
-    transition:
-      filter 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-      text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Hovered word: white fill, gold halo */
@@ -554,38 +550,40 @@
     pointer-events: none;
   }
 
-  /* ── CHANGED: JS-driven hover (replaces :has()) ───────────────── */
-  .menu-panel.menu-hovering .menu-item {
-    opacity: 0.22;
-    filter: none;
-    transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+  /* ═══════════════════════════════════════════════════════════════
+     ARTIST PAGE HOVER METHOD (Replaces the broken :has() method)
+     ═══════════════════════════════════════════════════════════════ */
+  .menu-links:has(.menu-link:hover) .menu-item {
+    opacity: 0.25;
+    filter: blur(1px);
   }
-  .menu-panel.menu-hovering .menu-item::before {
+  .menu-links:has(.menu-link:hover) .menu-item::before {
     opacity: 0.1;
   }
-  .menu-panel.menu-hovering .menu-item.is-hovered {
-    opacity: 1;
+  .menu-links .menu-item:hover {
+    opacity: 1 !important;
+    filter: blur(0) !important;
   }
-  .menu-panel.menu-hovering .menu-item.is-hovered::before {
-    opacity: 0.5;
+  .menu-links .menu-item:hover::before {
+    opacity: 0.5 !important;
     transform: translateY(-50%) translateX(2px);
   }
-  .menu-panel.menu-hovering .menu-section,
-  .menu-panel.menu-hovering .menu-close,
-  .menu-panel.menu-hovering .menu-heading,
-  .menu-panel.menu-hovering .menu-bottom,
-  .menu-panel.menu-hovering .crop-frame,
-  .menu-panel.menu-hovering .menu-links::before {
-    opacity: 0.25;
+
+  .menu-panel:has(.menu-link:hover) .menu-section,
+  .menu-panel:has(.menu-link:hover) .menu-close,
+  .menu-panel:has(.menu-link:hover) .menu-heading,
+  .menu-panel:has(.menu-link:hover) .menu-bottom {
+    opacity: 0.2;
   }
-  /* Smooth glow — no heavy blur filter on hover */
+
   .menu-link {
     transition:
-      color 0.45s ease,
-      text-shadow 0.45s ease;
+      color 0.6s ease,
+      opacity 0.5s ease,
+      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: text-shadow;
   }
-  /* ── END CHANGED ─────────────────────────────────────────────── */
+  /* ═══════════════════════════════════════════════════════════════ */
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
@@ -1056,26 +1054,6 @@
     panel.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', closeMenu);
     });
-
-    /* ── CHANGED: JS-driven hover class (replaces :has()) ───────── */
-    var linksList = panel.querySelectorAll('.menu-link');
-    linksList.forEach(function (link) {
-      link.addEventListener('mouseenter', function () {
-        panel.classList.add('menu-hovering');
-        var li = link.closest('.menu-item');
-        if (li) li.classList.add('is-hovered');
-      });
-      link.addEventListener('mouseleave', function () {
-        var li = link.closest('.menu-item');
-        if (li) li.classList.remove('is-hovered');
-        setTimeout(function () {
-          if (!panel.querySelector('.menu-item.is-hovered')) {
-            panel.classList.remove('menu-hovering');
-          }
-        }, 60);
-      });
-    });
-    /* ── END CHANGED ─────────────────────────────────────────────── */
 
     var current = window.location.pathname.split('?')[0].split('#')[0].replace(/\.html?$/i, '');
     if (current === '' || current === '/') current = '/';
