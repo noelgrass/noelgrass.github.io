@@ -401,9 +401,9 @@
       transparent 0%, var(--gold-soft) 15%,
       var(--gold-soft) 85%, transparent 100%);
     opacity: 0; transform: scaleX(0);
-    transform-origin: left center;
+    transform-origin: center center; /* Changed to draw from center */
     transition: opacity 0.6s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
-    margin-left: 10%;
+    margin: 0 auto; /* Centered */
   }
   .menu-panel.open .crop-frame {
     opacity: 0.35; transform: scaleX(1);
@@ -412,7 +412,7 @@
   .menu-panel.open .crop-frame--bottom { transition-delay: 0.7s; }
 
   .menu-inner {
-    display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; /* Centered */
     gap: 40px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
     min-height: 100vh; position: relative; z-index: 2;
   }
@@ -450,16 +450,16 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after { transform: rotate(-45deg); }
 
-  /* ── Menu Links (A24 Layout) ── */
+  /* ── Menu Links (Centered & Smooth Glide) ── */
   .menu-links {
     list-style: none; 
     display: flex; flex-direction: column;
-    align-items: flex-start;
+    align-items: flex-start; /* Text stays left-aligned internally */
     gap: 38px; 
     text-align: left; 
-    padding: 20px 0 20px 60px;
+    padding: 20px 0 20px 60px; /* Space for the numbers */
+    margin-left: -60px; /* Pulls it back so the TEXT is centered */
     position: relative;
-    margin-left: 10%;
   }
 
   /* The vertical gold spine */
@@ -483,7 +483,7 @@
   .menu-item { 
     opacity: 0; 
     position: relative; 
-    display: block; /* Changed from flex to block to fix centering */
+    display: block; 
   }
 
   /* Cinematic Numbers */
@@ -493,9 +493,9 @@
     letter-spacing: 0.1em;
     color: var(--gold-dim);
     opacity: 0.5;
-    transition: color 0.5s ease, opacity 0.5s ease;
+    transition: opacity 0.5s ease;
     position: absolute;
-    left: -50px; /* Floats to the left of the link */
+    left: -50px; 
     top: 50%;
     transform: translateY(-50%);
   }
@@ -517,8 +517,8 @@
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-block; position: relative; padding: 8px 0;
-    /* Smooth glide: using transform instead of padding */
-    transition: color 0.5s ease, opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    /* Unified smooth transition */
+    transition: color 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
     isolation: isolate;
   }
 
@@ -526,7 +526,7 @@
   .menu-link::before {
     content: '';
     position: absolute;
-    inset: -15px -40px; /* Expands outward */
+    inset: -15px -40px; 
     z-index: -1;
     background: radial-gradient(
       ellipse at center,
@@ -535,7 +535,7 @@
       transparent 70%
     );
     opacity: 0;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.5s ease;
     pointer-events: none;
   }
 
@@ -543,14 +543,13 @@
   .menu-link::after {
     content: '';
     position: absolute;
-    inset: -4px -12px; /* Snug around the text */
+    inset: -4px -12px; 
     opacity: 0;
-    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
-    transform: scale(1.05); /* Starts slightly larger */
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    transform: scale(1.05); 
     pointer-events: none;
-    z-index: 1; /* Sits above the glow */
+    z-index: 1; 
     
-    /* Draws the 4 corners */
     background: 
       linear-gradient(to right, var(--gold) 2px, transparent 2px) 0 0,
       linear-gradient(to bottom, var(--gold) 2px, transparent 2px) 0 0,
@@ -567,13 +566,13 @@
   /* The Hover State */
   .menu-link:hover { 
     color: #FFFFFF; 
-    transform: translateX(12px); /* Smooth glide to the right */
+    transform: translateX(12px); 
   }
   .menu-link:hover::before {
-    opacity: 1; /* Glow fades in */
+    opacity: 1; 
   }
   .menu-link:hover::after {
-    opacity: 1; /* Viewfinder snaps in */
+    opacity: 1; 
     transform: scale(1);
   }
 
@@ -583,20 +582,19 @@
     pointer-events: none;
   }
 
-  /* Smarter Dimming */
+  /* Smarter Dimming - Fixed to stop choppiness */
   .menu-links:hover .menu-link {
-    opacity: 0.15;
-    transition: opacity 0.5s ease;
+    color: var(--gold-dim); 
+    transition: color 0.4s ease, transform 0.5s cubic-bezier(0.16,1,0.3,1);
   }
   .menu-links:hover .menu-item::before {
     opacity: 0.15;
-    transition: opacity 0.5s ease;
   }
   .menu-links:hover .menu-link:hover {
-    opacity: 1;
+    color: #FFFFFF; 
   }
   .menu-links:has(.menu-link:hover) .menu-section {
-    opacity: 0.05; transition: opacity 0.5s ease;
+    opacity: 0.05; 
   }
 
   /* Dim the UI chrome when hovering */
@@ -611,7 +609,7 @@
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    opacity: 0; margin-top: 40px; margin-left: 10%;
+    opacity: 0; margin-top: 40px; text-align: center; width: 100%;
   }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 0.4s ease 0.8s forwards; }
 
@@ -845,7 +843,6 @@
     /* Mobile layout fixes for the new A24 menu */
     .menu-links { padding-left: 40px; margin-left: 0; }
     .menu-link { font-size: 1.4em; }
-    .crop-frame, .menu-bottom { margin-left: 0; }
     
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
