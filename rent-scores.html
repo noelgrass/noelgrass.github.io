@@ -620,13 +620,12 @@
       return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
-    // NEW: Function to combine and deduplicate instruments
+    // Function to combine and deduplicate instruments
     function buildMasterInstrumentList(descArray) {
       if (!descArray || !Array.isArray(descArray)) return '';
       var all = [];
       descArray.forEach(function (cueDesc) {
         if (!cueDesc) return;
-        // Split by middot and trim whitespace
         var parts = cueDesc.split('·').map(function (s) { return s.trim(); });
         parts.forEach(function (part) {
           if (part && all.indexOf(part) === -1) {
@@ -718,8 +717,9 @@
     function stopCue() {
       if (!currentCueId) return;
       var id = currentCueId;
-      
-      // 1. Force the visual reset on the OLD cue immediately
+      currentCueId = null; 
+
+      // Force the visual reset on the old cue
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       
@@ -731,8 +731,6 @@
         if (time) time.textContent = '0:00';
       }
 
-      // 2. Clear the ID and stop the audio
-      currentCueId = null;
       if (audio) { audio.pause(); audio.src = ""; audio.load(); }
     }
 
@@ -755,18 +753,13 @@
     function playCue(cueId, url) {
       if (!audio) return;
       
-      // Ensure any previous audio is completely stopped first
       audio.pause();
-      
-      // Set the new ID
       currentCueId = cueId;
-      
-      // Load and play
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
       
-      // Force the new button to show "Pause" immediately
+      // Force the new button to show Pause immediately
       var btn = mount.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
     }
@@ -800,10 +793,22 @@
         e.preventDefault();
         var cueId = cueBtn.getAttribute('data-cue-id');
         var url = cueBtn.getAttribute('data-url');
+        
+        // If clicking the currently playing cue, just pause/resume it
         if (currentCueId === cueId) {
-          if (audio) audio.paused ? audio.play() : audio.pause();
+          if (audio.paused) {
+            audio.play();
+            cueBtn.innerHTML = '❚❚';
+            cueBtn.classList.add('playing');
+          } else {
+            audio.pause();
+            cueBtn.innerHTML = '▶';
+            cueBtn.classList.remove('playing');
+          }
           return;
         }
+        
+        // If clicking a different cue, switch to it
         playCue(cueId, url);
         return;
       }
@@ -813,11 +818,6 @@
       audio.addEventListener('play', function () {
         var btn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
         if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
-      });
-      
-      audio.addEventListener('pause', function () {
-        var btn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
-        if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
       });
       
       audio.addEventListener('timeupdate', function () {
