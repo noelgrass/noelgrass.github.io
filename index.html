@@ -357,7 +357,7 @@
 
   .menu-links {
     list-style: none; display: flex; flex-direction: column;
-    align-items: center; gap: 20px; text-align: center; padding: 0;
+    align-items: center; gap: 32px; text-align: center; padding: 0;
   }
 
   .menu-item { position: relative; opacity: 0; }
@@ -378,14 +378,14 @@
 
   .menu-link {
     display: inline-block; position: relative; white-space: nowrap;
-    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2.2em;
     letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0;
-    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease;
   }
 
   .menu-link:hover {
     color: #FCFCF7;
-    text-shadow: 0 0 10px rgba(197, 168, 128, 0.75), 0 0 25px rgba(197, 168, 128, 0.55), 0 0 55px rgba(197, 168, 128, 0.30), 0 0 100px rgba(197, 168, 128, 0.15);
+    text-shadow: 0 0 12px rgba(197, 168, 128, 0.85), 0 0 30px rgba(197, 168, 128, 0.65), 0 0 70px rgba(197, 168, 128, 0.40), 0 0 130px rgba(197, 168, 128, 0.20);
   }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
 
@@ -601,7 +601,7 @@
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
     .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
-    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
+    .menu-column .menu-link { font-size: 1.6em; letter-spacing: 0.22em; }
     .menu-section { margin-bottom: 20px; }
     .menu-links { gap: 16px; }
     .menu-bottom { margin-top: 10px; }
