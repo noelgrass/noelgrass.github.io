@@ -392,10 +392,13 @@
     transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
   }
   
-  /* Glow effect on hover (matching the fork cards) */
+  /* The Hovered Link becomes a bright, glowing spotlight */
   .menu-link:hover { 
-    color: #FCFCF7; 
-    text-shadow: 0 0 15px rgba(197, 168, 128, 0.85), 0 0 35px rgba(197, 168, 128, 0.45); 
+    color: #FFFFFF; 
+    text-shadow: 
+      0 0 15px rgba(197, 168, 128, 1), 
+      0 0 40px rgba(197, 168, 128, 0.6), 
+      0 0 80px rgba(197, 168, 128, 0.3); 
   }
   
   /* Current Page (Dimmed, no glow) */
@@ -404,11 +407,32 @@
     pointer-events: none;
   }
   
-  /* Dimming effect on siblings */
-  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.1; }
-  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.15; }
+  /* When hovering, dim the background vignette slightly to increase contrast */
+  .menu-links:has(.menu-link:hover) ~ .menu-backdrop {
+    background: rgba(0,0,0,0.5);
+  }
 
-  /* Menu bottom - Fixed position to avoid letterbox cut off */
+  /* Dim the section header */
+  .menu-links:has(.menu-link:hover) .menu-section { 
+    opacity: 0.1; 
+    transition: opacity 0.4s ease;
+  }
+  
+  /* Dim ALL other links heavily */
+  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { 
+    opacity: 0.15; 
+    transition: opacity 0.4s ease;
+  }
+  
+  /* Dim the "Close" button and "Menu" heading too */
+  .menu-panel:has(.menu-link:hover) .menu-close,
+  .menu-panel:has(.menu-link:hover) .menu-heading,
+  .menu-panel:has(.menu-link:hover) .menu-bottom {
+    opacity: 0.2;
+    transition: opacity 0.4s ease;
+  }
+
+  /* Menu bottom */
   .menu-bottom { 
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); 
