@@ -240,7 +240,7 @@
     to   { opacity: 1; letter-spacing: 0.35em; }
   }
   @keyframes focusPullIn {
-    from { opacity: 0; transform: translate3d(0, 6px, 0); filter: blur(6px); }
+    from { opacity: 0; transform: translate3d(-15px, 0, 0); filter: blur(8px); }
     to   { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
   }
   @keyframes panelDrift {
@@ -313,7 +313,7 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
   /* ═══════════════════════════════════════════════════════════════
-     🗂️ FULLSCREEN MENU — PROJECTOR ROOM
+     🗂️ FULLSCREEN MENU — PROJECTOR ROOM (A24 EDITION)
      ═══════════════════════════════════════════════════════════════ */
 
   /* Page dims harder so the menu is the only lit thing in the room */
@@ -332,11 +332,10 @@
   }
   .menu-panel.open {
     opacity: 1; transform: scale(1); pointer-events: auto;
-    /* Slow Ken Burns so the screen is never fully still */
     animation: panelDrift 14s ease-in-out forwards;
   }
 
-  /* ── Projector light: off-axis warm glow, upper-left bias ── */
+  /* Projector light: off-axis warm glow, upper-left bias */
   .projector-light {
     position: absolute; inset: -20%; z-index: 0; pointer-events: none;
     background:
@@ -351,7 +350,7 @@
     animation: projectorFlicker 8s ease-in-out infinite;
   }
 
-  /* ── Projector beam: GPU-cheap conic wedge, opacity-only animation ── */
+  /* Projector beam: GPU-cheap conic wedge, opacity-only animation */
   .projector-beam {
     position: absolute;
     top: -20%;
@@ -376,7 +375,7 @@
     animation: beamBreathe 11s ease-in-out infinite;
   }
 
-  /* ── Film grain overlay (in front of the light) ── */
+  /* Film grain overlay */
   .grain {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
     opacity: 0.055; mix-blend-mode: overlay;
@@ -395,15 +394,16 @@
   .menu-panel.open .letterbox-top,
   .menu-panel.open .letterbox-bottom { transform: scaleY(1); }
 
-  /* ── Crop-frame hairlines around the link block ── */
+  /* Crop-frame hairlines around the link block */
   .crop-frame {
     width: min(560px, 80%); height: 1px;
     background: linear-gradient(to right,
       transparent 0%, var(--gold-soft) 15%,
       var(--gold-soft) 85%, transparent 100%);
     opacity: 0; transform: scaleX(0);
-    transform-origin: center;
+    transform-origin: left center; /* Changed to draw from the left */
     transition: opacity 0.6s ease, transform 1.2s cubic-bezier(0.16,1,0.3,1);
+    margin-left: 10%; /* Align with the new left-shifted menu */
   }
   .menu-panel.open .crop-frame {
     opacity: 0.35; transform: scaleX(1);
@@ -412,7 +412,7 @@
   .menu-panel.open .crop-frame--bottom { transition-delay: 0.7s; }
 
   .menu-inner {
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    display: flex; flex-direction: column; align-items: flex-start; justify-content: center; /* Left aligned */
     gap: 40px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
     min-height: 100vh; position: relative; z-index: 2;
   }
@@ -450,83 +450,134 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after { transform: rotate(-45deg); }
 
-  /* ── Menu Links ── */
+  /* ── Menu Links (A24 Layout) ── */
   .menu-links {
-    list-style: none; display: flex; flex-direction: column;
-    align-items: center; gap: 32px; text-align: center; padding: 20px 0;
+    list-style: none; 
+    display: flex; flex-direction: column;
+    align-items: flex-start; /* Left align */
+    gap: 38px; 
+    text-align: left; 
+    padding: 20px 0 20px 60px; /* Indent for the spine */
+    position: relative;
+    margin-left: 10%; /* Offset from dead center */
   }
+
+  /* The vertical gold spine */
+  .menu-links::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--gold-soft), transparent);
+    opacity: 0.3;
+    transition: opacity 0.5s ease;
+  }
+
   .menu-section {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
     margin-bottom: 20px; display: block; opacity: 0;
+    padding-left: 4px;
   }
   .menu-panel.open .menu-section { animation: menuLinkIn 0.4s ease 0.3s forwards; }
 
-  .menu-item { opacity: 0; position: relative; }
+  .menu-item { 
+    opacity: 0; 
+    position: relative; 
+    display: flex; align-items: baseline; gap: 24px;
+  }
 
-  /* Focus-pull entrance + slower 0.7s cascade */
-  .menu-panel.open .menu-item { animation: focusPullIn 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
-  .menu-panel.open .menu-item:nth-child(2) { animation-delay: 0.55s; }
-  .menu-panel.open .menu-item:nth-child(3) { animation-delay: 0.70s; }
-  .menu-panel.open .menu-item:nth-child(4) { animation-delay: 0.85s; }
-  .menu-panel.open .menu-item:nth-child(5) { animation-delay: 1.00s; }
-  .menu-panel.open .menu-item:nth-child(6) { animation-delay: 1.15s; }
+  /* Cinematic Numbers */
+  .menu-item::before {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65em;
+    letter-spacing: 0.1em;
+    color: var(--gold-dim);
+    opacity: 0.5;
+    transition: color 0.5s ease, opacity 0.5s ease;
+  }
+  .menu-item:nth-child(2)::before { content: '01'; }
+  .menu-item:nth-child(3)::before { content: '02'; }
+  .menu-item:nth-child(4)::before { content: '03'; }
+  .menu-item:nth-child(5)::before { content: '04'; }
+  .menu-item:nth-child(6)::before { content: '05'; }
+
+  /* Slow Pacing */
+  .menu-panel.open .menu-item { animation: focusPullIn 1.2s cubic-bezier(0.16,1,0.3,1) forwards; }
+  .menu-panel.open .menu-item:nth-child(2) { animation-delay: 0.60s; }
+  .menu-panel.open .menu-item:nth-child(3) { animation-delay: 0.80s; }
+  .menu-panel.open .menu-item:nth-child(4) { animation-delay: 1.00s; }
+  .menu-panel.open .menu-item:nth-child(5) { animation-delay: 1.20s; }
+  .menu-panel.open .menu-item:nth-child(6) { animation-delay: 1.40s; }
 
   .menu-link {
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-block; position: relative; padding: 8px 0;
-    transition: color 0.5s ease, opacity 0.5s ease;
+    transition: color 0.5s ease, opacity 0.5s ease, padding-left 0.4s ease;
     isolation: isolate;
   }
 
-  /* Halo hover — blurred duplicate sits behind text, like real light bleed */
+  /* Hard underline hover */
   .menu-link::before {
-    content: attr(data-halo);
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--gold);
-    filter: blur(14px);
-    opacity: 0;
-    z-index: -1;
-    transition: opacity 0.6s ease, filter 0.6s ease;
-    pointer-events: none;
+    display: none; /* Hides the old halo */
   }
-  .menu-link:hover { color: #FFFFFF; }
-  .menu-link:hover::before {
-    opacity: 0.9; filter: blur(20px);
+  .menu-link::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 100%;
+    height: 1px; background: var(--gold);
+    transition: right 0.4s cubic-bezier(0.16,1,0.3,1);
   }
 
-  /* Current page: dimmed, non-interactive */
+  /* The Hover State */
+  .menu-link:hover { 
+    color: #FFFFFF; 
+    padding-left: 12px; /* Nudge right */
+  }
+  .menu-link:hover::after {
+    right: 0; /* Underline draws across */
+  }
+
+  /* Current page */
   .menu-link.current {
     color: var(--gold-dim);
     pointer-events: none;
   }
 
-  /* Dim everything except the hovered link — harder than before */
+  /* Smarter Dimming: Dims the whole list, then brightens the hovered link */
+  .menu-links:hover .menu-link {
+    opacity: 0.15;
+    transition: opacity 0.5s ease;
+  }
+  .menu-links:hover .menu-item::before {
+    opacity: 0.15;
+    transition: opacity 0.5s ease;
+  }
+  .menu-links:hover .menu-link:hover {
+    opacity: 1;
+  }
   .menu-links:has(.menu-link:hover) .menu-section {
-    opacity: 0.08; transition: opacity 0.5s ease;
+    opacity: 0.05; transition: opacity 0.5s ease;
   }
-  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) {
-    opacity: 0.08; transition: opacity 0.5s ease;
-  }
+
+  /* Dim the UI chrome when hovering */
   .menu-panel:has(.menu-link:hover) .menu-close,
   .menu-panel:has(.menu-link:hover) .menu-heading,
   .menu-panel:has(.menu-link:hover) .menu-bottom,
-  .menu-panel:has(.menu-link:hover) .crop-frame {
-    opacity: 0.08; transition: opacity 0.5s ease;
+  .menu-panel:has(.menu-link:hover) .crop-frame,
+  .menu-panel:has(.menu-link:hover) .menu-links::before {
+    opacity: 0.05; transition: opacity 0.5s ease;
   }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    opacity: 0; margin-top: 40px;
+    opacity: 0; margin-top: 40px; margin-left: 10%; /* Aligned with menu */
   }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 0.4s ease 0.8s forwards; }
 
   .menu-backdrop { position: absolute; inset: 0; z-index: 0; cursor: pointer; }
 
-  /* Respect reduced motion: kill flicker, grain shift, drift, beam breathing */
+  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .projector-light { animation: none; }
     .grain { animation: none; }
@@ -750,7 +801,12 @@
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
     .menu-inner { padding: 90px 24px 100px; }
-    .menu-link { font-size: 1.5em; }
+    
+    /* Mobile layout fixes for the new A24 menu */
+    .menu-links { padding-left: 40px; margin-left: 0; }
+    .menu-link { font-size: 1.4em; }
+    .crop-frame, .menu-bottom { margin-left: 0; }
+    
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
     .footer-location { text-align: center; padding-right: 0; }
@@ -804,11 +860,11 @@
 
     <ul class="menu-links">
       <span class="menu-section">Explore</span>
-      <li class="menu-item"><a href="biography" class="menu-link" data-halo="Biography">Biography</a></li>
-      <li class="menu-item"><a href="./" class="menu-link current" data-halo="Home">Home</a></li>
-      <li class="menu-item"><a href="artist" class="menu-link" data-halo="Artist">Artist</a></li>
-      <li class="menu-item"><a href="film-composer" class="menu-link" data-halo="Film Composer">Film Composer</a></li>
-      <li class="menu-item"><a href="contact" class="menu-link" data-halo="Contact">Contact</a></li>
+      <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
+      <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
+      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+      <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+      <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
     </ul>
 
     <!-- Crop-frame bottom hairline -->
