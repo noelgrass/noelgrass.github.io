@@ -634,22 +634,19 @@
       filter: brightness(0.4) contrast(1.1);
     }
 
-    /* Mobile: disable animations/transitions ONLY on page content — menu keeps its full properties */
-    body > *:not(.menu-panel):not(script),
-    .page-wrap,
-    .page-wrap * {
+    /* 1. Turn off ALL animations/transitions globally on mobile */
+    *, *::before, *::after {
       animation: none !important;
       transition: none !important;
     }
 
-    /* Keep the page-wrap blur/dim transition when a menu is open */
+    /* 2. Keep page background fade when menu opens */
     .page-wrap {
       transition: filter 0.4s ease, opacity 0.4s ease !important;
     }
 
-    /* Explicitly restore the menu panel's full animation properties */
+    /* 3. Restore ALL Menu Animations & Transitions */
     .menu-panel {
-      animation: none !important;
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
@@ -659,11 +656,14 @@
     .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards !important; }
     .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards !important; }
     .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
+    
+    /* Restore links stagger */
     .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
     .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards !important; }
     .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards !important; }
     .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards !important; }
     .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards !important; }
+    
     .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards !important; }
     .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards !important; }
     .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards !important; }
@@ -671,7 +671,7 @@
     .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards !important; }
     .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards !important; }
 
-    /* Restore menu hover transitions on mobile */
+    /* Restore menu hover transitions */
     .menu-link { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
     .menu-close { transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease !important; }
     .menu-close .x { transition: transform 0.4s ease !important; }
