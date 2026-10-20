@@ -370,6 +370,21 @@
   .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
   .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
 
+  /* Menu bottom - Styled like Rent page */
+  .menu-bottom { 
+    font-family: 'Montserrat', sans-serif; 
+    font-weight: 300; 
+    font-size: 0.62em; 
+    letter-spacing: 0.4em; 
+    text-transform: uppercase; 
+    color: var(--gold-dim); 
+    opacity: 0; 
+    margin-top: 20px; 
+  }
+  .menu-panel.open .menu-bottom { 
+    animation: menuFadeIn 1s ease-out 1.6s forwards; 
+  }
+
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
   /* ═══════════════════════════════════════════════════════════════
