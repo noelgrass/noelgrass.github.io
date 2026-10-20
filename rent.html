@@ -212,6 +212,20 @@
 
   .track-preview-label { font-family: 'Montserrat', sans-serif; font-size: 0.62em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-left: 8px; font-style: normal; }
 
+  /* Expanded Suite styles */
+  .suite-cues { display: none; width: 100%; padding: 10px 0 10px 0; grid-column: 1 / -1; }
+  .suite-cues.active { display: block; animation: fadeUp 0.4s ease both; }
+  .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); }
+  .cue-info { display: flex; align-items: center; gap: 12px; }
+  .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); min-width: 60px; }
+  .cue-progress-wrap { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
+  .cue-progress-wrap::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
+  .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
+  .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
+  .cue-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 32px; height: 32px; padding-left: 2px; font-size: 0.7em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; }
+  .cue-play:hover { color: #FCFCF7; border-color: var(--gold); }
+  .cue-play.playing { color: var(--gold-pale); border-color: var(--gold); }
+
   /* Recovery CTA block */
   .recovery-cta { max-width: 600px; margin: 80px auto 60px; text-align: left; border: 1px solid rgba(197,168,128,0.3); padding: 44px 40px; background: rgba(197,168,128,0.02); animation: fadeUp 1s ease-out both; animation-delay: 0.3s; }
   .recovery-eyebrow { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); margin-bottom: 16px; display: block; }
@@ -319,6 +333,9 @@
     .menu-links { gap: 16px; }
     .menu-bottom { margin-top: 10px; }
     .signature-logo { height: 55px; }
+    .cue { gap: 10px; padding: 12px 0; }
+    .cue-title { font-size: 1em; min-width: 50px; }
+    .suite-cues { padding-left: 0; }
   }
 
   @media (max-width: 380px) {
@@ -682,9 +699,37 @@
     function buildTrackHtml(group) {
       var t = group.track;
       var url = buildPreviewUrl(t);
-      var previewNote = t.isSuite
-        ? '<span class="track-preview-label">Preview: Cue 1</span>'
-        : '';
+      
+      var trackContent = '';
+      
+      if (t.isSuite) {
+        // Build 3 cues for suites
+        var cuesHtml = '';
+        for (var i = 1; i <= 3; i++) {
+          var cueId = t.code + '-' + i;
+          var cueUrl = PREVIEW_BASE_SCORES + "?folder=" + encodeURIComponent(t.folder) + "&file=" + encodeURIComponent("cue-" + i + ".mp3");
+          cuesHtml +=
+            '<div class="cue" data-cue-id="' + cueId + '">' +
+              '<div class="cue-info">' +
+                '<span class="cue-title">Cue ' + i + '</span>' +
+                '<div class="cue-progress-wrap"><div class="cue-progress-bar"></div></div>' +
+                '<span class="cue-time">0:00</span>' +
+              '</div>' +
+              '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + cueUrl + '">▶</button>' +
+            '</div>';
+        }
+        trackContent = 
+          '<div class="suite-cues" id="suite-' + t.code + '">' + cuesHtml + '</div>';
+      } else {
+        // Build single player for jingles
+        trackContent = 
+          '<div class="inline-player" id="player-' + t.code + '">' +
+            '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
+            '<div class="player-time">0:00</div>' +
+          '</div>';
+      }
+
+      var previewNote = t.isSuite ? '<span class="track-preview-label">3 cues included</span>' : '';
 
       return '<div class="hub-category">' +
         '<div class="hub-category-header">' +
@@ -704,7 +749,7 @@
             '</div>' +
           '</div>' +
           '<div class="track-actions">' +
-            '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
+            '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '" data-issuite="' + t.isSuite + '">▶</button>' +
             '<button type="button" class="action-link js-buy" ' +
               'data-id="' + t.code + '" ' +
               'data-title="' + t.code + ' — ' + t.title + '" ' +
@@ -712,10 +757,7 @@
               'data-currency="KES" ' +
               'data-verify="' + t.verify + '">Buy</button>' +
           '</div>' +
-          '<div class="inline-player" id="player-' + t.code + '">' +
-            '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
-            '<div class="player-time">0:00</div>' +
-          '</div>' +
+          trackContent +
         '</div>' +
       '</div>';
     }
@@ -740,8 +782,11 @@
       if (!audio || !currentTrackId) return;
       audio.pause();
       audio.currentTime = 0;
+      
       var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
       if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
+      
+      // Reset single player
       var player = document.getElementById('player-' + currentTrackId);
       if (player) {
         var bar = player.querySelector('.player-progress-bar');
@@ -750,6 +795,19 @@
         if (time) time.innerText = '0:00';
         player.classList.remove('active');
       }
+      
+      // Reset suite cues
+      var suite = document.getElementById('suite-' + currentTrackId);
+      if (suite) {
+        suite.classList.remove('active');
+        suite.querySelectorAll('.cue-play').forEach(function(btn) {
+          btn.innerHTML = '▶';
+          btn.classList.remove('playing');
+        });
+        suite.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
+        suite.querySelectorAll('.cue-time').forEach(function(time) { time.innerText = '0:00'; });
+      }
+
       currentTrackId = null;
     }
 
@@ -758,43 +816,97 @@
       if (btn) {
         e.preventDefault();
         var code = btn.getAttribute('data-code');
-        var url  = btn.getAttribute('data-url');
+        var url = btn.getAttribute('data-url');
+        var isSuite = btn.getAttribute('data-issuite') === 'true';
         
-        // If clicking the currently playing track, just pause/resume it
         if (currentTrackId === code) {
-          if (audio.paused) {
-            audio.play();
-            btn.innerHTML = '❚❚';
-            btn.classList.add('playing');
-          } else {
-            audio.pause();
-            btn.innerHTML = '▶';
-            btn.classList.remove('playing');
-          }
+          audio.paused ? audio.play() : audio.pause();
           return;
         }
         
-        // If clicking a different track, switch to it
-        if (currentTrackId) {
-          var oldBtn = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-          if (oldBtn) { oldBtn.innerHTML = '▶'; oldBtn.classList.remove('playing'); }
-        }
-        
+        stopCurrentTrack();
         currentTrackId = code;
-        audio.src = url;
-        audio.load();
-        audio.play().catch(function() {});
         
-        btn.innerHTML = '❚❚';
-        btn.classList.add('playing');
-        
-        var player = document.getElementById('player-' + code);
-        if (player) player.classList.add('active');
-        
+        if (isSuite) {
+          // Open suite and play cue 1
+          var suite = document.getElementById('suite-' + code);
+          if (suite) {
+            suite.classList.add('active');
+            var firstCueBtn = suite.querySelector('.cue-play');
+            if (firstCueBtn) {
+              var firstCueId = firstCueBtn.getAttribute('data-cue-id');
+              var firstUrl = firstCueBtn.getAttribute('data-url');
+              
+              // Stop the main audio, let cue play handle it
+              audio.pause();
+              
+              // We need a separate function for playing cues to keep it clean
+              playCue(firstCueId, firstUrl);
+            }
+          }
+          btn.innerHTML = '✕';
+          btn.classList.add('playing');
+        } else {
+          // Play single jingle
+          audio.src = url;
+          audio.play().catch(function() {});
+          btn.innerHTML = '❚❚';
+          btn.classList.add('playing');
+          var player = document.getElementById('player-' + code);
+          if (player) player.classList.add('active');
+        }
       } else {
-        var isProgressBar = e.target.closest('.player-progress-wrap');
-        if (!isProgressBar && currentTrackId) stopCurrentTrack();
+        // Click outside logic
+        var isProgress = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
+        if (!isProgress && currentTrackId) stopCurrentTrack();
       }
+    });
+
+    // Separate function for playing cues
+    function playCue(cueId, url) {
+      if (!audio) return;
+      audio.pause();
+      
+      // Reset ALL cue buttons and progress bars
+      document.querySelectorAll('.cue-play').forEach(function(b) {
+        b.innerHTML = '▶';
+        b.classList.remove('playing');
+      });
+      document.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
+      
+      audio.src = url;
+      audio.load();
+      audio.play().catch(function() {});
+      
+      // Update the specific cue button
+      var btn = document.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
+      if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
+      
+      // Update currentTrackId to the cue ID so progress tracking works
+      currentTrackId = cueId;
+    }
+
+    // Handle cue play button clicks
+    document.addEventListener('click', function(e) {
+      var cueBtn = e.target.closest('.cue-play');
+      if (!cueBtn) return;
+      e.preventDefault();
+      
+      var cueId = cueBtn.getAttribute('data-cue-id');
+      var url = cueBtn.getAttribute('data-url');
+      
+      if (currentTrackId === cueId) {
+        if (audio.paused) {
+          audio.play();
+          cueBtn.innerHTML = '❚❚';
+        } else {
+          audio.pause();
+          cueBtn.innerHTML = '▶';
+        }
+        return;
+      }
+      
+      playCue(cueId, url);
     });
 
     var licensingBox = document.querySelector('.licensing-intro');
@@ -805,16 +917,46 @@
     }
 
     if (audio) {
+      audio.addEventListener('play', function () {
+        // Play icon is managed manually, so we only handle cues
+        if (currentTrackId && currentTrackId.includes('-')) {
+          // This is a cue, find its button
+          var btn = document.querySelector('.cue-play[data-cue-id="' + currentTrackId + '"]');
+          if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
+        }
+      });
+      audio.addEventListener('pause', function () {
+        // Play icon is managed manually, so we only handle cues
+        if (currentTrackId && currentTrackId.includes('-')) {
+          var btn = document.querySelector('.cue-play[data-cue-id="' + currentTrackId + '"]');
+          if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
+        }
+      });
+      
       audio.addEventListener('timeupdate', function () {
         if (!currentTrackId) return;
-        var player = document.getElementById('player-' + currentTrackId);
-        if (!player) return;
+        
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
-        var bar = player.querySelector('.player-progress-bar');
-        var time = player.querySelector('.player-time');
-        if (bar) bar.style.width = pct + '%';
-        if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
+        
+        // For single jingles
+        var player = document.getElementById('player-' + currentTrackId);
+        if (player) {
+          var bar = player.querySelector('.player-progress-bar');
+          var time = player.querySelector('.player-time');
+          if (bar) bar.style.width = pct + '%';
+          if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
+        }
+        
+        // For cues
+        var cue = document.querySelector('.cue[data-cue-id="' + currentTrackId + '"]');
+        if (cue) {
+          var cueBar = cue.querySelector('.cue-progress-bar');
+          var cueTime = cue.querySelector('.cue-time');
+          if (cueBar) cueBar.style.width = pct + '%';
+          if (cueTime) cueTime.innerText = fmt((audio.duration || 0) - audio.currentTime);
+        }
       });
+      
       audio.addEventListener('ended', function () { stopCurrentTrack(); });
 
       var isDragging = false;
@@ -827,18 +969,19 @@
         var clickX = clientX - rect.left;
         var pct = Math.max(0, Math.min(1, clickX / rect.width));
         audio.currentTime = pct * audio.duration;
-        var bar = wrap.querySelector('.player-progress-bar');
+        
+        var bar = wrap.querySelector('.player-progress-bar') || wrap.querySelector('.cue-progress-bar');
         if (bar) bar.style.width = (pct * 100) + '%';
       }
 
       document.addEventListener('mousedown', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap');
+        var wrap = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
         if (wrap) { isDragging = true; activeProgressWrap = wrap; seekToEvent(e, wrap); e.preventDefault(); }
       });
       document.addEventListener('mousemove', function(e) { if (isDragging && activeProgressWrap) seekToEvent(e, activeProgressWrap); });
       document.addEventListener('mouseup', function() { isDragging = false; activeProgressWrap = null; });
       document.addEventListener('touchstart', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap');
+        var wrap = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
         if (wrap) { isDragging = true; activeProgressWrap = wrap; seekToEvent(e, wrap); }
       }, { passive: true });
       document.addEventListener('touchmove', function(e) { if (isDragging && activeProgressWrap) seekToEvent(e, activeProgressWrap); }, { passive: true });
