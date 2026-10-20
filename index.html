@@ -633,6 +633,18 @@
     .fork-card:hover .fork-bg--artist img {
       filter: brightness(0.4) contrast(1.1);
     }
+
+    /* Mobile: disable ALL animations and transitions for smooth scrolling */
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    /* Exception — keep the menu open/close fade so menus don't pop abruptly */
+    .menu-panel,
+    .page-wrap {
+      transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease !important;
+    }
   }
 
   @media (max-width: 700px) {
@@ -1020,7 +1032,7 @@
 
     var current = window.location.pathname.split('?')[0].split('#')[0].replace(/\.html?$/i, '');
     if (current === '' || current === '/') current = '/';
-    
+
     homePanel.querySelectorAll('a.menu-link').forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
