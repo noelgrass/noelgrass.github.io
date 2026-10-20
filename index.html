@@ -399,6 +399,10 @@
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
   /* MENU 2 STYLES END */
 
+  /* Artist fork panel: single Music column reuses .menu-columns from the
+     Artist page. Since only one .menu-column is present, the grid collapses
+     to one centered column with no extra rule needed — no new CSS required. */
+
   .hero {
     position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
     padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate;
@@ -602,7 +606,10 @@
   </button>
 </header>
 
-<!-- MENU 2 START -->
+<!-- ============================================================
+     HOME MENU PANEL (intentional — do not alter link set)
+     Single centered column. Unchanged from original.
+     ============================================================ -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
 
@@ -619,7 +626,9 @@
       <span class="menu-section">Explore</span>
       <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
       <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
-      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+      <!-- data-open-menu="artist" routes this click to the Artist panel
+           instead of navigating to artist.html (per requirement #2a). -->
+      <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
       <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
       <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
     </ul>
@@ -627,7 +636,43 @@
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
   </div>
 </nav>
-<!-- MENU 2 END -->
+
+<!-- ============================================================
+     ARTIST FORK MENU PANEL (new)
+     Opens from the Artist fork card or the Home-menu "Artist" link.
+     Mirrors the Artist page menu (Music column only) — NO Elsewhere
+     column. Shares all .menu-* classes and motion, so design and
+     effects are identical to the existing panels (Requirement #4).
+     ============================================================ -->
+<nav class="menu-panel" id="artistMenuPanel" aria-label="Artist menu" aria-hidden="true">
+  <div class="menu-backdrop" id="artistMenuBackdrop"></div>
+
+  <div class="menu-inner">
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="artistMenuClose" type="button" aria-label="Close menu">
+        Close
+        <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Music</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="menu-bottom">Noel Grass · <span id="artistYear"></span></div>
+  </div>
+</nav>
 
 <div class="page-wrap" id="pageWrap">
 
@@ -649,7 +694,9 @@
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
       <div class="fork-row">
-        <a href="artist" class="fork-card" aria-label="Enter the Artist side">
+        <!-- data-open-menu="artist" intercepts this click and opens the
+             Artist menu panel instead of navigating (per requirement #2a). -->
+        <a href="artist" class="fork-card" aria-label="Enter the Artist side" data-open-menu="artist">
           <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
           </div>
@@ -738,12 +785,14 @@
 </div>
 
 <script>
+  /* Fade the whole page in once everything has loaded. */
   window.addEventListener('load', function() {
     document.body.classList.add('loaded');
     var hero = document.getElementById('hero');
     if (hero) hero.classList.add('loaded');
   });
 
+  /* Reveal the two fork cards when they scroll into view. */
   (function() {
     var cards = document.querySelectorAll('.fork-card');
     if (!cards.length) return;
@@ -765,11 +814,29 @@
     cards.forEach(function(card) { observer.observe(card); });
   })();
 
+  /* ------------------------------------------------------------
+     MENU CONTROLLER
+     Handles BOTH panels:
+       • #menuPanel       — the intentional Home menu (unchanged)
+       • #artistMenuPanel — the new Artist fork menu (Music column only)
+
+     The top-nav "Menu" button opens the Home menu. Clicks on any
+     element carrying data-open-menu="artist" (the Artist fork card
+     and the "Artist" link inside the Home menu) open the Artist
+     panel instead, and preventDefault() stops navigation so the
+     panel is shown only (behavior "a").
+     ------------------------------------------------------------ */
   (function () {
-    var toggle   = document.getElementById('menuToggle');
-    var panel    = document.getElementById('menuPanel');
-    var closeBtn = document.getElementById('menuClose');
-    var backdrop = document.getElementById('menuBackdrop');
+    var toggle        = document.getElementById('menuToggle');
+    var homePanel     = document.getElementById('menuPanel');
+    var homeClose     = document.getElementById('menuClose');
+    var homeBackdrop  = document.getElementById('menuBackdrop');
+
+    var artistPanel    = document.getElementById('artistMenuPanel');
+    var artistClose    = document.getElementById('artistMenuClose');
+    var artistBackdrop = document.getElementById('artistMenuBackdrop');
+
+    var activePanel = null; // which panel is currently open (null = none)
 
     function getScrollbarWidth() {
       return window.innerWidth - document.documentElement.clientWidth;
@@ -786,46 +853,78 @@
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
 
-    function openMenu() {
+    /* Open a given panel and keep page-level state in sync. */
+    function openPanel(panel) {
+      if (!panel) return;
+      // Close any other open panel first so only one is visible.
+      if (activePanel && activePanel !== panel) {
+        activePanel.classList.remove('open');
+        activePanel.setAttribute('aria-hidden', 'true');
+      }
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
+      activePanel = panel;
       document.body.classList.add('menu-open');
       lockScroll();
       toggle.setAttribute('aria-expanded', 'true');
       toggle.setAttribute('aria-label', 'Close menu');
     }
 
-    function closeMenu() {
-      panel.classList.remove('open');
-      panel.setAttribute('aria-hidden', 'true');
+    /* Close whichever panel is open. */
+    function closePanel() {
+      if (!activePanel) return;
+      activePanel.classList.remove('open');
+      activePanel.setAttribute('aria-hidden', 'true');
+      activePanel = null;
       document.body.classList.remove('menu-open');
       unlockScroll();
       toggle.setAttribute('aria-expanded', 'false');
       toggle.setAttribute('aria-label', 'Open menu');
     }
 
+    /* Top-nav button toggles the Home menu (or closes whatever is open). */
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (panel.classList.contains('open')) {
-        closeMenu();
+      if (activePanel) {
+        closePanel();
       } else {
-        openMenu();
+        openPanel(homePanel);
       }
     });
 
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
+    /* Explicit close buttons and backdrops for each panel. */
+    homeClose.addEventListener('click', closePanel);
+    homeBackdrop.addEventListener('click', closePanel);
+    artistClose.addEventListener('click', closePanel);
+    artistBackdrop.addEventListener('click', closePanel);
 
+    /* ESC closes the open panel. */
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) {
-        closeMenu();
+      if (e.key === 'Escape' && activePanel) {
+        closePanel();
       }
     });
 
-    panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
+    /* Any link inside either panel closes the panel before navigating. */
+    [homePanel, artistPanel].forEach(function (panel) {
+      panel.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closePanel);
+      });
     });
 
+    /* Flag-routed triggers: the Artist fork card and the "Artist"
+       link inside the Home menu open the Artist panel instead of
+       navigating. stopPropagation() keeps the Home-menu auto-close
+       listener above from firing first. */
+    document.querySelectorAll('[data-open-menu="artist"]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openPanel(artistPanel);
+      });
+    });
+
+    /* Highlight the current page in the Home menu (unchanged logic). */
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
@@ -841,7 +940,7 @@
     var current = normalizePath(window.location.pathname);
     var isHome = (current === '/' || current === '' || current === '/index');
 
-    var links = panel.querySelectorAll('a.menu-link');
+    var links = homePanel.querySelectorAll('a.menu-link');
     var matched = null;
 
     links.forEach(function (link) {
@@ -866,10 +965,14 @@
       matched.setAttribute('aria-current', 'page');
     }
 
+    /* Fill the year in both panel footers. */
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+    var artistYearEl = document.getElementById('artistYear');
+    if (artistYearEl) artistYearEl.textContent = new Date().getFullYear();
   })();
 
+  /* Media modal (YouTube / Spotify / Apple Music embeds — unchanged). */
   (function() {
     var modal      = document.getElementById('videoModal');
     var modalInner = document.getElementById('videoModalInner');
