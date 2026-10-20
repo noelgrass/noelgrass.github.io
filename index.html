@@ -140,9 +140,6 @@
 </script>
 
 <style>
-  /* ═══════════════════════════════════════════════════════════════
-     🎨 CORE VARIABLES & RESET
-     ═══════════════════════════════════════════════════════════════ */
   :root {
     --bg: #000000;
     --gold: #C5A880;
@@ -183,9 +180,6 @@
     clip: rect(0,0,0,0); white-space: nowrap; border: 0;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     ✨ ANIMATIONS
-     ═══════════════════════════════════════════════════════════════ */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -273,9 +267,6 @@
     body { opacity: 1; }
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     🧭 TOP NAVIGATION
-     ═══════════════════════════════════════════════════════════════ */
   .topnav {
     position: sticky; top: 0; z-index: 300;
     background: var(--bg); padding: 22px 40px;
@@ -313,10 +304,9 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
   /* ═══════════════════════════════════════════════════════════════
-     🗂️ FULLSCREEN MENU — PROJECTOR ROOM (A24 EDITION)
+     FULLSCREEN MENU
      ═══════════════════════════════════════════════════════════════ */
 
-  /* Page dims harder so the menu is the only lit thing in the room */
   .page-wrap { transition: filter 1s cubic-bezier(0.16,1,0.3,1), opacity 1s ease; }
   body.menu-open .page-wrap {
     filter: blur(30px) brightness(0.06); opacity: 0.22; pointer-events: none;
@@ -325,16 +315,10 @@
   .menu-panel {
     position: fixed; inset: 0; z-index: 400;
     background: #000;
-    background-image: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(197, 168, 128, 0.07) 0%,
-      transparent 65%
-    );
     opacity: 0; pointer-events: none;
     transform: scale(1.015);
     transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1),
-                transform 1.1s cubic-bezier(0.16,1,0.3,1),
-                background-image 0.6s ease;
+                transform 1.1s cubic-bezier(0.16,1,0.3,1);
     overflow: hidden;
   }
   .menu-panel.open {
@@ -342,16 +326,8 @@
     animation: panelDrift 16s ease-in-out forwards;
   }
 
-  /* The panel's warm light drops a stop when a word is hovered */
-  .menu-panel:has(.menu-link:hover) {
-    background-image: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(197, 168, 128, 0.035) 0%,
-      transparent 65%
-    );
-  }
-
-  /* Projector light: off-axis warm glow, upper-left bias */
+  /* Projector light: the room's warm ambient layer.
+     Its opacity is the ONLY thing that changes on hover — cheap, GPU-composited. */
   .projector-light {
     position: absolute; inset: -20%; z-index: 0; pointer-events: none;
     background:
@@ -364,10 +340,15 @@
         rgba(0,0,0,0.65) 78%,
         #000 100%);
     animation: projectorFlicker 9s ease-in-out infinite;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity;
+  }
+  /* When a word is hovered, the room's warm light drops a stop */
+  .menu-panel:has(.menu-link:hover) .projector-light {
+    opacity: 0.55;
   }
 
-  /* Projector beam: static warm pool of light on the wall */
+  /* Projector beam: static warm pool, dims on hover — opacity only */
   .projector-beam {
     position: absolute; inset: 0;
     pointer-events: none;
@@ -381,21 +362,13 @@
       transparent 76%
     );
     animation: beamBreathe 14s ease-in-out infinite;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
     will-change: opacity;
-    transition: opacity 0.6s ease;
   }
-
-  /* The beam dims a touch when a word is hovered */
   .menu-panel:has(.menu-link:hover) .projector-beam {
     opacity: 0.55;
   }
 
-  /* The projector light dims a touch too */
-  .menu-panel:has(.menu-link:hover) .projector-light {
-    opacity: 0.8;
-  }
-
-  /* Film grain overlay */
   .grain {
     position: absolute; inset: 0; z-index: 1; pointer-events: none;
     opacity: 0.055; mix-blend-mode: overlay;
@@ -404,7 +377,6 @@
     animation: grainShift 0.6s steps(6) infinite;
   }
 
-  /* Letterbox bars */
   .letterbox-top, .letterbox-bottom {
     position: absolute; left: 0; right: 0; height: 80px; background: #000; z-index: 500;
     transform: scaleY(0);
@@ -417,7 +389,6 @@
   .menu-panel.open .letterbox-top { transition-delay: 0.15s; }
   .menu-panel.open .letterbox-bottom { transition-delay: 0.25s; }
 
-  /* Crop-frame hairlines around the link block */
   .crop-frame {
     width: min(560px, 80%); height: 1px;
     background: linear-gradient(to right,
@@ -425,7 +396,7 @@
       var(--gold-soft) 85%, transparent 100%);
     opacity: 0; transform: scaleX(0);
     transform-origin: center center;
-    transition: opacity 0.7s ease, transform 1.4s cubic-bezier(0.16,1,0.3,1);
+    transition: opacity 0.6s ease, transform 1.4s cubic-bezier(0.16,1,0.3,1);
     margin: 0 auto;
   }
   .menu-panel.open .crop-frame {
@@ -448,6 +419,7 @@
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em;
     letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale);
     opacity: 0; display: flex; align-items: center;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
   .menu-panel.open .menu-heading { animation: menuHeadingIn 0.6s ease 0.4s forwards; }
   .menu-heading::after {
@@ -461,7 +433,7 @@
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale);
     display: inline-flex; align-items: center; gap: 16px; opacity: 0;
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1), color 0.3s ease;
   }
   .menu-panel.open .menu-close { animation: menuFadeIn 0.5s ease 1s forwards; }
   .menu-close:hover { color: #FBFAFC; }
@@ -476,7 +448,6 @@
   .menu-close:hover .x::before { transform: rotate(135deg); }
   .menu-close:hover .x::after { transform: rotate(45deg); }
 
-  /* ── Menu Links (Centered, Smooth Glide & Cinematic Dimming) ── */
   .menu-links {
     list-style: none;
     display: flex; flex-direction: column;
@@ -488,14 +459,13 @@
     position: relative;
   }
 
-  /* The vertical gold spine */
   .menu-links::before {
     content: '';
     position: absolute; left: 0; top: 0; bottom: 0;
     width: 1px;
     background: linear-gradient(to bottom, transparent, var(--gold-soft), transparent);
     opacity: 0.3;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
   .menu-section {
@@ -503,7 +473,7 @@
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
     margin-bottom: 20px; display: block; opacity: 0;
     padding-left: 4px;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
   .menu-panel.open .menu-section { animation: menuLinkIn 0.5s ease 0.4s forwards; }
 
@@ -514,9 +484,9 @@
     transition:
       opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
       filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: filter, opacity;
   }
 
-  /* Cinematic Numbers */
   .menu-item::before {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.65em;
@@ -535,7 +505,6 @@
   .menu-item:nth-child(5)::before { content: '04'; }
   .menu-item:nth-child(6)::before { content: '05'; }
 
-  /* Slower, layered stagger with blur-to-sharp focus pull */
   .menu-panel.open .menu-item {
     animation: focusPullIn 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
   }
@@ -545,21 +514,40 @@
   .menu-panel.open .menu-item:nth-child(5) { animation-delay: 1.15s; }
   .menu-panel.open .menu-item:nth-child(6) { animation-delay: 1.35s; }
 
+  /* Typography preserved: Cormorant Garamond, 1.6em, 0.28em tracking, uppercase, gold gradient */
   .menu-link {
-    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.6em;
-    letter-spacing: 0.28em; text-transform: uppercase;
-    display: inline-block; position: relative; padding: 8px 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.6em;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    display: inline-block;
+    position: relative;
+    padding: 8px 0;
+
+    background: linear-gradient(
+      100deg,
+      var(--gold-dim) 0%,
+      var(--gold-pale) 45%,
+      var(--gold-soft) 55%,
+      var(--gold-dim) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     color: var(--gold-pale);
-    will-change: filter, text-shadow, color;
+
+    will-change: filter, text-shadow;
     isolation: isolate;
     transition:
-      color 0.5s ease,
       filter 0.6s cubic-bezier(0.19, 1, 0.22, 1),
       text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* The Hover State — the word is lit, nothing else moves */
+  /* Hovered word: white fill, gold halo */
   .menu-link:hover {
+    background: none;
+    -webkit-text-fill-color: #FFFFFF;
     color: #FFFFFF;
     text-shadow:
       0 0 4px rgba(197, 168, 128, 0.55),
@@ -567,13 +555,14 @@
       0 0 22px rgba(197, 168, 128, 0.18);
   }
 
-  /* Current page */
   .menu-link.current {
+    background: none;
+    -webkit-text-fill-color: var(--gold-dim);
     color: var(--gold-dim);
     pointer-events: none;
   }
 
-  /* Non-hovered links dim and soften out of focus */
+  /* Non-hovered words dim and blur out of focus */
   .menu-links:has(.menu-link:hover) .menu-item {
     opacity: 0.15;
     filter: blur(1.5px);
@@ -590,43 +579,41 @@
     transform: translateY(-50%) translateX(2px);
   }
 
-  /* Section label recedes when the room narrows */
+  /* Section label recedes */
   .menu-panel:has(.menu-link:hover) .menu-section {
     opacity: 0.12;
   }
 
-  /* Chrome recedes — heading, close, credit — on the same 0.6s curve */
+  /* Chrome recedes on the same 0.6s curve */
   .menu-panel:has(.menu-link:hover) .menu-close,
   .menu-panel:has(.menu-link:hover) .menu-heading,
   .menu-panel:has(.menu-link:hover) .menu-bottom,
   .menu-panel:has(.menu-link:hover) .crop-frame,
   .menu-panel:has(.menu-link:hover) .menu-links::before {
-    opacity: 0.45;
-    transition: opacity 0.6s ease;
+    opacity: 0.2;
   }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
     opacity: 0; margin-top: 40px; text-align: center; width: 100%;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
   }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 0.5s ease 1.1s forwards; }
 
   .menu-backdrop { position: absolute; inset: 0; z-index: 0; cursor: pointer; }
 
-  /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
     .projector-light { animation: none; }
     .grain { animation: none; }
     .projector-beam { animation: none; opacity: 1; }
     .menu-panel.open { animation: none; }
     .menu-panel.open .menu-item { animation: menuLinkIn 0.01s forwards; filter: none; }
-    .menu-link { transition: filter 0.2s ease; }
+    .menu-link { transition: filter 0.2s ease, text-shadow 0.2s ease; }
   }
 
   /* ═══════════════════════════════════════════════════════════════
-     🖼️ HERO SECTION (Top Image & Title)
+     HERO SECTION
      ═══════════════════════════════════════════════════════════════ */
   .hero {
     position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
@@ -656,11 +643,10 @@
   .rule-small { width: 48px; height: 3px; border-top: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); margin: 0 auto; }
 
   /* ═══════════════════════════════════════════════════════════════
-     📖 MAIN CONTENT AREA
+     MAIN CONTENT AREA
      ═══════════════════════════════════════════════════════════════ */
   .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
 
-  /* ── Editorial (Portrait & Bio) ── */
   .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; }
   .portrait { position: sticky; top: 120px; animation: portraitIn 1.4s ease both; }
   .portrait img {
@@ -676,9 +662,6 @@
   .intro-body { font-size: 1.05em; color: var(--offwhite); margin-bottom: 36px; }
   .bio-link a { border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; font-style: italic; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     🚪 THE FORK (Artist vs Film Composer Cards)
-     ═══════════════════════════════════════════════════════════════ */
   .fork { margin: 100px auto 70px; max-width: 960px; }
   .fork-intro { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--gold-pale); text-align: center; margin-bottom: 40px; }
   .fork-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; }
@@ -776,9 +759,6 @@
   .fork-desc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); opacity: 0.85; margin-bottom: 24px; }
   .fork-enter { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); opacity: 0.65; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     🔗 SOCIAL ICONS & FOOTER
-     ═══════════════════════════════════════════════════════════════ */
   .scroll-cue { display: flex; flex-direction: column; align-items: center; gap: 10px; margin: 0 auto 60px; }
   .scroll-cue .label { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); }
   .scroll-cue .line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold-soft) 0%, transparent 100%); animation: scrollPulse 3s ease-in-out infinite; }
@@ -803,9 +783,6 @@
   .footer-location a { color: var(--muted); }
   .footer-location a:hover { color: var(--gold-pale); }
 
-  /* ═══════════════════════════════════════════════════════════════
-     🎬 VIDEO / MEDIA MODAL
-     ═══════════════════════════════════════════════════════════════ */
   .video-modal { position: fixed; inset: 0; z-index: 900; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0, 0, 0, 0.88); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
   .video-modal.open { opacity: 1; pointer-events: auto; }
   .video-modal-inner { position: relative; width: 100%; max-width: 900px; aspect-ratio: 16 / 9; border: 1px solid var(--gold-soft); background: #000; transform: scale(0.94); transition: transform 0.4s ease; }
@@ -814,9 +791,6 @@
   .video-modal-inner iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
   .video-close { position: absolute; top: -46px; right: 0; background: transparent; border: 0; color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     📱 MOBILE RESPONSIVENESS
-     ═══════════════════════════════════════════════════════════════ */
   @media (max-width: 900px) {
     .editorial { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-top: 50px; }
     .portrait { position: static; max-width: 320px; margin: 0 auto; }
@@ -841,7 +815,6 @@
     .wordmark { font-size: 0.95em; }
     .menu-inner { padding: 90px 24px 100px; }
     
-    /* Mobile layout fixes for the new A24 menu */
     .menu-links { padding-left: 40px; margin-left: 0; }
     .menu-link { font-size: 1.4em; }
     
@@ -853,9 +826,6 @@
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🧭 TOP NAVIGATION BAR
-     ═══════════════════════════════════════════════════════════════ -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
@@ -866,22 +836,13 @@
   </button>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🗂️ FULLSCREEN MENU OVERLAY — PROJECTOR ROOM
-     ═══════════════════════════════════════════════════════════════ -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
 
-  <!-- Projector light: off-axis warm glow (upper-left bias) -->
   <div class="projector-light" aria-hidden="true"></div>
-
-  <!-- Projector beam: static warm pool of light on the wall -->
   <div class="projector-beam" aria-hidden="true"></div>
-
-  <!-- Film grain overlay -->
   <div class="grain" aria-hidden="true"></div>
 
-  <!-- Letterbox Bars -->
   <div class="letterbox-top"></div>
   <div class="letterbox-bottom"></div>
 
@@ -893,7 +854,6 @@
       </button>
     </div>
 
-    <!-- Crop-frame top hairline -->
     <div class="crop-frame crop-frame--top" aria-hidden="true"></div>
 
     <ul class="menu-links">
@@ -905,7 +865,6 @@
       <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
     </ul>
 
-    <!-- Crop-frame bottom hairline -->
     <div class="crop-frame crop-frame--bottom" aria-hidden="true"></div>
 
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
@@ -914,16 +873,10 @@
 
 <div class="page-wrap" id="pageWrap">
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       🖼️ HERO SECTION
-       ═══════════════════════════════════════════════════════════════ -->
   <section class="hero" id="hero">
-    <!-- Background Image -->
     <div class="hero-bg">
       <img src="images/noel-grass.jpeg" alt="" aria-hidden="true">
     </div>
-
-    <!-- Title Text -->
     <div class="hero-content">
       <div class="title-block">
         <p class="eyebrow">Film Composer &nbsp;|&nbsp; Pianist &nbsp;|&nbsp; Music Producer</p>
@@ -933,12 +886,8 @@
     </div>
   </section>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       📖 MAIN CONTENT
-       ═══════════════════════════════════════════════════════════════ -->
   <div class="page">
 
-    <!-- Editorial (Portrait + Bio) -->
     <div class="editorial">
       <div class="portrait">
         <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
@@ -950,12 +899,9 @@
       </div>
     </div>
 
-    <!-- The Fork (Artist vs Film Composer) -->
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
       <div class="fork-row">
-        
-        <!-- Artist Card -->
         <a href="artist" class="fork-card" aria-label="Enter the Artist side">
           <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
@@ -966,8 +912,6 @@
             <span class="fork-enter">Enter</span>
           </div>
         </a>
-
-        <!-- Film Composer Card -->
         <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
           <div class="fork-bg" aria-hidden="true">
             <img src="images/film/film-strip.jpg" alt="" loading="lazy">
@@ -978,17 +922,14 @@
             <span class="fork-enter">Enter</span>
           </div>
         </a>
-
       </div>
     </div>
 
-    <!-- Scroll Cue -->
     <div class="scroll-cue" aria-hidden="true">
       <span class="label">Listen &amp; Follow</span>
       <span class="line"></span>
     </div>
 
-    <!-- Social Icons -->
     <div class="icons">
       <div class="icon-item">
         <button type="button" class="js-embed" data-embed="https://www.youtube.com/embed/T6jDLG2Acbk?autoplay=1&rel=0" data-mode="video" title="YouTube">
@@ -1042,9 +983,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🎬 MEDIA MODAL (Hidden by default)
-     ═══════════════════════════════════════════════════════════════ -->
 <div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Media player">
   <div class="video-modal-inner" id="videoModalInner">
     <button type="button" class="video-close" id="videoClose">Close ✕</button>
@@ -1053,16 +991,12 @@
 </div>
 
 <script>
-  /* ═══════════════════════════════════════════════════════════════
-     🚀 PAGE LOAD & ANIMATIONS
-     ═══════════════════════════════════════════════════════════════ */
   window.addEventListener('load', function() {
     document.body.classList.add('loaded');
     var hero = document.getElementById('hero');
     if (hero) hero.classList.add('loaded');
   });
 
-  // Fade in the fork cards when they scroll into view
   (function() {
     var cards = document.querySelectorAll('.fork-card');
     if (!cards.length) return;
@@ -1084,9 +1018,6 @@
     cards.forEach(function(card) { observer.observe(card); });
   })();
 
-  /* ═══════════════════════════════════════════════════════════════
-     🧭 MENU & UI LOGIC
-     ═══════════════════════════════════════════════════════════════ */
   (function () {
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
@@ -1132,7 +1063,6 @@
       link.addEventListener('click', closeMenu);
     });
 
-    // Set the active page highlight in the menu
     var current = window.location.pathname.split('?')[0].split('#')[0].replace(/\.html?$/i, '');
     if (current === '' || current === '/') current = '/';
     
@@ -1149,9 +1079,6 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 
-  /* ═══════════════════════════════════════════════════════════════
-     🎬 MEDIA MODAL LOGIC
-     ═══════════════════════════════════════════════════════════════ */
   (function() {
     var modal      = document.getElementById('videoModal');
     var modalInner = document.getElementById('videoModalInner');
