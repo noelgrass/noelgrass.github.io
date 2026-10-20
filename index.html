@@ -362,16 +362,23 @@
   }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
 
+  /* Specific font size reduction for the fork panels so long links fit comfortably */
+  #artistMenuPanel .menu-link,
+  #filmMenuPanel .menu-link { font-size: 1.6em; }
+
+  /* Dim the other links and section title */
   .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
   .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
 
-  /* Fix: Cancel any pending entrance animations instantly when a user hovers
-     over the list so the hover glow applies immediately without lag. */
+  /* 
+    Fix: Cancel pending entrance animations instantly on hover so the glow 
+    applies immediately without lag, but WITHOUT overriding the opacity/transform 
+    of the items (so the dimming effect still works).
+  */
   .menu-links:hover .menu-item,
   .menu-links:hover .menu-item .menu-link {
     animation: none !important;
-    opacity: 1 !important;
-    transform: translate3d(0, 0, 0) !important;
+    transform: none !important;
   }
 
   .menu-bottom {
