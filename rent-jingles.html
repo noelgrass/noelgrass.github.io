@@ -191,15 +191,17 @@
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
   .page { max-width: 900px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
-  .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--offwhite); margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
+  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
+  .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
 
-  /* Banner strip — matches the Rent Scores page. */
+  /* Banner strip */
   .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
+  /* Info box — unified with Scores */
   .info-box { max-width: 600px; margin: 0 auto 50px; animation: fadeUp 1s ease-out both; animation-delay: 0.65s; }
-  .info-box p { font-family: 'Playfair Display', Georgia, serif; font-style: normal; font-size: 1em; line-height: 1.75; color: var(--muted); margin-bottom: 12px; }
+  .info-box p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); margin-bottom: 12px; }
   .info-box p em { font-style: italic; }
+  .info-box strong { color: var(--muted); font-weight: 700; }
   .info-box a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.3); padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease; }
   .info-box a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
 
@@ -382,10 +384,9 @@
 
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
-    /* H1 sizing matched to the Rent Scores page for visual consistency */
     h1 { font-size: 1.35em; letter-spacing: 0.12em; line-height: 1.35; margin-bottom: 16px; }
     .section-banner { font-size: 0.6em; letter-spacing: 0.12em; margin-bottom: 30px; line-height: 1.6; }
-    .hero-subhead { font-size: 1.1em; }
+    .hero-subhead { font-size: 1.02em; }
     .back-link { margin-bottom: 30px; }
     .license-link { margin-left: 0; margin-bottom: 30px; display: block; }
     .mood-group summary { padding: 22px 0 16px; gap: 12px; }
