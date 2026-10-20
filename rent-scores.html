@@ -391,10 +391,8 @@
     <h1>Rent / License Film Scores</h1>
     <p class="hero-subhead">Original scores for film, television, documentaries, and media.</p>
 
-    <!-- Banner strip — what to do, how fast, how much -->
     <p class="section-banner">Browse → Preview → License · Instant download · Ksh 8,000 per suite</p>
 
-    <!-- Info box — aligned with Jingles -->
     <div class="info-box">
       <p><strong>What you get:</strong> Every score is licensed as a <em>suite</em> (a pack of 3 cues for one mood). Your purchase includes the high-quality master files and a written commercial license for film, TV, online, and broadcast use. <a href="license">Read the full terms →</a></p>
       <p><em>Need something custom? <a href="commission">Commission a score →</a></em></p>
@@ -407,14 +405,12 @@
 
     <a href="#recoveryBox" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
-    <!-- Shelves mount — filled by JavaScript -->
     <div id="shelvesMount"></div>
 
     <div class="custom-link">
       Need something custom-made for your film? <a href="commission">Commission a Score →</a>
     </div>
 
-    <!-- Recovery box — for returning customers -->
     <div class="recovery-box" id="recoveryBox">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
@@ -424,7 +420,6 @@
       <div id="recoveryError" style="font-family:'Montserrat';font-size:0.65em;color:#e08b7a;margin-top:12px;display:none;"></div>
     </div>
 
-    <!-- FAQ footer -->
     <div class="faq-footer">
       <details>
         <summary><span class="faq-indicator"></span>Do I own the score after renting it?</summary>
@@ -459,7 +454,6 @@
 
 <audio id="mainAudio"></audio>
 
-<!-- Checkout Modal -->
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
     <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
@@ -475,7 +469,6 @@
   </div>
 </div>
 
-<!-- Success Modal -->
 <div class="success-modal" id="successModal" aria-hidden="true" role="dialog" aria-label="Payment successful">
   <div class="success-inner">
     <div class="success-mark" aria-hidden="true">✓</div>
@@ -494,9 +487,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -531,9 +521,6 @@
   })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     ⚙️ SCRIPT 2 — PREVIEW URL CONFIGURATION
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var PREVIEW_BASE = "https://rent-scores.noelgrass.workers.dev/preview";
 
@@ -545,9 +532,6 @@
   }
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🎵 SCRIPT 3 — SCORES + SHELVES DATA
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
@@ -577,15 +561,12 @@
     { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
     { cat: "drama",   label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
     { cat: "place",   label: "Place & Heritage",   desc: "For period, cultural, and heritage films" },
-    { cat: "quiet",   label: "Quiet & Still",      desc: "For quiet scenes, transitions, and moments that need space" },
+    { cat: "quiet",   label: "Quiet & Still",      desc: "For unsettling stillness, ambient drones, and quiet dread." },
     { cat: "modern",  label: "Modern & Hybrid",    desc: "For contemporary thrillers, sci-fi, tech, urban" },
     { cat: "trailer", label: "Trailer & Promo",    desc: "For trailers, teasers, and title sequences" }
   ];
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🎬 SCRIPT 4 — RENDER + AUDIO ENGINE + PAYSTACK
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
   var VERIFY_ENDPOINT    = "https://rent-scores.noelgrass.workers.dev/verify";
@@ -939,9 +920,6 @@
       }
     });
 
-    // ─────────────────────────────────────────────────────────────
-    // RECOVERY BOX
-    // ─────────────────────────────────────────────────────────────
     var recBtn   = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
