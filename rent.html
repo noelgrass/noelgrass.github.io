@@ -131,10 +131,8 @@
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
 
-  /* Banner strip */
   .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
-  /* Licensing Box */
   .licensing-intro { display: block; text-align: left; margin: 0 auto 60px; max-width: 720px; padding: 0; border: 1px solid var(--gold-soft); background: rgba(197,168,128,0.02); animation: fadeUp 1s ease-out both, licensingPulse 6s ease-in-out infinite; animation-delay: 0.7s, 1.7s; transition: border-color 0.4s ease, background 0.4s ease; }
   .licensing-intro:hover { border-color: var(--gold); background: rgba(197,168,128,0.04); animation: fadeUp 1s ease-out both, licensingPulseHover 6s ease-in-out infinite; animation-delay: 0.7s, 0s; }
   .licensing-intro > summary { list-style: none; cursor: pointer; padding: 42px 44px 30px; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "eyebrow toggle" "headline headline" "leadpara leadpara"; gap: 0 24px; align-items: start; }
@@ -498,8 +496,6 @@
   </div>
 </div>
 
-<audio id="mainAudio"></audio>
-
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
     <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
@@ -539,6 +535,8 @@
     <button type="button" class="success-done" id="successDone">Done</button>
   </div>
 </div>
+
+<audio id="mainAudio"></audio>
 
 <script>
   (function () {
@@ -618,7 +616,7 @@
        Track fields:
          code      unique ID (e.g. "AF01")
          title     track/suite title
-         desc      instrumentation notes
+         desc      instrumentation notes (deduplicated)
          duration  "Category · 0:32" or "Tension" for suites
          file      filename ("AF01.mp3" for jingles, "cue-1.mp3" for suites)
          folder    audio subfolder ("af" for jingles, "tn/TN01" for suites)
@@ -662,7 +660,7 @@
         count: "13 suites",
         link: "rent-scores",
         track: {
-          code: "TN01", title: "Theme 1", desc: "Synth",
+          code: "TN01", title: "Theme 1", desc: "Synth · Piano · Cello",
           duration: "Tension", file: "cue-1.mp3", folder: "tn/TN01",
           amount: "800000",
           verify: "https://rent-scores.noelgrass.workers.dev/verify",
@@ -820,7 +818,16 @@
         var isSuite = btn.getAttribute('data-issuite') === 'true';
         
         if (currentTrackId === code) {
-          audio.paused ? audio.play() : audio.pause();
+          // If already playing, pause/resume
+          if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '❚❚';
+            btn.classList.add('playing');
+          } else {
+            audio.pause();
+            btn.innerHTML = '▶';
+            btn.classList.remove('playing');
+          }
           return;
         }
         
