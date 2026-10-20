@@ -634,17 +634,48 @@
       filter: brightness(0.4) contrast(1.1);
     }
 
-    /* Mobile: disable ALL animations and transitions for smooth scrolling */
-    *, *::before, *::after {
+    /* Mobile: disable animations/transitions ONLY on page content — menu keeps its full properties */
+    body > *:not(.menu-panel):not(script),
+    .page-wrap,
+    .page-wrap * {
       animation: none !important;
       transition: none !important;
     }
 
-    /* Exception — keep the menu open/close fade so menus don't pop abruptly */
-    .menu-panel,
+    /* Keep the page-wrap blur/dim transition when a menu is open */
     .page-wrap {
-      transition: opacity 0.4s ease, transform 0.4s ease, filter 0.4s ease !important;
+      transition: filter 0.4s ease, opacity 0.4s ease !important;
     }
+
+    /* Explicitly restore the menu panel's full animation properties */
+    .menu-panel {
+      animation: none !important;
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards !important; }
+    .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards !important; }
+    .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards !important; }
+    .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.06s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards !important; }
+    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards !important; }
+
+    /* Restore menu hover transitions on mobile */
+    .menu-link { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
+    .menu-close { transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease !important; }
+    .menu-close .x { transition: transform 0.4s ease !important; }
+    .menu-section { transition: opacity 0.5s ease !important; }
   }
 
   @media (max-width: 700px) {
