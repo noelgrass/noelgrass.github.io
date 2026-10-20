@@ -354,7 +354,7 @@
     display: inline-block; position: relative; white-space: nowrap;
     font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2em;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); padding: 8px 0 8px 0;
-    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
   }
   .menu-link:hover {
     color: #FCFCF7;
@@ -365,8 +365,14 @@
   .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
   .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
 
-  /* Specific font size reduction for the Film panel so all 6 links fit */
-  #filmMenuPanel .menu-link { font-size: 1.6em; }
+  /* Fix: Cancel any pending entrance animations instantly when a user hovers
+     over the list so the hover glow applies immediately without lag. */
+  .menu-links:hover .menu-item,
+  .menu-links:hover .menu-item .menu-link {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+  }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
@@ -620,7 +626,7 @@
 </nav>
 
 <!-- ==========================================================
-     ARTIST FORK MENU PANEL (new)
+     ARTIST FORK MENU PANEL
      ========================================================== -->
 <nav class="menu-panel" id="artistMenuPanel" aria-label="Artist menu" aria-hidden="true">
   <div class="menu-backdrop" id="artistMenuBackdrop"></div>
@@ -645,9 +651,7 @@
 </nav>
 
 <!-- ==========================================================
-     FILM FORK MENU PANEL (new)
-     Includes "Rent Jingles" and a specific CSS rule above
-     to slightly reduce the font size so all 6 links fit.
+     FILM FORK MENU PANEL
      ========================================================== -->
 <nav class="menu-panel" id="filmMenuPanel" aria-label="Film Composer menu" aria-hidden="true">
   <div class="menu-backdrop" id="filmMenuBackdrop"></div>
