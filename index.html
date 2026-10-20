@@ -294,7 +294,7 @@
 
   .menu-inner {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 48px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px;
+    gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px;
     min-height: 100vh; position: relative;
   }
   .menu-top {
@@ -331,55 +331,66 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after  { transform: rotate(-45deg); }
 
-  .menu-links {
-    list-style: none; display: flex; flex-direction: column;
-    align-items: center; gap: 32px; text-align: center; padding-top: 20px;
+  .menu-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    justify-content: center;
+    align-items: start;
+    text-align: center;
+    max-width: 900px;
+    width: 100%;
   }
+
+  .menu-column {
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+  }
+
   .menu-section {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    margin-bottom: 20px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease;
+    margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease;
   }
-  .menu-panel.open .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+
+  .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+
+  .menu-links {
+    list-style: none; display: flex; flex-direction: column;
+    align-items: center; gap: 20px; text-align: center; padding: 0;
+  }
 
   .menu-item { position: relative; opacity: 0; }
-  .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
-  .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
-  .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
-  .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
-  .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
-  .menu-panel.open .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
+
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
+
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.06s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards; }
 
   .menu-link {
     display: inline-block; position: relative; white-space: nowrap;
-    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2em;
-    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); padding: 8px 0 8px 0;
-    transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em;
+    letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0;
+    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
+
   .menu-link:hover {
     color: #FCFCF7;
-    text-shadow: 0 0 12px rgba(197, 168, 128, 0.75), 0 0 30px rgba(197, 168, 128, 0.55), 0 0 70px rgba(197, 168, 128, 0.30), 0 0 130px rgba(197, 168, 128, 0.15);
+    text-shadow: 0 0 10px rgba(197, 168, 128, 0.75), 0 0 25px rgba(197, 168, 128, 0.55), 0 0 55px rgba(197, 168, 128, 0.30), 0 0 100px rgba(197, 168, 128, 0.15);
   }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
 
-  /* Specific font size reduction for the fork panels so long links fit comfortably */
-  #artistMenuPanel .menu-link,
-  #filmMenuPanel .menu-link { font-size: 1.6em; }
-
-  /* Dim the other links and section title */
-  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
-  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
-
-  /* 
-    Fix: Cancel pending entrance animations instantly on hover so the glow 
-    applies immediately without lag, but WITHOUT overriding the opacity/transform 
-    of the items (so the dimming effect still works).
-  */
-  .menu-links:hover .menu-item,
-  .menu-links:hover .menu-item .menu-link {
-    animation: none !important;
-    transform: none !important;
-  }
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
+  .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
@@ -585,10 +596,15 @@
     
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
-    .menu-inner { padding: 90px 24px 100px; }
-    
-    .menu-links { padding-left: 40px; margin-left: 0; }
-    .menu-link { font-size: 1.4em; }
+    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
+    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
+    .menu-close .x { width: 15px; height: 15px; }
+    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
+    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
+    .menu-section { margin-bottom: 20px; }
+    .menu-links { gap: 16px; }
+    .menu-bottom { margin-top: 10px; }
     
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
@@ -620,14 +636,18 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Explore</span>
-      <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
-      <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
-      <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
-      <li class="menu-item"><a href="film-composer" class="menu-link" data-open-menu="film">Film Composer</a></li>
-      <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Explore</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
+          <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
+          <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
+          <li class="menu-item"><a href="film-composer" class="menu-link" data-open-menu="film">Film Composer</a></li>
+          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
   </div>
 </nav>
@@ -644,15 +664,19 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Music</span>
-      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
-      <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
-      <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
-      <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
-      <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
-      <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Music</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="artistYear"></span></div>
   </div>
 </nav>
@@ -669,15 +693,19 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Film</span>
-      <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
-      <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
-      <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
-      <li class="menu-item"><a href="rent" class="menu-link">Rent/License</a></li>
-      <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
-      <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Film</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+          <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
+          <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
+          <li class="menu-item"><a href="rent" class="menu-link">Rent/License</a></li>
+          <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
+          <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="filmYear"></span></div>
   </div>
 </nav>
