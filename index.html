@@ -329,7 +329,7 @@
 
   .menu-inner {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 48px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px;
+    gap: 48px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
     min-height: 100vh; position: relative; z-index: 2;
   }
   .menu-top {
@@ -392,30 +392,13 @@
     transition: color 0.4s ease, opacity 0.4s ease, text-shadow 0.4s ease;
   }
   
-  /* The Underline */
-  .menu-link::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-    height: 1px; background: var(--gold);
-    transform: scaleX(0); transform-origin: left center;
-    transition: transform 0.4s ease;
-  }
-  
-  /* Hover: Draw the line */
-  .menu-link:hover::after {
-    transform: scaleX(1);
-  }
-  
-  /* Current page: No line */
-  .menu-link.current::after {
-    display: none;
-  }
-  
+  /* Glow effect on hover (matching the fork cards) */
   .menu-link:hover { 
     color: #FCFCF7; 
-    text-shadow: 0 0 20px rgba(197, 168, 128, 0.8); 
+    text-shadow: 0 0 15px rgba(197, 168, 128, 0.85), 0 0 35px rgba(197, 168, 128, 0.45); 
   }
   
-  /* Current Page (No underline) */
+  /* Current Page (Dimmed, no glow) */
   .menu-link.current {
     color: var(--gold-dim);
     pointer-events: none;
@@ -425,11 +408,11 @@
   .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.1; }
   .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.15; }
 
-  /* Menu bottom */
+  /* Menu bottom - Fixed position to avoid letterbox cut off */
   .menu-bottom { 
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); 
-    opacity: 0; margin-top: 20px; 
+    opacity: 0; margin-top: 40px; 
   }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 0.4s ease 0.8s forwards; }
 
@@ -651,7 +634,7 @@
     
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
-    .menu-inner { padding: 90px 24px 60px; }
+    .menu-inner { padding: 90px 24px 100px; }
     .menu-link { font-size: 1.5em; }
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
