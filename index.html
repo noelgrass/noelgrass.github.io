@@ -233,30 +233,6 @@
     from { opacity: 0; letter-spacing: 0.5em; }
     to   { opacity: 1; letter-spacing: 0.35em; }
   }
-  @keyframes focusPullIn {
-    from { opacity: 0; transform: translate3d(-15px, 0, 0); filter: blur(8px); }
-    to   { opacity: 1; transform: translate3d(0, 0, 0); filter: blur(0); }
-  }
-  @keyframes panelDrift {
-    from { transform: scale(1); }
-    to   { transform: scale(1.015); }
-  }
-  @keyframes projectorFlicker {
-    0%, 100% { opacity: 0.97; }
-    50%      { opacity: 1; }
-  }
-  @keyframes grainShift {
-    0%   { transform: translate(0, 0); }
-    20%  { transform: translate(-2%, 1%); }
-    40%  { transform: translate(1%, -2%); }
-    60%  { transform: translate(-1%, 2%); }
-    80%  { transform: translate(2%, -1%); }
-    100% { transform: translate(0, 0); }
-  }
-  @keyframes beamBreathe {
-    0%, 100% { opacity: 0.85; }
-    50%      { opacity: 1; }
-  }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -303,318 +279,104 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
-  /* ═══════════════════════════════════════════════════════════════
-     FULLSCREEN MENU
-     ═══════════════════════════════════════════════════════════════ */
-
-  .page-wrap { transition: filter 1s cubic-bezier(0.16,1,0.3,1), opacity 1s ease; }
-  body.menu-open .page-wrap {
-    filter: blur(30px) brightness(0.06); opacity: 0.22; pointer-events: none;
-  }
+  .page-wrap { transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
+  body.menu-open h1, body.menu-open .portrait img, body.menu-open .scroll-cue .line, body.menu-open .fork-card { animation-play-state: paused; }
 
   .menu-panel {
-    position: fixed; inset: 0; z-index: 400;
-    background: #000;
-    opacity: 0; pointer-events: none;
-    transform: scale(1.015);
-    transition: opacity 1.1s cubic-bezier(0.16,1,0.3,1),
-                transform 1.1s cubic-bezier(0.16,1,0.3,1);
-    overflow: hidden;
+    position: fixed; inset: 0; z-index: 400; background: #000000;
+    background-image: radial-gradient(ellipse at 50% 50%, rgba(197, 168, 128, 0.07) 0%, transparent 65%);
+    opacity: 0; pointer-events: none; transform: scale(1.02);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto; overscroll-behavior: contain;
   }
-  .menu-panel.open {
-    opacity: 1; transform: scale(1); pointer-events: auto;
-    animation: panelDrift 16s ease-in-out forwards;
-  }
-
-  /* Projector light: the room's warm ambient layer.
-     Its opacity is the ONLY thing that changes on hover — cheap, GPU-composited. */
-  .projector-light {
-    position: absolute; inset: -20%; z-index: 0; pointer-events: none;
-    background:
-      radial-gradient(ellipse 70% 55% at 28% 22%,
-        rgba(197, 168, 128, 0.16) 0%,
-        rgba(197, 168, 128, 0.05) 38%,
-        transparent 72%),
-      radial-gradient(ellipse 90% 80% at 50% 60%,
-        rgba(0,0,0,0) 40%,
-        rgba(0,0,0,0.65) 78%,
-        #000 100%);
-    animation: projectorFlicker 9s ease-in-out infinite;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    will-change: opacity;
-  }
-  /* When a word is hovered, the room's warm light drops a stop */
-  .menu-panel:has(.menu-link:hover) .projector-light {
-    opacity: 0.55;
-  }
-
-  /* Projector beam: static warm pool, dims on hover — opacity only */
-  .projector-beam {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    mix-blend-mode: screen;
-    background: radial-gradient(
-      circle 52vmax at 28% 22%,
-      rgba(197, 168, 128, 0.16) 0%,
-      rgba(197, 168, 128, 0.07) 32%,
-      rgba(197, 168, 128, 0.02) 55%,
-      transparent 76%
-    );
-    animation: beamBreathe 14s ease-in-out infinite;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    will-change: opacity;
-  }
-  .menu-panel:has(.menu-link:hover) .projector-beam {
-    opacity: 0.55;
-  }
-
-  .grain {
-    position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    opacity: 0.055; mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-    background-size: 160px 160px;
-    animation: grainShift 0.6s steps(6) infinite;
-  }
-
-  .letterbox-top, .letterbox-bottom {
-    position: absolute; left: 0; right: 0; height: 80px; background: #000; z-index: 500;
-    transform: scaleY(0);
-    transition: transform 1.15s cubic-bezier(0.16,1,0.3,1);
-  }
-  .letterbox-top { top: 0; transform-origin: top; }
-  .letterbox-bottom { bottom: 0; transform-origin: bottom; }
-  .menu-panel.open .letterbox-top,
-  .menu-panel.open .letterbox-bottom { transform: scaleY(1); }
-  .menu-panel.open .letterbox-top { transition-delay: 0.15s; }
-  .menu-panel.open .letterbox-bottom { transition-delay: 0.25s; }
-
-  .crop-frame {
-    width: min(560px, 80%); height: 1px;
-    background: linear-gradient(to right,
-      transparent 0%, var(--gold-soft) 15%,
-      var(--gold-soft) 85%, transparent 100%);
-    opacity: 0; transform: scaleX(0);
-    transform-origin: center center;
-    transition: opacity 0.6s ease, transform 1.4s cubic-bezier(0.16,1,0.3,1);
-    margin: 0 auto;
-  }
-  .menu-panel.open .crop-frame {
-    opacity: 0.35; transform: scaleX(1);
-  }
-  .menu-panel.open .crop-frame--top    { transition-delay: 0.7s; }
-  .menu-panel.open .crop-frame--bottom { transition-delay: 0.9s; }
+  .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
 
   .menu-inner {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 44px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 120px;
-    min-height: 100vh; position: relative; z-index: 2;
+    gap: 48px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px;
+    min-height: 100vh; position: relative;
   }
   .menu-top {
-    position: absolute; top: 100px; left: 40px; right: 40px;
-    display: flex; align-items: center; justify-content: space-between; z-index: 12;
+    position: absolute; top: 32px; left: 40px; right: 40px;
+    display: flex; align-items: center; justify-content: space-between; z-index: 2;
   }
 
   .menu-heading {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em;
     letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale);
-    opacity: 0; display: flex; align-items: center;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    display: inline-flex; align-items: center; gap: 20px; opacity: 0;
   }
-  .menu-panel.open .menu-heading { animation: menuHeadingIn 0.6s ease 0.4s forwards; }
+  .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards; }
   .menu-heading::after {
     content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold);
-    transform: scaleX(0); transform-origin: left center; margin-left: 20px; vertical-align: middle;
+    transform: scaleX(0); transform-origin: left center;
   }
-  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
+  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards; }
 
   .menu-close {
     background: transparent; border: 0; cursor: pointer;
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale);
-    display: inline-flex; align-items: center; gap: 16px; opacity: 0;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1), color 0.3s ease;
+    padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    opacity: 0; -webkit-tap-highlight-color: transparent;
   }
-  .menu-panel.open .menu-close { animation: menuFadeIn 0.5s ease 1s forwards; }
-  .menu-close:hover { color: #FBFAFC; }
-  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; }
-  .menu-close .x::before, .menu-close .x::after {
-    content: ''; position: absolute; top: 50%; left: 0; right: 0;
-    height: 2px; background: currentColor;
-    transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  }
+  .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards; }
+  .menu-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197, 168, 128, 0.7), 0 0 45px rgba(197, 168, 128, 0.3); }
+  
+  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; transition: transform 0.4s ease; }
+  .menu-close:hover .x { transform: rotate(90deg); }
+  .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
   .menu-close .x::before { transform: rotate(45deg); }
-  .menu-close .x::after { transform: rotate(-45deg); }
-  .menu-close:hover .x::before { transform: rotate(135deg); }
-  .menu-close:hover .x::after { transform: rotate(45deg); }
+  .menu-close .x::after  { transform: rotate(-45deg); }
 
   .menu-links {
-    list-style: none;
-    display: flex; flex-direction: column;
-    align-items: flex-start;
-    gap: 38px;
-    text-align: left;
-    padding: 20px 0 20px 60px;
-    margin-left: -60px;
-    position: relative;
+    list-style: none; display: flex; flex-direction: column;
+    align-items: center; gap: 32px; text-align: center; padding-top: 20px;
   }
-
-  .menu-links::before {
-    content: '';
-    position: absolute; left: 0; top: 0; bottom: 0;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, var(--gold-soft), transparent);
-    opacity: 0.3;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
   .menu-section {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    margin-bottom: 20px; display: block; opacity: 0;
-    padding-left: 4px;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    margin-bottom: 20px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease;
   }
-  .menu-panel.open .menu-section { animation: menuLinkIn 0.5s ease 0.4s forwards; }
+  .menu-panel.open .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards; }
 
-  .menu-item {
-    opacity: 0;
-    position: relative;
-    display: block;
-    transition:
-      opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-      filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    will-change: filter, opacity;
-  }
+  .menu-item { position: relative; opacity: 0; }
+  .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards; }
+  .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards; }
+  .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards; }
+  .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards; }
+  .menu-panel.open .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards; }
+  .menu-panel.open .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards; }
 
-  .menu-item::before {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.65em;
-    letter-spacing: 0.1em;
-    color: var(--gold-dim);
-    opacity: 0.5;
-    position: absolute;
-    left: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .menu-item:nth-child(2)::before { content: '01'; }
-  .menu-item:nth-child(3)::before { content: '02'; }
-  .menu-item:nth-child(4)::before { content: '03'; }
-  .menu-item:nth-child(5)::before { content: '04'; }
-  .menu-item:nth-child(6)::before { content: '05'; }
-
-  .menu-panel.open .menu-item {
-    animation: focusPullIn 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
-  }
-  .menu-panel.open .menu-item:nth-child(2) { animation-delay: 0.55s; }
-  .menu-panel.open .menu-item:nth-child(3) { animation-delay: 0.75s; }
-  .menu-panel.open .menu-item:nth-child(4) { animation-delay: 0.95s; }
-  .menu-panel.open .menu-item:nth-child(5) { animation-delay: 1.15s; }
-  .menu-panel.open .menu-item:nth-child(6) { animation-delay: 1.35s; }
-
-  /* Typography preserved: Cormorant Garamond, 1.6em, 0.28em tracking, uppercase, gold gradient */
   .menu-link {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 500;
-    font-size: 1.6em;
-    letter-spacing: 0.28em;
-    text-transform: uppercase;
-    display: inline-block;
-    position: relative;
-    padding: 8px 0;
-
-    background: linear-gradient(
-      100deg,
-      var(--gold-dim) 0%,
-      var(--gold-pale) 45%,
-      var(--gold-soft) 55%,
-      var(--gold-dim) 100%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    color: var(--gold-pale);
-
-    will-change: filter, text-shadow;
-    isolation: isolate;
-    transition:
-      filter 0.6s cubic-bezier(0.19, 1, 0.22, 1),
-      text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    display: inline-block; position: relative; white-space: nowrap;
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2em;
+    letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); padding: 8px 0 8px 0;
+    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
-
-  /* Hovered word: white fill, gold halo */
   .menu-link:hover {
-    background: none;
-    -webkit-text-fill-color: #FFFFFF;
-    color: #FFFFFF;
-    text-shadow:
-      0 0 4px rgba(197, 168, 128, 0.55),
-      0 0 10px rgba(197, 168, 128, 0.35),
-      0 0 22px rgba(197, 168, 128, 0.18);
+    color: #FCFCF7;
+    text-shadow: 0 0 12px rgba(197, 168, 128, 0.75), 0 0 30px rgba(197, 168, 128, 0.55), 0 0 70px rgba(197, 168, 128, 0.30), 0 0 130px rgba(197, 168, 128, 0.15);
   }
+  .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
 
-  .menu-link.current {
-    background: none;
-    -webkit-text-fill-color: var(--gold-dim);
-    color: var(--gold-dim);
-    pointer-events: none;
-  }
+  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
+  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
 
-  /* Non-hovered words dim and blur out of focus */
-  .menu-links:has(.menu-link:hover) .menu-item {
-    opacity: 0.15;
-    filter: blur(1.5px);
-  }
-  .menu-links:has(.menu-link:hover) .menu-item::before {
-    opacity: 0.08;
-  }
-  .menu-links .menu-item:hover {
-    opacity: 1 !important;
-    filter: blur(0) !important;
-  }
-  .menu-links .menu-item:hover::before {
-    opacity: 0.5 !important;
-    transform: translateY(-50%) translateX(2px);
-  }
-
-  /* Section label recedes */
-  .menu-panel:has(.menu-link:hover) .menu-section {
-    opacity: 0.12;
-  }
-
-  /* Chrome recedes on the same 0.6s curve */
-  .menu-panel:has(.menu-link:hover) .menu-close,
-  .menu-panel:has(.menu-link:hover) .menu-heading,
-  .menu-panel:has(.menu-link:hover) .menu-bottom,
-  .menu-panel:has(.menu-link:hover) .crop-frame,
-  .menu-panel:has(.menu-link:hover) .menu-links::before {
-    opacity: 0.2;
-  }
+  /* Specific font size reduction for the Film panel so all 6 links fit */
+  #filmMenuPanel .menu-link { font-size: 1.6em; }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
     letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim);
-    opacity: 0; margin-top: 40px; text-align: center; width: 100%;
-    transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    opacity: 0; margin-top: 20px;
   }
-  .menu-panel.open .menu-bottom { animation: menuFadeIn 0.5s ease 1.1s forwards; }
+  .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
 
-  .menu-backdrop { position: absolute; inset: 0; z-index: 0; cursor: pointer; }
+  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
-  @media (prefers-reduced-motion: reduce) {
-    .projector-light { animation: none; }
-    .grain { animation: none; }
-    .projector-beam { animation: none; opacity: 1; }
-    .menu-panel.open { animation: none; }
-    .menu-panel.open .menu-item { animation: menuLinkIn 0.01s forwards; filter: none; }
-    .menu-link { transition: filter 0.2s ease, text-shadow 0.2s ease; }
-  }
-
-  /* ═══════════════════════════════════════════════════════════════
-     HERO SECTION
-     ═══════════════════════════════════════════════════════════════ */
   .hero {
     position: relative; width: 100%; max-width: 1200px; margin: 0 auto;
     padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate;
@@ -642,9 +404,6 @@
   }
   .rule-small { width: 48px; height: 3px; border-top: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); margin: 0 auto; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     MAIN CONTENT AREA
-     ═══════════════════════════════════════════════════════════════ */
   .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
 
   .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; }
@@ -836,16 +595,11 @@
   </button>
 </header>
 
+<!-- ==========================================================
+     HOME MENU PANEL
+     ========================================================== -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
-
-  <div class="projector-light" aria-hidden="true"></div>
-  <div class="projector-beam" aria-hidden="true"></div>
-  <div class="grain" aria-hidden="true"></div>
-
-  <div class="letterbox-top"></div>
-  <div class="letterbox-bottom"></div>
-
   <div class="menu-inner">
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
@@ -853,21 +607,67 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-
-    <div class="crop-frame crop-frame--top" aria-hidden="true"></div>
-
     <ul class="menu-links">
       <span class="menu-section">Explore</span>
       <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
       <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
-      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
-      <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+      <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
+      <li class="menu-item"><a href="film-composer" class="menu-link" data-open-menu="film">Film Composer</a></li>
       <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
     </ul>
-
-    <div class="crop-frame crop-frame--bottom" aria-hidden="true"></div>
-
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     ARTIST FORK MENU PANEL (new)
+     ========================================================== -->
+<nav class="menu-panel" id="artistMenuPanel" aria-label="Artist menu" aria-hidden="true">
+  <div class="menu-backdrop" id="artistMenuBackdrop"></div>
+  <div class="menu-inner">
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="artistMenuClose" type="button" aria-label="Close menu">
+        Close <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <ul class="menu-links">
+      <span class="menu-section">Music</span>
+      <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+      <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+      <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+      <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+      <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+      <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+    </ul>
+    <div class="menu-bottom">Noel Grass · <span id="artistYear"></span></div>
+  </div>
+</nav>
+
+<!-- ==========================================================
+     FILM FORK MENU PANEL (new)
+     Includes "Rent Jingles" and a specific CSS rule above
+     to slightly reduce the font size so all 6 links fit.
+     ========================================================== -->
+<nav class="menu-panel" id="filmMenuPanel" aria-label="Film Composer menu" aria-hidden="true">
+  <div class="menu-backdrop" id="filmMenuBackdrop"></div>
+  <div class="menu-inner">
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="filmMenuClose" type="button" aria-label="Close menu">
+        Close <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <ul class="menu-links">
+      <span class="menu-section">Film</span>
+      <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+      <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
+      <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
+      <li class="menu-item"><a href="rent" class="menu-link">Rent/License</a></li>
+      <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
+      <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
+    </ul>
+    <div class="menu-bottom">Noel Grass · <span id="filmYear"></span></div>
   </div>
 </nav>
 
@@ -902,7 +702,7 @@
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
       <div class="fork-row">
-        <a href="artist" class="fork-card" aria-label="Enter the Artist side">
+        <a href="artist" class="fork-card" aria-label="Enter the Artist side" data-open-menu="artist">
           <div class="fork-bg fork-bg--artist" aria-hidden="true">
             <img src="images/noel-grass-artist.jpeg" alt="" loading="lazy">
           </div>
@@ -912,7 +712,7 @@
             <span class="fork-enter">Enter</span>
           </div>
         </a>
-        <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
+        <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film" data-open-menu="film">
           <div class="fork-bg" aria-hidden="true">
             <img src="images/film/film-strip.jpg" alt="" loading="lazy">
           </div>
@@ -952,7 +752,6 @@
     </div>
 
     <p class="follow-link"><a href="https://www.youtube.com/@NoelGrass" target="_blank" rel="noopener">Subscribe on YouTube →</a></p>
-
     <div class="rule-full"></div>
 
     <ul class="footer-links">
@@ -979,7 +778,6 @@
       <span class="footer-sep">·</span>
       <span>Worldwide</span>
     </p>
-
   </div>
 </div>
 
@@ -1018,55 +816,118 @@
     cards.forEach(function(card) { observer.observe(card); });
   })();
 
+  /* ------------------------------------------------------------
+     MENU CONTROLLER
+     Handles ALL menu panels:
+       #menuPanel        — Home menu (original)
+       #artistMenuPanel  — Artist fork menu
+       #filmMenuPanel    — Film fork menu
+     ------------------------------------------------------------ */
   (function () {
-    var toggle   = document.getElementById('menuToggle');
-    var panel    = document.getElementById('menuPanel');
-    var closeBtn = document.getElementById('menuClose');
-    var backdrop = document.getElementById('menuBackdrop');
+    var toggle       = document.getElementById('menuToggle');
+    var homePanel    = document.getElementById('menuPanel');
+    var homeClose    = document.getElementById('menuClose');
+    var homeBackdrop = document.getElementById('menuBackdrop');
+
+    var artistPanel    = document.getElementById('artistMenuPanel');
+    var artistClose    = document.getElementById('artistMenuClose');
+    var artistBackdrop = document.getElementById('artistMenuBackdrop');
+
+    var filmPanel    = document.getElementById('filmMenuPanel');
+    var filmClose    = document.getElementById('filmMenuClose');
+    var filmBackdrop = document.getElementById('filmMenuBackdrop');
+
+    var activePanel = null;
+
+    function getScrollbarWidth() {
+      return window.innerWidth - document.documentElement.clientWidth;
+    }
 
     function lockScroll() {
-      var sw = window.innerWidth - document.documentElement.clientWidth;
+      var sw = getScrollbarWidth();
       document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
       document.documentElement.classList.add('menu-lock');
     }
+
     function unlockScroll() {
       document.documentElement.classList.remove('menu-lock');
       document.documentElement.style.removeProperty('--scrollbar-width');
     }
-    function openMenu() {
+
+    function openPanel(panel) {
+      if (!panel) return;
+      if (activePanel && activePanel !== panel) {
+        activePanel.classList.remove('open');
+        activePanel.setAttribute('aria-hidden', 'true');
+      }
       panel.classList.add('open');
       panel.setAttribute('aria-hidden', 'false');
+      activePanel = panel;
       document.body.classList.add('menu-open');
       lockScroll();
       toggle.setAttribute('aria-expanded', 'true');
+      toggle.setAttribute('aria-label', 'Close menu');
     }
-    function closeMenu() {
-      panel.classList.remove('open');
-      panel.setAttribute('aria-hidden', 'true');
+
+    function closePanel() {
+      if (!activePanel) return;
+      activePanel.classList.remove('open');
+      activePanel.setAttribute('aria-hidden', 'true');
+      activePanel = null;
       document.body.classList.remove('menu-open');
       unlockScroll();
       toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Open menu');
     }
 
     toggle.addEventListener('click', function (e) {
       e.stopPropagation();
-      if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); }
+      if (activePanel) {
+        closePanel();
+      } else {
+        openPanel(homePanel);
+      }
     });
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
+
+    homeClose.addEventListener('click', closePanel);
+    homeBackdrop.addEventListener('click', closePanel);
+    artistClose.addEventListener('click', closePanel);
+    artistBackdrop.addEventListener('click', closePanel);
+    filmClose.addEventListener('click', closePanel);
+    filmBackdrop.addEventListener('click', closePanel);
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); }
+      if (e.key === 'Escape' && activePanel) {
+        closePanel();
+      }
     });
 
-    panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
+    [homePanel, artistPanel, filmPanel].forEach(function (panel) {
+      panel.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closePanel);
+      });
+    });
+
+    document.querySelectorAll('[data-open-menu="artist"]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openPanel(artistPanel);
+      });
+    });
+
+    document.querySelectorAll('[data-open-menu="film"]').forEach(function (trigger) {
+      trigger.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openPanel(filmPanel);
+      });
     });
 
     var current = window.location.pathname.split('?')[0].split('#')[0].replace(/\.html?$/i, '');
     if (current === '' || current === '/') current = '/';
     
-    panel.querySelectorAll('a.menu-link').forEach(function (link) {
+    homePanel.querySelectorAll('a.menu-link').forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
       var linkPath = href.split('?')[0].split('#')[0].replace(/\.html?$/i, '');
@@ -1077,6 +938,10 @@
 
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+    var artistYearEl = document.getElementById('artistYear');
+    if (artistYearEl) artistYearEl.textContent = new Date().getFullYear();
+    var filmYearEl = document.getElementById('filmYear');
+    if (filmYearEl) filmYearEl.textContent = new Date().getFullYear();
   })();
 
   (function() {
