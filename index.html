@@ -638,36 +638,53 @@
       filter: brightness(0.4) contrast(1.1);
     }
 
-    /* 1. Turn off ALL animations/transitions globally on mobile */
-    *, *::before, *::after {
+    /* 1. Kill ONLY decorative infinite loops on mobile (perf).
+          Do NOT kill transitions globally — the menu system needs them. */
+    h1, .wordmark, .portrait img, .fork-card::before,
+    .scroll-cue .line {
       animation: none !important;
-      transition: none !important;
     }
 
-    /* 2. Keep page background fade when menu opens */
+    /* 2. Page-wrap fade when a menu opens — restored */
     .page-wrap {
       transition: filter 0.4s ease, opacity 0.4s ease !important;
     }
 
-    /* 3. Force menu elements to be visible immediately (fixes invisible Join/Rent Jingles) */
-    .menu-panel.open .menu-item,
-    .menu-panel.open .menu-section,
-    .menu-panel.open .menu-heading,
-    .menu-panel.open .menu-close,
-    .menu-panel.open .menu-bottom {
-      animation: none !important;
-      opacity: 1 !important;
-      transform: none !important;
-    }
-
-    /* 4. Restore menu panel transition */
+    /* 3. Panel fade — restored */
     .menu-panel {
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-    .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards !important; }
 
-    /* Restore menu hover transitions */
+    /* 4. Staggered reveal for ALL THREE panels on mobile */
+    .menu-panel.open .menu-heading {
+      opacity: 0;
+      animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards !important;
+    }
+    .menu-panel.open .menu-heading::after {
+      animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards !important;
+    }
+    .menu-panel.open .menu-close {
+      opacity: 0;
+      animation: menuFadeIn 0.8s ease-out 1.2s forwards !important;
+    }
+    .menu-panel.open .menu-bottom {
+      opacity: 0;
+      animation: menuFadeIn 1s ease-out 1.6s forwards !important;
+    }
+    .menu-panel.open .menu-section {
+      opacity: 0;
+      animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards !important;
+    }
+    .menu-panel.open .menu-item:nth-child(1) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.60s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(2) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(3) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(4) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(5) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(6) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards !important; }
+    .menu-panel.open .menu-item:nth-child(7) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards !important; }
+
+    /* 5. Menu hover transitions */
     .menu-link { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
     .menu-close { transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease !important; }
     .menu-close .x { transition: transform 0.4s ease !important; }
