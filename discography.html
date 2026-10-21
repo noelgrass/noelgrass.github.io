@@ -812,7 +812,9 @@
     animation-delay: 1.3s;
   }
 
-  .feature-cover:hover img {
+  /* Feature cover hover — also fires when the Preview button is hovered */
+  .feature-cover:hover img,
+  .feature-release:has(.action-link:hover) .feature-cover img {
     filter: brightness(0.85) contrast(1.10);
     transform: scale(1.015);
     border-color: var(--gold-soft);
@@ -951,14 +953,15 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     ▶️ PREVIEW BUTTON + HALO — matches the store's Buy button
-     - Bare ▶ + "Preview" text, no box, no border.
-     - Halo is a pill-shaped ::before that fades in on hover.
-     - Pop-forward scale + text-shadow on hover (same as store).
-     - Triggered by hovering the item wrapper (like store's
-       .store-item:hover) OR directly on the button.
-     - play-icon scales up (1.1) on hover, matching the store's
-       cart icon behaviour.
+     ▶️ PREVIEW BUTTON + HALO — film-gallery typography with
+        store Buy button hover behaviour, plus a BIDIRECTIONAL
+        link between the poster image and the button:
+
+     • Hover the image → button halos + pops up.
+       (via .poster:hover ~ .item-actions .action-link)
+     • Hover the button → image brightens + glows + scales.
+       (via .store-item:has(.action-link:hover) .poster)
+     • Direct button hover still works on its own.
      ═══════════════════════════════════════════════════════════ */
   .item-actions {
     display: flex;
@@ -975,8 +978,8 @@
     color: var(--gold-soft);
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.85em;
-    letter-spacing: 0.22em;
+    font-size: 0.65em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
     cursor: pointer;
     padding: 8px 0;
@@ -1010,24 +1013,26 @@
     transition: transform 0.35s ease;
   }
 
-  /* Pop-forward + text-shadow on hover (matches store Buy) */
-  .feature-release:hover .action-link,
-  .store-item:hover .action-link,
+  /* ── Bidirectional trigger: hover the poster OR the button ── */
+  /* 1) Poster hover → button pops up (sibling selector) */
+  .store-item .poster:hover ~ .item-actions .action-link,
+  .feature-cover:hover ~ .feature-actions .action-link,
+  /* 2) Button hover (direct) → button pops up */
   .action-link:hover {
     color: var(--gold-pale);
     text-shadow: 0 0 15px rgba(197, 168, 128, 0.7);
     transform: scale(1.08) translateY(-2px);
   }
 
-  .feature-release:hover .action-link .play-icon,
-  .store-item:hover .action-link .play-icon,
+  .store-item .poster:hover ~ .item-actions .action-link .play-icon,
+  .feature-cover:hover ~ .feature-actions .action-link .play-icon,
   .action-link:hover .play-icon {
     transform: scale(1.1);
   }
 
-  /* Halo ring appears on hover (item-hover OR direct button hover) */
-  .feature-release:hover .action-link::before,
-  .store-item:hover .action-link::before,
+  /* Halo ring appears on the same triggers */
+  .store-item .poster:hover ~ .item-actions .action-link::before,
+  .feature-cover:hover ~ .feature-actions .action-link::before,
   .action-link:hover::before {
     opacity: 1;
     border-color: rgba(197, 168, 128, 0.45);
@@ -1035,6 +1040,40 @@
       0 0 14px 2px rgba(197, 168, 128, 0.45),
       0 0 30px 8px rgba(197, 168, 128, 0.22),
       0 0 56px 16px rgba(197, 168, 128, 0.10);
+  }
+
+  /* ── Reverse direction: hover the button → poster reacts ── */
+  .store-item:has(.action-link:hover) .poster {
+    border-color: var(--gold-soft);
+    animation: tileHoverGlow 4s ease-in-out infinite;
+  }
+  .store-item:has(.action-link:hover) .poster img {
+    filter: brightness(0.82) contrast(1.10);
+    transform: scale(1.015);
+  }
+  .store-item:has(.action-link:hover) .caption { color: #FCFCF7; }
+
+  /* Sibling dimming should also fire when a button (not just a poster) is hovered */
+  .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .poster {
+    box-shadow:
+      0 0 15px 2px rgba(185, 151, 92, 0.08),
+      0 0 30px 4px rgba(185, 151, 92, 0.03);
+    border-color: #1a1a1a;
+    animation: none;
+    transition: box-shadow 0.7s ease, border-color 0.7s ease;
+  }
+  .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .poster img {
+    filter: brightness(0.55) contrast(0.95);
+    transform: none;
+  }
+  .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .caption {
+    color: rgba(232, 213, 181, 0.3);
+  }
+  .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .format-label {
+    color: rgba(154, 149, 140, 0.3);
+  }
+  .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .badge {
+    opacity: 0.35;
   }
 
   .store-gallery {
