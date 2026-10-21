@@ -951,13 +951,14 @@
   }
 
   /* ═══════════════════════════════════════════════════════════
-     ▶️ PREVIEW BUTTON + HALO — copied from film-gallery
-     - Used by both the featured block and every category card.
-     - The halo is a pill-shaped ::before pseudo-element that
-       fades in on .feature-release:hover OR .store-item:hover
-       OR .action-link:hover (Option A — hover anywhere on the
-       item wrapper triggers the halo on its button).
-     - No pop-forward scale (film-gallery doesn't have it either).
+     ▶️ PREVIEW BUTTON + HALO — matches the store's Buy button
+     - Bare ▶ + "Preview" text, no box, no border.
+     - Halo is a pill-shaped ::before that fades in on hover.
+     - Pop-forward scale + text-shadow on hover (same as store).
+     - Triggered by hovering the item wrapper (like store's
+       .store-item:hover) OR directly on the button.
+     - play-icon scales up (1.1) on hover, matching the store's
+       cart icon behaviour.
      ═══════════════════════════════════════════════════════════ */
   .item-actions {
     display: flex;
@@ -971,15 +972,16 @@
   .action-link {
     background: transparent;
     border: none;
-    color: var(--gold-dim);
+    color: var(--gold-soft);
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.65em;
-    letter-spacing: 0.25em;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     cursor: pointer;
-    padding: 10px 14px;
+    padding: 8px 0;
     position: relative;
-    transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.35s ease;
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -998,13 +1000,32 @@
     pointer-events: none;
   }
 
+  .play-icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 4px 0 4px 6px;
+    border-color: transparent transparent transparent currentColor;
+    transition: transform 0.35s ease;
+  }
+
+  /* Pop-forward + text-shadow on hover (matches store Buy) */
   .feature-release:hover .action-link,
   .store-item:hover .action-link,
   .action-link:hover {
     color: var(--gold-pale);
-    text-shadow: 0 0 12px rgba(197, 168, 128, 0.6);
+    text-shadow: 0 0 15px rgba(197, 168, 128, 0.7);
+    transform: scale(1.08) translateY(-2px);
   }
 
+  .feature-release:hover .action-link .play-icon,
+  .store-item:hover .action-link .play-icon,
+  .action-link:hover .play-icon {
+    transform: scale(1.1);
+  }
+
+  /* Halo ring appears on hover (item-hover OR direct button hover) */
   .feature-release:hover .action-link::before,
   .store-item:hover .action-link::before,
   .action-link:hover::before {
@@ -1014,16 +1035,6 @@
       0 0 14px 2px rgba(197, 168, 128, 0.45),
       0 0 30px 8px rgba(197, 168, 128, 0.22),
       0 0 56px 16px rgba(197, 168, 128, 0.10);
-  }
-
-  .play-icon {
-    display: inline-block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 4px 0 4px 6px;
-    border-color: transparent transparent transparent currentColor;
-    transition: all 0.3s ease;
   }
 
   .store-gallery {
