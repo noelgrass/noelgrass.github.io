@@ -940,6 +940,24 @@
     opacity: 0.6;
   }
 
+  /* ------------------------------------------------------------------
+     OPTION B: Film-focus state for #menuPanel
+     When the menu was auto-opened on the Film Composer page,
+     the Elsewhere column dims and is non-interactive while the
+     Film column stays fully lit.
+     ------------------------------------------------------------------ */
+  #menuPanel.film-focus .menu-column:nth-child(2) {
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  #menuPanel.film-focus .menu-column:nth-child(2) .menu-link,
+  #menuPanel.film-focus .menu-column:nth-child(2) .menu-section {
+    color: var(--gold-dim);
+  }
+  #menuPanel.film-focus .menu-column:nth-child(1) .menu-section {
+    color: var(--gold-pale);
+  }
+
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.8em; letter-spacing: 0.15em; margin-bottom: 40px; }
@@ -1157,7 +1175,7 @@
         <li><em>On Air</em> (2024). Intense Feature Film Thriller. Original Score.</li>
         <li><em>Thief</em> (2024). Short Film. Official Soundtrack.</li>
         <li><em>Nyūmba Ya Mbūri</em>. Cultural Cinema Soundtrack. Original Score.</li>
-        <li><em>The Parliament of Owls</em> (2024). Stage Production. Thematic Theatrical Score.</li>
+        <li><em>The Parliament of Owls</em> (2024). Stage Production. Theatrical Score.</li>
       </ul>
     </section>
 
@@ -1296,6 +1314,7 @@
 
     function closeMenu() {
       panel.classList.remove('open');
+      panel.classList.remove('film-focus');
       panel.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('menu-open');
       unlockScroll();
@@ -1367,6 +1386,31 @@
 
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    /* ------------------------------------------------------------
+       OPTION B: Auto-open the Film menu on this page.
+       - First visit per browser session only (sessionStorage).
+       - Skips if the user prefers reduced motion.
+       - Adds `film-focus` to the panel so the Elsewhere column
+         dims while the Film column stays lit.
+       - `closeMenu` already strips `film-focus` on close.
+       ------------------------------------------------------------ */
+    (function autoOpenFilmMenu() {
+      var prefersReduced = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      var KEY = 'ng-film-menu-autoshown';
+      var alreadyShown = false;
+      try { alreadyShown = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+
+      if (prefersReduced || alreadyShown) return;
+
+      setTimeout(function () {
+        panel.classList.add('film-focus');
+        openMenu();
+        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      }, prefersReduced ? 0 : 700);
+    })();
 
     if (!('IntersectionObserver' in window)) {
       document.querySelectorAll('.reveal').forEach(function(el) {
