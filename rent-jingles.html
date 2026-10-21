@@ -268,25 +268,99 @@
 
   .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
 
+  /* Play — bare ▶, no circle, halo ring on hover */
   .action-play {
-    display: inline-flex; justify-content: center; align-items: center;
-    background: transparent; border: 1px solid rgba(185,151,92,0.3);
-    border-radius: 50%; width: 38px; height: 38px; padding-left: 3px;
-    font-size: 0.8em; color: var(--gold-soft); cursor: pointer;
-    transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-  }
-  .action-play:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
-  .action-play.playing { color: var(--gold-pale); border-color: var(--gold); }
-
-  .action-link {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em;
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft);
-    background: transparent; border: 1px solid rgba(185,151,92,0.45);
-    padding: 9px 18px; cursor: pointer; position: relative;
-    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease;
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    font-size: 0.95em;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.25s ease, text-shadow 0.35s ease;
     -webkit-tap-highlight-color: transparent;
   }
-  .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
+  .action-play::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.35s ease, box-shadow 0.45s ease, border-color 0.35s ease;
+    pointer-events: none;
+  }
+  .action-play:hover {
+    color: #FCFCF7;
+    transform: scale(1.12);
+    text-shadow: 0 0 12px rgba(197,168,128,0.8);
+  }
+  .action-play:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.55);
+    box-shadow:
+      0 0 12px 2px rgba(197,168,128,0.55),
+      0 0 26px 6px rgba(197,168,128,0.30),
+      0 0 48px 12px rgba(197,168,128,0.15);
+  }
+  .action-play.playing { color: var(--gold-pale); }
+  .action-play.playing::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.35);
+    box-shadow: 0 0 10px 1px rgba(197,168,128,0.35);
+  }
+
+  /* Buy — store cart style + halo ring on hover */
+  .action-link {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: none;
+    padding: 8px 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .action-link::before {
+    content: '';
+    position: absolute;
+    inset: -6px -12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+    pointer-events: none;
+  }
+  .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
+  .action-link:hover {
+    color: var(--gold-pale);
+    text-shadow: 0 0 15px rgba(197,168,128,0.7);
+    transform: scale(1.06) translateY(-1px);
+  }
+  .action-link:hover svg { transform: scale(1.1); }
+  .action-link:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.45);
+    box-shadow:
+      0 0 14px 2px rgba(197,168,128,0.45),
+      0 0 30px 8px rgba(197,168,128,0.22),
+      0 0 56px 16px rgba(197,168,128,0.10);
+  }
 
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
@@ -399,8 +473,8 @@
     .track-desc { font-size: 0.65em; }
     .track-meta { font-size: 0.7em; }
     .track-actions { gap: 8px; }
-    .action-play { width: 34px; height: 34px; font-size: 0.7em; }
-    .action-link { font-size: 0.65em; padding: 7px 14px; }
+    .action-play { width: 34px; height: 34px; font-size: 0.85em; }
+    .action-link { font-size: 0.68em; padding: 6px 0; }
     .inline-player { padding: 12px 0 8px 58px; }
 
     .topnav { padding: 18px 22px; }
@@ -714,8 +788,38 @@
   document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
+    /* ═══════════════════════════════════════════════════════════════
+       🎵 TRACKS — jingles catalogue shown on this page
+
+       ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / CHANGE TRACKS.
+
+       Fields:
+         cat       Category key — must match one of the <div class="track-list"
+                   data-category="..."> blocks in the HTML above.
+                   Current keys: "anthems", "african", "cinematic", "modern".
+         code      Unique track ID (e.g. "AF01"). Doubles as the Paystack
+                   product id sent in metadata. Keep unique per page.
+         title     Shown under the numeral, e.g. "Theme 1".
+         desc      Instrumentation note in parentheses,
+                   e.g. "Ethnic and Orchestral".
+         duration  "Category · M:SS" — e.g. "African · 0:32".
+         file      Audio filename, e.g. "AF01.mp3".
+         folder    Audio subfolder on the worker, e.g. "af" / "cr" / "mc".
+         amount    Price in smallest currency unit (500000 = KSh 5,000).
+
+       How to add a new track:
+         1. Upload the .mp3 to the matching folder on the worker.
+         2. Copy an existing line below, paste it under the last entry
+            of the same `cat` group.
+         3. Change code / file / title / duration. Keep `cat` and
+            `folder` consistent with the group you're adding to.
+         4. Save. Track counts and the rendered list update automatically.
+       ═══════════════════════════════════════════════════════════════ */
     var TRACKS = [
+      // ── ANTHEMS & CAMPAIGNS ─────────────────────────────────────
       { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
+
+      // ── AFRICAN & CULTURAL ──────────────────────────────────────
       { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
@@ -724,12 +828,16 @@
       { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
       { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
+
+      // ── CINEMATIC & REFLECTIVE ──────────────────────────────────
       { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
       { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
+
+      // ── MODERN & CORPORATE ──────────────────────────────────────
       { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
       { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
@@ -737,6 +845,16 @@
       { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
     ];
 
+    /* ═══════════════════════════════════════════════════════════════
+       ⚙️ PREVIEW BASE — the jingles-only Cloudflare Worker.
+
+       buildPreviewUrl() appends:
+         ?file=<mp3>&folder=<subfolder>&v=final5
+
+       The `&v=` param is a cache-bust key. Bump it (final5 → final6 …)
+       after re-uploading a file under the same name so browsers fetch
+       the fresh audio instead of a stale cached copy.
+       ═══════════════════════════════════════════════════════════════ */
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) {
       return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5";
@@ -760,7 +878,10 @@
             '</div>' +
             '<div class="track-actions">' +
               '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '">▶</button>' +
-              '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">Buy</button>' +
+              '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES">' +
+                '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+                'Buy' +
+              '</button>' +
             '</div>' +
             '<div class="inline-player" id="player-' + t.code + '">' +
               '<div class="player-progress-wrap"><div class="player-progress-bar"></div></div>' +
@@ -896,6 +1017,15 @@
       });
     }
 
+    /* ═══════════════════════════════════════════════════════════════
+       💳 CHECKOUT & RECOVERY
+       ═══════════════════════════════════════════════════════════════
+       PAYSTACK_PUBLIC_KEY  live key used in the Paystack inline modal.
+       STORAGE_KEY          localStorage key for remembered email.
+       Verify endpoint      https://rent-jingles.noelgrass.workers.dev/verify
+                            — must exist on this worker and return
+                            { success: true, downloadUrl, title } on success.
+       ═══════════════════════════════════════════════════════════════ */
     var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var STORAGE_KEY = "noelgrass_email";
     var modal      = document.getElementById('checkoutModal');
