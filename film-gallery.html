@@ -206,9 +206,17 @@
   .clients-block { margin-top: 130px; }
   .clients-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 0 0 20px; display: block; }
   .clients-note { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); max-width: 640px; margin: 0 auto 60px; text-align: center; }
+  
+  /* Updated Organizations Grid to allow larger icons */
   .clients { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 65px 55px; max-width: 900px; margin: 0 auto 50px; }
-  .client-item { display: flex; align-items: center; justify-content: center; width: calc((100% - 110px) / 3); min-height: 130px; padding: 16px; cursor: default; }
-  .client-item img { display: block; max-width: 100%; max-height: 120px; width: auto; height: auto; object-fit: contain; filter: brightness(0.85) contrast(1.05); animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; pointer-events: none; }
+  .client-item { display: flex; flex-direction: column; align-items: center; justify-content: center; width: calc((100% - 110px) / 3); min-height: 170px; padding: 16px; cursor: default; }
+  .client-item img { display: block; max-width: 100%; max-height: 130px; width: auto; height: auto; object-fit: contain; filter: brightness(0.85) contrast(1.05); animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; pointer-events: none; transition: filter 0.8s ease, transform 0.8s ease; }
+  
+  /* Hover effects for Organizations */
+  .client-item:hover img { filter: brightness(1.1) contrast(1.1); transform: scale(1.05); animation: tileHoverGlow 4s ease-in-out infinite; }
+  .clients:has(.client-item:hover) .client-item .img { animation: none; }
+  .clients:has(.client-item:hover) .client-item:not(:hover) img { filter: brightness(0.5) contrast(0.9); transform: none; animation: none; box-shadow: none; }
+  
   .clients-caption { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; line-height: 1.8; color: var(--muted); max-width: 800px; margin: 0 auto; text-align: center; }
 
   .commission-line { margin-top: 90px; padding-top: 50px; border-top: 1px solid var(--rule); font-style: italic; font-size: 1em; text-align: center; }
@@ -237,7 +245,7 @@
     .gallery { gap: 55px 35px; }
     .gallery-item { width: calc((100% - 35px) / 2); }
     .clients { gap: 50px 35px; }
-    .client-item { width: calc((100% - 70px) / 2); min-height: 110px; }
+    .client-item { width: calc((100% - 70px) / 2); min-height: 140px; }
   }
 
   @media (max-width: 700px) {
@@ -272,8 +280,8 @@
     .clients-subhead { font-size: 1.1em; }
     .clients-note { font-size: 0.95em; margin-bottom: 40px; }
     .clients { gap: 40px 25px; max-width: 400px; margin-bottom: 35px; }
-    .client-item { width: calc((100% - 25px) / 2); min-height: 90px; padding: 10px; }
-    .client-item img { max-height: 85px; }
+    .client-item { width: 100%; min-height: 120px; padding: 10px; }
+    .client-item img { max-height: 100px; }
     .clients-caption { font-size: 0.85em; }
     .commission-line { margin-top: 60px; padding-top: 35px; font-size: 0.95em; }
     .cross-link { font-size: 0.95em; }
@@ -352,8 +360,6 @@
     <div class="gallery-section" id="gallery-section">
       <!-- ═══════════════════════════════════════════════════════════════
            🎬 FILM GRID — filled automatically by JavaScript below.
-           📁 Images live in: images/film/
-           ➕ To add a film, edit the GALLERY.films array (bottom of file).
            ═══════════════════════════════════════════════════════════════ -->
       <div class="gallery" id="filmsGrid"></div>
     </div>
@@ -364,12 +370,10 @@
 
       <!-- ═══════════════════════════════════════════════════════════════
            🏢 CLIENT LOGO GRID — filled automatically by JavaScript below.
-           📁 Images live in: images/corporate/
-           ➕ To add a client, edit the GALLERY.clients array (bottom of file).
            ═══════════════════════════════════════════════════════════════ -->
       <div class="clients" id="clientsGrid"></div>
 
-      <p class="clients-caption">Clients include IFC / World Bank Group, HELB, GAA, SOMINVEST, Radisson Blu, Serena Hotel, Camera Africa Consultants, Heritage Institute, Profiles, Engage, and AMREF.</p>
+      <p class="clients-caption">Clients include IFC / World Bank Group, HELB, GAA, SOMINVEST, Camera Africa Consultants, Heritage Institute, Profiles, Engage, and AMREF.</p>
     </div>
 
     <div class="commission-line">
@@ -470,7 +474,6 @@
       document.body.classList.remove('no-scroll');
     }
 
-    // Expose for the render script
     window.openVideoModal = openModal;
 
     closeBtn.addEventListener('click', closeModal);
@@ -478,7 +481,6 @@
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
   })();
 
-  // IntersectionObserver — exposes to render script for fade-in on new tiles
   (function() {
     if ('IntersectionObserver' in window) {
       window.tileObserver = new IntersectionObserver(function(entries) {
@@ -497,61 +499,35 @@
 
 <!-- ============================================================
      SCRIPT 2: GALLERY DATA + AUTO-RENDER
-
-     ═══════════════════════════════════════════════════════════════
-     📁 FILM IMAGES live in: images/film/
-     ➕ To ADD a film   → paste one line into GALLERY.films
-     ➖ To DELETE       → delete its line
-     🔁 To REORDER      → move the line up/down
-     📝 To EDIT         → change the line in place
-
-     Film line fields:
-       img    = path to image
-       alt    = accessibility / SEO text
-       title  = caption shown under the poster
-       video  = YouTube video ID (the part after v= in the URL)
-     ═══════════════════════════════════════════════════════════════
-     📁 CLIENT IMAGES live in: images/corporate/
-     ➕ To ADD a client → paste one line into GALLERY.clients
-     ➖ To DELETE       → delete its line
-     ═══════════════════════════════════════════════════════════════
      ============================================================ -->
 <script>
   var GALLERY = {
-
-    // ═══════════════════════════════════════════════════════════
-    // 🎬 FILMS — images in images/film/
-    // ═══════════════════════════════════════════════════════════
+    // 🎬 FILMS — Updated with new YouTube links
     films: [
-      { img: "images/film/thief.jpg",              alt: "Thief — Original Motion Picture Score by Noel Grass",                                   title: "Thief",                 video: "3Z-w6QgqBKY" },
-      { img: "images/film/on-air.jpg",             alt: "On Air — Original Motion Picture Score by Noel Grass",                                  title: "On Air",                video: "gULOHcdoCTY" },
-      { img: "images/film/nyumba-ya-mburi.jpg",    alt: "Nyumba Ya Mburi — Original Motion Picture Score by Noel Grass",                         title: "NYUMBA YA MBURI",       video: "jogjMXagK1o" },
+      { img: "images/film/thief.jpg",              alt: "Thief — Original Motion Picture Score by Noel Grass",                                   title: "Thief",                 video: "xAkmVpYrDKg" },
+      { img: "images/film/on-air.jpg",             alt: "On Air — Original Motion Picture Score by Noel Grass",                                  title: "On Air",                video: "E4IR3TB1Ib8" },
+      { img: "images/film/nyumba-ya-mburi.jpg",    alt: "Nyumba Ya Mburi — Original Motion Picture Score by Noel Grass",                         title: "NYUMBA YA MBURI",       video: "SZbdnKQmzuU" },
       { img: "images/film/ziwa.jpg",               alt: "Ziwa — Original Motion Picture Soundtrack by Noel Grass",                               title: "Ziwa",                  video: "IDAe-88vjSc" },
       { img: "images/film/kutu.jpg",               alt: "Kutu — Original Motion Picture Score by Noel Grass. Kalasha Award winner for Best Short Film", title: "Kutu",             video: "_Rbu80VIllg" },
-      { img: "images/film/lost-in-time.jpg",       alt: "Lost in Time — Original Motion Picture Score by Noel Grass. Award winner for Best Feature Film", title: "Lost in Time",    video: "H2wKXKmqUfQ" },
-      { img: "images/film/parliament-of-owls.jpg", alt: "The Parliament of Owls — Original Motion Picture Score by Noel Grass",                   title: "The Parliament of Owls", video: "XTHrG3tUT2k" }
+      { img: "images/film/lost-in-time.jpg",       alt: "Lost in Time — Original Motion Picture Score by Noel Grass. Award winner for Best Feature Film", title: "Lost in Time",    video: "xItZvvHkeYA" },
+      { img: "images/film/parliament-of-owls.jpg", alt: "The Parliament of Owls — Original Motion Picture Score by Noel Grass",                   title: "The Parliament of Owls", video: "6p8oVlw9eWo" }
     ],
 
-    // ═══════════════════════════════════════════════════════════
-    // 🏢 CLIENTS — images in images/corporate/
-    // ═══════════════════════════════════════════════════════════
+    // 🏢 CLIENTS — Removed Radisson and Serena. Added audio routing.
     clients: [
-      { img: "images/corporate/world-bank.png",        alt: "IFC / World Bank Group, client of Noel Grass" },
-      { img: "images/corporate/helb.png",              alt: "HELB, client of Noel Grass" },
-      { img: "images/corporate/gaa.png",               alt: "GAA, client of Noel Grass" },
-      { img: "images/corporate/sominvest.png",         alt: "SOMINVEST, client of Noel Grass" },
-      { img: "images/corporate/radisson-blu.png",      alt: "Radisson Blu, client of Noel Grass" },
-      { img: "images/corporate/serena-hotel.png",      alt: "Serena Hotel, client of Noel Grass" },
-      { img: "images/corporate/camera-africa.jpeg",    alt: "Camera Africa Consultants, client of Noel Grass" },
-      { img: "images/corporate/heritage-institute.jpg", alt: "Heritage Institute, client of Noel Grass" },
-      { img: "images/corporate/profiles.png",          alt: "Profiles, client of Noel Grass" },
-      { img: "images/corporate/engage.jpeg",           alt: "Engage, client of Noel Grass" },
-      { img: "images/corporate/amref.png",             alt: "AMREF, client of Noel Grass" }
+      { img: "images/corporate/world-bank.png",        alt: "IFC / World Bank Group, client of Noel Grass", folder: "mc", file: "mc03.mp3" },
+      { img: "images/corporate/helb.png",              alt: "HELB, client of Noel Grass", folder: "mc", file: "mc01.mp3" },
+      { img: "images/corporate/gaa.png",               alt: "GAA, client of Noel Grass", folder: "mc", file: "mc04.mp3" },
+      { img: "images/corporate/sominvest.png",         alt: "SOMINVEST, client of Noel Grass", folder: "af", file: "af08.mp3" },
+      { img: "images/corporate/camera-africa.jpeg",    alt: "Camera Africa Consultants, client of Noel Grass", folder: "cr", file: "cr02.mp3" },
+      { img: "images/corporate/heritage-institute.jpg", alt: "Heritage Institute, client of Noel Grass", folder: "af", file: "af06.mp3" },
+      { img: "images/corporate/profiles.png",          alt: "Profiles, client of Noel Grass", folder: "mc", file: "mc05.mp3" },
+      { img: "images/corporate/engage.jpeg",           alt: "Engage, client of Noel Grass", folder: "owned", file: "jingle.mp3" },
+      { img: "images/corporate/amref.png",             alt: "AMREF, client of Noel Grass", folder: "af", file: "af05.mp3" }
     ]
   };
 
   (function renderGallery() {
-
     // ---- 1. Render FILMS ----
     var filmsGrid = document.getElementById('filmsGrid');
     if (filmsGrid) {
@@ -563,7 +539,7 @@
             '</div>' +
             '<div class="caption">' + film.title + '</div>' +
             '<div class="item-actions">' +
-              '<button type="button" class="action-link js-preview" data-video="' + film.video + '" aria-label="Preview ' + film.title + '">Preview</button>' +
+              '<button type="button" class="action-link js-preview-video" data-video="' + film.video + '" aria-label="Preview ' + film.title + '">Preview</button>' +
             '</div>' +
           '</div>'
         );
@@ -577,13 +553,16 @@
         return (
           '<div class="client-item">' +
             '<img src="' + client.img + '" alt="' + client.alt + '" loading="lazy">' +
+            '<div class="item-actions" style="margin-top: 20px;">' +
+              '<button type="button" class="action-link js-preview-audio" data-folder="' + client.folder + '" data-file="' + client.file + '" aria-label="Preview Audio">Preview</button>' +
+            '</div>' +
           '</div>'
         );
       }).join('');
     }
 
-    // ---- 3. Wire up film Preview buttons (AFTER render — the bonus fix) ----
-    document.querySelectorAll('.js-preview').forEach(function(btn) {
+    // ---- 3. Wire up Film Preview buttons ----
+    document.querySelectorAll('.js-preview-video').forEach(function(btn) {
       btn.addEventListener('click', function(e) {
         e.preventDefault();
         var id = btn.getAttribute('data-video');
@@ -591,7 +570,24 @@
       });
     });
 
-    // ---- 4. Fade-in animation for each film tile (staggered) ----
+    // ---- 4. Wire up Organization Preview buttons ----
+    document.querySelectorAll('.js-preview-audio').forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        var folder = btn.getAttribute('data-folder');
+        var file = btn.getAttribute('data-file');
+        var audioUrl = 'https://rent-jingles.noelgrass.workers.dev/preview?folder=' + folder + '&file=' + file;
+        
+        // Create a temporary audio element to play the preview
+        var audio = new Audio(audioUrl);
+        audio.play().catch(function(err) {
+          alert("Could not load audio preview. Make sure the file exists on the server.");
+          console.error(err);
+        });
+      });
+    });
+
+    // ---- 5. Fade-in animation for film tiles ----
     var filmTiles = filmsGrid ? filmsGrid.querySelectorAll('.gallery-item') : [];
     if (window.tileObserver) {
       filmTiles.forEach(function(el, i) {
