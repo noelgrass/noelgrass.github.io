@@ -159,18 +159,22 @@
   .mood-group[open] .mood-indicator { transform: rotate(45deg) translateY(-2px); border-color: var(--gold); }
   .coming-soon { padding: 50px 20px 60px; text-align: center; }
   .coming-soon p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.02em; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.85; }
+  
+  /* Feature Release Section */
   .feature-release { padding: 50px 0 60px; text-align: center; }
-  .feature-cover { display: inline-block; position: relative; max-width: 480px; width: 100%; aspect-ratio: 1 / 1; margin: 0 auto 40px; }
-  .feature-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; border: 1px solid #1f1f1f; background: #1a1a1a; filter: brightness(0.78) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease, border-color 0.7s ease; animation: artworkRestGlow 7s ease-in-out infinite; animation-delay: 1.3s; }
-  .feature-cover:hover img { filter: brightness(0.85) contrast(1.10); transform: scale(1.015); border-color: var(--gold-soft); animation: artworkHoverGlow 4s ease-in-out infinite; }
+  .feature-cover { display: inline-block; position: relative; max-width: 480px; width: 100%; aspect-ratio: 1 / 1; margin: 0 auto 40px; cursor: pointer; }
+  .feature-cover img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; border: 1px solid #1f1f1f; background: #1a1a1a; filter: brightness(0.78) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease, border-color 0.7s ease; animation: artworkRestGlow 7s ease-in-out infinite; animation-delay: 1.3s; pointer-events: none; }
+  .feature-release:hover .feature-cover img { filter: brightness(0.85) contrast(1.10); transform: scale(1.015); border-color: var(--gold-soft); animation: artworkHoverGlow 4s ease-in-out infinite; }
   .feature-badge { position: absolute; top: 12px; right: 12px; z-index: 2; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.6em; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-pale); background: rgba(0,0,0,0.62); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(185,151,92,0.5); padding: 5px 10px; pointer-events: none; }
   .feature-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.8em; color: var(--gold-pale); letter-spacing: 0.05em; margin-bottom: 30px; transition: color 0.3s ease; }
   .feature-actions { display: flex; justify-content: center; align-items: center; gap: 30px; flex-wrap: wrap; }
+  
+  /* Store Grid */
   .mood-group .store-gallery { padding: 40px 0 50px; }
   .store-gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 80px 50px; max-width: 1100px; margin: 0 auto; }
   .store-item { display: block; text-align: center; width: calc((100% - 100px) / 3); }
-  .store-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.7s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; }
-  .store-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease; }
+  .store-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.7s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
+  .store-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease; pointer-events: none; }
   .store-item .badge { position: absolute; top: 10px; right: 10px; z-index: 2; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.58em; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-pale); background: rgba(0,0,0,0.62); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: 1px solid rgba(185,151,92,0.5); padding: 5px 9px; pointer-events: none; transition: opacity 0.5s ease; }
   .store-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 4s ease-in-out infinite; }
   .store-item:hover .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
@@ -178,8 +182,43 @@
   .store-item:hover .caption { color: #FCFCF7; }
   .store-item .format-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 6px; transition: color 0.5s ease; }
   .item-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 16px; flex-wrap: wrap; }
-  .action-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.68em; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 8px 18px; cursor: pointer; position: relative; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
-  .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
+  
+  /* Elegant Buy Button with Cart Icon */
+  .action-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.68em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: none;
+    padding: 8px 0;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  .action-link svg { width: 14px; height: 14px; fill: currentColor; transition: transform 0.3s ease; }
+  
+  /* Linked Hover */
+  .store-item:hover .action-link,
+  .feature-release:hover .action-link,
+  .action-link:hover {
+    color: var(--gold-pale);
+    text-shadow: 0 0 10px rgba(197,168,128,0.5);
+  }
+  
+  .store-item:hover .action-link svg,
+  .feature-release:hover .action-link svg,
+  .action-link:hover svg {
+    transform: translateX(4px) scale(1.1);
+  }
+
   a.action-link { display: inline-block; }
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .poster { box-shadow: 0 0 15px 2px rgba(185,151,92,0.08), 0 0 30px 4px rgba(185,151,92,0.03); border-color: #1a1a1a; transition: box-shadow 0.7s ease, border-color 0.7s ease; animation: none; }
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .poster img { filter: brightness(0.55) contrast(0.95); transform: none; }
@@ -187,6 +226,7 @@
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .format-label { color: rgba(154,149,140,0.3); }
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .badge { opacity: 0.35; }
 
+  /* Modals & Recovery */
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -360,9 +400,9 @@
     <div class="mood-groups">
 
       <!-- ═══════════════════════════════════════════════════════════
-           💿 LATEST RELEASE — rendered from STORE_ITEMS.featured
-           📁 Image lives in: images/discography/
-           ➕ To update it, edit STORE_ITEMS.featured (bottom of file)
+           💿 LATEST RELEASE
+           ➕ To update this, scroll to the bottom of the file and 
+              edit the "featured" object inside the STORE_ITEMS script.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group" open>
         <summary>
@@ -373,10 +413,9 @@
       </details>
 
       <!-- ═══════════════════════════════════════════════════════════
-           💿 SOLO PIANO — rendered from STORE_ITEMS["solo-piano"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit STORE_ITEMS["solo-piano"] below.
-              The count and Buy buttons update automatically.
+           💿 SOLO PIANO
+           ➕ To add a release here, edit STORE_ITEMS["solo-piano"] 
+              at the bottom of the file.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
@@ -387,9 +426,9 @@
       </details>
 
       <!-- ═══════════════════════════════════════════════════════════
-           💿 ORCHESTRAL — rendered from STORE_ITEMS["orchestral"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit STORE_ITEMS["orchestral"] below.
+           💿 ORCHESTRAL
+           ➕ To add a release here, edit STORE_ITEMS["orchestral"] 
+              at the bottom of the file.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
@@ -400,9 +439,9 @@
       </details>
 
       <!-- ═══════════════════════════════════════════════════════════
-           💿 EXPERIMENTAL — rendered from STORE_ITEMS["experimental"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit STORE_ITEMS["experimental"] below.
+           💿 EXPERIMENTAL
+           ➕ To add a release here, edit STORE_ITEMS["experimental"] 
+              at the bottom of the file.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
@@ -413,9 +452,9 @@
       </details>
 
       <!-- ═══════════════════════════════════════════════════════════
-           💿 AMBIENT — rendered from STORE_ITEMS["ambient"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit STORE_ITEMS["ambient"] below.
+           💿 AMBIENT
+           ➕ To add a release here, edit STORE_ITEMS["ambient"] 
+              at the bottom of the file.
            ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
@@ -470,9 +509,7 @@
     </div>
 
     <!-- ═══════════════════════════════════════════════════════════
-         🔑 RECOVERY BOX — for returning customers
-         Target of the top "Already purchased?" link (id="already-purchased")
-         Server: my-store-backend.noelgrass.workers.dev/verify
+         🔑 RECOVERY BOX
          ═══════════════════════════════════════════════════════════ -->
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
@@ -488,9 +525,6 @@
       <p class="secondary-line">For press, bookings, or commissions, see the <a href="contact">Contact page →</a></p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
-         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -550,7 +584,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU + ACCORDION (YouTube modal removed)
+     🧭 SCRIPT 1 — MENU + ACCORDION
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -629,7 +663,7 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     💳 SCRIPT 2 — CHECKOUT + RECOVERY (Paystack)
+     💳 SCRIPT 2 — CHECKOUT + RECOVERY
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -820,10 +854,30 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
+     
+     🛒 HOW TO ADD A NEW RELEASE:
+     1. Upload your square album cover to: images/discography/
+     2. Find the correct category below (e.g., "solo-piano", "orchestral").
+     3. Copy one of the existing lines, paste it below the last one, and 
+        change the details to match your new release.
+     
+     Fields explained:
+       img:    The path to the image (e.g., "images/discography/my-new-album.jpg")
+       alt:    A short description for screen readers / SEO.
+       title:  The title of the release (shows under the image).
+       format: The text under the title (e.g., "Solo Piano", "Album").
+       badge:  The little tag on the top right (e.g., "EP", "Album", "Single").
+       id:     The exact Product ID used in your Paystack/Worker backend.
+       amount: The price in the smallest currency unit (e.g., 50000 = 500 KES).
+       currency: "KES", "USD", etc.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   var STORE_ITEMS = {
 
+    // ═══════════════════════════════════════════════════════════
+    // ⭐ LATEST RELEASE (Shows at the very top)
+    // To change it, update the details here.
+    // ═══════════════════════════════════════════════════════════
     featured: {
       img: "images/discography/into-a-stillness.jpg",
       alt: "Into A Stillness That Answers — EP by Noel Grass",
@@ -834,6 +888,9 @@
       currency: "KES"
     },
 
+    // ═══════════════════════════════════════════════════════════
+    // 🎹 SOLO PIANO
+    // ═══════════════════════════════════════════════════════════
     "solo-piano": [
       { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    id: "into-a-stillness",    amount: 50000, currency: "KES" },
       { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    id: "where-i-begin-again", amount: 50000, currency: "KES" },
@@ -841,41 +898,57 @@
       { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", id: "the-impressionist-2", amount: 90000, currency: "KES" }
     ],
 
+    // ═══════════════════════════════════════════════════════════
+    // 🎻 ORCHESTRAL
+    // ═══════════════════════════════════════════════════════════
     "orchestral": [
       { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    id: "introspect",        amount: 50000, currency: "KES" },
       { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
     ],
 
+    // ═══════════════════════════════════════════════════════════
+    // 🌀 EXPERIMENTAL
+    // ═══════════════════════════════════════════════════════════
     "experimental": [
       { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    id: "agent-254",           amount: 50000, currency: "KES" },
       { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", id: "the-impressionist-3", amount: 90000, currency: "KES" }
     ],
 
+    // ═══════════════════════════════════════════════════════════
+    // 🌫️ AMBIENT
+    // ═══════════════════════════════════════════════════════════
     "ambient": [
       { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", id: "when-stars-align", amount: 20000, currency: "KES" }
     ]
   };
 
   (function renderStore() {
+    // --- 1. Render Featured Release ---
     var feat = STORE_ITEMS.featured;
     var featMount = document.getElementById('featuredRelease');
     var featBadge = document.querySelector('[data-featured-badge]');
     if (feat && featMount) {
       featMount.innerHTML =
-        '<div class="feature-cover">' +
+        '<div class="feature-cover js-buy" ' +
+            'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
+            'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '">' +
           '<img src="' + feat.img + '" alt="' + feat.alt + '" loading="lazy">' +
           '<span class="feature-badge">' + feat.badge + '</span>' +
         '</div>' +
         '<p class="feature-title">' + feat.title + '</p>' +
         '<div class="feature-actions">' +
-          '<button type="button" class="action-link js-buy" ' +
+          '<button type="button" class="action-link js-buy-btn" ' +
             'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
             'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '" ' +
-            'aria-label="Buy ' + feat.title + '">Buy</button>' +
+            'aria-label="Buy ' + feat.title + '">' +
+            '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+            'Buy' +
+          '</button>' +
         '</div>';
       if (featBadge) featBadge.textContent = feat.badge;
     }
 
+    // --- 2. Render Category Grids ---
     Object.keys(STORE_ITEMS).forEach(function(category) {
       if (category === 'featured') return;
       var gallery = document.querySelector('.store-gallery[data-category="' + category + '"]');
@@ -885,17 +958,22 @@
       gallery.innerHTML = items.map(function(item) {
         return (
           '<div class="store-item">' +
-            '<div class="poster">' +
+            '<div class="poster js-buy" ' +
+              'data-id="' + item.id + '" data-title="' + item.title + '" ' +
+              'data-amount="' + item.amount + '" data-currency="' + item.currency + '">' +
               '<img src="' + item.img + '" alt="' + item.alt + '" loading="lazy">' +
               '<span class="badge">' + item.badge + '</span>' +
             '</div>' +
             '<div class="caption">' + item.title + '</div>' +
             '<div class="format-label">' + item.format + '</div>' +
             '<div class="item-actions">' +
-              '<button type="button" class="action-link js-buy" ' +
+              '<button type="button" class="action-link js-buy-btn" ' +
                 'data-id="' + item.id + '" data-title="' + item.title + '" ' +
                 'data-amount="' + item.amount + '" data-currency="' + item.currency + '" ' +
-                'aria-label="Buy ' + item.title + '">Buy</button>' +
+                'aria-label="Buy ' + item.title + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+                'Buy' +
+              '</button>' +
             '</div>' +
           '</div>'
         );
@@ -908,22 +986,29 @@
       }
     });
 
-    document.querySelectorAll('.js-buy').forEach(function(btn) {
+    // --- 3. Wire up all Buy buttons and clickable posters ---
+    document.querySelectorAll('.js-buy, .js-buy-btn').forEach(function(el) {
+      // Check if sales are paused
       if (window.SALES_PAUSED) {
-        btn.disabled = true;
-        btn.setAttribute('aria-disabled', 'true');
-        btn.style.pointerEvents = 'none';
-        btn.style.opacity = '0.5';
-        btn.style.cursor = 'not-allowed';
-        btn.style.background = '#1a1a1a';
-        btn.style.color = '#555';
-        btn.style.borderColor = '#333';
-        btn.innerText = "Paused";
+        if (el.tagName === 'BUTTON') {
+          el.disabled = true;
+          el.setAttribute('aria-disabled', 'true');
+          el.style.pointerEvents = 'none';
+          el.style.opacity = '0.5';
+          el.style.cursor = 'not-allowed';
+          el.style.color = '#555';
+          el.innerHTML = 'Paused';
+        }
         return;
       }
-      btn.addEventListener('click', function(e) {
+      
+      el.addEventListener('click', function(e) {
         e.preventDefault();
-        if (window.openCheckout) window.openCheckout(btn);
+        // Prevent double triggering if they click the button inside the poster
+        if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) {
+           e.stopPropagation();
+        }
+        if (window.openCheckout) window.openCheckout(el);
       });
     });
   })();
