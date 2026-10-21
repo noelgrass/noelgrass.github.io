@@ -154,7 +154,7 @@
 
   .page { max-width: 1100px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
   .intro-block { transition: opacity 0.9s ease; }
-  .page:has(.gallery-item:hover) .intro-block, .page:has(.client-item:hover) .intro-block { opacity: 0.28; }
+  .page:has(.gallery-item:hover) .intro-block, .page:has(.client-item:hover) .intro-block, .page:has(.action-link:hover) .intro-block { opacity: 0.28; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.6em; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   h2, .subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; font-weight: 400; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 50px 0 24px; display: block; }
   p { font-size: 1.05em; line-height: 1.85; margin: 0 0 22px; max-width: 780px; margin-left: auto; margin-right: auto; }
@@ -170,17 +170,44 @@
   .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.4s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
   .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.4s ease, transform 0.4s ease; pointer-events: none; will-change: transform, filter; }
 
-  /* Store-style Hover for Film Tiles */
-  .gallery-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 4s ease-in-out infinite; }
-  .gallery-item:hover .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
+  /* ── Store-style hover for Film Tiles ──
+     Two triggers fire the same visual state:
+     1) Hover the poster → image + button both react
+     2) Hover the Preview button → image + button both react */
+  .gallery-item:hover .poster,
+  .gallery-item:has(.action-link:hover) .poster {
+    border-color: var(--gold-soft);
+    animation: tileHoverGlow 4s ease-in-out infinite;
+  }
+  .gallery-item:hover .poster img,
+  .gallery-item:has(.action-link:hover) .poster img {
+    filter: brightness(0.82) contrast(1.10);
+    transform: scale(1.015);
+  }
   .gallery-item .caption { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.05em; letter-spacing: 0.08em; color: var(--gold-pale); margin-top: 20px; text-transform: uppercase; transition: color 0.5s ease; }
-  .gallery-item:hover .caption { color: #FCFCF7; }
-  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster { box-shadow: none; border-color: #1a1a1a; animation: none; transition: box-shadow 0.4s ease, border-color 0.4s ease; }
-  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster img { filter: brightness(0.55) contrast(0.95); transform: none; }
-  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .caption { color: rgba(232,213,181,0.3); }
+  .gallery-item:hover .caption,
+  .gallery-item:has(.action-link:hover) .caption { color: #FCFCF7; }
+
+  /* Sibling dimming — fires whether a poster OR a button is hovered */
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster,
+  .gallery:has(.gallery-item:has(.action-link:hover)) .gallery-item:not(:has(.action-link:hover)) .poster {
+    box-shadow: none;
+    border-color: #1a1a1a;
+    animation: none;
+    transition: box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster img,
+  .gallery:has(.gallery-item:has(.action-link:hover)) .gallery-item:not(:has(.action-link:hover)) .poster img {
+    filter: brightness(0.55) contrast(0.95);
+    transform: none;
+  }
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .caption,
+  .gallery:has(.gallery-item:has(.action-link:hover)) .gallery-item:not(:has(.action-link:hover)) .caption {
+    color: rgba(232,213,181,0.3);
+  }
 
   /* =========================================================
-     ELEGANT PREVIEW BUTTON with Halo Ring
+     PREVIEW BUTTON with Halo Ring + Pop-Forward
      ========================================================= */
   .item-actions { display: flex; justify-content: center; align-items: center; margin-top: 8px; gap: 0; }
 
@@ -215,15 +242,23 @@
     pointer-events: none;
   }
 
-  /* Linked Hover: triggered by hovering the image/card OR the button itself */
+  /* Button hover — fires on tile hover OR direct button hover
+     Includes pop-forward scale + text-shadow (matching discography) */
   .gallery-item:hover .action-link,
   .client-item:hover .action-link,
   .action-link:hover {
     color: var(--gold-pale);
-    text-shadow: 0 0 12px rgba(197,168,128,0.6);
+    text-shadow: 0 0 15px rgba(197,168,128,0.7);
+    transform: scale(1.08) translateY(-2px);
   }
 
-  /* Halo appears when item is hovered OR button is hovered */
+  .gallery-item:hover .action-link .play-icon,
+  .client-item:hover .action-link .play-icon,
+  .action-link:hover .play-icon {
+    transform: scale(1.1);
+  }
+
+  /* Halo appears on the same triggers */
   .gallery-item:hover .action-link::before,
   .client-item:hover .action-link::before,
   .action-link:hover::before {
@@ -242,7 +277,7 @@
     border-style: solid;
     border-width: 4px 0 4px 6px;
     border-color: transparent transparent transparent currentColor;
-    transition: all 0.3s ease;
+    transition: transform 0.35s ease;
   }
 
   /* Progress Bar State */
@@ -303,9 +338,24 @@
   .client-item { display: flex; flex-direction: column; align-items: center; justify-content: center; width: calc((100% - 110px) / 3); min-height: 170px; padding: 16px; cursor: pointer; }
   .client-item img { display: block; max-width: 100%; max-height: 130px; width: auto; height: auto; object-fit: contain; filter: brightness(0.72) contrast(1.05); animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; pointer-events: none; transition: filter 0.4s ease, transform 0.4s ease; will-change: transform, filter; }
 
-  /* Store-style Hover for Client Logos */
-  .client-item:hover img { filter: brightness(0.82) contrast(1.10); animation: tileHoverGlow 4s ease-in-out infinite; transform: scale(1.01); }
-  .clients:has(.client-item:hover) .client-item:not(:hover) img { filter: brightness(0.55) contrast(0.95); animation: none; box-shadow: none; transform: none; transition: filter 0.4s ease, transform 0.4s ease; }
+  /* ── Store-style hover for Client Logos (bidirectional) ── */
+  .client-item:hover img,
+  .client-item:has(.action-link:hover) img {
+    filter: brightness(0.82) contrast(1.10);
+    animation: tileHoverGlow 4s ease-in-out infinite;
+    transform: scale(1.01);
+  }
+
+  /* Sibling dimming — fires whether a logo OR its button is hovered */
+  .clients:has(.client-item:hover) .client-item:not(:hover) img,
+  .clients:has(.client-item:has(.action-link:hover)) .client-item:not(:has(.action-link:hover)) img {
+    filter: brightness(0.55) contrast(0.95);
+    animation: none;
+    box-shadow: none;
+    transform: none;
+    transition: filter 0.4s ease, transform 0.4s ease;
+  }
+
   .clients-caption { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; line-height: 1.8; color: var(--muted); max-width: 800px; margin: 0 auto; text-align: center; }
 
   .commission-line { margin-top: 90px; padding-top: 50px; border-top: 1px solid var(--rule); font-style: italic; font-size: 1em; text-align: center; }
@@ -369,10 +419,10 @@
   .audio-modal-progress-wrap { width: 100%; display: flex; align-items: center; gap: 16px; }
   .audio-modal-time { font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.1em; color: var(--muted); }
   .audio-modal-track { flex-grow: 1; height: 4px; background: rgba(122, 107, 79, 0.4); position: relative; cursor: pointer; display: flex; align-items: center; }
-  .audio-modal-track::before { content: ''; position: absolute; inset: -10px 0; } /* Expands clickable area */
+  .audio-modal-track::before { content: ''; position: absolute; inset: -10px 0; }
   .audio-modal-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--gold); box-shadow: 0 0 8px rgba(197,168,128,0.8); pointer-events: none; }
 
-  /* Elegant Close Button (Shared for both modals) */
+  /* Elegant Close Button */
   .modal-close {
     position: absolute;
     top: 16px;
@@ -446,7 +496,8 @@
     .gallery { gap: 55px; max-width: 400px; }
     .gallery-item { width: 100%; }
     .gallery-item .poster img { filter: brightness(0.85) contrast(1.05); }
-    .gallery-item:hover .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
+    .gallery-item:hover .poster img,
+    .gallery-item:has(.action-link:hover) .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
     .gallery-item .caption { font-size: 1em; }
     .clients-block { margin-top: 80px; }
     .clients-subhead { font-size: 1.1em; }
@@ -589,7 +640,6 @@
         </div>
         <span class="audio-modal-time" id="audioDuration">00:00</span>
       </div>
-      <!-- Volume Control -->
       <div class="volume-container" id="volumeContainer">
         <div class="volume-icon" id="volumeIcon">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
@@ -667,14 +717,14 @@
       iframe.title = 'YouTube video preview';
       iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
       iframe.setAttribute('allowfullscreen', 'true');
-      
+
       inner.appendChild(iframe);
-      
+
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
     }
-    
+
     function closeModal() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
