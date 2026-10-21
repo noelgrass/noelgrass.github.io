@@ -167,8 +167,8 @@
   .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 80px 50px; margin: 0 auto 40px; max-width: 860px; }
   .gallery-item { display: block; text-align: center; width: calc((100% - 100px) / 3); opacity: 0; transform: translateY(28px); transition: opacity 1.2s ease, transform 1.2s ease; }
   .gallery-item.lit { opacity: 1; transform: translateY(0); }
-  .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.7s ease, box-shadow 0.9s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; }
-  .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease; }
+  .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.7s ease, box-shadow 0.9s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
+  .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease; pointer-events: none; }
   
   /* Softened Hover Brightness for Films */
   .gallery-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 5s ease-in-out infinite; }
@@ -341,12 +341,14 @@
   .audio-modal-btn .play-icon { border-width: 6px 0 6px 10px; margin-left: 4px; }
   .audio-modal-btn.playing .play-icon { width: 10px; height: 14px; margin-left: 0; border: none; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
   
+  /* Scrubbable Progress Bar */
   .audio-modal-progress-wrap { width: 100%; display: flex; align-items: center; gap: 16px; }
   .audio-modal-time { font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.1em; color: var(--muted); }
-  .audio-modal-track { flex-grow: 1; height: 2px; background: rgba(122, 107, 79, 0.4); position: relative; }
-  .audio-modal-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--gold); box-shadow: 0 0 8px rgba(197,168,128,0.8); transition: width 0.1s linear; }
+  .audio-modal-track { flex-grow: 1; height: 4px; background: rgba(122, 107, 79, 0.4); position: relative; cursor: pointer; display: flex; align-items: center; }
+  .audio-modal-track::before { content: ''; position: absolute; inset: -10px 0; } /* Expands clickable area */
+  .audio-modal-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--gold); box-shadow: 0 0 8px rgba(197,168,128,0.8); pointer-events: none; }
   
-  /* Elegant Close Button */
+  /* Elegant Close Button (Shared for both modals) */
   .modal-close {
     position: absolute;
     top: 16px;
@@ -538,7 +540,9 @@
 <!-- VIDEO MODAL -->
 <div class="video-modal" id="videoModal" aria-hidden="true" role="dialog" aria-label="Video preview">
   <div class="video-modal-inner">
-    <button type="button" class="video-close" id="videoClose">Close ✕</button>
+    <button type="button" class="modal-close" id="videoClose" aria-label="Close">
+      <span class="x" aria-hidden="true"></span>
+    </button>
     <iframe id="videoFrame" src="" title="YouTube video preview" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
   </div>
 </div>
@@ -556,7 +560,7 @@
       </button>
       <div class="audio-modal-progress-wrap">
         <span class="audio-modal-time" id="audioCurrentTime">00:00</span>
-        <div class="audio-modal-track">
+        <div class="audio-modal-track" id="audioTrack">
           <div class="audio-modal-fill" id="audioProgressFill"></div>
         </div>
         <span class="audio-modal-time" id="audioDuration">00:00</span>
@@ -626,19 +630,34 @@
   // Video Modal Logic
   (function() {
     var modal    = document.getElementById('videoModal');
-    var frame    = document.getElementById('videoFrame');
     var closeBtn = document.getElementById('videoClose');
+    var inner    = modal.querySelector('.video-modal-inner');
 
     function openModal(videoId) {
-      frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1';
+      // Remove old iframe if it exists
+      var oldIframe = document.getElementById('videoFrame');
+      if (oldIframe) oldIframe.remove();
+
+      // Create a new iframe dynamically (this fixes the mobile loading issue)
+      var iframe = document.createElement('iframe');
+      iframe.id = 'videoFrame';
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&playsinline=1';
+      iframe.title = 'YouTube video preview';
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', 'true');
+      
+      inner.appendChild(iframe);
+      
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
     }
+    
     function closeModal() {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
-      frame.src = '';
+      var iframe = document.getElementById('videoFrame');
+      if (iframe) iframe.remove();
       document.body.classList.remove('no-scroll');
     }
 
@@ -697,7 +716,7 @@
       filmsGrid.innerHTML = GALLERY.films.map(function(film) {
         return (
           '<div class="gallery-item">' +
-            '<div class="poster">' +
+            '<div class="poster js-preview-video" data-video="' + film.video + '">' +
               '<img src="' + film.img + '" alt="' + film.alt + '" loading="lazy">' +
             '</div>' +
             '<div class="caption">' + film.title + '</div>' +
@@ -716,10 +735,10 @@
     if (clientsGrid) {
       clientsGrid.innerHTML = GALLERY.clients.map(function(client) {
         return (
-          '<div class="client-item">' +
+          '<div class="client-item js-preview-audio" data-folder="' + client.folder + '" data-file="' + client.file + '" data-logo="' + client.img + '">' +
             '<img src="' + client.img + '" alt="' + client.alt + '" loading="lazy">' +
             '<div class="item-actions">' +
-              '<button type="button" class="action-link js-preview-audio" data-folder="' + client.folder + '" data-file="' + client.file + '" data-logo="' + client.img + '">' +
+              '<button type="button" class="action-link">' +
                 '<span class="play-icon"></span>' +
                 '<span>Preview</span>' +
               '</button>' +
@@ -729,16 +748,20 @@
       }).join('');
     }
 
-    // --- Video Modals ---
-    document.querySelectorAll('.js-preview-video').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+    // --- Video Modals (Click image OR button) ---
+    document.querySelectorAll('.js-preview-video').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Prevent double triggering if clicking the button inside the image container
+        if (e.target.tagName === 'BUTTON' || e.target.parentNode.tagName === 'BUTTON') {
+           e.stopPropagation();
+        }
         e.preventDefault();
-        var id = btn.getAttribute('data-video');
+        var id = el.getAttribute('data-video');
         if (id && window.openVideoModal) window.openVideoModal(id);
       });
     });
 
-    // --- Audio Modals ---
+    // --- Audio Modals (Click logo OR button) ---
     var audioModal      = document.getElementById('audioModal');
     var audioClose      = document.getElementById('audioClose');
     var audioModalLogo  = document.getElementById('audioModalLogo');
@@ -746,6 +769,7 @@
     var audioCurrentTime= document.getElementById('audioCurrentTime');
     var audioDuration   = document.getElementById('audioDuration');
     var audioProgressFill = document.getElementById('audioProgressFill');
+    var audioTrack      = document.getElementById('audioTrack');
     var volumeContainer = document.getElementById('volumeContainer');
     var volumeIcon      = document.getElementById('volumeIcon');
     var volumeSlider    = document.getElementById('volumeSlider');
@@ -812,17 +836,21 @@
       });
     }
 
-    document.querySelectorAll('.js-preview-audio').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+    document.querySelectorAll('.js-preview-audio').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        if (e.target.tagName === 'BUTTON' || e.target.parentNode.tagName === 'BUTTON') {
+           e.stopPropagation();
+        }
         e.preventDefault();
-        var folder = btn.getAttribute('data-folder');
-        var file = btn.getAttribute('data-file');
-        var logo = btn.getAttribute('data-logo');
+        var folder = el.getAttribute('data-folder');
+        var file = el.getAttribute('data-file');
+        var logo = el.getAttribute('data-logo');
         openAudioModal(folder, file, logo);
       });
     });
 
-    audioPlayBtn.addEventListener('click', function() {
+    audioPlayBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
       if (!currentAudio) return;
       if (currentAudio.paused) {
         currentAudio.play();
@@ -833,7 +861,8 @@
       }
     });
 
-    volumeIcon.addEventListener('click', function() {
+    volumeIcon.addEventListener('click', function(e) {
+      e.stopPropagation();
       volumeContainer.classList.toggle('active');
     });
 
@@ -841,6 +870,31 @@
       if (currentAudio) {
         currentAudio.volume = e.target.value;
       }
+    });
+
+    // Scrubbable Progress Bar
+    audioTrack.addEventListener('click', function(e) {
+      if (!currentAudio || !currentAudio.duration) return;
+      var rect = audioTrack.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var percent = x / rect.width;
+      if (percent < 0) percent = 0;
+      if (percent > 1) percent = 1;
+      currentAudio.currentTime = percent * currentAudio.duration;
+    });
+
+    // Drag to scrub
+    var isDragging = false;
+    audioTrack.addEventListener('mousedown', function() { isDragging = true; });
+    document.addEventListener('mouseup', function() { isDragging = false; });
+    audioTrack.addEventListener('mousemove', function(e) {
+      if (!isDragging || !currentAudio || !currentAudio.duration) return;
+      var rect = audioTrack.getBoundingClientRect();
+      var x = e.clientX - rect.left;
+      var percent = x / rect.width;
+      if (percent < 0) percent = 0;
+      if (percent > 1) percent = 1;
+      currentAudio.currentTime = percent * currentAudio.duration;
     });
 
     audioClose.addEventListener('click', closeAudioModal);
