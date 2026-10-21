@@ -210,23 +210,107 @@
   .suite-code { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; line-height: 1.4; }
   .suite-text { display: flex; flex-direction: column; gap: 4px; }
   .suite-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); line-height: 1.3; }
-  
+
   /* Master instrument list under title */
-  .suite-instruments { 
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 0.68em; 
-    color: var(--gold-soft); 
-    letter-spacing: 0.12em; 
-    text-transform: uppercase; 
-    line-height: 1.4; 
-    margin: 4px 0; 
+  .suite-instruments {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68em;
+    color: var(--gold-soft);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    margin: 4px 0;
   }
 
   .suite-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  .action-preview { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 38px; height: 38px; padding-left: 3px; font-size: 0.8em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
-  .action-preview:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
-  .action-buy { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 9px 18px; cursor: pointer; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
-  .action-buy:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
+
+  /* Preview — bare ▶, no circle, halo ring on hover */
+  .action-preview {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    font-size: 0.95em;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.25s ease, text-shadow 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .action-preview::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.35s ease, box-shadow 0.45s ease, border-color 0.35s ease;
+    pointer-events: none;
+  }
+  .action-preview:hover {
+    color: #FCFCF7;
+    transform: scale(1.12);
+    text-shadow: 0 0 12px rgba(197,168,128,0.8);
+  }
+  .action-preview:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.55);
+    box-shadow:
+      0 0 12px 2px rgba(197,168,128,0.55),
+      0 0 26px 6px rgba(197,168,128,0.30),
+      0 0 48px 12px rgba(197,168,128,0.15);
+  }
+
+  /* Buy — store cart style + halo ring on hover */
+  .action-buy {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: none;
+    padding: 8px 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .action-buy::before {
+    content: '';
+    position: absolute;
+    inset: -6px -12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+    pointer-events: none;
+  }
+  .action-buy svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
+  .action-buy:hover {
+    color: var(--gold-pale);
+    text-shadow: 0 0 15px rgba(197,168,128,0.7);
+    transform: scale(1.06) translateY(-1px);
+  }
+  .action-buy:hover svg { transform: scale(1.1); }
+  .action-buy:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.45);
+    box-shadow:
+      0 0 14px 2px rgba(197,168,128,0.45),
+      0 0 30px 8px rgba(197,168,128,0.22),
+      0 0 56px 16px rgba(197,168,128,0.10);
+  }
 
   /* Cue list */
   .suite-cues { display: none; padding: 0 0 20px 66px; }
@@ -234,15 +318,15 @@
   .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
   .cue-info { display: flex; flex-direction: column; gap: 4px; }
   .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); }
-  
+
   /* Cue-specific instruments shown in gold */
-  .cue-desc { 
-    font-family: 'Montserrat', sans-serif; 
-    font-size: 0.62em; 
-    font-style: normal; 
-    color: var(--gold-soft); 
-    letter-spacing: 0.1em; 
-    text-transform: uppercase; 
+  .cue-desc {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.62em;
+    font-style: normal;
+    color: var(--gold-soft);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     margin-bottom: 6px;
   }
 
@@ -251,9 +335,54 @@
   .cue-progress::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
   .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
   .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
-  .cue-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 32px; height: 32px; padding-left: 2px; font-size: 0.7em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; }
-  .cue-play:hover { color: #FCFCF7; border-color: var(--gold); }
-  .cue-play.playing { color: var(--gold-pale); border-color: var(--gold); }
+
+  /* Cue play — bare ▶, halo ring on hover */
+  .cue-play {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    font-size: 0.8em;
+    color: var(--gold-soft);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.25s ease, text-shadow 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cue-play::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.35s ease, box-shadow 0.45s ease, border-color 0.35s ease;
+    pointer-events: none;
+  }
+  .cue-play:hover {
+    color: #FCFCF7;
+    transform: scale(1.12);
+    text-shadow: 0 0 10px rgba(197,168,128,0.8);
+  }
+  .cue-play:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.55);
+    box-shadow:
+      0 0 10px 2px rgba(197,168,128,0.55),
+      0 0 22px 5px rgba(197,168,128,0.30),
+      0 0 40px 10px rgba(197,168,128,0.15);
+  }
+  .cue-play.playing { color: var(--gold-pale); }
+  .cue-play.playing::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.35);
+    box-shadow: 0 0 8px 1px rgba(197,168,128,0.35);
+  }
 
   .custom-link { text-align: center; margin: 60px 0 20px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); }
   .custom-link a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; }
@@ -334,8 +463,8 @@
     .suite-title { font-size: 1.25em; }
     .suite-instruments { font-size: 0.65em; }
     .suite-actions { gap: 8px; }
-    .action-preview { width: 34px; height: 34px; font-size: 0.7em; }
-    .action-buy { font-size: 0.65em; padding: 7px 14px; }
+    .action-preview { width: 34px; height: 34px; font-size: 0.85em; }
+    .action-buy { font-size: 0.68em; padding: 6px 0; }
     .suite-cues { padding-left: 58px; }
     .cue { gap: 10px; padding: 12px 0; }
     .cue-title { font-size: 1em; min-width: 60px; }
@@ -546,6 +675,18 @@
 </script>
 
 <script>
+  /* ═══════════════════════════════════════════════════════════════
+     ⚙️ PREVIEW BASE + URL BUILDER — scores-only worker.
+
+     buildPreviewUrl(code, cueNumber) derives the audio path:
+       prefix = first two letters of code, lowercased ("TN01" → "tn")
+       folder = prefix + "/" + code        ("tn/TN01")
+       file   = "cue-" + cueNumber + ".mp3"
+
+     The `&v=final1` param is a cache-bust key. Bump it (final1 →
+     final2 …) after re-uploading a cue under the same filename so
+     browsers fetch the fresh audio instead of a stale cached copy.
+     ═══════════════════════════════════════════════════════════════ */
   var PREVIEW_BASE = "https://rent-scores.noelgrass.workers.dev/preview";
 
   function buildPreviewUrl(code, cueNumber) {
@@ -558,13 +699,36 @@
 
 <script>
   /* ═══════════════════════════════════════════════════════════════
-     🎼 HOW TO EDIT THE CATALOGUE
-     
-     1. EDITING OR ADDING A SUITE:
-        - Each line is one Suite.
-        - desc: A list of 3 instruments (one for each cue). 
-                Put them inside [ ] and separate with commas.
-        - amount: 800000 = Ksh 8,000 (always multiply by 100).
+     🎼 SCORES — the full suite catalogue shown on this page
+
+     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / CHANGE SUITES.
+
+     Fields:
+       cat     Category key — must match a shelf in SHELVES below.
+               Current keys: "tension", "drama", "place", "quiet",
+                             "modern", "trailer".
+       code    Unique suite ID (e.g. "TN01"). Doubles as the Paystack
+               product id AND as the audio folder path:
+                 prefix = first 2 letters of code, lowercased
+                 folder = prefix + "/" + code  (e.g. "tn/TN01")
+               So "TN01" maps to worker folder tn/TN01, "DR02" → dr/DR02.
+               Keep the 2-letter prefix consistent with its shelf's mood.
+       title   Shown next to the suite code, e.g. "Theme 1".
+       desc    Array of 3 strings — one instrumentation note per cue.
+               cue-1 → desc[0], cue-2 → desc[1], cue-3 → desc[2].
+               Instruments inside each string are separated by " · "
+               (middle dot). Each cue's file must exist at
+                 <worker>/preview?folder=<prefix>/<code>&file=cue-N.mp3
+       amount  Price in smallest currency unit (800000 = KSh 8,000).
+
+     How to add a new suite:
+       1. Upload cue-1.mp3, cue-2.mp3, cue-3.mp3 to the worker under
+          the folder <prefix>/<code> (e.g. tn/TN14).
+       2. Copy an existing line below, paste it under the last entry
+          of the same `cat` group.
+       3. Change code / title / desc / amount. Keep `cat` matching
+          the shelf you want it to appear under.
+       4. Save. The shelf renders automatically with cue count + cues.
      ═══════════════════════════════════════════════════════════════ */
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
@@ -590,6 +754,18 @@
     { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], amount: "800000" }
   ];
 
+  /* ═══════════════════════════════════════════════════════════════
+     📚 SHELVES — the category headings that appear on the page.
+
+     ⚠️ EDIT THIS TO ADD / REORDER / RENAME CATEGORIES.
+
+     Fields:
+       cat     Category key — must match the `cat` values in SCORES.
+               If a shelf has no matching SCORES, it renders with
+               "No suites yet — coming soon."
+       label   Heading shown in the accordion.
+       desc    Small descriptive line under the heading.
+     ═══════════════════════════════════════════════════════════════ */
   var SHELVES = [
     { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
     { cat: "drama",   label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
@@ -601,6 +777,15 @@
 </script>
 
 <script>
+  /* ═══════════════════════════════════════════════════════════════
+     💳 CHECKOUT & RECOVERY
+     ═══════════════════════════════════════════════════════════════
+     PAYSTACK_PUBLIC_KEY  live key used in the Paystack inline modal.
+     VERIFY_ENDPOINT      the scores worker's verify route — must
+                          return { success: true, downloadUrl, title }
+                          for valid references.
+     STORAGE_KEY          localStorage key for remembered email.
+     ═══════════════════════════════════════════════════════════════ */
   var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
   var VERIFY_ENDPOINT    = "https://rent-scores.noelgrass.workers.dev/verify";
   var STORAGE_KEY = "noelgrass_email";
@@ -668,7 +853,10 @@
             '</div>' +
             '<div class="suite-actions">' +
               '<button type="button" class="action-preview" data-code="' + suite.code + '" aria-label="Preview cues">▶</button>' +
-              '<button type="button" class="action-buy" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '">Buy</button>' +
+              '<button type="button" class="action-buy" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '">' +
+                '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+                'Buy' +
+              '</button>' +
             '</div>' +
           '</div>' +
           '<div class="suite-cues" id="cues-' + suite.code + '">' + cuesHtml + '</div>' +
@@ -716,11 +904,11 @@
     function stopCue() {
       if (!currentCueId) return;
       var id = currentCueId;
-      currentCueId = null; 
+      currentCueId = null;
 
       var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
-      
+
       var cue = mount.querySelector('.cue[data-cue-id="' + id + '"]');
       if (cue) {
         var bar = cue.querySelector('.cue-progress-bar');
@@ -745,10 +933,10 @@
     document.addEventListener('click', function (e) {
       // If the click is outside any shelf AND outside any preview button
       if (!e.target.closest('.shelf') && !e.target.closest('.action-preview')) {
-        
+
         // 1. Stop any playing audio and reset cue buttons
         closeAllSuites();
-        
+
         // 2. Close all the accordion shelves
         shelves.forEach(function (shelf) {
           if (shelf.open) {
@@ -760,15 +948,15 @@
 
     function playCue(cueId, url) {
       if (!audio) return;
-      
+
       // Stop any existing audio silently
-      audio.pause(); 
-      
+      audio.pause();
+
       currentCueId = cueId;
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
-      
+
       // Force the new button to Pause
       var btn = mount.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
@@ -783,7 +971,7 @@
         if (!cues) return;
         var isOpen = cues.classList.contains('active');
         if (!isOpen) {
-          closeAllSuites(); 
+          closeAllSuites();
           cues.classList.add('active');
           previewBtn.innerHTML = '✕';
           var firstCueBtn = cues.querySelector('.cue-play');
@@ -803,7 +991,7 @@
         e.preventDefault();
         var cueId = cueBtn.getAttribute('data-cue-id');
         var url = cueBtn.getAttribute('data-url');
-        
+
         if (currentCueId === cueId) {
           if (audio.paused) {
             audio.play();
@@ -816,7 +1004,7 @@
           }
           return;
         }
-        
+
         // Manually reset the OLD button before playing the new one
         if (currentCueId) {
           var oldBtn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
@@ -829,7 +1017,7 @@
             if (oldTime) oldTime.textContent = '0:00';
           }
         }
-        
+
         playCue(cueId, url);
         return;
       }
@@ -843,15 +1031,15 @@
         if (!cue) return;
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
-        
+
         var pct = (audio.currentTime / (audio.duration || 1)) * 100;
         if (bar) bar.style.width = pct + '%';
-        
-        if (time && audio.duration) { 
-          time.textContent = fmt(audio.duration - audio.currentTime); 
+
+        if (time && audio.duration) {
+          time.textContent = fmt(audio.duration - audio.currentTime);
         }
       });
-      
+
       audio.addEventListener('ended', function () { stopCue(); });
 
       var isDragging = false;
@@ -1001,14 +1189,14 @@
     if (cancelBtn) cancelBtn.addEventListener('click', closeCheckout);
     if (closeBtn) closeBtn.addEventListener('click', closeCheckout);
     if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
-    
+
     if (successDoneBtn) successDoneBtn.addEventListener('click', function () {
       successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
     });
-    if (successModal) successModal.addEventListener('click', function (e) { 
+    if (successModal) successModal.addEventListener('click', function (e) {
       if (e.target === successModal) {
-        successModal.classList.remove('open'); 
+        successModal.classList.remove('open');
         document.body.style.overflow = '';
       }
     });
