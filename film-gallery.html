@@ -89,8 +89,20 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
-  @keyframes tileRestGlow { 0% { box-shadow: 0 0 15px 1px rgba(185,151,92,0.15), 0 0 30px 3px rgba(185,151,92,0.05); } 50% { box-shadow: 0 0 25px 3px rgba(185,151,92,0.28), 0 0 45px 8px rgba(185,151,92,0.10); } 100% { box-shadow: 0 0 15px 1px rgba(185,151,92,0.15), 0 0 30px 3px rgba(185,151,92,0.05); } }
-  @keyframes tileHoverGlow { 0% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 50% { box-shadow: 0 0 40px 8px rgba(197,168,128,0.60), 0 0 80px 20px rgba(197,168,128,0.30); } 100% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } }
+  
+  /* Increased Pulsing Rest Glow */
+  @keyframes tileRestGlow { 
+    0% { box-shadow: 0 0 20px 2px rgba(185,151,92,0.25), 0 0 45px 6px rgba(185,151,92,0.10); } 
+    50% { box-shadow: 0 0 30px 5px rgba(185,151,92,0.45), 0 0 65px 12px rgba(185,151,92,0.18); } 
+    100% { box-shadow: 0 0 20px 2px rgba(185,151,92,0.25), 0 0 45px 6px rgba(185,151,92,0.10); } 
+  }
+  
+  @keyframes tileHoverGlow { 
+    0% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 
+    50% { box-shadow: 0 0 40px 8px rgba(197,168,128,0.60), 0 0 80px 20px rgba(197,168,128,0.30); } 
+    100% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 
+  }
+  
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
   .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
@@ -326,7 +338,7 @@
   /* Bidirectional hover — image OR button */
   .client-item:hover img,
   .client-item:has(.action-link:hover) img {
-    filter: brightness(0.85) contrast(1.10);
+    filter: brightness(0.88) contrast(1.10); /* Increased from 0.85 slightly */
     animation: tileHoverGlow 4s ease-in-out infinite;
     transform: scale(1.04) translateY(-4px); /* Lift and push forward */
   }
