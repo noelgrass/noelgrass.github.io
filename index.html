@@ -645,31 +645,23 @@
       transition: filter 0.4s ease, opacity 0.4s ease !important;
     }
 
-    /* 3. Restore ALL Menu Animations & Transitions */
+    /* 3. Force menu elements to be visible immediately (fixes invisible Join/Rent Jingles) */
+    .menu-panel.open .menu-item,
+    .menu-panel.open .menu-section,
+    .menu-panel.open .menu-heading,
+    .menu-panel.open .menu-close,
+    .menu-panel.open .menu-bottom {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    /* 4. Restore menu panel transition */
     .menu-panel {
       transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
                   transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
-    .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards !important; }
     .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards !important; }
-    .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards !important; }
-    .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
-    
-    /* Restore links stagger */
-    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.72s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.84s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.96s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards !important; }
-    
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.7s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.94s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.06s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.18s forwards !important; }
-    .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards !important; }
 
     /* Restore menu hover transitions */
     .menu-link { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
@@ -697,8 +689,8 @@
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
     
-    /* Fix mobile menu overflow & reduce font size */
-    .menu-inner { padding: 80px 24px 40px; gap: 30px; justify-content: flex-start; height: 100%; min-height: 100vh; overflow-y: auto; }
+    /* Fix mobile menu overflow & center it */
+    .menu-inner { padding: 80px 24px 40px; gap: 30px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; }
     .menu-top { top: 20px; left: 24px; right: 24px; }
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
