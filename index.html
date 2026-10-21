@@ -693,17 +693,28 @@
     .wordmark { font-size: 0.95em; }
     
     /* Fix mobile menu overflow & center it */
-    .menu-inner { padding: 120px 24px 120px !important; gap: 40px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; }
+    .menu-inner { padding: 120px 24px 120px !important; gap: 40px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; position: relative; }
     .menu-top { top: 20px; left: 24px; right: 24px; }
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
     .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; padding-bottom: 0; }
-    .menu-column .menu-link { font-size: 1.5em; letter-spacing: 0.22em; }
+    
+    /* Slightly smaller font to prevent wide words from pushing off-screen */
+    .menu-column .menu-link { font-size: 1.35em; letter-spacing: 0.18em; }
+    
     .menu-section { margin-bottom: 20px; font-size: 0.85em; }
     .menu-links { gap: 20px; }
     
-    /* Force the bottom text to center */
-    .menu-bottom { margin-top: 20px; padding-bottom: 0; width: 100%; text-align: center; }
+    /* Pin the footer text perfectly to the center bottom (matching the join.html reference) */
+    .menu-bottom {
+      position: absolute !important;
+      bottom: 40px !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      width: 100% !important;
+      text-align: center !important;
+      margin-top: 0 !important;
+    }
     
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
