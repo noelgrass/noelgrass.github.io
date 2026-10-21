@@ -90,7 +90,7 @@
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
   @keyframes tileRestGlow { 0% { box-shadow: 0 0 15px 1px rgba(185,151,92,0.15), 0 0 30px 3px rgba(185,151,92,0.05); } 50% { box-shadow: 0 0 25px 3px rgba(185,151,92,0.28), 0 0 45px 8px rgba(185,151,92,0.10); } 100% { box-shadow: 0 0 15px 1px rgba(185,151,92,0.15), 0 0 30px 3px rgba(185,151,92,0.05); } }
-  @keyframes tileHoverGlow { 0% { box-shadow: 0 0 20px 4px rgba(197,168,128,0.35), 0 0 50px 15px rgba(197,168,128,0.15), 0 0 90px 25px rgba(197,168,128,0.05); } 50% { box-shadow: 0 0 30px 8px rgba(197,168,128,0.55), 0 0 70px 25px rgba(197,168,128,0.25), 0 0 120px 40px rgba(197,168,128,0.08); } 100% { box-shadow: 0 0 20px 4px rgba(197,168,128,0.35), 0 0 50px 15px rgba(197,168,128,0.15), 0 0 90px 25px rgba(197,168,128,0.05); } }
+  @keyframes tileHoverGlow { 0% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 50% { box-shadow: 0 0 40px 8px rgba(197,168,128,0.60), 0 0 80px 20px rgba(197,168,128,0.30); } 100% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
   .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
@@ -167,21 +167,21 @@
   .gallery { display: flex; flex-wrap: wrap; justify-content: center; gap: 80px 50px; margin: 0 auto 40px; max-width: 860px; }
   .gallery-item { display: block; text-align: center; width: calc((100% - 100px) / 3); opacity: 0; transform: translateY(28px); transition: opacity 1.2s ease, transform 1.2s ease; }
   .gallery-item.lit { opacity: 1; transform: translateY(0); }
-  .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.7s ease, box-shadow 0.9s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
-  .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.8s ease, transform 0.8s ease; pointer-events: none; }
+  .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.4s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
+  .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.4s ease, transform 0.4s ease; pointer-events: none; }
   
-  /* Softened Hover Brightness for Films */
-  .gallery-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 5s ease-in-out infinite; }
-  .gallery-item:hover .poster img { filter: brightness(0.78) contrast(1.08); transform: scale(1.01); }
+  /* Store-style Hover for Film Tiles */
+  .gallery-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 4s ease-in-out infinite; }
+  .gallery-item:hover .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
   .gallery-item .caption { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.05em; letter-spacing: 0.08em; color: var(--gold-pale); margin-top: 20px; text-transform: uppercase; transition: color 0.5s ease; }
   .gallery-item:hover .caption { color: #FCFCF7; }
   .gallery:has(.gallery-item:hover) .gallery-item .poster { animation: none; }
-  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster { box-shadow: 0 0 15px 2px rgba(185,151,92,0.08), 0 0 30px 4px rgba(185,151,92,0.03); border-color: #1a1a1a; transition: box-shadow 0.7s ease, border-color 0.7s ease; }
+  .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster { box-shadow: none; border-color: #1a1a1a; animation: none; transition: box-shadow 0.4s ease, border-color 0.4s ease; }
   .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .poster img { filter: brightness(0.55) contrast(0.95); transform: none; }
   .gallery:has(.gallery-item:hover) .gallery-item:not(:hover) .caption { color: rgba(232,213,181,0.3); }
 
   /* =========================================================
-     ELEGANT PREVIEW BUTTON (Option 1)
+     ELEGANT PREVIEW BUTTON with Halo Ring
      ========================================================= */
   .item-actions { display: flex; justify-content: center; align-items: center; margin-top: 8px; gap: 0; }
   
@@ -194,13 +194,26 @@
     letter-spacing: 0.25em;
     text-transform: uppercase;
     cursor: pointer;
-    padding: 10px 0;
+    padding: 10px 14px;
     position: relative;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
+    transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.35s ease;
     display: inline-flex;
     align-items: center;
     gap: 10px;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Halo ring — pill-shaped, fades in on hover */
+  .action-link::before {
+    content: '';
+    position: absolute;
+    inset: -6px -12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+    pointer-events: none;
   }
 
   /* Linked Hover: triggered by hovering the image/card OR the button itself */
@@ -208,7 +221,19 @@
   .client-item:hover .action-link,
   .action-link:hover {
     color: var(--gold-pale);
-    text-shadow: 0 0 10px rgba(197,168,128,0.5);
+    text-shadow: 0 0 12px rgba(197,168,128,0.6);
+  }
+
+  /* Halo appears when item is hovered OR button is hovered */
+  .gallery-item:hover .action-link::before,
+  .client-item:hover .action-link::before,
+  .action-link:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.45);
+    box-shadow:
+      0 0 14px 2px rgba(197,168,128,0.45),
+      0 0 30px 8px rgba(197,168,128,0.22),
+      0 0 56px 16px rgba(197,168,128,0.10);
   }
 
   .play-icon {
@@ -686,18 +711,35 @@
 </script>
 
 <script>
-  // =========================================================
-  // 🎬 FILMS LIST
-  // To add a new film:
-  // 1. Upload their poster to: images/film/your-poster.jpg
-  // 2. Copy one of the lines below, paste it, and change the details.
-  //
-  // Fields explained:
-  // img:    The path to the poster image.
-  // alt:    A short description for screen readers / SEO.
-  // title:  The text that appears under the poster.
-  // video:  The YouTube Video ID (the part after v= in the URL).
-  // =========================================================
+  /* ═══════════════════════════════════════════════════════════════
+     🎬 GALLERY DATA — FILMS + CLIENTS
+     
+     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / CHANGE ITEMS.
+
+     ── FILMS ARRAY ──────────────────────────────────────────────
+       img     Poster image path, e.g. "images/film/thief.jpg".
+               Recommend 1000×1000+ square JPG/WEBP, under ~300 KB.
+       alt     Short description for screen readers / SEO.
+       title   Text shown under the poster (auto-uppercased).
+       video   YouTube Video ID — the part after "v=" in the URL.
+               Example: https://youtube.com/watch?v=xAkmVpYrDKg
+                        → video: "xAkmVpYrDKg"
+
+     ── CLIENTS ARRAY ────────────────────────────────────────────
+       img     Logo image path, e.g. "images/corporate/helb.png".
+               Transparent PNG or WEBP, up to ~250px tall.
+       alt     Client name (used for accessibility).
+       folder  R2 folder on the jingles worker (e.g. "mc", "af", "cr",
+               "owned"). Must match the folder used in uploads.
+       file    Exact mp3 filename in that folder
+               (case-sensitive — "MC03.mp3" ≠ "mc03.mp3").
+
+     ── HOW TO ADD A NEW ENTRY ───────────────────────────────────
+       Films:    copy any line in GALLERY.films, paste after the last
+                 one, update the 4 fields.
+       Clients:  copy any line in GALLERY.clients, paste after the
+                 last one, update img/alt/folder/file.
+     ═══════════════════════════════════════════════════════════════ */
   var GALLERY = {
     films: [
       { img: "images/film/thief.jpg",              alt: "Thief — Original Motion Picture Score by Noel Grass",                                   title: "Thief",                 video: "xAkmVpYrDKg" },
@@ -707,23 +749,8 @@
       { img: "images/film/kutu.jpg",               alt: "Kutu — Original Motion Picture Score by Noel Grass. Kalasha Award winner for Best Short Film", title: "Kutu",             video: "_Rbu80VIllg" },
       { img: "images/film/lost-in-time.jpg",       alt: "Lost in Time — Original Motion Picture Score by Noel Grass. Award winner for Best Feature Film", title: "Lost in Time",    video: "xItZvvHkeYA" },
       { img: "images/film/parliament-of-owls.jpg", alt: "The Parliament of Owls — Original Motion Picture Score by Noel Grass",                   title: "The Parliament of Owls", video: "6p8oVlw9eWo" }
-      
-      // 👇 EXAMPLE: How to add a new film 👇
-      // { img: "images/film/new-film.jpg", alt: "New Film Poster", title: "New Film Title", video: "YOUTUBE_ID_HERE" }
     ],
 
-    // =========================================================
-    // 🏢 CLIENTS LIST
-    // To add a new client:
-    // 1. Upload their logo to: images/corporate/your-logo.png
-    // 2. Copy one of the lines below, paste it, and change the details.
-    //
-    // Fields explained:
-    // img:    The path to the logo image.
-    // alt:    A short description for screen readers / SEO.
-    // folder: The R2 folder name (e.g., "mc", "af", "cr", "owned").
-    // file:   The exact audio filename in that folder (watch uppercase/lowercase!).
-    // =========================================================
     clients: [
       { img: "images/corporate/world-bank.png",         alt: "IFC / World Bank Group", folder: "mc", file: "MC03.mp3" },
       { img: "images/corporate/helb.png",               alt: "HELB", folder: "mc", file: "MC01.mp3" },
@@ -734,9 +761,6 @@
       { img: "images/corporate/profiles.png",           alt: "Profiles", folder: "mc", file: "MC05.mp3" },
       { img: "images/corporate/engage.jpeg",            alt: "Engage", folder: "owned", file: "jingle.mp3" },
       { img: "images/corporate/amref.png",              alt: "AMREF", folder: "af", file: "AF05.mp3" }
-      
-      // 👇 EXAMPLE: How to add a new client 👇
-      // { img: "images/corporate/new-client.png", alt: "New Client Name", folder: "af", file: "AF09.mp3" }
     ]
   };
 
@@ -781,7 +805,6 @@
     // --- Video Modals (Click image OR button) ---
     document.querySelectorAll('.js-preview-video').forEach(function(el) {
       el.addEventListener('click', function(e) {
-        // Prevent double triggering if clicking the button inside the image container
         if (e.target.tagName === 'BUTTON' || e.target.parentNode.tagName === 'BUTTON') {
            e.stopPropagation();
         }
@@ -828,7 +851,7 @@
     }
 
     function openAudioModal(folder, file, logoUrl) {
-      closeAudioModal(); // Reset previous
+      closeAudioModal();
       
       audioModalLogo.src = logoUrl;
       audioModal.classList.add('open');
@@ -858,7 +881,6 @@
         currentAudio.currentTime = 0;
       });
 
-      // Auto-play when opened
       currentAudio.play().then(function() {
         audioPlayBtn.classList.add('playing');
       }).catch(function(err) {
@@ -902,7 +924,6 @@
       }
     });
 
-    // Scrubbable Progress Bar
     audioTrack.addEventListener('click', function(e) {
       if (!currentAudio || !currentAudio.duration) return;
       var rect = audioTrack.getBoundingClientRect();
@@ -913,7 +934,6 @@
       currentAudio.currentTime = percent * currentAudio.duration;
     });
 
-    // Drag to scrub
     var isDragging = false;
     audioTrack.addEventListener('mousedown', function() { isDragging = true; });
     document.addEventListener('mouseup', function() { isDragging = false; });
@@ -931,7 +951,6 @@
     audioModal.addEventListener('click', function(e) { if (e.target === audioModal) closeAudioModal(); });
     document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && audioModal.classList.contains('open')) closeAudioModal(); });
 
-    // Tile Animations
     var filmTiles = filmsGrid ? filmsGrid.querySelectorAll('.gallery-item') : [];
     if (window.tileObserver) {
       filmTiles.forEach(function(el, i) {
