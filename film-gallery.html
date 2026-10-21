@@ -334,22 +334,73 @@
   .clients-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 0 0 20px; display: block; }
   .clients-note { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); max-width: 640px; margin: 0 auto 60px; text-align: center; }
 
-  .clients { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 65px 55px; max-width: 900px; margin: 0 auto 50px; }
-  .client-item { display: flex; flex-direction: column; align-items: center; justify-content: center; width: calc((100% - 110px) / 3); min-height: 170px; padding: 16px; cursor: pointer; }
-  .client-item img { display: block; max-width: 100%; max-height: 130px; width: auto; height: auto; object-fit: contain; filter: brightness(0.72) contrast(1.05); animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; pointer-events: none; transition: filter 0.4s ease, transform 0.4s ease; will-change: transform, filter; }
+  .clients { display: flex; flex-wrap: wrap; justify-content: center; align-items: stretch; gap: 65px 55px; max-width: 900px; margin: 0 auto 50px; }
 
-  /* ── Store-style hover for Client Logos (bidirectional) ── */
+  /* ── Client tile — bigger logos, more breathing room, gold halo ring ── */
+  .client-item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc((100% - 110px) / 3);
+    min-height: 210px;
+    padding: 16px;
+    cursor: pointer;
+  }
+
+  /* Soft gold halo ring behind the logo */
+  .client-item::before {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 12px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+    pointer-events: none;
+  }
+
+  .client-item img {
+    display: block;
+    max-width: 100%;
+    max-height: 160px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: brightness(0.72) contrast(1.05);
+    animation: tileRestGlow 7s ease-in-out infinite;
+    animation-delay: 1.4s;
+    pointer-events: none;
+    transition: filter 0.4s ease, transform 0.4s ease;
+    will-change: transform, filter;
+  }
+
+  /* Clear space between the logo and its Preview button */
+  .client-item .item-actions { margin-top: 22px; }
+
+  /* Bidirectional hover — image OR button */
   .client-item:hover img,
   .client-item:has(.action-link:hover) img {
-    filter: brightness(0.82) contrast(1.10);
+    filter: brightness(0.95) contrast(1.10);
     animation: tileHoverGlow 4s ease-in-out infinite;
-    transform: scale(1.01);
+    transform: scale(1.04);
+  }
+
+  .client-item:hover::before,
+  .client-item:has(.action-link:hover)::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.35);
+    box-shadow:
+      0 0 14px 2px rgba(197,168,128,0.35),
+      0 0 30px 8px rgba(197,168,128,0.18);
   }
 
   /* Sibling dimming — fires whether a logo OR its button is hovered */
   .clients:has(.client-item:hover) .client-item:not(:hover) img,
   .clients:has(.client-item:has(.action-link:hover)) .client-item:not(:has(.action-link:hover)) img {
-    filter: brightness(0.55) contrast(0.95);
+    filter: brightness(0.4) contrast(0.9);
     animation: none;
     box-shadow: none;
     transform: none;
@@ -467,7 +518,7 @@
     .gallery { gap: 55px 35px; }
     .gallery-item { width: calc((100% - 35px) / 2); }
     .clients { gap: 50px 35px; }
-    .client-item { width: calc((100% - 70px) / 2); min-height: 140px; }
+    .client-item { width: calc((100% - 70px) / 2); min-height: 180px; }
   }
 
   @media (max-width: 700px) {
@@ -503,8 +554,9 @@
     .clients-subhead { font-size: 1.1em; }
     .clients-note { font-size: 0.95em; margin-bottom: 40px; }
     .clients { gap: 40px 25px; max-width: 400px; margin-bottom: 35px; }
-    .client-item { width: 100%; min-height: 120px; padding: 10px; }
-    .client-item img { max-height: 100px; }
+    .client-item { width: 100%; min-height: 160px; padding: 10px; }
+    .client-item img { max-height: 120px; }
+    .client-item .item-actions { margin-top: 18px; }
     .clients-caption { font-size: 0.85em; }
     .commission-line { margin-top: 60px; padding-top: 35px; font-size: 0.95em; }
     .cross-link { font-size: 0.95em; }
