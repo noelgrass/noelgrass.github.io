@@ -796,6 +796,7 @@
     aspect-ratio: 1 / 1;
     margin: 0 auto 30px;
     animation: fadeUp 1s ease-out both;
+    cursor: pointer; /* Added clickable cursor */
   }
 
   .feature-cover img {
@@ -958,9 +959,7 @@
         link between the poster image and the button:
 
      • Hover the image → button halos + pops up.
-       (via .poster:hover ~ .item-actions .action-link)
      • Hover the button → image brightens + glows + scales.
-       (via .store-item:has(.action-link:hover) .poster)
      • Direct button hover still works on its own.
      ═══════════════════════════════════════════════════════════ */
   .item-actions {
@@ -1030,16 +1029,16 @@
     transform: scale(1.1);
   }
 
-  /* Halo ring appears on the same triggers */
+  /* Halo ring appears on the same triggers (SOFTENED) */
   .store-item .poster:hover ~ .item-actions .action-link::before,
   .feature-cover:hover ~ .feature-actions .action-link::before,
   .action-link:hover::before {
     opacity: 1;
-    border-color: rgba(197, 168, 128, 0.45);
+    border-color: rgba(197, 168, 128, 0.35);
     box-shadow:
-      0 0 14px 2px rgba(197, 168, 128, 0.45),
-      0 0 30px 8px rgba(197, 168, 128, 0.22),
-      0 0 56px 16px rgba(197, 168, 128, 0.10);
+      0 0 10px 1px rgba(197, 168, 128, 0.25),
+      0 0 20px 4px rgba(197, 168, 128, 0.12),
+      0 0 35px 8px rgba(197, 168, 128, 0.05);
   }
 
   /* ── Reverse direction: hover the button → poster reacts ── */
@@ -1105,6 +1104,7 @@
     transition: border-color 0.7s ease;
     animation: tileRestGlow 7s ease-in-out infinite;
     animation-delay: 1.4s;
+    cursor: pointer; /* Added clickable cursor */
   }
 
   .store-item .poster img {
@@ -1827,7 +1827,7 @@
 
     if (feat && featMount) {
       featMount.innerHTML =
-        '<div class="feature-cover">' +
+        '<div class="feature-cover js-preview" data-video="' + feat.video + '" aria-label="Preview ' + feat.title + '">' +
           '<img src="' + feat.img + '" alt="' + feat.alt + '" loading="lazy">' +
           '<span class="feature-badge">' + feat.badge + '</span>' +
         '</div>' +
@@ -1873,7 +1873,7 @@
       gallery.innerHTML = items.map(function(item) {
         return (
           '<div class="store-item">' +
-            '<div class="poster">' +
+            '<div class="poster js-preview" data-video="' + item.video + '" aria-label="Preview ' + item.title + '">' +
               '<img src="' + item.img + '" alt="' + item.alt + '" loading="lazy">' +
               '<span class="badge">' + item.badge + '</span>' +
             '</div>' +
@@ -1897,10 +1897,14 @@
     });
 
     // ---- 3. Wire up all dynamically-created buttons ----
-    document.querySelectorAll('.js-preview').forEach(function(btn) {
-      btn.addEventListener('click', function(e) {
+    document.querySelectorAll('.js-preview').forEach(function(el) {
+      el.addEventListener('click', function(e) {
+        // Prevent double triggering if clicking the button inside the image container
+        if (e.target.tagName === 'BUTTON' || e.target.parentNode.tagName === 'BUTTON') {
+           e.stopPropagation();
+        }
         e.preventDefault();
-        var id = btn.getAttribute('data-video');
+        var id = el.getAttribute('data-video');
         if (id && window.openMediaModal) {
           window.openMediaModal('https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0', 'video');
         }
