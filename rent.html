@@ -194,11 +194,39 @@
   .track-desc { font-family: 'Montserrat', sans-serif; font-size: 0.68em; font-style: normal; font-weight: 400; color: #a8a39a; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; }
   .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
   .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-  .action-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 38px; height: 38px; padding-left: 3px; font-size: 0.8em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; }
-  .action-play:hover { color: #FCFCF7; border-color: var(--gold); transform: scale(1.05); }
-  .action-play.playing { color: var(--gold-pale); border-color: var(--gold); }
-  .action-link { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: 1px solid rgba(185,151,92,0.45); padding: 9px 18px; cursor: pointer; position: relative; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; -webkit-tap-highlight-color: transparent; }
-  .action-link:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
+
+  /* Play — bare ▶, no circle */
+  .action-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 0; width: 38px; height: 38px; padding: 0; font-size: 0.95em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; -webkit-tap-highlight-color: transparent; }
+  .action-play:hover { color: #FCFCF7; transform: scale(1.12); }
+  .action-play.playing { color: var(--gold-pale); }
+
+  /* Buy — matches store page cart style */
+  .action-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.85em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: transparent;
+    border: none;
+    padding: 8px 0;
+    cursor: pointer;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
+  .action-link:hover {
+    color: var(--gold-pale);
+    text-shadow: 0 0 15px rgba(197,168,128,0.7);
+    transform: scale(1.08) translateY(-2px);
+  }
+  .action-link:hover svg { transform: scale(1.1); }
+
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
   .player-progress-wrap { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
@@ -220,9 +248,9 @@
   .cue-progress-wrap::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
   .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
   .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
-  .cue-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 1px solid rgba(185,151,92,0.3); border-radius: 50%; width: 32px; height: 32px; padding-left: 2px; font-size: 0.7em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease; }
-  .cue-play:hover { color: #FCFCF7; border-color: var(--gold); }
-  .cue-play.playing { color: var(--gold-pale); border-color: var(--gold); }
+  .cue-play { display: inline-flex; justify-content: center; align-items: center; background: transparent; border: 0; width: 32px; height: 32px; padding: 0; font-size: 0.8em; color: var(--gold-soft); cursor: pointer; transition: color 0.3s ease, transform 0.2s ease; -webkit-tap-highlight-color: transparent; }
+  .cue-play:hover { color: #FCFCF7; transform: scale(1.12); }
+  .cue-play.playing { color: var(--gold-pale); }
 
   /* Recovery CTA block */
   .recovery-cta { max-width: 600px; margin: 80px auto 60px; text-align: left; border: 1px solid rgba(197,168,128,0.3); padding: 44px 40px; background: rgba(197,168,128,0.02); animation: fadeUp 1s ease-out both; animation-delay: 0.3s; }
@@ -309,8 +337,8 @@
     .track-desc { font-size: 0.65em; }
     .track-meta { font-size: 0.7em; }
     .track-actions { gap: 8px; }
-    .action-play { width: 34px; height: 34px; font-size: 0.7em; }
-    .action-link { font-size: 0.65em; padding: 7px 14px; }
+    .action-play { width: 34px; height: 34px; font-size: 0.85em; }
+    .action-link { font-size: 0.68em; padding: 6px 0; }
     .inline-player { padding: 12px 0 8px 58px; }
     .track-preview-label { font-size: 0.58em; display: block; margin-left: 0; margin-top: 4px; }
     .recovery-cta { padding: 32px 24px; margin: 60px auto 40px; }
@@ -753,7 +781,10 @@
               'data-title="' + t.code + ' — ' + t.title + '" ' +
               'data-amount="' + t.amount + '" ' +
               'data-currency="KES" ' +
-              'data-verify="' + t.verify + '">Buy</button>' +
+              'data-verify="' + t.verify + '">' +
+              '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+              'Buy' +
+            '</button>' +
           '</div>' +
           trackContent +
         '</div>' +
