@@ -183,11 +183,11 @@
   .store-item .format-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 6px; transition: color 0.5s ease; }
   .item-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 16px; flex-wrap: wrap; }
   
-  /* Elegant Buy Button with Cart Icon */
+  /* Elegant Buy Button */
   .action-link {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.68em;
+    font-size: 0.85em; 
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--gold-soft);
@@ -198,25 +198,26 @@
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
   }
   
-  .action-link svg { width: 14px; height: 14px; fill: currentColor; transition: transform 0.3s ease; }
+  .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
   
-  /* Linked Hover */
+  /* Perfect Linked Hover (3D Pop Forward) */
   .store-item:hover .action-link,
   .feature-release:hover .action-link,
   .action-link:hover {
     color: var(--gold-pale);
-    text-shadow: 0 0 10px rgba(197,168,128,0.5);
+    text-shadow: 0 0 15px rgba(197,168,128,0.7);
+    transform: scale(1.08) translateY(-2px);
   }
   
   .store-item:hover .action-link svg,
   .feature-release:hover .action-link svg,
   .action-link:hover svg {
-    transform: translateX(4px) scale(1.1);
+    transform: scale(1.1);
   }
 
   a.action-link { display: inline-block; }
@@ -399,11 +400,6 @@
 
     <div class="mood-groups">
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 LATEST RELEASE
-           ➕ To update this, scroll to the bottom of the file and 
-              edit the "featured" object inside the STORE_ITEMS script.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group" open>
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
@@ -412,11 +408,6 @@
         <div class="feature-release" id="featuredRelease"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 SOLO PIANO
-           ➕ To add a release here, edit STORE_ITEMS["solo-piano"] 
-              at the bottom of the file.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
@@ -425,11 +416,6 @@
         <div class="store-gallery" data-category="solo-piano"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 ORCHESTRAL
-           ➕ To add a release here, edit STORE_ITEMS["orchestral"] 
-              at the bottom of the file.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
@@ -438,11 +424,6 @@
         <div class="store-gallery" data-category="orchestral"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 EXPERIMENTAL
-           ➕ To add a release here, edit STORE_ITEMS["experimental"] 
-              at the bottom of the file.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
@@ -451,11 +432,6 @@
         <div class="store-gallery" data-category="experimental"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 AMBIENT
-           ➕ To add a release here, edit STORE_ITEMS["ambient"] 
-              at the bottom of the file.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
@@ -508,9 +484,6 @@
       </details>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         🔑 RECOVERY BOX
-         ═══════════════════════════════════════════════════════════ -->
     <div class="recovery-box" id="already-purchased">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
