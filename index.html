@@ -331,12 +331,13 @@
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after  { transform: rotate(-45deg); }
 
+  /* SINGLE CENTERED COLUMN - MATCHING ARTIST/BIOGRAPHY */
   .menu-columns {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: start;
+    gap: 40px;
     text-align: center;
     max-width: 900px;
     width: 100%;
@@ -696,11 +697,12 @@
     .wordmark { font-size: 0.95em; }
     
     /* Fix mobile menu overflow & center it */
-    .menu-inner { padding: 120px 24px 120px !important; gap: 40px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; position: relative; }
-    .menu-top { top: 20px; left: 24px; right: 24px; }
+    .menu-inner { padding: 90px 24px 60px !important; gap: 32px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; position: relative; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
-    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; padding-bottom: 0; }
+    
+    .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; padding-bottom: 0; }
     
     /* Match the exact font size of the artist page mobile view */
     .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
@@ -748,14 +750,18 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Explore</span>
-      <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
-      <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
-      <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
-      <li class="menu-item"><a href="film-composer" class="menu-link" data-open-menu="film">Film Composer</a></li>
-      <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Explore</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
+          <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
+          <li class="menu-item"><a href="artist" class="menu-link" data-open-menu="artist">Artist</a></li>
+          <li class="menu-item"><a href="film-composer" class="menu-link" data-open-menu="film">Film Composer</a></li>
+          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
   </div>
 </nav>
@@ -772,15 +778,19 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Artist</span>
-      <li class="menu-item"><a href="artist" class="menu-link">About</a></li>
-      <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
-      <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
-      <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
-      <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
-      <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Artist</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">About</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="artistYear"></span></div>
   </div>
 </nav>
@@ -797,15 +807,19 @@
         Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
-    <ul class="menu-links">
-      <span class="menu-section">Film Composer</span>
-      <li class="menu-item"><a href="film-composer" class="menu-link">About</a></li>
-      <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
-      <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
-      <li class="menu-item"><a href="rent" class="menu-link">Rent/License</a></li>
-      <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
-      <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
-    </ul>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Film Composer</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="film-composer" class="menu-link">About</a></li>
+          <li class="menu-item"><a href="commission" class="menu-link">Commission a Score</a></li>
+          <li class="menu-item"><a href="film-gallery" class="menu-link">Gallery</a></li>
+          <li class="menu-item"><a href="rent" class="menu-link">Rent/License</a></li>
+          <li class="menu-item"><a href="rent-scores" class="menu-link">Rent Scores</a></li>
+          <li class="menu-item"><a href="rent-jingles" class="menu-link">Rent Jingles</a></li>
+        </ul>
+      </div>
+    </div>
     <div class="menu-bottom">Noel Grass · <span id="filmYear"></span></div>
   </div>
 </nav>
