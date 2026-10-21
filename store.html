@@ -252,7 +252,20 @@
     transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
   }
-  
+
+  /* Halo ring — pill-shaped, fades in on hover */
+  .action-link::before {
+    content: '';
+    position: absolute;
+    inset: -6px -12px;
+    border-radius: 999px;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 0 rgba(197,168,128,0);
+    opacity: 0;
+    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
+    pointer-events: none;
+  }
+
   .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
   
   /* 3D Pop Forward Hover */
@@ -268,6 +281,18 @@
   .feature-item:hover .action-link svg,
   .action-link:hover svg {
     transform: scale(1.1);
+  }
+
+  /* Halo ring appears on hover (item-hover OR direct button hover) */
+  .store-item:hover .action-link::before,
+  .feature-item:hover .action-link::before,
+  .action-link:hover::before {
+    opacity: 1;
+    border-color: rgba(197,168,128,0.45);
+    box-shadow:
+      0 0 14px 2px rgba(197,168,128,0.45),
+      0 0 30px 8px rgba(197,168,128,0.22),
+      0 0 56px 16px rgba(197,168,128,0.10);
   }
 
   a.action-link { display: inline-block; }
@@ -620,6 +645,11 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      🧭 SCRIPT 1 — MENU + ACCORDION
+
+     Menu:       opens/closes the full-screen nav panel; highlights
+                 the current page in the link list; locks body scroll.
+     Accordion:  only one <details class="mood-group"> open at a time;
+                 auto-scrolls the summary into view when opened.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -699,6 +729,14 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💳 SCRIPT 2 — CHECKOUT + RECOVERY
+
+     PAYSTACK_PUBLIC_KEY  live key for the Paystack inline modal.
+     SALES_PAUSED         flip to true to hide Buy buttons and pause.
+     STORAGE_KEY          localStorage key for remembered email.
+     Verify endpoint      https://my-store-backend.noelgrass.workers.dev/verify
+                          must return { success: true, downloadUrl, title }
+                          for valid references (used by both the post-
+                          purchase flow AND the recovery box).
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -889,22 +927,36 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
-     
-     🛒 HOW TO ADD A NEW RELEASE:
-     1. Upload your square album cover to: images/discography/
-     2. Find the correct category below (e.g., "solo-piano", "orchestral").
-     3. Copy one of the existing lines, paste it below the last one, and 
-        change the details to match your new release.
-     
-     Fields explained:
-       img:    The path to the image (e.g., "images/discography/my-new-album.jpg")
-       alt:    A short description for screen readers / SEO.
-       title:  The title of the release (shows under the image).
-       format: The text under the title (e.g., "Solo Piano", "Album").
-       badge:  The little tag on the top right (e.g., "EP", "Album", "Single").
-       id:     The exact Product ID used in your Paystack/Worker backend.
-       amount: The price in the smallest currency unit (e.g., 50000 = 500 KES).
-       currency: "KES", "USD", etc.
+
+     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / CHANGE PRODUCTS.
+
+     Each category below renders into a matching <div class="store-gallery"
+     data-category="..."> in the HTML. The "featured" entry renders at the
+     top under "Latest Release".
+
+     ── HOW TO ADD A NEW RELEASE ─────────────────────────────────
+     1. Upload a square cover image to: images/discography/
+        (recommended: 1000×1000+, JPG or WEBP, under ~300 KB)
+     2. Find the correct category array below
+        (e.g. "solo-piano", "orchestral", "experimental", "ambient").
+     3. Copy an existing line, paste it below the last one in that
+        category, and change the details to match the new release.
+     4. Save. Counts and rendering happen automatically.
+
+     ── FIELDS ───────────────────────────────────────────────────
+       img       Image path, e.g. "images/discography/my-new-album.jpg"
+       alt       Short text description for screen readers / SEO.
+       title     Release title (shown under the cover).
+       format    Format line under the title, e.g. "Solo Piano".
+       badge     Corner tag, e.g. "EP", "Album", "Single".
+       id        Product ID used in your Paystack/Worker backend —
+                 must match the id expected by
+                 https://my-store-backend.noelgrass.workers.dev/verify
+       amount    Price in smallest currency unit.
+                 (50000 = KSh 500, 90000 = KSh 900, 20000 = KSh 200)
+       currency  Currency code — "KES", "USD", "GBP", "EUR", etc.
+                 Must match the currency the backend expects for
+                 this product id.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   var STORE_ITEMS = {
