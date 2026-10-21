@@ -681,7 +681,10 @@
     .fork-row::before { display: none; }
     .fork-card:nth-child(1), .fork-card:nth-child(2) { transform: translate3d(0, 24px, 0); }
     .fork-card.in-view { transform: translate3d(0, 0, 0); }
-    .fork-content { padding: 120px 24px 40px; min-height: 380px; justify-content: flex-end; }
+    
+    /* Reduced height and removed the large top headroom */
+    .fork-content { padding: 40px 24px 40px; min-height: 260px; justify-content: flex-end; }
+    
     .fork-label { font-size: 1.3em; }
     .fork-desc { font-size: 0.85em; }
     .fork-enter { font-size: 0.65em; }
@@ -689,18 +692,16 @@
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
     
-    /* Match the reference font sizes and alignment */
-    .menu-inner { padding: 80px 24px 40px; gap: 40px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; }
+    /* Fix mobile menu overflow & center it */
+    .menu-inner { padding: 120px 24px 120px !important; gap: 40px; justify-content: center !important; height: 100%; min-height: 100vh; overflow-y: auto; }
     .menu-top { top: 20px; left: 24px; right: 24px; }
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
-    .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; padding-bottom: 40px; }
-    
-    /* Increase font size to match reference */
-    .menu-column .menu-link { font-size: 1.5em; letter-spacing: 0.22em; }
-    .menu-section { margin-bottom: 16px; font-size: 0.85em; }
+    .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; padding-bottom: 0; }
+    .menu-column .menu-link { font-size: 1.5em; letter-spacing: 0.22em; } /* Increased size to match reference */
+    .menu-section { margin-bottom: 20px; font-size: 0.85em; } /* Increased title size */
     .menu-links { gap: 20px; }
-    .menu-bottom { margin-top: 20px; padding-bottom: 20px; }
+    .menu-bottom { margin-top: 20px; padding-bottom: 0; }
     
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
