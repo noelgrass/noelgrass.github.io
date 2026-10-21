@@ -694,15 +694,17 @@
     
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; }
-    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
-    .menu-top { top: 22px; left: 24px; right: 24px; }
+    
+    /* Fix mobile menu overflow */
+    .menu-inner { padding: 80px 24px 40px; gap: 30px; justify-content: flex-start; height: 100%; min-height: 100vh; overflow-y: auto; }
+    .menu-top { top: 20px; left: 24px; right: 24px; }
     .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
     .menu-close .x { width: 15px; height: 15px; }
-    .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; }
-    .menu-column .menu-link { font-size: 1.6em; letter-spacing: 0.22em; }
-    .menu-section { margin-bottom: 20px; }
+    .menu-columns { flex-direction: column; gap: 40px; max-width: 100%; padding-bottom: 40px; }
+    .menu-column .menu-link { font-size: 1.5em; letter-spacing: 0.2em; }
+    .menu-section { margin-bottom: 16px; }
     .menu-links { gap: 16px; }
-    .menu-bottom { margin-top: 10px; }
+    .menu-bottom { margin-top: 20px; padding-bottom: 20px; }
     
     .icons { gap: 25px; }
     .footer-links { font-size: 0.65em; }
