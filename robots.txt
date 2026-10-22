@@ -80,14 +80,24 @@ Allow: /
 User-agent: cohere-ai
 Allow: /
 
+# ——— META AI (Facebook / Instagram / WhatsApp / Meta AI app) ———
+
 User-agent: meta-externalagent
 Allow: /
 
 User-agent: meta-externalfetcher
 Allow: /
 
+User-agent: meta-webindexer
+Allow: /
+
 User-agent: FacebookBot
 Allow: /
+
+User-agent: MetaAI
+Allow: /
+
+# ——— OTHER AI CRAWLERS ———
 
 User-agent: DeepSeekBot
 Allow: /
