@@ -65,6 +65,12 @@ Allow: /
 User-agent: Google-CloudVertexBot
 Allow: /
 
+User-agent: Google-Agent
+Allow: /
+
+User-agent: GoogleAgent-Mariner
+Allow: /
+
 User-agent: Gemini-Deep-Research
 Allow: /
 
@@ -118,6 +124,9 @@ User-agent: TavilyBot
 Allow: /
 
 User-agent: ExaBot
+Allow: /
+
+User-agent: ExaSearchBot
 Allow: /
 
 User-agent: FirecrawlAgent
