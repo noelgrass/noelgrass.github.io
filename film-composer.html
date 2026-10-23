@@ -871,7 +871,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 28px;
+    gap: 24px; /* Slightly tighter gap to fit the smaller buttons */
     margin: 40px 0 40px;
     flex-wrap: wrap;
     position: relative;
@@ -884,8 +884,8 @@
   .cta-link {
     font-family: 'Cormorant Garamond', Georgia, serif;
     font-weight: 500;
-    font-size: 1.6em;
-    letter-spacing: 0.3em;
+    font-size: 1.2em; /* Reduced from 1.6em */
+    letter-spacing: 0.2em; /* Reduced from 0.3em */
     text-transform: uppercase;
     color: var(--gold-pale);
     padding: 8px 0 6px;
@@ -914,8 +914,8 @@
 
   .cta-row .diamond {
     display: inline-block;
-    width: 8px;
-    height: 8px;
+    width: 6px; /* Slightly smaller diamond to match buttons */
+    height: 6px;
     background: var(--gold);
     transform: rotate(45deg);
     opacity: 0.9;
@@ -1116,7 +1116,7 @@
     }
 
     .cta-row { gap: 20px; margin: 30px 0 30px; }
-    .cta-link { font-size: 1.15em; letter-spacing: 0.25em; }
+    .cta-link { font-size: 1em; letter-spacing: 0.15em; }
     .cross-link { margin-top: 50px; padding-top: 30px; }
     
     .footer-links { 
@@ -1295,9 +1295,11 @@
     </section>
 
     <div class="cta-row">
-      <a href="film-gallery" class="cta-link">Gallery</a>
+      <a href="commission" class="cta-link">Commission a Score</a>
       <span class="diamond"></span>
-      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Noel Grass Profile</a>
+      <a href="film-gallery" class="cta-link">Film Gallery</a>
+      <span class="diamond"></span>
+      <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener" class="cta-link">Press Profile</a>
     </div>
 
     <details class="faq-wrap">
