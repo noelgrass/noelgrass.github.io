@@ -151,3 +151,5 @@ User-agent: MistralAI-User
 Allow: /
 
 Sitemap: https://noelgrass.github.io/sitemap.xml
+
+Sitemap: https://noelgrass.github.io/sitemap.txt
