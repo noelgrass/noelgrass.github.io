@@ -150,6 +150,6 @@ Allow: /
 User-agent: MistralAI-User
 Allow: /
 
-Sitemap: https://noelgrass.github.io/sitemap.xml
+Sitemap: https://noelgrass.com/sitemap.xml
 
-Sitemap: https://noelgrass.github.io/sitemap.txt
+Sitemap: https://noelgrass.com/sitemap.txt
