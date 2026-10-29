@@ -9,7 +9,7 @@
 <!-- ═══════════════════════════════════════════════════════════════
      🏷️ TITLE & META (SEO)
      ═══════════════════════════════════════════════════════════════ -->
-<title>Noel Grass — Film Composer &amp; Neoclasåsical Pianist</title>
+<title>Noel Grass — Film Composer &amp; Neoclassical Pianist</title>
 <meta name="description" content="Noel Grass is a film composer, neoclassical pianist, and music producer from Kenya. Emotional cinematic music, contemporary neoclassical piano compositions, and custom original soundtracks for film, television, and visual media, released internationally.">
 <link rel="canonical" href="https://noelgrass.com/">
 
@@ -27,11 +27,16 @@
 <meta name="twitter:image" content="https://noelgrass.com/images/noel-grass.jpeg">
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🖋️ FONTS
+     🖋️ FONTS (trimmed to weights actually used)
      ═══════════════════════════════════════════════════════════════ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+
+<!-- ═══════════════════════════════════════════════════════════════
+     🖼️ PRELOAD HERO IMAGE (fetches before body parse)
+     ═══════════════════════════════════════════════════════════════ -->
+<link rel="preload" as="image" href="images/noel-grass-hero.webp" type="image/webp" fetchpriority="high">
 
 <!-- ═══════════════════════════════════════════════════════════════
      🤖 STRUCTURED DATA (JSON-LD) - Explains to Google who you are
@@ -298,7 +303,7 @@
 
   .hero { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate; }
   .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
-  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.85; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; opacity: 0.85; }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.92) 95%), linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 55%, var(--bg) 100%); z-index: 1; }
   .hero-content { position: relative; z-index: 2; }
   .eyebrow { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: #E8D5B5; margin-bottom: 30px; }
@@ -309,8 +314,8 @@
 
   .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; }
   .portrait { position: sticky; top: 120px; animation: portraitIn 1.4s ease both; }
-  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--rule); filter: grayscale(100%) contrast(1.05) brightness(0.7); transition: filter 0.7s ease, transform 0.6s ease; animation: portraitGlow 6s ease-in-out infinite; }
-  .portrait img:hover { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.015); }
+  .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--rule); transition: transform 0.6s ease; animation: portraitGlow 6s ease-in-out infinite; }
+  .portrait img:hover { transform: scale(1.015); }
   
   .editorial-text { text-align: left; padding-top: 10px; }
   .intro { font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 30px; }
@@ -379,9 +384,8 @@
     .editorial { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-top: 50px; }
     .portrait { position: static; max-width: 320px; margin: 0 auto; animation: none; transition: none; will-change: auto; }
     .editorial-text, .intro, .intro-body, .bio-link { text-align: center; }
-    .portrait img { display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: fill; animation: none; transition: none; filter: brightness(0.75); box-shadow: none; border: 1px solid rgba(197, 168, 128, 0.35); transform: none; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-    .portrait img:hover { filter: brightness(0.75); transform: none; }
-    .hero-bg img { filter: brightness(0.42) contrast(1.15); }
+    .portrait img { display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: fill; animation: none; transition: none; box-shadow: none; border: 1px solid rgba(197, 168, 128, 0.35); transform: none; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+    .portrait img:hover { transform: none; }
     .fork-card::before { animation: none; opacity: 0.3; filter: blur(6px); }
     .fork-card:hover::before { animation: none; filter: blur(6px); }
     .fork-bg img { filter: brightness(0.4) contrast(1.1); }
@@ -473,9 +477,7 @@
         <ul class="menu-links">
           <li class="menu-item"><a href="biography" class="menu-link">Biography</a></li>
           <li class="menu-item"><a href="./" class="menu-link current">Home</a></li>
-          <!-- EXPLAINER: Removed the data-open-menu attribute so this link works normally and takes the user straight to the Artist page -->
           <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
-          <!-- EXPLAINER: Removed the data-open-menu attribute so this link works normally and takes the user straight to the Film Composer page -->
           <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
           <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
         </ul>
@@ -492,7 +494,11 @@
 
   <section class="hero" id="hero">
     <div class="hero-bg">
-      <img src="images/noel-grass.jpeg" alt="" aria-hidden="true">
+      <picture>
+        <source srcset="images/noel-grass-hero.webp" type="image/webp">
+        <img src="images/noel-grass-hero.jpg" alt="" aria-hidden="true"
+             fetchpriority="high" width="1600" height="900" decoding="async">
+      </picture>
     </div>
     <div class="hero-content">
       <div class="title-block">
@@ -507,7 +513,12 @@
 
     <div class="editorial">
       <div class="portrait">
-        <img src="images/noel-grass.jpeg" alt="Noel Grass — Film Composer and Neoclassical Pianist" loading="eager">
+        <picture>
+          <source srcset="images/noel-grass-portrait-600.webp" type="image/webp">
+          <img src="images/noel-grass-portrait-600.jpg"
+               alt="Noel Grass — Film Composer and Neoclassical Pianist"
+               loading="eager" width="600" height="750">
+        </picture>
       </div>
       <div class="editorial-text">
         <p class="intro">Welcome to a world where music and sound become a space you can feel.</p>
@@ -515,7 +526,6 @@
       </div>
     </div>
 
-    <!-- EXPLAINER: The Fork Cards. Removed the data-open-menu attributes so these now act as direct links to the pages, which is much better for SEO. -->
     <div class="fork" id="fork">
       <p class="fork-intro">Two practices. One name. Choose your door.</p>
       <div class="fork-row">
@@ -617,10 +627,12 @@
      ⚙️ JAVASCRIPT: Menu & Interaction Logic
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  window.addEventListener('load', function() {
-    document.body.classList.add('loaded');
-    var hero = document.getElementById('hero');
-    if (hero) hero.classList.add('loaded');
+  document.addEventListener('DOMContentLoaded', function() {
+    document.fonts.ready.then(function() {
+      document.body.classList.add('loaded');
+      var hero = document.getElementById('hero');
+      if (hero) hero.classList.add('loaded');
+    });
   });
 
   (function() {
@@ -644,11 +656,6 @@
     cards.forEach(function(card) { observer.observe(card); });
   })();
 
-  /* 
-     EXPLAINER: CLEANED UP MENU CONTROLLER
-     The extra Artist and Film Composer menus have been removed. 
-     This script now only controls the main menu panel.
-  */
   (function () {
     var toggle       = document.getElementById('menuToggle');
     var homePanel    = document.getElementById('menuPanel');
@@ -786,4 +793,4 @@
 </script>
 
 </body>
-</html> is the code functional
+</html>
