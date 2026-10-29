@@ -45,7 +45,7 @@
 }
 </script>
 
-<!-- 2. SERVICE -->
+<!-- 2. SERVICE (Optimized Provider Mapping) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -53,11 +53,22 @@
   "@id": "https://noelgrass.github.io/film-composer#service",
   "name": "Film Scoring and Commercial Music Composition",
   "url": "https://noelgrass.github.io/film-composer",
-  "description": "Original film scoring, cinematic soundtracks, jingles, TV commercial music, and sonic branding for film, television, and brands.",
+  "description": "Original film scoring, cinematic soundtracks, jingles, TV commercial music, and sonic branding for film, television, and brands in Nairobi, Kenya and worldwide.",
   "serviceType": "Film Composition",
   "category": "Music Composition",
   "dateModified": "2026-10-27T10:00:00+03:00",
-  "provider": { "@id": "https://noelgrass.github.io/#person" },
+  "provider": {
+    "@type": "Person",
+    "@id": "https://noelgrass.github.io/#person",
+    "name": "Noel Grass",
+    "jobTitle": "Film Composer",
+    "url": "https://noelgrass.github.io/",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nairobi",
+      "addressCountry": "KE"
+    }
+  },
   "areaServed": [
     { "@type": "City", "name": "Nairobi" },
     { "@type": "Country", "name": "Kenya" },
@@ -163,7 +174,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-  /* CSS REMAINS 100% UNTOUCHED */
   :root {
     --bg: #000000;
     --gold: #C5A880;
