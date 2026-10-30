@@ -810,14 +810,18 @@
     ]
   };
 
-  (function renderGallery() {
+    (function renderGallery() {
     var filmsGrid = document.getElementById('filmsGrid');
     if (filmsGrid) {
-      filmsGrid.innerHTML = GALLERY.films.map(function(film) {
+      filmsGrid.innerHTML = GALLERY.films.map(function(film, index) {
+        var imgAttrs = index === 0 
+          ? 'fetchpriority="high" decoding="async"' 
+          : 'loading="lazy" decoding="async"';
+
         return (
           '<div class="gallery-item">' +
             '<div class="poster js-preview-video" data-video="' + film.video + '">' +
-              '<img src="' + film.img + '" alt="' + film.alt + '" loading="lazy">' +
+              '<img src="' + film.img + '" alt="' + film.alt + '" ' + imgAttrs + '>' +
             '</div>' +
             '<div class="caption">' + film.title + '</div>' +
             '<div class="item-actions">' +
@@ -836,7 +840,7 @@
       clientsGrid.innerHTML = GALLERY.clients.map(function(client) {
         return (
           '<div class="client-item js-preview-audio" data-folder="' + client.folder + '" data-file="' + client.file + '" data-logo="' + client.img + '">' +
-            '<img src="' + client.img + '" alt="' + client.alt + '" loading="lazy">' +
+            '<img src="' + client.img + '" alt="' + client.alt + '" loading="lazy" decoding="async">' +
             '<div class="item-actions">' +
               '<button type="button" class="action-link">' +
                 '<span class="play-icon"></span>' +
