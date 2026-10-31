@@ -623,7 +623,48 @@
   .success-done { display: block; width: 100%; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); background: transparent; border: 1px solid var(--gold-soft); padding: 14px 20px; cursor: pointer; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease; -webkit-tap-highlight-color: transparent; }
   .success-done:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 22px rgba(197,168,128,0.30); }
   @media (max-width: 520px) { .success-inner { padding: 44px 26px 34px; } .success-title { font-size: 1.35em; } }
+  /* ... line 625 ends here ... */
 
+  /* 👇 PASTE THE NEW FAQ CSS HERE 👇 */
+  .faq-wrap {
+    text-align: left; margin: 60px auto 0; max-width: 720px;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .faq-wrap summary {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 2px; cursor: pointer; list-style: none;
+    transition: color 0.3s ease;
+  }
+  .faq-wrap summary::-webkit-details-marker { display: none; }
+  .faq-wrap summary::marker { content: ''; }
+  .faq-label {
+    font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
+    letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted);
+    transition: color 0.3s ease;
+  }
+  .faq-wrap summary:hover .faq-label { color: var(--gold-pale); }
+  .faq-indicator {
+    display: inline-block; width: 6px; height: 6px;
+    border-right: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft);
+    transform: rotate(-45deg) translateY(-2px);
+    transition: transform 0.4s ease, border-color 0.4s ease; flex: 0 0 auto;
+  }
+  .faq-wrap[open] .faq-indicator { transform: rotate(45deg) translateY(-2px); border-color: var(--gold); }
+  .faq-body { padding: 4px 0 18px; }
+  .faq-item { padding: 12px 0; border-top: 1px solid rgba(42,42,42,0.7); }
+  .faq-item:first-child { border-top: none; padding-top: 4px; }
+  .faq-item h3 {
+    font-family: 'Playfair Display', Georgia, serif; font-style: normal; font-weight: 400;
+    font-size: 0.88em; color: var(--offwhite); letter-spacing: 0;
+    margin-bottom: 5px; line-height: 1.5; opacity: 0.9;
+  }
+  .faq-item p { font-size: 0.82em; line-height: 1.75; margin: 0; color: var(--muted); }
+  .faq-item p a {
+    color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.35);
+    padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease;
+  }
+  .faq-item p a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
+  
   @media (max-width: 700px) {
     .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
     .page { padding: 60px 22px 60px; }
@@ -845,27 +886,36 @@
       </div>
     </div>
 
-    <div class="section" id="faq">
-      <h2 class="section-heading">Frequently Asked Questions</h2>
+        <div class="section" id="faq">
+      <details class="faq-wrap">
+        <summary>
+          <span class="faq-label">Questions</span>
+          <span class="faq-indicator" aria-hidden="true"></span>
+        </summary>
 
-      <details style="border-bottom:1px solid var(--rule); padding:18px 0;">
-        <summary style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.15em; color:var(--offwhite); cursor:pointer; list-style:none;">What is a stock music library?</summary>
-        <p style="margin-top:12px; color:var(--offwhite);">A stock music library is a pre-made catalogue of music you can license instantly, with no commissioning and no waiting. At Noel Grass, the library covers film scores, cinematic cues, and commercial jingles, all pre-cleared for synchronization in film, TV, and brand work across Kenya and Africa.</p>
-      </details>
+        <div class="faq-body">
 
-      <details style="border-bottom:1px solid var(--rule); padding:18px 0;">
-        <summary style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.15em; color:var(--offwhite); cursor:pointer; list-style:none;">Can Kenyan film production companies license these tracks?</summary>
-        <p style="margin-top:12px; color:var(--offwhite);">Yes. Film production companies in Kenya and across Africa can license these tracks for client productions, documentaries, ad campaigns, and streaming projects. Licenses cover synchronization and distribution, and the written license is attached to the download.</p>
-      </details>
+          <div class="faq-item">
+            <h3>What is a stock music library?</h3>
+            <p>A stock music library is a pre-made catalogue of music you can license instantly, with no commissioning and no waiting. At Noel Grass, the library covers film scores, cinematic cues, and commercial jingles, all pre-cleared for synchronization in film, TV, and brand work across Kenya and Africa.</p>
+          </div>
 
-      <details style="border-bottom:1px solid var(--rule); padding:18px 0;">
-  <summary style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.15em; color:var(--offwhite); cursor:pointer; list-style:none;">Can I use these tracks in a production distributed outside Kenya?</summary>
-  <p style="margin-top:12px; color:var(--offwhite);">Yes. Every license issued by Noel Grass covers worldwide synchronization, so a production scored with these tracks can be distributed internationally. That includes film festivals, streaming platforms, broadcast, and brand campaigns in any territory. The written license states the worldwide scope explicitly, so international distributors, broadcasters, and clients can accept it without a further clearance step. If your project requires territory-specific terms, that can be arranged at the point of licensing.</p>
-</details>
-       
-      <details style="padding:18px 0 0;">
-        <summary style="font-family:'Cormorant Garamond',serif; font-weight:600; font-size:1.15em; color:var(--offwhite); cursor:pointer; list-style:none;">Is this royalty-free or pre-cleared music?</summary>
-        <p style="margin-top:12px; color:var(--offwhite);">These are pre-cleared master licenses. You pay once and use as agreed, with no ongoing royalties for synchronization. Details are in the <a href="license">full licensing terms</a>.</p>
+          <div class="faq-item">
+            <h3>Can Kenyan film production companies license these tracks?</h3>
+            <p>Yes. Film production companies in Kenya and across Africa can license these tracks for client productions, documentaries, ad campaigns, and streaming projects. Licenses cover synchronization and distribution, and the written license is attached to the download.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Can I use these tracks in a production distributed outside Kenya?</h3>
+            <p>Yes. Every license issued by Noel Grass covers worldwide synchronization, so a production scored with these tracks can be distributed internationally. That includes film festivals, streaming platforms, broadcast, and brand campaigns in any territory. The written license states the worldwide scope explicitly, so international distributors, broadcasters, and clients can accept it without a further clearance step. If your project requires territory-specific terms, that can be arranged at the point of licensing.</p>
+          </div>
+
+          <div class="faq-item">
+            <h3>Is this royalty-free or pre-cleared music?</h3>
+            <p>These are pre-cleared master licenses. You pay once and use as agreed, with no ongoing royalties for synchronization. Details are in the <a href="license">full licensing terms</a>.</p>
+          </div>
+
+        </div>
       </details>
     </div>
 
