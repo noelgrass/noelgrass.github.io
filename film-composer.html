@@ -49,7 +49,7 @@
 }
 </script>
 
-<!-- 2. SERVICE (Optimized Provider Mapping) -->
+ <!-- 2. SERVICE (Optimized Provider Mapping) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -57,10 +57,10 @@
   "@id": "https://noelgrass.com/film-composer#service",
   "name": "Film Scoring and Commercial Music Composition",
   "url": "https://noelgrass.com/film-composer",
-  "description": "Original film scoring, cinematic soundtracks, jingles, TV commercial music, and sonic branding for film, television, and brands in Nairobi, Kenya and worldwide.",
+  "description": "Original film scoring, cinematic soundtracks, jingles, TV commercial music, and sonic branding for film, television, and brands in Nairobi, Kenya and worldwide. Pre-cleared film scores and jingles are also available for licensing.",
   "serviceType": "Film Composition",
   "category": "Music Composition",
-  "dateModified": "2026-10-29T10:00:00+03:00",
+  "dateModified": "2026-11-01T12:00:00+03:00",
   "provider": {
     "@type": "Person",
     "@id": "https://noelgrass.com/#person",
@@ -79,7 +79,37 @@
     { "@type": "Place", "name": "East Africa" },
     { "@type": "Place", "name": "Africa" },
     { "@type": "Place", "name": "Worldwide" }
-  ]
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Film Composer Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Original Film Scoring & Commission",
+          "url": "https://noelgrass.com/commission"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Jingles, TV Commercials & Sonic Branding",
+          "url": "https://noelgrass.com/film-gallery"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Music Licensing & Stock Library",
+          "url": "https://noelgrass.com/rent"
+        }
+      }
+    ]
+  }
 }
 </script>
 
@@ -640,6 +670,7 @@
       <li><a href="./">Home</a></li>
       <li><a href="artist">Artist</a></li>
       <li><a href="film-composer">Film Composer</a></li>
+      <li><a href="rent">Rent / License</a></li>
       <li><a href="biography">Biography</a></li>
       <li><a href="contact">Contact</a></li>
       <li><a href="https://www.wikidata.org/wiki/Q141263210" target="_blank" rel="noopener">Wikidata</a></li>
