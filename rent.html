@@ -30,54 +30,54 @@
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🤖 STRUCTURED DATA — 4 SCHEMAS
+     🤖 STRUCTURED DATA — Connected Entity Graph
+     References #person and #website defined on the homepage
      ═══════════════════════════════════════════════════════════════ -->
 
-<!-- 1. WEBPAGE -->
+<!-- 1. WEBPAGE (references Person + Website by @id) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "@id": "https://noelgrass.com/rent#webpage",
   "url": "https://noelgrass.com/rent",
-  "name": "Library Kenya | Film Scores & Jingles for Film Production Companies",
-  "description": "Kenya's library for film production companies and African filmmakers. License pre-cleared film scores, cinematic cues, and commercial jingles — no subscription, per-track pricing.",
-  "dateModified": "2026-10-29T12:00:00+03:00",
+  "name": "Stock Music Library Kenya | Film Scores & Jingles",
+  "description": "Kenya's stock music library for film production companies and African filmmakers. License pre-cleared film scores and commercial jingles — no subscription, per-track pricing.",
+  "dateModified": "2026-11-01T12:00:00+03:00",
   "isPartOf": { "@id": "https://noelgrass.com/#website" },
   "about": { "@id": "https://noelgrass.com/#person" },
-  "mainEntity": { "@id": "https://noelgrass.com/rent#service" }
+  "mainEntity": { "@id": "https://noelgrass.com/rent#service" },
+  "breadcrumb": { "@id": "https://noelgrass.com/rent#breadcrumb" }
 }
 </script>
 
-<!-- 2. SERVICE -->
+<!-- 2. BREADCRUMB -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": "https://noelgrass.com/rent#breadcrumb",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://noelgrass.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Rent / License", "item": "https://noelgrass.com/rent" }
+  ]
+}
+</script>
+
+<!-- 3. SERVICE (links to Person, Website, and OfferCatalog) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Service",
   "@id": "https://noelgrass.com/rent#service",
-  "name": "Licensing for Film & TV",
+  "name": "Music Licensing for Film & TV",
   "serviceType": "Music Licensing",
-  "category": "Library",
+  "category": "Stock Music Library",
   "url": "https://noelgrass.com/rent",
   "description": "Pre-cleared licensing for film production companies in Kenya and African filmmakers. Film scores, cinematic cues, and commercial jingles licensed per track for synchronization in film, TV, streaming, and brand campaigns.",
-  "dateModified": "2026-10-29T12:00:00+03:00",
-  "provider": {
-    "@type": "Person",
-    "@id": "https://noelgrass.com/#person",
-    "name": "Noel Grass",
-    "jobTitle": "Film Composer",
-    "url": "https://noelgrass.com/",
-    "sameAs": [
-      "https://noelgrass.com/film-composer",
-      "https://www.imdb.com/name/nm14289703/",
-      "https://www.wikidata.org/wiki/Q141263210"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Nairobi",
-      "addressCountry": "KE"
-    }
-  },
+  "dateModified": "2026-11-01T12:00:00+03:00",
+  "provider": { "@id": "https://noelgrass.com/#person" },
+  "isPartOf": { "@id": "https://noelgrass.com/#website" },
   "areaServed": [
     { "@type": "City", "name": "Nairobi" },
     { "@type": "Country", "name": "Kenya" },
@@ -90,6 +90,7 @@
     "audienceType": "Film Production Companies, Independent Filmmakers, Solo Creators, TV Broadcasters, Ad Agencies",
     "geographicArea": { "@type": "Country", "name": "Kenya" }
   },
+  "hasOfferCatalog": { "@id": "https://noelgrass.com/rent#catalog" },
   "offers": {
     "@type": "AggregateOffer",
     "priceCurrency": "KES",
@@ -100,40 +101,17 @@
 }
 </script>
 
-<!-- 3. OFFER CATALOG -->
+<!-- 4. OFFER CATALOG (linked to Service) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "OfferCatalog",
   "@id": "https://noelgrass.com/rent#catalog",
-  "name": "Library Kenya — Film Scores & Jingles for Film Production Companies",
+  "name": "Stock Music Library Kenya — Film Scores & Jingles",
   "url": "https://noelgrass.com/rent",
-  "description": "Kenya's library for film production companies and African filmmakers. License pre-cleared film scores, cinematic cues, and commercial jingles — no subscription, per-track pricing, licensed for synchronization across Kenya, East Africa, and worldwide.",
-  "dateModified": "2026-10-29T12:00:00+03:00",
-  "provider": {
-    "@type": "Person",
-    "@id": "https://noelgrass.com/#person",
-    "name": "Noel Grass",
-    "jobTitle": "Film Composer",
-    "url": "https://noelgrass.com/",
-    "sameAs": [
-      "https://noelgrass.com/film-composer",
-      "https://www.imdb.com/name/nm14289703/",
-      "https://www.wikidata.org/wiki/Q141263210"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Nairobi",
-      "addressCountry": "KE"
-    }
-  },
-  "areaServed": [
-    { "@type": "City", "name": "Nairobi" },
-    { "@type": "Country", "name": "Kenya" },
-    { "@type": "Place", "name": "East Africa" },
-    { "@type": "Place", "name": "Africa" },
-    { "@type": "Place", "name": "Worldwide" }
-  ],
+  "description": "Pre-cleared film scores, cinematic cues, and commercial jingles for synchronization across Kenya, East Africa, and worldwide.",
+  "dateModified": "2026-11-01T12:00:00+03:00",
+  "provider": { "@id": "https://noelgrass.com/#person" },
   "itemListElement": [
     {
       "@type": "Offer",
@@ -150,27 +128,6 @@
           "hasMerchantReturnPolicy": {
             "@type": "MerchantReturnPolicy",
             "returnPolicyCategory": "https://schema.org/DigitalProductReturnNotPermitted"
-          },
-          "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": "0.00",
-              "currency": "KES"
-            },
-            "shippingDestination": {
-              "@type": "DefinedRegion",
-              "addressCountry": "KE"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "handlingTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 0,
-                "maxValue": 0,
-                "unitCode": "DAY"
-              }
-            }
           }
         }
       }
@@ -190,27 +147,6 @@
           "hasMerchantReturnPolicy": {
             "@type": "MerchantReturnPolicy",
             "returnPolicyCategory": "https://schema.org/DigitalProductReturnNotPermitted"
-          },
-          "shippingDetails": {
-            "@type": "OfferShippingDetails",
-            "shippingRate": {
-              "@type": "MonetaryAmount",
-              "value": "0.00",
-              "currency": "KES"
-            },
-            "shippingDestination": {
-              "@type": "DefinedRegion",
-              "addressCountry": "KE"
-            },
-            "deliveryTime": {
-              "@type": "ShippingDeliveryTime",
-              "handlingTime": {
-                "@type": "QuantitativeValue",
-                "minValue": 0,
-                "maxValue": 0,
-                "unitCode": "DAY"
-              }
-            }
           }
         }
       }
@@ -219,16 +155,18 @@
 }
 </script>
 
-<!-- 4. FAQ PAGE -->
+<!-- 5. FAQ PAGE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
+  "@id": "https://noelgrass.com/rent#faq",
+  "isPartOf": { "@id": "https://noelgrass.com/rent#webpage" },
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "What is a library?",
-      "acceptedAnswer": { "@type": "Answer", "text": "A library is a pre-made catalogue of music you can license instantly, with no commissioning and no waiting. At Noel Grass, the library covers film scores, cinematic cues, and commercial jingles, all pre-cleared for synchronization in film, TV, and brand work across Kenya and Africa." }
+      "name": "What is a stock music library?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A stock music library is a pre-made catalogue of music you can license instantly, with no commissioning and no waiting. At Noel Grass, the library covers film scores, cinematic cues, and commercial jingles, all pre-cleared for synchronization in film, TV, and brand work across Kenya and Africa." }
     },
     {
       "@type": "Question",
@@ -237,8 +175,8 @@
     },
     {
       "@type": "Question",
-  "name": "Can I use these tracks in a production distributed outside Kenya?",
-  "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every license issued by Noel Grass covers worldwide synchronization, so a production scored with these tracks can be distributed internationally. That includes film festivals, streaming platforms, broadcast, and brand campaigns in any territory. The written license states the worldwide scope explicitly, so international distributors, broadcasters, and clients can accept it without a further clearance step. If your project requires territory-specific terms, that can be arranged at the point of licensing." }
+      "name": "Can I use these tracks in a production distributed outside Kenya?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes. Every license issued by Noel Grass covers worldwide synchronization, so a production scored with these tracks can be distributed internationally. That includes film festivals, streaming platforms, broadcast, and brand campaigns in any territory. The written license states the worldwide scope explicitly, so international distributors, broadcasters, and clients can accept it without a further clearance step. If your project requires territory-specific terms, that can be arranged at the point of licensing." }
     },
     {
       "@type": "Question",
@@ -837,7 +775,7 @@
     <div class="section" id="for-production-companies">
       <h2 class="section-heading">For Kenyan Film Production Companies &amp; Independent Filmmakers</h2>
       
-      <p>Built for film production companies in Kenya, East Africa, and across the continent, this stock music library exists for producers and independent filmmakers who need pre-cleared cinematic music without commissioning original scores for every project. Your clients get cinematic sound; you get clean legal clearance, fast turnaround, and music that is already cleared for synchronization in film, TV, and online distribution.</p>
+      <p>Built for film production companies in Kenya, East Africa, and across the continent, this stock music library exists for producers and independent filmmakers who need pre-cleared cinematic music without commissioning original scores for every project. It is an extension of <a href="film-composer">Noel Grass's film scoring practice</a> — the same composer behind the scores below. Your clients get cinematic sound; you get clean legal clearance, fast turnaround, and music that is already cleared for synchronization in film, TV, and online distribution.</p>
       <p>Whether you're producing documentaries in Nairobi, ad campaigns for East African brands, or narrative films for streaming platforms, these tracks are licensed specifically for production company workflows including client work and multi-project use.</p>
       <p>The catalogue is composed by Noel Grass, a two-time Kalasha International Film Awards nominee for Best Original Score, whose work includes <em>Ziwa</em> (Najib Ayyed Grand Prize) and <em>Lost in Time</em> (five Kalasha Awards including Best Feature Film). <a href="film-composer">See the full filmography →</a></p>
       <ul class="licensing-list">
