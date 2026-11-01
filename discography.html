@@ -24,17 +24,40 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://noelgrass.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Artist", "item": "https://noelgrass.com/artist" },
+    { "@type": "ListItem", "position": 3, "name": "Discography", "item": "https://noelgrass.com/discography" }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "CollectionPage",
   "@id": "https://noelgrass.com/discography#collection",
   "url": "https://noelgrass.com/discography",
   "name": "Discography — Noel Grass",
+  "description": "The complete catalogue of releases by Noel Grass, a contemporary classical and neoclassical composer and pianist from Kenya.",
   "mainEntity": {
     "@type": "Person",
-    "@id": "https://noelgrass.com/#person"
+    "@id": "https://noelgrass.com/#person",
+    "name": "Noel Grass",
+    "jobTitle": "Contemporary Classical & Neoclassical Composer and Pianist",
+    "nationality": "Kenya",
+    "knowsAbout": [
+      "Contemporary Classical",
+      "Modern Classical",
+      "Neoclassical",
+      "Orchestral",
+      "Ambient",
+      "Solo Piano"
+    ]
   }
 }
 </script>
-
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
