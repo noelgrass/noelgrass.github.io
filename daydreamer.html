@@ -12,7 +12,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
-  /* [Keep all the CSS from the previous version here, it is perfect] */
   :root {
     --bg: #000000; --gold: #C5A880; --gold-soft: #B9975C; --gold-pale: #E8D5B5;
     --offwhite: #EDEAE3; --muted: #9a958c; --rule: #2a2a2a;
@@ -57,7 +56,8 @@
     <div class="vault-section" id="vault-section">
       
       <span class="vault-title">The Vault</span>
-            <!-- Patron Email Capture -->
+
+      <!-- Patron Email Capture -->
       <div class="vault-card" style="background: transparent; border: 1px dashed var(--gold-soft); margin-bottom: 30px;">
         <h3 style="font-size: 1.2em;">Claim your Patron status.</h3>
         <p style="margin-bottom: 16px;">Enter your email to get notified the moment new vault drops are released.</p>
@@ -68,18 +68,24 @@
         <div id="patron-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">You're in. We'll be in touch.</div>
       </div>
 
+      <!-- Vault Track 1: A Daydreamer's Draft -->
       <div class="vault-card">
-        <h3>Unreleased: The 2 AM Improvisation</h3>
-        <p>A raw, unedited piano piece recorded on my phone. It's not on Spotify. It's just for you.</p>
+        <h3>A Daydreamer's Draft</h3>
+        <p>A raw, unedited piano piece. It was never meant for the public. It lives here, in the Vault, only for the Daydreamers.</p>
         <br>
-      <span style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.6;">Coming soon</span>
+        <a href="[YOUR_LINK_TO_IMPROVISATION]" target="_blank" style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-pale); border-bottom: 1px solid var(--gold-soft); padding-bottom: 4px; transition: color 0.3s ease;">Listen to the secret file →</a>
       </div>
 
-      <div class="vault-card">
-        <h3>Studio Notes: Into A Stillness</h3>
-        <p>The handwritten chords, the lyrics, and a photo of the piano the day it was written.</p>
-        <br>
-        <span style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.6;">Coming soon</span>
+      <!-- The Daydreamers' Council -->
+      <div class="vault-card" style="margin-top: 30px;">
+        <h3>Shape the Dream</h3>
+        <p style="margin-bottom: 16px;">As a Patron, your voice matters. What vibe do you want to hear next? A quiet solo piano piece? A sweeping orchestral theme? A strange ambient texture? Tell me below.</p>
+        <p style="margin-bottom: 16px; color: var(--gold-pale); font-size: 0.9em;">If I use your idea, you will be credited in the final piece.</p>
+        <form id="council-form">
+          <textarea id="council-input" placeholder="I'd love to hear..." required style="width: 100%; height: 100px; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); padding: 12px; font-family: 'Playfair Display', serif; font-style: italic; outline: none; resize: vertical; margin-bottom: 12px;"></textarea>
+          <button type="submit" style="background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); padding: 12px 24px; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;">Send to the Studio</button>
+        </form>
+        <div id="council-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">Received. Thank you for helping shape this world.</div>
       </div>
 
     </div>
@@ -89,41 +95,55 @@
   </div>
 
   <script>
+    // 1. Check if they are a patron from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
 
-  
-  // This script reads the URL to see how they arrived.
-  const urlParams = new URLSearchParams(window.location.search);
-  const type = urlParams.get('type');
+    if (type === 'patron') {
+      document.getElementById('patron-message').style.display = 'block';
+      document.getElementById('vault-section').style.display = 'block';
+    }
 
-  if (type === 'patron') {
-    document.getElementById('patron-message').style.display = 'block';
-    document.getElementById('vault-section').style.display = 'block';
-  }
-
-  // Handle the Patron form submission
-  const patronForm = document.getElementById('patron-form');
-  if (patronForm) {
-    patronForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('patron-email').value;
-      
-      // Sends to Kit
-      fetch("https://app.kit.com/forms/03b7d9f76e/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email_address: email })
-      })
-      .then(() => {
-        document.getElementById('patron-form').style.display = 'none';
-        document.getElementById('patron-success').style.display = 'block';
-      })
-      .catch(err => {
-        console.error(err);
-        alert("Something went wrong. Please try again.");
+    // 2. Handle the Patron form submission
+    const patronForm = document.getElementById('patron-form');
+    if (patronForm) {
+      patronForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('patron-email').value;
+        
+        // Send to Kit
+        fetch("https://app.kit.com/forms/03b7d9f76e/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email_address: email })
+        })
+        .then(() => {
+          document.getElementById('patron-form').style.display = 'none';
+          document.getElementById('patron-success').style.display = 'block';
+        })
+        .catch(err => {
+          console.error(err);
+          alert("Something went wrong. Please try again.");
+        });
       });
-    });
-  }
-</script>
+    }
+
+    // 3. Handle the Council form submission (opens email client)
+    const councilForm = document.getElementById('council-form');
+    if (councilForm) {
+      councilForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const idea = document.getElementById('council-input').value;
+        
+        const subject = encodeURIComponent("A note from a Daydreamer");
+        const body = encodeURIComponent(idea);
+        window.location.href = `mailto:noel@noelgrass.com?subject=${subject}&body=${body}`;
+        
+        document.getElementById('council-form').style.display = 'none';
+        document.getElementById('council-success').style.display = 'block';
+      });
+    }
+  </script>
 
 </body>
 </html>
