@@ -633,7 +633,7 @@
       </p>
     </div>
 
-    <button type="button" class="success-done" id="successDone">Done</button>
+    <button type="button" class="success-done" id="successDone">Enter the Daydreamer's Room →</button>
   </div>
 </div>
 
@@ -769,7 +769,9 @@
 
     function showSuccess() { successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
     function hideSuccess() { successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
-    successDoneBtn.addEventListener('click', hideSuccess);
+        successDoneBtn.addEventListener('click', function() {
+      window.location.href = "daydreamer.html?type=patron";
+    });
     successModal.addEventListener('click', function (e) { if (e.target === successModal) hideSuccess(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && successModal.classList.contains('open')) { hideSuccess(); } });
 
