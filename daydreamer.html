@@ -47,20 +47,38 @@
     <div class="divider"></div>
 
     <!-- Message for the Listener -->
-    <p id="intro-message">You are officially a daydreamer. You've stepped inside a quiet space where my music becomes your story.</p>
+    <p id="intro-message">
+      You are officially a Daydreamer. You've stepped inside a quiet space where my music becomes your story.
+      <br><br>
+      But this isn't just my world. It's ours. Every note I write, every silence I keep, is built for the people who listen closely. Together, we are building a world of dreams.
+      <br><br>
+      <em>Welcome to the dream. — Noel Grass</em>
+    </p>
     
-    <!-- Extra Message for the Patron (Buyer) -->
-    <p id="patron-message" style="display: none; color: var(--gold-pale);">And you didn't just listen, you took a piece of this world home. Thank you. Because you supported the art directly, the Vault is open to you.</p>
+    <!-- Message for the Patron (Architect) -->
+    <p id="patron-message" style="display: none; color: var(--gold-pale);">
+      Most people will only ever hear the music. They press play, listen, and walk away.
+      <br><br>
+      But you didn't. You stepped inside. You supported the art directly, and by doing so, you didn't just buy a track—you helped build it.
+      <br><br>
+      From this moment on, you are no longer just a Daydreamer. You are an <strong>Architect of the Dream</strong>. You have a seat at the table, the key to the Vault, and a voice in what I build next.
+      <br><br>
+      We are building this world together.
+      <br><br>
+      <em>To my fellow Architect of Dreams,</em>
+      <br><br>
+      <strong>Noel Grass</strong>
+    </p>
 
     <!-- THE VAULT (Hidden by default, shown by JS) -->
     <div class="vault-section" id="vault-section">
       
       <span class="vault-title">The Vault</span>
 
-      <!-- Patron Email Capture -->
+      <!-- Architect Registration -->
       <div class="vault-card" style="background: transparent; border: 1px dashed var(--gold-soft); margin-bottom: 30px;">
-        <h3 style="font-size: 1.2em;">Claim your Patron status.</h3>
-        <p style="margin-bottom: 16px;">Enter your email to get notified the moment new vault drops are released.</p>
+        <h3 style="font-size: 1.2em;">Claim your Architect status.</h3>
+        <p style="margin-bottom: 16px;">Enter your email to register as an Architect. You'll be the first to hear when a new piece is being built, and you'll have a voice in how it sounds.</p>
         <form id="patron-form" style="display: flex; gap: 10px;">
           <input type="email" id="patron-email" placeholder="you@example.com" required style="flex: 1; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); padding: 12px; font-family: 'Playfair Display', serif; font-style: italic; outline: none;">
           <button type="submit" style="background: var(--gold-soft); color: var(--bg); border: none; padding: 12px 24px; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;">Claim</button>
@@ -71,23 +89,33 @@
       <!-- Vault Track 1: A Daydreamer's Draft -->
       <div class="vault-card">
         <h3>A Daydreamer's Draft</h3>
-        <p>A raw, unedited piano piece. It was never meant for the public. It lives here, in the Vault, only for the Daydreamers.</p>
+        <p>A raw, unedited piano piece. It was never meant for the public. It lives here, in the Vault, only for the Architects.</p>
         <br>
         <a href="[YOUR_LINK_TO_IMPROVISATION]" target="_blank" style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-pale); border-bottom: 1px solid var(--gold-soft); padding-bottom: 4px; transition: color 0.3s ease;">Listen to the secret file →</a>
       </div>
 
-      <!-- The Daydreamers' Council -->
+      <!-- The Architects' Council -->
       <div class="vault-card" style="margin-top: 30px;">
-        <h3>Shape the Dream</h3>
-        <p style="margin-bottom: 16px;">As a Patron, your voice matters. What vibe do you want to hear next? A quiet solo piano piece? A sweeping orchestral theme? A strange ambient texture? Tell me below.</p>
+        <h3>Build the Next World</h3>
+        <p style="margin-bottom: 16px;">As an Architect of the Dream, your voice shapes the music. What vibe do you want to hear next? A quiet solo piano piece? A sweeping orchestral theme? A strange ambient texture? Tell me below.</p>
         <p style="margin-bottom: 16px; color: var(--gold-pale); font-size: 0.9em;">If I use your idea, you will be credited in the final piece.</p>
         <form id="council-form">
           <textarea id="council-input" placeholder="I'd love to hear..." required style="width: 100%; height: 100px; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); padding: 12px; font-family: 'Playfair Display', serif; font-style: italic; outline: none; resize: vertical; margin-bottom: 12px;"></textarea>
           <button type="submit" style="background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); padding: 12px 24px; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease;">Send to the Studio</button>
         </form>
-        <div id="council-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">Received. Thank you for helping shape this world.</div>
+        <div id="council-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">Received. Thank you, Architect. Your idea is now part of the blueprint.</div>
       </div>
 
+    </div>
+
+    <!-- The Listener Teaser (Only shows to free subscribers) -->
+    <div id="listener-teaser" style="display: none; margin-top: 60px; border-top: 1px solid var(--rule); padding-top: 40px; width: 100%; text-align: left;">
+      <div class="vault-card" style="background: transparent; border: 1px dashed var(--gold-soft);">
+        <h3 style="color: var(--gold);">Build the World With Me</h3>
+        <p style="margin-bottom: 16px;">You are a Daydreamer. But there is a deeper level. The <strong>Architects of the Dream</strong> are the ones who help shape what comes next. They get the hidden tracks, they get their name in the credits, and they help decide what I write next.</p>
+        <p style="margin-bottom: 16px;">We are building this world together. If you want a seat at the table, the key is a purchase from the Store. It's not a subscription. It's a one-time key.</p>
+        <a href="store" class="cta-link" style="margin-top: 0; border-color: var(--gold-soft);">Become an Architect of Dreams →</a>
+      </div>
     </div>
 
     <a href="discography" class="cta-link">Explore the Catalogue</a>
@@ -102,6 +130,8 @@
     if (type === 'patron') {
       document.getElementById('patron-message').style.display = 'block';
       document.getElementById('vault-section').style.display = 'block';
+    } else {
+      document.getElementById('listener-teaser').style.display = 'block';
     }
 
     // 2. Handle the Patron form submission
@@ -135,7 +165,7 @@
         e.preventDefault();
         const idea = document.getElementById('council-input').value;
         
-        const subject = encodeURIComponent("A note from a Daydreamer");
+        const subject = encodeURIComponent("A note from an Architect");
         const body = encodeURIComponent(idea);
         window.location.href = `mailto:noel@noelgrass.com?subject=${subject}&body=${body}`;
         
