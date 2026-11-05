@@ -12,6 +12,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
+  /* ═══════════════════════════════════════════════════════════════
+     🎨 CSS VARIABLES (The Color Palette)
+     ═══════════════════════════════════════════════════════════════ */
   :root {
     --bg: #000000; --gold: #C5A880; --gold-soft: #B9975C; --gold-pale: #E8D5B5;
     --offwhite: #EDEAE3; --muted: #9a958c; --rule: #2a2a2a;
@@ -46,6 +49,13 @@
     
     <div class="divider"></div>
 
+    <!-- ═══════════════════════════════════════════════════════════════
+         📖 THE WELCOME MESSAGES
+         Two messages live here. Only one will show at a time.
+         1. intro-message = The Listener (Free subscriber)
+         2. patron-message = The Architect (Buyer)
+         ═══════════════════════════════════════════════════════════════ -->
+    
     <!-- Message for the Listener -->
     <p id="intro-message">
       You are officially a Daydreamer. You've stepped inside a quiet space where my music becomes your story.
@@ -70,7 +80,15 @@
       <strong>Noel Grass</strong>
     </p>
 
-    <!-- THE VAULT (Hidden by default, shown by JS) -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         🔒 THE VAULT (Hidden by default, shown only to Architects)
+         This section is only visible to people with ?type=patron in the URL.
+         
+         Inside you will find:
+         1. Architect Registration (Saves their email to Kit)
+         2. The Secret Track (A Daydreamer's Draft - Coming Soon)
+         3. The Council (Lets them suggest music ideas)
+         ═══════════════════════════════════════════════════════════════ -->
     <div class="vault-section" id="vault-section">
       
       <span class="vault-title">The Vault</span>
@@ -86,7 +104,7 @@
         <div id="patron-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">You're in. We'll be in touch.</div>
       </div>
 
-      <!-- Vault Track 1: A Daydreamer's Draft -->
+      <!-- Vault Track 1: A Daydreamer's Draft (Coming Soon) -->
       <div class="vault-card">
         <h3>A Daydreamer's Draft</h3>
         <p>A raw, unedited piano piece. It was never meant for the public. It lives here, in the Vault, only for the Architects.</p>
@@ -94,7 +112,7 @@
         <span style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.6;">Coming soon</span>
       </div>
 
-      <!-- The Architects' Council -->
+      <!-- The Architects' Council (Suggest music) -->
       <div class="vault-card" style="margin-top: 30px;">
         <h3>Build the Next World</h3>
         <p style="margin-bottom: 16px;">As an Architect of the Dream, your voice shapes the music. What vibe do you want to hear next? A quiet solo piano piece? A sweeping orchestral theme? A strange ambient texture? Tell me below.</p>
@@ -108,7 +126,11 @@
 
     </div>
 
-    <!-- The Listener Teaser (Only shows to free subscribers) -->
+    <!-- ═══════════════════════════════════════════════════════════════
+         🎟️ THE LISTENER TEASER (Hidden by default)
+         This section only shows to Listeners (free subscribers).
+         It invites them to become an Architect by visiting the Store.
+         ═══════════════════════════════════════════════════════════════ -->
     <div id="listener-teaser" style="display: none; margin-top: 60px; border-top: 1px solid var(--rule); padding-top: 40px; width: 100%; text-align: left;">
       <div class="vault-card" style="background: transparent; border: 1px dashed var(--gold-soft);">
         <h3 style="color: var(--gold);">Build the World With Me</h3>
@@ -118,19 +140,30 @@
       </div>
     </div>
 
+    <!-- The footer link back to the catalogue -->
     <a href="discography" class="cta-link">Explore the Catalogue</a>
 
   </div>
 
+  <!-- ═══════════════════════════════════════════════════════════════
+       ⚙️ SCRIPT (The Engine)
+       This code runs when the page loads.
+       
+       1. It reads the URL. If it says ?type=patron, it unlocks the Vault.
+       2. It handles the Architect registration form (sends to Kit).
+       3. It handles the Council suggestion form (opens email client).
+       ═══════════════════════════════════════════════════════════════ -->
   <script>
     // 1. Check if they are a patron from the URL
     const urlParams = new URLSearchParams(window.location.search);
     const type = urlParams.get('type');
 
     if (type === 'patron') {
+      // Show the Architect message and unlock the Vault
       document.getElementById('patron-message').style.display = 'block';
       document.getElementById('vault-section').style.display = 'block';
     } else {
+      // Show the Listener teaser
       document.getElementById('listener-teaser').style.display = 'block';
     }
 
