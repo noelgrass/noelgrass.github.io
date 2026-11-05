@@ -854,26 +854,13 @@
             body: JSON.stringify({ reference: response.reference })
           })
           .then(res => res.json())
-          .then(data => {
+          
+            .then(data => {
             if (data.success) {
-                            // 1. Set the button's link and text
               downloadBtn.href = data.downloadUrl;
               downloadBtn.innerText = "Download " + data.title + ".zip";
               downloadBtn.style.opacity = "1";
               downloadBtn.style.pointerEvents = "auto";
-
-              // 2. Automatically trigger the download
-              var tempLink = document.createElement('a');
-              tempLink.href = data.downloadUrl;
-              tempLink.setAttribute('download', data.title + '.zip');
-              document.body.appendChild(tempLink);
-              tempLink.click();
-              document.body.removeChild(tempLink);
-
-              // 3. Open the Vault in a new tab
-              setTimeout(function() {
-                window.open("daydreamer.html?type=patron", "_blank");
-              }, 500);
             } else {
               alert("Could not generate download link. Please use the 'Already Purchased' box at the bottom of the page.");
             }
