@@ -7,10 +7,9 @@
 
 <title>Noel Grass — Store | Music, Tickets &amp; Digital Products</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
-<meta name="description" content="The official store for Noel Grass, neoclassical pianist and contemporary classical composer from Kenya. Music, tickets for live performances, merchandise, and digital products, shipped worldwide.">
+<meta name="description" content="The official store for Noel Grass, neoclassical pianist and contemporary classical composer from Kenya. Music, tickets, merchandise, and digital products, shipped worldwide.">
 <link rel="canonical" href="https://noelgrass.com/store">
 
 <meta property="og:type" content="website">
@@ -69,13 +68,11 @@
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
   
-  /* Optimized Rest Glow for all items */
   @keyframes tileRestGlow { 
     0% { box-shadow: 0 0 15px 2px rgba(185,151,92,0.15), 0 0 30px 5px rgba(185,151,92,0.05); } 
     50% { box-shadow: 0 0 20px 3px rgba(185,151,92,0.30), 0 0 45px 8px rgba(185,151,92,0.10); } 
     100% { box-shadow: 0 0 15px 2px rgba(185,151,92,0.15), 0 0 30px 5px rgba(185,151,92,0.05); } 
   }
-  /* Optimized Hover Glow for all items */
   @keyframes tileHoverGlow { 
     0% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 
     50% { box-shadow: 0 0 40px 8px rgba(197,168,128,0.60), 0 0 80px 20px rgba(197,168,128,0.30); } 
@@ -174,7 +171,6 @@
   .coming-soon { padding: 50px 20px 60px; text-align: center; }
   .coming-soon p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.02em; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.85; }
   
-  /* Unified Store Grid */
   .mood-group .store-gallery, .feature-release { padding: 40px 0 50px; }
   .store-gallery, .feature-release { display: flex; flex-wrap: wrap; justify-content: center; gap: 80px 50px; max-width: 1100px; margin: 0 auto; }
   
@@ -226,7 +222,6 @@
     transition: opacity 0.5s ease;
   }
 
-  /* Hover States */
   .store-item:hover .poster, .feature-item:hover .poster { border-color: var(--gold-soft); animation: tileHoverGlow 4s ease-in-out infinite; }
   .store-item:hover .poster img, .feature-item:hover .poster img { filter: brightness(0.82) contrast(1.10); transform: scale(1.015); }
   
@@ -237,7 +232,6 @@
   
   .item-actions { display: flex; justify-content: center; align-items: center; gap: 18px; margin-top: 16px; flex-wrap: wrap; }
   
-  /* Elegant Buy Button */
   .action-link {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -257,7 +251,6 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Halo ring — pill-shaped, fades in on hover */
   .action-link::before {
     content: '';
     position: absolute;
@@ -272,7 +265,6 @@
 
   .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
   
-  /* 3D Pop Forward Hover */
   .store-item:hover .action-link,
   .feature-item:hover .action-link,
   .action-link:hover {
@@ -287,7 +279,6 @@
     transform: scale(1.1);
   }
 
-  /* Halo ring appears on hover (item-hover OR direct button hover) */
   .store-item:hover .action-link::before,
   .feature-item:hover .action-link::before,
   .action-link:hover::before {
@@ -301,7 +292,6 @@
 
   a.action-link { display: inline-block; }
   
-  /* Dimming Other Items */
   .store-gallery:has(.store-item:hover) .store-item:not(:hover) .poster,
   .store-gallery:has(.feature-item:hover) .store-item:not(:hover) .poster {
     box-shadow: none; border-color: #1a1a1a; animation: none;
@@ -323,7 +313,6 @@
     opacity: 0.35;
   }
 
-  /* Modals & Recovery */
   .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -739,7 +728,7 @@
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
-    var PAYSTACK_PUBLIC_KEY = "pk_test_2617e97bc9ee5dab828a3e949a58f2246c7d13a9";
+    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
     var SALES_PAUSED = false;
     window.SALES_PAUSED = SALES_PAUSED;
 
@@ -774,9 +763,7 @@
 
     function showSuccess() { successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
     function hideSuccess() { successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
-        successDoneBtn.addEventListener('click', function() {
-      window.location.href = "daydreamer.html?type=patron";
-    });
+    successDoneBtn.addEventListener('click', hideSuccess);
     successModal.addEventListener('click', function (e) { if (e.target === successModal) hideSuccess(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && successModal.classList.contains('open')) { hideSuccess(); } });
 
@@ -854,13 +841,27 @@
             body: JSON.stringify({ reference: response.reference })
           })
           .then(res => res.json())
-          
-            .then(data => {
+          .then(data => {
             if (data.success) {
+              // 1. Set the button's link and text
               downloadBtn.href = data.downloadUrl;
               downloadBtn.innerText = "Download " + data.title + ".zip";
               downloadBtn.style.opacity = "1";
               downloadBtn.style.pointerEvents = "auto";
+
+              // 2. Automatically trigger the download
+              var tempLink = document.createElement('a');
+              tempLink.href = data.downloadUrl;
+              tempLink.setAttribute('download', data.title + '.zip');
+              document.body.appendChild(tempLink);
+              tempLink.click();
+              document.body.removeChild(tempLink);
+
+              // 3. Open the Vault in a new tab
+              setTimeout(function() {
+                window.open("daydreamer.html?type=patron", "_blank");
+              }, 500);
+
             } else {
               alert("Could not generate download link. Please use the 'Already Purchased' box at the bottom of the page.");
             }
