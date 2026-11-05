@@ -57,6 +57,16 @@
     <div class="vault-section" id="vault-section">
       
       <span class="vault-title">The Vault</span>
+            <!-- Patron Email Capture -->
+      <div class="vault-card" style="background: transparent; border: 1px dashed var(--gold-soft); margin-bottom: 30px;">
+        <h3 style="font-size: 1.2em;">Claim your Patron status.</h3>
+        <p style="margin-bottom: 16px;">Enter your email to get notified the moment new vault drops are released.</p>
+        <form id="patron-form" style="display: flex; gap: 10px;">
+          <input type="email" id="patron-email" placeholder="you@example.com" required style="flex: 1; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); padding: 12px; font-family: 'Playfair Display', serif; font-style: italic; outline: none;">
+          <button type="submit" style="background: var(--gold-soft); color: var(--bg); border: none; padding: 12px 24px; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; cursor: pointer;">Claim</button>
+        </form>
+        <div id="patron-success" style="display: none; color: var(--gold-pale); font-style: italic; margin-top: 10px;">You're in. We'll be in touch.</div>
+      </div>
 
       <div class="vault-card">
         <h3>Unreleased: The 2 AM Improvisation</h3>
@@ -79,17 +89,41 @@
   </div>
 
   <script>
-    // This script reads the URL to see how they arrived.
-    // It looks for the word 'patron' in the link (e.g., daydreamer.html?type=patron)
-    const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
 
-    if (type === 'patron') {
-      // If they are a patron (buyer), show the extra message and open the Vault
-      document.getElementById('patron-message').style.display = 'block';
-      document.getElementById('vault-section').style.display = 'block';
-    }
-  </script>
+  
+  // This script reads the URL to see how they arrived.
+  const urlParams = new URLSearchParams(window.location.search);
+  const type = urlParams.get('type');
+
+  if (type === 'patron') {
+    document.getElementById('patron-message').style.display = 'block';
+    document.getElementById('vault-section').style.display = 'block';
+  }
+
+  // Handle the Patron form submission
+  const patronForm = document.getElementById('patron-form');
+  if (patronForm) {
+    patronForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const email = document.getElementById('patron-email').value;
+      
+      // Sends to Kit
+      fetch("https://app.kit.com/forms/03b7d9f76e/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email_address: email })
+      })
+      .then(() => {
+        document.getElementById('patron-form').style.display = 'none';
+        document.getElementById('patron-success').style.display = 'block';
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Something went wrong. Please try again.");
+      });
+    });
+  }
+</script>
 
 </body>
 </html>
