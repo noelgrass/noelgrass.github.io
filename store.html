@@ -623,26 +623,22 @@
     <p class="success-title">Payment received</p>
     <p class="success-body">Thank you! Your download is ready.</p>
 
-    <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
+   <!-- The Download Button (Auto-downloads and opens the Vault) -->
+    <a href="#" id="downloadLinkBtn" class="checkout-submit" download style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
 
-    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
-      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 16px;">Save your receipt:</p>
-      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px; line-height: 1.5;">
-        Your transaction reference is:
-      </p>
-      <div style="margin-bottom: 20px;">
-        <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.3em; display: inline-block; background: rgba(197,168,128,0.1); padding: 8px 12px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
-      </div>
-      <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
-        <strong>Want to download this again later?</strong><br>
-        <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Come back to the website:</strong> Return to this store at any time and scroll down to the <a href="#already-purchased" style="color:var(--gold); text-decoration:underline; text-underline-offset:2px;">"Already Purchased?"</a> box at the bottom of the page to get a fresh download link.</span>
-      </p>
-    </div>
+    <!-- A quiet line explaining what happens next -->
+    <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; color: var(--muted); margin-bottom: 24px;">
+      Your download will start automatically. <br>
+      Your key to the Vault is waiting in your email.
+    </p>
 
-    <button type="button" class="success-done" id="successDone">You've obtained the key. Become an Architect of Dreams →</button>
+    <p style="font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.1em; color: var(--muted); margin-top: 24px;">
+      Keep this reference for your records: <strong id="successRef" style="color: var(--gold-pale);"></strong>
+    </p>
+
+    
   </div>
 </div>
 
@@ -860,10 +856,24 @@
           .then(res => res.json())
           .then(data => {
             if (data.success) {
+                            // 1. Set the button's link and text
               downloadBtn.href = data.downloadUrl;
               downloadBtn.innerText = "Download " + data.title + ".zip";
               downloadBtn.style.opacity = "1";
               downloadBtn.style.pointerEvents = "auto";
+
+              // 2. Automatically trigger the download
+              var tempLink = document.createElement('a');
+              tempLink.href = data.downloadUrl;
+              tempLink.setAttribute('download', data.title + '.zip');
+              document.body.appendChild(tempLink);
+              tempLink.click();
+              document.body.removeChild(tempLink);
+
+              // 3. Open the Vault in a new tab
+              setTimeout(function() {
+                window.open("daydreamer.html?type=patron", "_blank");
+              }, 500);
             } else {
               alert("Could not generate download link. Please use the 'Already Purchased' box at the bottom of the page.");
             }
