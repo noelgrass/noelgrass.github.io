@@ -998,7 +998,39 @@
     transition: border-color 0.3s ease, color 0.3s ease;
   }
 
-  .faq-item p a:hover {
+ /* Connect list inside collapsible */
+  .faq-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .faq-body ul li {
+    padding: 10px 0 10px 22px;
+    position: relative;
+    border-bottom: 1px solid rgba(42, 42, 42, 0.7);
+  }
+
+  .faq-body ul li:last-child {
+    border-bottom: none;
+  }
+
+  .faq-body ul li::before {
+    content: "\2014";
+    color: var(--gold);
+    position: absolute;
+    left: 0;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+
+  .faq-body ul li a {
+    color: var(--gold);
+    border-bottom: 1px solid rgba(197, 168, 128, 0.35);
+    padding-bottom: 1px;
+    transition: border-color 0.3s ease, color 0.3s ease;
+  }
+
+  .faq-body ul li a:hover {
     border-bottom-color: var(--gold);
     color: #FCFCF7;
   }
@@ -1245,7 +1277,7 @@
     <!-- FAQ (collapsible, matches Film Composer page) -->
     <details class="faq-wrap">
       <summary>
-        <span class="faq-label">Frequently Asked Questions</span>
+        <span class="faq-label">Questions</span>
         <span class="faq-indicator" aria-hidden="true"></span>
       </summary>
 
@@ -1294,27 +1326,33 @@
       </div>
     </details>
 
-    <section class="reveal">
-      <h2>Connect</h2>
-      <ul>
-        <li><a href="https://noelgrass.com">Official Website</a></li>
-        <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
-        <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
-        <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
-        <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
-        <li><a href="https://ke.linkedin.com/in/noelgrass">LinkedIn</a></li>
-        <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
-        <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
-        <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
-        <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
-        <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
-        <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
-        <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
-        <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
-        <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
-        <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
-      </ul>
-    </section>
+        <details class="faq-wrap">
+      <summary>
+        <span class="faq-label">Connect</span>
+        <span class="faq-indicator" aria-hidden="true"></span>
+      </summary>
+
+      <div class="faq-body">
+        <ul>
+          <li><a href="https://noelgrass.com">Official Website</a></li>
+          <li><a href="https://www.imdb.com/name/nm14289703/">IMDb</a></li>
+          <li><a href="https://www.wikidata.org/wiki/Q141263210">Wikidata</a></li>
+          <li><a href="https://musicinafrica.net/directory/noel-grass/">Music In Africa</a></li>
+          <li><a href="https://filamu.org/person/noel-grass/">Filamu</a></li>
+          <li><a href="https://ke.linkedin.com/in/noelgrass">LinkedIn</a></li>
+          <li><a href="https://www.instagram.com/noelgrass/">Instagram</a></li>
+          <li><a href="https://facebook.com/noelgrassmusic">Facebook</a></li>
+          <li><a href="https://www.youtube.com/@NoelGrass">YouTube</a></li>
+          <li><a href="https://open.spotify.com/artist/1a6i0GGbOBR2MQykr2H1vG">Spotify</a></li>
+          <li><a href="https://music.apple.com/us/artist/noel-grass/1451933028">Apple Music</a></li>
+          <li><a href="https://noelgrass.bandcamp.com/">Bandcamp</a></li>
+          <li><a href="https://soundcloud.com/noel-grass">SoundCloud</a></li>
+          <li><a href="https://www.deezer.com/de/artist/58180192">Deezer</a></li>
+          <li><a href="https://www.qobuz.com/be-nl/interpreter/noel-grass/4447403">Qobuz</a></li>
+          <li><a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8">Google Maps</a></li>
+        </ul>
+      </div>
+    </details>
 
     <section class="reveal">
       <p>For his recorded work as a pianist and composer, see the <a href="artist">Artist page</a>. For his scoring work, see the <a href="film-composer">Film Composer page</a>.</p>
