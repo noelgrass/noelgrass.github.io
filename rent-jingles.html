@@ -1094,7 +1094,11 @@
       try {
         var handler = PaystackPop.setup({
           key: PAYSTACK_PUBLIC_KEY, email: email, amount: amount, currency: currency,
-          metadata: { product_id: productId, custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
+          metadata: { 
+  product_id: productId, 
+  webhook_url: "https://rent-jingles.noelgrass.workers.dev/", 
+  custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] 
+},
           callback: function (response) {
             var dlBtn = document.getElementById('downloadLinkBtn');
             dlBtn.href = "https://rent-jingles.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(response.reference) + "&product=" + encodeURIComponent(productId);
