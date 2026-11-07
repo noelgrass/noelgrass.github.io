@@ -7,6 +7,7 @@
 
 <title>Stock Music Library Kenya | Film Scores &amp; Jingles</title>
 
+   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
 <meta name="description" content="Kenya's stock music library for African filmmakers. License pre-cleared film scores and commercial jingles.">
@@ -28,7 +29,12 @@
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
-<!-- 1. WEBPAGE -->
+<!-- ═══════════════════════════════════════════════════════════════
+     🤖 STRUCTURED DATA — Connected Entity Graph
+     References #person and #website defined on the homepage
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- 1. WEBPAGE (references Person + Website by @id) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -58,7 +64,7 @@
 }
 </script>
 
-<!-- 3. SERVICE -->
+<!-- 3. SERVICE (links to Person, Website, and OfferCatalog) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -95,7 +101,7 @@
 }
 </script>
 
-<!-- 4. OFFER CATALOG -->
+<!-- 4. OFFER CATALOG (linked to Service) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -516,6 +522,9 @@
     padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease;
   }
   .faq-item p a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
+
+  /* 👇 REMOVED BUY BUTTONS GLOBALLY 👇 */
+  .action-link { display: none !important; }
   
   @media (max-width: 700px) {
     .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
@@ -694,6 +703,7 @@
       <ul class="licensing-list">
         <li>License once, use in client productions with clear written terms.</li>
         <li>Pre-cleared for synchronization — film, TV, streaming, and brand campaigns across Africa.</li>
+        
         <li>Individual licenses for independent filmmakers, editors, and solo creators.</li>
         <li>No subscription. Pay per track, per project.</li>
       </ul>
@@ -735,7 +745,7 @@
       </div>
     </div>
 
-    <div class="section" id="faq">
+        <div class="section" id="faq">
       <details class="faq-wrap">
         <summary>
           <span class="faq-label">Questions</span>
