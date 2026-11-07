@@ -7,7 +7,6 @@
 
 <title>Stock Music Library Kenya | Film Scores &amp; Jingles</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
 <meta name="description" content="Kenya's stock music library for African filmmakers. License pre-cleared film scores and commercial jingles.">
@@ -29,12 +28,7 @@
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🤖 STRUCTURED DATA — Connected Entity Graph
-     References #person and #website defined on the homepage
-     ═══════════════════════════════════════════════════════════════ -->
-
-<!-- 1. WEBPAGE (references Person + Website by @id) -->
+<!-- 1. WEBPAGE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -64,7 +58,7 @@
 }
 </script>
 
-<!-- 3. SERVICE (links to Person, Website, and OfferCatalog) -->
+<!-- 3. SERVICE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -101,7 +95,7 @@
 }
 </script>
 
-<!-- 4. OFFER CATALOG (linked to Service) -->
+<!-- 4. OFFER CATALOG -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -388,51 +382,6 @@
     box-shadow: 0 0 10px 1px rgba(197,168,128,0.35);
   }
 
-  .action-link {
-    position: relative;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 0.85em;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--gold-soft);
-    background: transparent;
-    border: none;
-    padding: 8px 6px;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    transition: color 0.35s ease, text-shadow 0.35s ease, transform 0.35s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .action-link::before {
-    content: '';
-    position: absolute;
-    inset: -6px -12px;
-    border-radius: 999px;
-    border: 1px solid transparent;
-    box-shadow: 0 0 0 0 rgba(197,168,128,0);
-    opacity: 0;
-    transition: opacity 0.4s ease, box-shadow 0.5s ease, border-color 0.4s ease;
-    pointer-events: none;
-  }
-  .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
-  .action-link:hover {
-    color: var(--gold-pale);
-    text-shadow: 0 0 15px rgba(197,168,128,0.7);
-    transform: scale(1.06) translateY(-1px);
-  }
-  .action-link:hover svg { transform: scale(1.1); }
-  .action-link:hover::before {
-    opacity: 1;
-    border-color: rgba(197,168,128,0.45);
-    box-shadow:
-      0 0 14px 2px rgba(197,168,128,0.45),
-      0 0 30px 8px rgba(197,168,128,0.22),
-      0 0 56px 16px rgba(197,168,128,0.10);
-  }
-
   .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
   .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
   .player-progress-wrap { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
@@ -528,41 +477,6 @@
   .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
   .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
 
-  .checkout-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
-  .checkout-modal.open { opacity: 1; pointer-events: auto; }
-  .checkout-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
-  .checkout-modal.open .checkout-inner { transform: scale(1); }
-  .checkout-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.65em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 18px; display: block; }
-  .checkout-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; letter-spacing: 0.05em; color: var(--gold-pale); margin-bottom: 8px; line-height: 1.3; }
-  .checkout-price { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.85em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 34px; }
-  .checkout-divider { height: 1px; background: linear-gradient(to right, transparent 0%, rgba(197,168,128,0.4) 50%, transparent 100%); margin: 0 0 30px; }
-  .checkout-field-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); text-align: left; display: block; margin-bottom: 10px; }
-  .checkout-input { display: block; width: 100%; background: transparent; border: 0; border-bottom: 1px solid rgba(185,151,92,0.4); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; font-size: 1em; padding: 10px 0; outline: none; transition: border-color 0.3s ease; text-align: left; }
-  .checkout-input::placeholder { color: rgba(154,149,140,0.55); font-style: italic; }
-  .checkout-input:focus { border-bottom-color: var(--gold); }
-  .checkout-error { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.15em; color: #e08b7a; text-align: left; margin-top: 8px; min-height: 14px; opacity: 0; transition: opacity 0.3s ease; }
-  .checkout-error.visible { opacity: 1; }
-  .checkout-submit { display: block; width: 100%; margin-top: 30px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); background: transparent; border: 1px solid var(--gold-soft); padding: 14px 20px; cursor: pointer; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease; -webkit-tap-highlight-color: transparent; }
-  .checkout-submit:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 22px rgba(197,168,128,0.30); }
-  .checkout-cancel { display: inline-block; margin-top: 22px; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.6em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); background: transparent; border: 0; cursor: pointer; padding: 6px 4px; transition: color 0.3s ease; }
-  .checkout-cancel:hover { color: var(--gold-pale); }
-  .checkout-close { position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; line-height: 1; padding: 6px 8px; cursor: pointer; transition: color 0.3s ease; }
-  .checkout-close:hover { color: var(--gold-pale); }
-
-  .success-modal { position: fixed; inset: 0; z-index: 960; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
-  .success-modal.open { opacity: 1; pointer-events: auto; }
-  .success-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 56px 40px 44px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
-  .success-modal.open .success-inner { transform: scale(1); }
-  .success-mark { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; border: 1px solid var(--gold-soft); border-radius: 50%; color: var(--gold-pale); font-size: 1.6em; margin-bottom: 26px; box-shadow: 0 0 30px rgba(197,168,128,0.25); }
-  .success-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.65em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 16px; display: block; }
-  .success-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.6em; letter-spacing: 0.05em; color: var(--gold-pale); margin-bottom: 18px; line-height: 1.3; }
-  .success-body { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.98em; color: var(--offwhite); line-height: 1.75; margin-bottom: 34px; }
-  .success-body strong { font-style: normal; font-weight: 500; color: var(--gold-soft); }
-  .success-done { display: block; width: 100%; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); background: transparent; border: 1px solid var(--gold-soft); padding: 14px 20px; cursor: pointer; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease; -webkit-tap-highlight-color: transparent; }
-  .success-done:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 22px rgba(197,168,128,0.30); }
-  @media (max-width: 520px) { .success-inner { padding: 44px 26px 34px; } .success-title { font-size: 1.35em; } }
-  /* ... line 625 ends here ... */
-
   /* 👇 PASTE THE NEW FAQ CSS HERE 👇 */
   .faq-wrap {
     text-align: left; margin: 60px auto 0; max-width: 720px;
@@ -636,7 +550,6 @@
     .track-meta { font-size: 0.7em; }
     .track-actions { gap: 8px; }
     .action-play { width: 34px; height: 34px; font-size: 0.85em; }
-    .action-link { font-size: 0.68em; padding: 6px 0; }
     .inline-player { padding: 12px 0 8px 58px; }
     .track-preview-label { font-size: 0.58em; display: block; margin-left: 0; margin-top: 4px; }
     .recovery-cta { padding: 32px 24px; margin: 60px auto 40px; }
@@ -781,7 +694,6 @@
       <ul class="licensing-list">
         <li>License once, use in client productions with clear written terms.</li>
         <li>Pre-cleared for synchronization — film, TV, streaming, and brand campaigns across Africa.</li>
-        
         <li>Individual licenses for independent filmmakers, editors, and solo creators.</li>
         <li>No subscription. Pay per track, per project.</li>
       </ul>
@@ -823,7 +735,7 @@
       </div>
     </div>
 
-        <div class="section" id="faq">
+    <div class="section" id="faq">
       <details class="faq-wrap">
         <summary>
           <span class="faq-label">Questions</span>
@@ -1040,9 +952,7 @@
           '</div>' +
           '<div class="track-actions">' +
             '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '" data-issuite="' + t.isSuite + '">▶</button>' +
-            '<button type="button" class="action-link js-buy" data-id="' + t.code + '" data-title="' + t.code + ' — ' + t.title + '" data-amount="' + t.amount + '" data-currency="KES" data-verify="' + t.verify + '">' +
-              '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>Buy' +
-            '</button>' +
+            /* REMOVED: Buy button here */
           '</div>' +
           trackContent +
         '</div>' +
@@ -1092,7 +1002,6 @@
         var url = mainPlayBtn.getAttribute('data-url');
         var isSuite = mainPlayBtn.getAttribute('data-issuite') === 'true';
 
-        /* JS FIX: suite cancel — clicking ✕ on an open suite now stops audio and collapses the suite */
         if (isSuite && currentTrackId && currentTrackId.indexOf(code + '-') === 0) {
           stopCurrentTrack();
           var openSuite = document.getElementById('suite-' + code);
