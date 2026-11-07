@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
-<title>Noel Grass — Join | Two Paths. One Dream.</title>
+<title>Noel Grass — Join</title>
 
    <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
@@ -14,12 +14,12 @@
 <link rel="canonical" href="https://noelgrass.com/join">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Noel Grass — Join | Two Paths. One Dream.">
+<meta property="og:title" content="Noel Grass — Join">
 <meta property="og:description" content="Join Noel Grass's list. Step into a world of dreams.">
 <meta property="og:url" content="https://noelgrass.com/join">
 <meta property="og:image" content="https://noelgrass.com/images/noel-grass.jpeg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Noel Grass — Join | Two Paths. One Dream.">
+<meta name="twitter:title" content="Noel Grass — Join">
 <meta name="twitter:description" content="Join Noel Grass's list. Step into a world of dreams.">
 <meta name="twitter:image" content="https://noelgrass.com/images/noel-grass.jpeg">
 
@@ -136,9 +136,25 @@
   .page { max-width: 720px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
 
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
-  .hero-hook { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.35em; color: var(--offwhite); margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-  .hero-desc { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; line-height: 1.85; color: var(--offwhite); max-width: 520px; margin: 0 auto 50px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
-  .hero-desc strong { color: var(--gold-pale); font-weight: 600; }
+
+  /* ═══════════════════════════════════════════════════════════════
+     📜 THE OPENING LETTER
+     ═══════════════════════════════════════════════════════════════ */
+  .opening-letter {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1em;
+    line-height: 1.85;
+    color: var(--offwhite);
+    max-width: 580px;
+    margin: 0 auto 60px;
+    text-align: left;
+    animation: fadeUp 1s ease-out both;
+    animation-delay: 0.4s;
+  }
+  .opening-letter p { margin-bottom: 24px; }
+  .opening-letter p:last-child { margin-bottom: 0; }
+  .opening-letter em { font-style: italic; }
+  .opening-letter strong { color: var(--gold-pale); font-weight: 600; }
 
   .kit-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
 
@@ -165,24 +181,6 @@
   .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-powered-by-convertkit-container { margin: 20px 0 0 0 !important; opacity: 0.4 !important; transition: opacity 0.3s ease !important; justify-content: center !important; }
   .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-powered-by-convertkit-container:hover { opacity: 0.75 !important; }
 
-  .join-note { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-bottom: 60px; animation: fadeUp 1s ease-out both; animation-delay: 0.85s; }
-
-  /* ═══════════════════════════════════════════════════════════════
-     🎭 THE TWO TIERS (Side-by-Side)
-     ═══════════════════════════════════════════════════════════════ */
-  .tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 720px; margin: 0 auto 60px; text-align: left; animation: fadeUp 1s ease-out both; animation-delay: 1s; }
-  .tier-card { border: 1px solid var(--rule); padding: 32px 24px; display: flex; flex-direction: column; transition: border-color 0.3s ease; }
-  .tier-label { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.3em; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--offwhite); display: block; margin-bottom: 8px; }
-  .tier-price { font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-soft); display: block; margin-bottom: 24px; }
-  .tier-list { list-style: none; padding: 0; margin: 0 0 24px; flex-grow: 1; }
-  .tier-list li { padding: 10px 0 10px 24px; position: relative; font-family: 'Playfair Display', Georgia, serif; font-size: 0.95em; line-height: 1.6; color: var(--offwhite); }
-  .tier-list li::before { content: '—'; color: var(--gold); position: absolute; left: 0; }
-  .tier-note { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin: 0; }
-  .tier-cta { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-pale); border-bottom: 1px solid var(--gold-soft); padding-bottom: 2px; transition: color 0.3s ease, border-color 0.3s ease; }
-  .tier-cta:hover { color: #FCFCF7; border-bottom-color: var(--gold); }
-
-  @media (max-width: 600px) { .tier-grid { grid-template-columns: 1fr; } }
-
   .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.15s; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
 
@@ -194,13 +192,9 @@
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.9em; letter-spacing: 0.2em; margin-bottom: 24px; }
-    .hero-hook { font-size: 1.15em; }
-    .hero-desc { font-size: 1em; margin-bottom: 40px; }
+    .opening-letter { font-size: 1em; margin-bottom: 40px; }
     .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-input { font-size: 0.95em !important; padding: 14px 16px !important; }
     .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit { padding: 16px 32px !important; font-size: 0.75em !important; letter-spacing: 0.25em !important; }
-    .join-note { font-size: 0.65em; letter-spacing: 0.2em; margin-bottom: 40px; }
-    .tier-card { padding: 24px 20px; }
-    .tier-list li { font-size: 0.9em; padding: 8px 0 8px 20px; }
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -279,63 +273,22 @@
 
     <h1>Join</h1>
 
-    <p class="hero-hook">Two paths. One dream.</p>
-
-    <p class="hero-desc">
-      You are stepping inside a quiet space where the music becomes your story.
-      <br><br>
-      You can join as a <strong>Daydreamer</strong>. You will hear new pieces first, get notes from the studio, and follow the story.
-      <br><br>
-      Or, if you want a seat at the table, you can become an <strong>Architect of Dreams</strong> by making a purchase from the Store. You get the key to the Vault, the hidden tracks, and a voice in what I write next.
-    </p>
+    <!-- ═══════════════════════════════════════════════════════════════
+         📜 THE OPENING LETTER
+         ═══════════════════════════════════════════════════════════════ -->
+    <div class="opening-letter">
+      <p>I daydream. I create stories. Music is what gives them shape.</p>
+      <p>My music moves through quiet rooms and sweeping orchestras, but the goal is always the same: <strong>to help you find a story of your own.</strong></p>
+      <p>When you join, you become a <strong>Daydreamer</strong>. You get early releases and studio notes. But more than that, you get the space to build your own universe. To take these pieces and score the stories in your head. This music isn't just mine anymore. It's yours to dream with.</p>
+      <p>Welcome to the dream.</p>
+    </div>
 
     <!-- ═══════════════════════════════════════════════════════════════
          📧 THE DAYDREAMER FORM (Kit)
-         This is the free tier. They enter their email to join the list.
+         This is the email capture form.
          ═══════════════════════════════════════════════════════════════ -->
     <div class="kit-form-wrap">
       <script async data-uid="03b7d9f76e" src="https://noel-grass.kit.com/03b7d9f76e/index.js"></script>
-    </div>
-
-    <p class="join-note">Join the list as a Daydreamer</p>
-
-    <!-- ═══════════════════════════════════════════════════════════════
-         🎭 THE TWO TIERS
-         Shows the difference between a Daydreamer (email join) and an Architect (purchase).
-         ═══════════════════════════════════════════════════════════════ -->
-    <div class="tier-grid">
-
-      <!-- Daydreamer Tier -->
-      <div class="tier-card">
-        <span class="tier-label">The Daydreamer</span>
-        <span class="tier-price">Join the List</span>
-        <ul class="tier-list">
-          <li>New pieces before the public.</li>
-          <li>Notes from the studio.</li>
-          <li>Follow the story as it unfolds.</li>
-        </ul>
-        <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; color: var(--muted); margin-bottom: 20px;">
-          You are stepping into a quiet space where the music becomes your story. The door is open.
-        </p>
-        <p class="tier-note">Join the list above.</p>
-      </div>
-
-      <!-- Architect Tier -->
-      <div class="tier-card" style="border-color: var(--gold-soft); background: rgba(197,168,128,0.03);">
-        <span class="tier-label" style="color: var(--gold-pale);">The Architect of Dreams</span>
-        <span class="tier-price" style="color: var(--gold);">The Key is a Purchase</span>
-        <ul class="tier-list">
-          <li>The key to the Vault.</li>
-          <li>Hidden, unreleased tracks.</li>
-          <li>A voice in what I write next.</li>
-          <li>A part of the process.</li>
-        </ul>
-        <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; color: var(--gold-pale); margin-bottom: 20px;">
-          You are not just a listener. You are someone who helps build this world.
-        </p>
-        <a href="store" class="tier-cta" style="font-size: 0.75em;">Become an Architect of Dreams →</a>
-      </div>
-
     </div>
 
     <div class="signature">
