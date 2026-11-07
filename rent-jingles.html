@@ -7,7 +7,6 @@
 
 <title>Rent Jingles — Stock Music Library Kenya | Noel Grass</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
 <meta name="description" content="License commercial jingles from Kenya's stock music library. Pre-cleared brand tracks for Kenyan film production companies, independent creators, and international campaigns — no subscription, per-track pricing.">
@@ -28,10 +27,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     🤖 STRUCTURED DATA — 3 SCHEMAS (WebPage + Service + FAQPage)
-     ═══════════════════════════════════════════════════════════════ -->
 
 <!-- 1. WEBPAGE -->
 <script type="application/ld+json">
@@ -724,28 +719,16 @@
     <div class="success-mark" aria-hidden="true">✓</div>
     <span class="success-label">Confirmed</span>
     <p class="success-title">Payment received</p>
-    <p class="success-body">
-      Thank you! Your download is ready.
-    </p>
+    <p class="success-body">Thank you! Your files are ready.</p>
 
     <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
 
-    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: left;">
-      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 16px;">Save your receipt:</p>
-
-      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px; line-height: 1.5;">
-        Your transaction reference is:
-      </p>
-      <div style="margin-bottom: 20px;">
-        <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.3em; display: inline-block; background: rgba(197,168,128,0.1); padding: 8px 12px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
-      </div>
-
+    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: center;">
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
-        <strong>Want to download this again later?</strong><br>
-        <span style="color: var(--muted);">1. <strong>Check your email:</strong> Look for the transaction reference number on the receipt Paystack sent to your email.</span><br>
-        <span style="color: var(--muted);">2. <strong>Come back to this page at any time:</strong> Scroll down to the <em style="color: var(--gold-pale); font-style: italic;">"Already Purchased?"</em> box at the bottom of the page to get a fresh download link.</span>
+        A download link has also been sent to your email.<br>
+        <span style="color: var(--muted); font-size: 0.9em;">Please check your inbox (and spam folder) to access your purchase.</span>
       </p>
     </div>
 
@@ -1050,7 +1033,6 @@
     var closeBtn   = document.getElementById('checkoutClose');
     var successModal   = document.getElementById('successModal');
     var successDoneBtn = document.getElementById('successDone');
-    var successRefEl   = document.getElementById('successRef');
     var downloadBtn    = document.getElementById('downloadLinkBtn');
     var pendingBtn = null;
 
@@ -1107,23 +1089,19 @@
           key: PAYSTACK_PUBLIC_KEY, email: email, amount: amount, currency: currency,
           metadata: { product_id: productId, custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
           callback: function (response) {
-            successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false');
+            // 1. Setup the permanent recovery link
+            var dlBtn = document.getElementById('downloadLinkBtn');
+            dlBtn.href = "https://rent-jingles.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(response.reference) + "&product=" + encodeURIComponent(productId);
+            
+            // 2. Make the button clickable and change text
+            dlBtn.style.opacity = "1";
+            dlBtn.style.pointerEvents = "auto";
+            dlBtn.innerText = "Download Your Files";
+            
+            // 3. Show the popup
+            successModal.classList.add('open');
+            successModal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('no-scroll');
-            var ref = response.reference;
-            successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
-            downloadBtn.innerText = "Generating link...";
-            downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
-
-            fetch("https://rent-jingles.noelgrass.workers.dev/verify", {
-              method: "POST", headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ reference: response.reference })
-            }).then(function (r) { return r.json(); }).then(function (data) {
-              if (data.success) {
-                downloadBtn.href = data.downloadUrl;
-                downloadBtn.innerText = "Download " + data.title + ".zip";
-                downloadBtn.style.opacity = "1"; downloadBtn.style.pointerEvents = "auto";
-              } else { alert("Could not generate download link."); }
-            }).catch(function () { alert("Network error."); });
           },
           onClose: function () {}
         });
@@ -1135,7 +1113,8 @@
     if (closeBtn) closeBtn.addEventListener('click', closeCheckout);
     if (modal) modal.addEventListener('click', function (e) { if (e.target === modal) closeCheckout(); });
     if (successDoneBtn) successDoneBtn.addEventListener('click', function () {
-      successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true');
+      successModal.classList.remove('open'); 
+      successModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('no-scroll');
     });
     if (successModal) successModal.addEventListener('click', function (e) { if (e.target === successModal) successModal.classList.remove('open'); });
