@@ -28,6 +28,10 @@
 
 <script src="https://js.paystack.co/v1/inline.js"></script>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     🤖 STRUCTURED DATA — 3 SCHEMAS (WebPage + Service + FAQPage)
+     ═══════════════════════════════════════════════════════════════ -->
+
 <!-- 1. WEBPAGE -->
 <script type="application/ld+json">
 {
@@ -738,6 +742,9 @@
 
 <audio id="mainAudio"></audio>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     🧭 SCRIPT 1 — MENU + ACCORDION + AUDIO
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -1089,16 +1096,13 @@
           key: PAYSTACK_PUBLIC_KEY, email: email, amount: amount, currency: currency,
           metadata: { product_id: productId, custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
           callback: function (response) {
-            // 1. Setup the permanent recovery link
             var dlBtn = document.getElementById('downloadLinkBtn');
             dlBtn.href = "https://rent-jingles.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(response.reference) + "&product=" + encodeURIComponent(productId);
             
-            // 2. Make the button clickable and change text
             dlBtn.style.opacity = "1";
             dlBtn.style.pointerEvents = "auto";
             dlBtn.innerText = "Download Your Files";
             
-            // 3. Show the popup
             successModal.classList.add('open');
             successModal.setAttribute('aria-hidden', 'false');
             document.body.classList.add('no-scroll');
