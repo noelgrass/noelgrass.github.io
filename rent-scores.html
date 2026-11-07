@@ -668,15 +668,19 @@
     <div class="success-mark" aria-hidden="true">✓</div>
     <span class="checkout-label" style="text-align:center;">Confirmed</span>
     <p class="success-title">Payment received</p>
-    <p class="success-body">Thank you! Your download is ready.</p>
+    <p class="success-body">Thank you! Your files are ready.</p>
+
     <a href="#" id="downloadLinkBtn" class="checkout-submit" style="display:block; text-decoration:none; margin-bottom: 24px; opacity:0.5; pointer-events:none; font-size: 0.85em; padding: 14px 20px;">
       Generating link...
     </a>
-    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 20px; margin-bottom: 24px; text-align: left;">
-      <p style="font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 12px;">Save your receipt:</p>
-      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); margin-bottom: 8px;">Your transaction reference is:</p>
-      <strong id="successRef" style="font-family: 'Montserrat', sans-serif; color: var(--gold-pale); word-break: break-all; font-size: 1.2em; display: inline-block; background: rgba(197,168,128,0.1); padding: 6px 10px; border-radius: 4px; letter-spacing: 0.05em;"></strong>
+
+    <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: center;">
+      <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
+        A download link has also been sent to your email.<br>
+        <span style="color: var(--muted); font-size: 0.9em;">Please check your inbox (and spam folder) to access your purchase.</span>
+      </p>
     </div>
+
     <button type="button" class="success-done" id="successDone">Done</button>
   </div>
 </div>
@@ -726,6 +730,18 @@
   }
 </script>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     🚨🚨🚨 DATA ENTRY — SCORES & SHELVES 🚨🚨🚨
+     
+     HOW TO ADD A NEW SCORE:
+     1. Find the correct shelf in the `SCORES` array below.
+     2. Copy an existing line, paste it, and update the details.
+     3. `desc` is an array of 3 strings (one for each cue in the suite).
+     
+     HOW TO ADD A NEW SHELF:
+     1. Copy an existing line in the `SHELVES` array and update it.
+     2. Ensure the `cat` value matches the `cat` value of the scores you add.
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
   var SCORES = [
     // ── TENSION & SUSPENSE ─────────────────────────────────────
@@ -1097,7 +1113,6 @@
     var closeBtn   = document.getElementById('checkoutClose');
     var successModal   = document.getElementById('successModal');
     var successDoneBtn = document.getElementById('successDone');
-    var successRefEl   = document.getElementById('successRef');
     var downloadBtn    = document.getElementById('downloadLinkBtn');
     var pendingBtn = null;
 
@@ -1150,25 +1165,25 @@
       try {
         var handler = PaystackPop.setup({
           key: PAYSTACK_PUBLIC_KEY, email: email, amount: amount, currency: 'KES',
-          metadata: { product_id: productId, custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] },
+          metadata: { 
+            product_id: productId, 
+            webhook_url: "https://rent-scores.noelgrass.workers.dev/", 
+            custom_fields: [{ display_name: "Product", variable_name: "product", value: title }] 
+          },
           callback: function (response) {
-            successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false');
+            // Set up the download button
+            var dlBtn = document.getElementById('downloadLinkBtn');
+            dlBtn.href = "https://rent-scores.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(response.reference) + "&product=" + encodeURIComponent(productId);
+            
+            // Make the button clickable
+            dlBtn.style.opacity = "1";
+            dlBtn.style.pointerEvents = "auto";
+            dlBtn.innerText = "Download Your Files";
+            
+            // Show the popup
+            successModal.classList.add('open');
+            successModal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
-            var ref = response.reference;
-            successRefEl.textContent = ref.replace(/-/g, '').match(/.{1,4}/g).join('-');
-            downloadBtn.innerText = "Generating link...";
-            downloadBtn.style.opacity = "0.5"; downloadBtn.style.pointerEvents = "none";
-
-            fetch(VERIFY_ENDPOINT, {
-              method: "POST", headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ reference: response.reference })
-            }).then(function (r) { return r.json(); }).then(function (data) {
-              if (data.success) {
-                downloadBtn.href = data.downloadUrl;
-                downloadBtn.innerText = "Download " + data.title + ".zip";
-                downloadBtn.style.opacity = "1"; downloadBtn.style.pointerEvents = "auto";
-              } else { alert("Could not generate download link."); }
-            }).catch(function () { alert("Network error."); });
           },
           onClose: function () {}
         });
