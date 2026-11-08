@@ -230,8 +230,7 @@
   
   .format-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); margin-top: 6px; transition: color 0.5s ease; }
   
-  .item-actions { display: flex; justify-content: center; align-items: center; gap: 32px; margin-top: 16px; flex-wrap: wrap; }
-  
+ .item-actions { display: flex; justify-content: center; align-items: center; gap: 48px; margin-top: 20px; flex-wrap: wrap; }
   .action-link {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
@@ -251,10 +250,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  .action-link::before {
+     .action-link::before {
     content: '';
     position: absolute;
-    inset: -6px -14px;
+    inset: -4px -8px;
     border-radius: 999px;
     border: 1px solid transparent;
     box-shadow: 0 0 0 0 rgba(197,168,128,0);
@@ -264,23 +263,17 @@
   }
 
   .action-link svg { width: 16px; height: 16px; fill: currentColor; transition: transform 0.35s ease; }
-  
-  .store-item:hover .action-link,
-  .feature-item:hover .action-link,
+
   .action-link:hover {
     color: var(--gold-pale);
     text-shadow: 0 0 15px rgba(197,168,128,0.7);
     transform: scale(1.08) translateY(-2px);
   }
-  
-  .store-item:hover .action-link svg,
-  .feature-item:hover .action-link svg,
+
   .action-link:hover svg {
     transform: scale(1.1);
   }
 
-  .store-item:hover .action-link::before,
-  .feature-item:hover .action-link::before,
   .action-link:hover::before {
     opacity: 1;
     border-color: rgba(197,168,128,0.45);
