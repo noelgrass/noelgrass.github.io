@@ -906,7 +906,7 @@
               '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
               'Buy' +
             '</button>' +
-            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + feat.id + '" onclick="window.addToCart(\'' + feat.id + '\', \'' + feat.title + '\', ' + feat.amount + ')" style="color: var(--gold-pale);">' +
+            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + feat.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + feat.id + '\', \'' + feat.title + '\', ' + feat.amount + ')" style="color: var(--gold-pale);">' +
               '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
               'Add to Cart' +
             '</button>' +
@@ -941,7 +941,7 @@
                 '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
                 'Buy' +
               '</button>' +
-              '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + item.amount + ')" style="color: var(--gold-pale);">' +
+              '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + item.amount + ')" style="color: var(--gold-pale);">' +
                 '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
                 'Add to Cart' +
               '</button>' +
@@ -973,6 +973,8 @@
       }
       
       el.addEventListener('click', function(e) {
+        if (e.target.closest('.js-add-to-cart-btn')) return;
+        
         e.preventDefault();
         if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) {
            e.stopPropagation();
@@ -1144,9 +1146,9 @@
       if (item) {
         btn.innerHTML = 
           '<div class="main-qty-controls">' +
-            '<button type="button" class="main-qty-btn" onclick="window.handleMainQty(\'' + id + '\', -1, event)">-</button>' +
+            '<button type="button" class="main-qty-btn" onclick="event.stopPropagation(); window.handleMainQty(\'' + id + '\', -1, event)">-</button>' +
             '<span class="main-qty-num">' + item.qty + '</span>' +
-            '<button type="button" class="main-qty-btn" onclick="window.handleMainQty(\'' + id + '\', 1, event)">+</button>' +
+            '<button type="button" class="main-qty-btn" onclick="event.stopPropagation(); window.handleMainQty(\'' + id + '\', 1, event)">+</button>' +
           '</div>';
       } else {
         btn.innerHTML = 
@@ -1191,7 +1193,10 @@
 
   // Master function to handle +/- from BOTH main page and modal
   window.handleMainQty = function(id, delta, event) {
-    if(event) event.preventDefault();
+    if(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     
     var itemIndex = window.cartData.findIndex(function(item) { return item.id === id; });
     
@@ -1203,7 +1208,51 @@
       }
       
       localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
-      window.updateCartUI();
+      
+      // Update the cart modal
+      var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
+      var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
+      document.getElementById('floatingCartCount').innerText = count;
+      document.getElementById('cartTotalPrice').innerText = total.toLocaleString();
+      
+      var btn = document.getElementById('floatingCartBtn');
+      if (count > 0) { btn.classList.add('show'); } else { btn.classList.remove('show'); }
+
+      var list = document.getElementById('cartItemsList');
+      if (count === 0) {
+        list.innerHTML = '<p style="font-family: \'Playfair Display\', serif; font-style: italic; color: var(--muted); text-align: center;">Your cart is empty.</p>';
+      } else {
+        list.innerHTML = window.cartData.map(function(item) {
+          return '<div class="cart-item-row">' +
+            '<div class="cart-item-info">' +
+              '<span class="cart-item-title">' + item.title + '</span>' +
+              '<span class="cart-item-price">KES ' + ((item.amount * item.qty) / 100).toLocaleString() + '</span>' +
+            '</div>' +
+            '<div class="cart-qty-controls">' +
+              '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', -1, event)">-</button>' +
+              '<span class="cart-qty-num">' + item.qty + '</span>' +
+              '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', 1, event)">+</button>' +
+            '</div>' +
+          '</div>';
+        }).join('');
+      }
+      
+      // Update ONLY the button on the main page that was clicked
+      var buttons = document.querySelectorAll('.js-add-to-cart-btn');
+      buttons.forEach(function(btn) {
+        if (btn.getAttribute('data-id') === id) {
+          var updatedItem = window.cartData.find(function(i) { return i.id === id; });
+          
+          if (updatedItem) {
+            var qtySpan = btn.querySelector('.main-qty-num');
+            if (qtySpan) qtySpan.innerText = updatedItem.qty;
+          } else {
+            btn.innerHTML = 
+              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
+              'Add to Cart';
+          }
+        }
+      });
     }
   };
 
