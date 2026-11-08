@@ -1135,31 +1135,56 @@
       this.value = formatted;
     });
 
-    if (recBtn) recBtn.addEventListener('click', function () {
+       if (recBtn) recBtn.addEventListener('click', async function () {
       var ref = recInput.value.trim();
       if (!ref) {
         recError.innerText = "Please enter a reference code.";
         recError.style.display = "block";
         return;
       }
+      
       recError.style.display = "none";
       recBtn.innerText = "Verifying...";
       recBtn.disabled = true;
 
-      if (downloadBtn) {
-        downloadBtn.innerText = "Downloading...";
-        downloadBtn.style.opacity = "0.5"; 
-        downloadBtn.style.pointerEvents = "none";
-      }
-      successModal.classList.add('open');
-      successModal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
+      // 1. Silently ask Master Brain if the link is valid without downloading it
+      try {
+        const check = await fetch("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), {
+          method: "HEAD",
+          redirect: "manual" // Stops the browser from downloading the file right now
+        });
 
-      setTimeout(function() {
-        window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+        if (check.status === 403 || check.status === 400) {
+          // 2. It's invalid! Show the error and stop.
+          recError.innerText = "Invalid reference or payment incomplete.";
+          recError.style.display = "block";
+          recBtn.innerText = "Generate Fresh Link";
+          recBtn.disabled = false;
+          return;
+        }
+
+        // 3. It's valid! Show the modal and navigate.
+        if (downloadBtn) {
+          downloadBtn.innerText = "Downloading...";
+          downloadBtn.style.opacity = "0.5"; 
+          downloadBtn.style.pointerEvents = "none";
+        }
+        successModal.classList.add('open');
+        successModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+
+        setTimeout(function() {
+          window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+          recBtn.innerText = "Generate Fresh Link";
+          recBtn.disabled = false;
+        }, 1500);
+
+      } catch (err) {
+        recError.innerText = "Network error. Please try again.";
+        recError.style.display = "block";
         recBtn.innerText = "Generate Fresh Link";
         recBtn.disabled = false;
-      }, 1500);
+      }
     });
 
     renderTracks();
