@@ -802,43 +802,27 @@
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
 
+    // ✏️ EDIT 1: Input formatter (uppercase, grouped 4-4-4)
     recInput.addEventListener('input', function(e) {
-      var val = this.value.replace(/-/g, '');
-      var newVal = val.match(/.{1,4}/g);
-      if (newVal) { this.value = newVal.join('-'); } else { this.value = val; }
+      var val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+      var formatted = val;
+      if (val.length > 4)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8);
+      if (val.length > 8)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8) + '-' + val.slice(8, 12);
+      this.value = formatted;
     });
 
+    // ✏️ EDIT 2: Recovery button - direct navigation, no fetch()
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
       if(!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
 
+      recError.style.display = "none";
       recBtn.innerText = "Verifying...";
       recBtn.style.opacity = "0.5";
       recBtn.disabled = true;
-      recError.style.display = "none";
 
-      // CHANGED TO MASTER BRAIN GET ROUTE
-      fetch("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), {
-        method: "GET"
-      })
-      .then(res => {
-        if (res.ok || res.redirected) {
-          // Force the browser to navigate to the URL to download the file
-          window.location.href = res.url;
-        } else {
-          recError.innerText = "Invalid reference or payment incomplete.";
-          recError.style.display = "block";
-        }
-      })
-      .catch(err => {
-        recError.innerText = "Network error. Please try again.";
-        recError.style.display = "block";
-      })
-      .finally(() => {
-        recBtn.innerText = "Generate Fresh Link";
-        recBtn.style.opacity = "1";
-        recBtn.disabled = false;
-      });
+      // Direct browser navigation so the ZIP streams natively
+      window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
     });
   })();
 </script>
@@ -1010,12 +994,12 @@
         downloadBtn.style.pointerEvents = "auto";
         downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         
-        // When they click it, close the modal so they can see the file download
-        downloadBtn.onclick = function() {
-          setTimeout(function() {
-            successModal.classList.remove('open');
-            document.body.classList.remove('no-scroll');
-          }, 500);
+        // ✏️ EDIT 3: Close modal first, then navigate (avoids canceling slow downloads)
+        downloadBtn.onclick = function(e) {
+          e.preventDefault();
+          successModal.classList.remove('open');
+          document.body.classList.remove('no-scroll');
+          window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         };
       }
       
