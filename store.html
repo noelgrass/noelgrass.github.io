@@ -803,14 +803,13 @@
     var recError = document.getElementById('recoveryError');
 
     // ✏️ EDIT 1: Input formatter (uppercase, grouped 4-4-4)
-    recInput.addEventListener('input', function(e) {
+       recInput.addEventListener('input', function(e) {
       var val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
       var formatted = val;
       if (val.length > 4)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8);
       if (val.length > 8)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8) + '-' + val.slice(8, 12);
       this.value = formatted;
     });
-
     // ✏️ EDIT 2: Recovery button - direct navigation, no fetch()
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
