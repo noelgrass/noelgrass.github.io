@@ -998,21 +998,40 @@
       successModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
       
-      // 🚀 SET UP THE DOWNLOAD BUTTON TO HIT THE MASTER BRAIN
+            // 🚀 SET UP THE DOWNLOAD BUTTON TO HIT THE MASTER BRAIN
       if (downloadBtn && ref) {
         downloadBtn.innerText = "Download Your Files";
         downloadBtn.style.opacity = "1"; 
         downloadBtn.style.pointerEvents = "auto";
-        downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         
-        // ✏️ NEW: Keep modal open, change text to "Downloading..." 
-        downloadBtn.onclick = function(e) {
+        downloadBtn.onclick = async function(e) {
           e.preventDefault();
-          downloadBtn.innerText = "Downloading...";
+          downloadBtn.innerText = "Preparing files...";
           downloadBtn.style.opacity = "0.7";
           
-          // Trigger download in a new tab so the modal stays visible
-          window.open("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), "_blank");
+          try {
+            // Fetch the secure links from the master brain
+            const res = await fetch(`https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`, {
+               // Use HEAD just to get the redirect location without downloading the page
+               method: 'HEAD',
+               redirect: 'manual' 
+            });
+
+            // If the master brain redirected them directly to a file (1 item)
+            if (res.type === 'opaqueredirect' || res.status === 0) {
+               // We can't read the redirect URL in fetch due to CORS, so we just open the link
+               window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
+            } else {
+               // If it's a multiple-item page, we navigate the current tab to the auto-download page
+               // Because the user clicked a button, the browser will allow the downloads on the new page.
+               window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
+            }
+            
+          } catch (err) {
+            console.error(err);
+            // Fallback
+            window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
+          }
         };
       }
       
