@@ -41,8 +41,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- PAYSTACK SCRIPT REMOVED HERE -->
-
 <style>
   :root {
     --bg: #000000;
@@ -687,32 +685,9 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💳 SCRIPT 2 — CHECKOUT + RECOVERY
-
-     PAYSTACK_PUBLIC_KEY  live key for the Paystack inline modal.
-     SALES_PAUSED         flip to true to hide Buy buttons and pause.
-     STORAGE_KEY          localStorage key for remembered email.
-     Verify endpoint      https://my-store-backend.noelgrass.workers.dev/verify
-                          must return { success: true, downloadUrl, title }
-                          for valid references (used by both the post-
-                          purchase flow AND the recovery box).
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
-    var PAYSTACK_PUBLIC_KEY = "pk_live_d010069cb476a949766ec2928741f4aeddd9fddd";
-    var SALES_PAUSED = false;
-    window.SALES_PAUSED = SALES_PAUSED;
-
-    if (SALES_PAUSED) {
-      var topLink = document.getElementById('heroTopLink');
-      if (topLink) {
-        topLink.href = "#";
-        topLink.style.pointerEvents = "none";
-        topLink.style.color = "var(--muted)";
-        topLink.style.fontStyle = "italic";
-        topLink.innerText = "We are currently updating our store. Sales will resume shortly.";
-      }
-    }
-
     var STORAGE_KEY = "noelgrass_email";
 
     var modal      = document.getElementById('checkoutModal');
@@ -768,7 +743,6 @@
 
     function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-    // REPLACED PROCEED TO PAYSTACK FUNCTION HERE
     async function proceedToPaystack() {
       if (!pendingBtn) return;
       var email = (emailInput.value || '').trim();
@@ -848,7 +822,8 @@
         method: "GET"
       })
       .then(res => {
-        if (res.redirected) {
+        if (res.ok || res.redirected) {
+          // Force the browser to navigate to the URL to download the file
           window.location.href = res.url;
         } else {
           recError.innerText = "Invalid reference or payment incomplete.";
@@ -870,36 +845,6 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
-
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / CHANGE PRODUCTS.
-
-     Each category below renders into a matching <div class="store-gallery"
-     data-category="..."> in the HTML. The "featured" entry renders at the
-     top under "Latest Release".
-
-     ── HOW TO ADD A NEW RELEASE ─────────────────────────────────
-     1. Upload a square cover image to: images/discography/
-        (recommended: 1000×1000+, JPG or WEBP, under ~300 KB)
-     2. Find the correct category array below
-        (e.g. "solo-piano", "orchestral", "experimental", "ambient").
-     3. Copy an existing line, paste it below the last one in that
-        category, and change the details to match the new release.
-     4. Save. Counts and rendering happen automatically.
-
-     ── FIELDS ───────────────────────────────────────────────────
-       img       Image path, e.g. "images/discography/my-new-album.jpg"
-       alt       Short text description for screen readers / SEO.
-       title     Release title (shown under the cover).
-       format    Format line under the title, e.g. "Solo Piano".
-       badge     Corner tag, e.g. "EP", "Album", "Single".
-       id        Product ID used in your Paystack/Worker backend —
-                 must match the id expected by
-                 https://my-store-backend.noelgrass.workers.dev/verify
-       amount    Price in smallest currency unit.
-                 (50000 = KSh 500, 90000 = KSh 900, 20000 = KSh 200)
-       currency  Currency code — "KES", "USD", "GBP", "EUR", etc.
-                 Must match the currency the backend expects for
-                 this product id.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   var STORE_ITEMS = {
@@ -1045,7 +990,6 @@
   })();
 </script>
 
-<!-- ADDED RETURN FROM PAYMENT HANDLER HERE -->
 <script>
   // Check if the user is returning from a successful payment
   const urlParams = new URLSearchParams(window.location.search);
@@ -1059,11 +1003,20 @@
       successModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
       
-      // The Master Brain sends the email, so we tell the user to check it here
-      if (downloadBtn) {
-        downloadBtn.innerText = "Check your email for the download link";
+      // 🚀 SET UP THE DOWNLOAD BUTTON TO HIT THE MASTER BRAIN
+      if (downloadBtn && ref) {
+        downloadBtn.innerText = "Download Your Files";
         downloadBtn.style.opacity = "1"; 
-        downloadBtn.style.pointerEvents = "none";
+        downloadBtn.style.pointerEvents = "auto";
+        downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+        
+        // When they click it, close the modal so they can see the file download
+        downloadBtn.onclick = function() {
+          setTimeout(function() {
+            successModal.classList.remove('open');
+            document.body.classList.remove('no-scroll');
+          }, 500);
+        };
       }
       
       // Clean the URL so they don't accidentally refresh and see the modal again
