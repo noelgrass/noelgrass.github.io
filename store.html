@@ -906,7 +906,7 @@
               '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
               'Buy' +
             '</button>' +
-            '<button type="button" class="action-link" onclick="window.addToCart(\'' + feat.id + '\', \'' + feat.title + '\', ' + feat.amount + ')" style="color: var(--gold-pale);">' +
+            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + feat.id + '" onclick="window.addToCart(\'' + feat.id + '\', \'' + feat.title + '\', ' + feat.amount + ')" style="color: var(--gold-pale);">' +
               '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
               'Add to Cart' +
             '</button>' +
@@ -941,7 +941,7 @@
                 '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
                 'Buy' +
               '</button>' +
-              '<button type="button" class="action-link" onclick="window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + item.amount + ')" style="color: var(--gold-pale);">' +
+              '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + item.amount + ')" style="color: var(--gold-pale);">' +
                 '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
                 'Add to Cart' +
               '</button>' +
@@ -1071,6 +1071,37 @@
   .cart-qty-num { font-family: 'Montserrat', sans-serif; font-size: 0.9em; min-width: 20px; text-align: center; }
 
   .cart-total-row { display: flex; justify-content: space-between; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.2em; color: var(--gold-pale); margin-bottom: 30px; }
+
+  /* Main Page Quantity Controls */
+  .main-qty-controls {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--gold-pale);
+  }
+  .main-qty-btn {
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    color: var(--gold-pale);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    transition: all 0.2s ease;
+  }
+  .main-qty-btn:hover { background: var(--gold-soft); color: #000; }
+  .main-qty-num {
+    font-size: 0.85em;
+    min-width: 20px;
+    text-align: center;
+    letter-spacing: 0.1em;
+  }
 </style>
 
 <div id="floatingCartBtn" onclick="openCartModal()">
@@ -1102,6 +1133,30 @@
 <script>
   window.cartData = JSON.parse(localStorage.getItem('noelgrass_cart') || '[]');
 
+  // Function to sync the Main Page buttons with the Cart data
+  window.syncMainPageButtons = function() {
+    var buttons = document.querySelectorAll('.js-add-to-cart-btn');
+    
+    buttons.forEach(function(btn) {
+      var id = btn.getAttribute('data-id');
+      var item = window.cartData.find(function(i) { return i.id === id; });
+      
+      if (item) {
+        btn.innerHTML = 
+          '<div class="main-qty-controls">' +
+            '<button type="button" class="main-qty-btn" onclick="window.handleMainQty(\'' + id + '\', -1, event)">-</button>' +
+            '<span class="main-qty-num">' + item.qty + '</span>' +
+            '<button type="button" class="main-qty-btn" onclick="window.handleMainQty(\'' + id + '\', 1, event)">+</button>' +
+          '</div>';
+      } else {
+        btn.innerHTML = 
+          '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
+          'Add to Cart';
+      }
+    });
+  };
+
+  // Function to update the Cart Modal UI
   window.updateCartUI = function() {
     var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
     var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
@@ -1116,19 +1171,39 @@
     if (count === 0) {
       list.innerHTML = '<p style="font-family: \'Playfair Display\', serif; font-style: italic; color: var(--muted); text-align: center;">Your cart is empty.</p>';
     } else {
-      list.innerHTML = window.cartData.map(function(item, index) {
+      list.innerHTML = window.cartData.map(function(item) {
         return '<div class="cart-item-row">' +
           '<div class="cart-item-info">' +
             '<span class="cart-item-title">' + item.title + '</span>' +
             '<span class="cart-item-price">KES ' + ((item.amount * item.qty) / 100).toLocaleString() + '</span>' +
           '</div>' +
           '<div class="cart-qty-controls">' +
-            '<button class="cart-qty-btn" onclick="changeQty(' + index + ', -1)">-</button>' +
+            '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', -1, event)">-</button>' +
             '<span class="cart-qty-num">' + item.qty + '</span>' +
-            '<button class="cart-qty-btn" onclick="changeQty(' + index + ', 1)">+</button>' +
+            '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', 1, event)">+</button>' +
           '</div>' +
         '</div>';
       }).join('');
+    }
+
+    window.syncMainPageButtons();
+  };
+
+  // Master function to handle +/- from BOTH main page and modal
+  window.handleMainQty = function(id, delta, event) {
+    if(event) event.preventDefault();
+    
+    var itemIndex = window.cartData.findIndex(function(item) { return item.id === id; });
+    
+    if (itemIndex > -1) {
+      window.cartData[itemIndex].qty += delta;
+      
+      if (window.cartData[itemIndex].qty <= 0) {
+        window.cartData.splice(itemIndex, 1);
+      }
+      
+      localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
+      window.updateCartUI();
     }
   };
 
@@ -1147,15 +1222,6 @@
     var btn = document.getElementById('floatingCartBtn');
     btn.style.transform = 'scale(1.1)';
     setTimeout(function() { btn.style.transform = ''; }, 300);
-  };
-
-  window.changeQty = function(index, delta) {
-    window.cartData[index].qty += delta;
-    if (window.cartData[index].qty <= 0) {
-      window.cartData.splice(index, 1);
-    }
-    localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
-    window.updateCartUI();
   };
 
   window.openCartModal = function() { 
