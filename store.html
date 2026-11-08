@@ -591,7 +591,7 @@
     <div style="background: rgba(197,168,128,0.05); border: 1px solid rgba(197,168,128,0.3); padding: 24px; margin-top: 10px; margin-bottom: 24px; text-align: center;">
       <p style="font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.05em; line-height: 1.6; color: var(--offwhite); margin: 0;">
         A download link has also been sent to your email.<br>
-        <span style="color: var(--muted); font-size: 0.9em;">Please check your inbox (and spam folder) to access your purchase anytime.</span>
+        <span style="color: var(--muted); font-size: 0.9em;">Please check your inbox (and spam folder) to access your purchase.</span>
       </p>
     </div>
 
@@ -601,11 +601,6 @@
 
 <!-- ═══════════════════════════════════════════════════════════════
      🧭 SCRIPT 1 — MENU + ACCORDION
-
-     Menu:       opens/closes the full-screen nav panel; highlights
-                 the current page in the link list; locks body scroll.
-     Accordion:  only one <details class="mood-group"> open at a time;
-                 auto-scrolls the summary into view when opened.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -803,14 +798,15 @@
     var recError = document.getElementById('recoveryError');
 
     // ✏️ EDIT 1: Input formatter (uppercase, grouped 4-4-4)
-       recInput.addEventListener('input', function(e) {
+    recInput.addEventListener('input', function(e) {
       var val = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
       var formatted = val;
       if (val.length > 4)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8);
       if (val.length > 8)  formatted = val.slice(0, 4) + '-' + val.slice(4, 8) + '-' + val.slice(8, 12);
       this.value = formatted;
     });
-    // ✏️ EDIT 2: Recovery button - direct navigation, no fetch()
+
+    // ✏️ EDIT 2: Recovery button - show modal, then navigate
     recBtn.addEventListener('click', function() {
       var ref = recInput.value.trim();
       if(!ref) { recError.innerText = "Please enter a reference code."; recError.style.display = "block"; return; }
@@ -820,8 +816,20 @@
       recBtn.style.opacity = "0.5";
       recBtn.disabled = true;
 
-      // Direct browser navigation so the ZIP streams natively
-      window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+      if (downloadBtn) {
+        downloadBtn.innerText = "Downloading...";
+        downloadBtn.style.opacity = "0.5"; 
+        downloadBtn.style.pointerEvents = "none";
+      }
+      showSuccess();
+
+      setTimeout(function() {
+        window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+        
+        recBtn.innerText = "Generate Fresh Link";
+        recBtn.style.opacity = "1";
+        recBtn.disabled = false;
+      }, 1500); 
     });
   })();
 </script>
@@ -993,12 +1001,14 @@
         downloadBtn.style.pointerEvents = "auto";
         downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         
-        // ✏️ EDIT 3: Close modal first, then navigate (avoids canceling slow downloads)
+        // ✏️ NEW: Keep modal open, change text to "Downloading..." 
         downloadBtn.onclick = function(e) {
           e.preventDefault();
-          successModal.classList.remove('open');
-          document.body.classList.remove('no-scroll');
-          window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+          downloadBtn.innerText = "Downloading...";
+          downloadBtn.style.opacity = "0.7";
+          
+          // Trigger download in a new tab so the modal stays visible
+          window.open("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), "_blank");
         };
       }
       
