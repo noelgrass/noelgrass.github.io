@@ -504,7 +504,7 @@
   /* ═══════════════════════════════════════════════════════════════
      🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
      ═══════════════════════════════════════════════════════════════ */
-  fetch("https://master-brain.noelgrass.workers.dev/api/performances")
+  fetch("https://master-brain.noelgrass.workers.dev/api/data?table=performances&published=1")
     .then(res => res.json())
     .then(data => {
       renderPerformances(data);
