@@ -325,12 +325,6 @@
     <h1>Performances</h1>
     <p class="hero-subtitle">Live Videos &amp; Concert Recordings</p>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         🎬 PERFORMANCES MOUNT — filled automatically by JavaScript
-         ⚠️ Do NOT add cards here by hand.
-         ➕ To add a performance, edit PERFORMANCES (bottom of file).
-         If PERFORMANCES is empty, the "Coming Soon" block appears.
-         ═══════════════════════════════════════════════════════════════ -->
     <div id="performancesMount"></div>
 
     <div class="footer-cta">
@@ -342,9 +336,6 @@
       </p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
-         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -366,9 +357,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU + BULLETPROOF VIDEO MODAL
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -512,56 +500,26 @@
   })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🎬 SCRIPT 2 — PERFORMANCE DATA + AUTO-RENDER
-
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / DELETE PERFORMANCES.
-
-     ➕ To ADD a performance → paste one line into PERFORMANCES
-     ➖ To DELETE → delete its line
-     🔁 To REORDER → move the line up/down
-     📝 To EDIT → change the line in place
-
-     Field reference:
-       title    = name of the piece / event
-       format   = "Solo Piano" | "Full Ensemble" | "Orchestral" | "Duet"
-       venue    = venue name
-       location = city, country
-       year     = year (e.g. "2024")
-       video    = YouTube video ID (the part after v= in the URL)
-       poster   = (Optional) path to a custom cover image, e.g. "images/performances/live.jpg"
-                  If omitted, the YouTube thumbnail is used automatically.
-
-     When PERFORMANCES has at least one item → grid appears,
-     "Coming Soon" block disappears automatically.
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var PERFORMANCES = [
-    // ✏️ Uncomment and fill in the template below when you have your first video:
-    //
-    // {
-    //   title: "Into A Stillness — Live at Alliance Française",
-    //   format: "Solo Piano",
-    //   venue: "Alliance Française",
-    //   location: "Nairobi, Kenya",
-    //   year: "2024",
-    //   video: "T6jDLG2Acbk"
-    //   // poster: "images/performances/alliance-francaise.jpg"  ← Optional
-    // },
-    //
-    // Paste new performances here — one per line.
-  ];
+  /* ═══════════════════════════════════════════════════════════════
+     🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
+     ═══════════════════════════════════════════════════════════════ */
+  fetch("https://master-brain.noelgrass.workers.dev/api/performances")
+    .then(res => res.json())
+    .then(data => {
+      renderPerformances(data);
+    })
+    .catch(err => {
+      console.error("Failed to load performances:", err);
+      document.getElementById('performancesMount').innerHTML = '<p style="color:#aaa;">Failed to load performances. Please try again later.</p>';
+    });
 
-  /* ═══════════════════════════════════════════════════════════
-     ⚙️ RENDER — everything below runs automatically.
-     You should never need to edit below this line.
-     ═══════════════════════════════════════════════════════════ */
-  (function renderPerformances() {
+  function renderPerformances(PERFORMANCES) {
     var mount = document.getElementById('performancesMount');
     if (!mount) return;
 
     // No performances yet → show "Coming Soon" block
-    if (!PERFORMANCES.length) {
+    if (!PERFORMANCES || !PERFORMANCES.length) {
       mount.innerHTML =
         '<div class="coming-soon">' +
           '<span class="ornament" aria-hidden="true"></span>' +
@@ -572,25 +530,32 @@
       return;
     }
 
-    // Sort by year (newest first)
+    // Sort by event_date (newest first)
     var sorted = PERFORMANCES.slice().sort(function (a, b) {
-      return (b.year || '').localeCompare(a.year || '');
+      return (b.event_date || '').localeCompare(a.event_date || '');
     });
 
     var listHtml = sorted.map(function (perf) {
-      // Build poster: use custom image if provided, otherwise YouTube thumbnail
-      var posterSrc = perf.poster || ('https://img.youtube.com/vi/' + perf.video + '/maxresdefault.jpg');
+      // Safely check if poster_url exists and prepend master-brain domain
+      let posterSrc = 'https://img.youtube.com/vi/' + perf.video_id + '/maxresdefault.jpg';
+      if (perf.poster_url) {
+        posterSrc = perf.poster_url.startsWith('/') 
+          ? "https://master-brain.noelgrass.workers.dev" + perf.poster_url 
+          : perf.poster_url;
+      }
+
+      // Format date nicely if it exists
+      let yearStr = perf.event_date ? new Date(perf.event_date).getFullYear() : "";
 
       return (
         '<div class="performance-item">' +
-          '<div class="performance-poster js-play" data-video="' + perf.video + '">' +
-            '<img src="' + posterSrc + '" alt="' + perf.title + ' — Live Performance" loading="lazy" onerror="this.src=\'https://img.youtube.com/vi/' + perf.video + '/hqdefault.jpg\'">' +
+          '<div class="performance-poster js-play" data-video="' + perf.video_id + '">' +
+            '<img src="' + posterSrc + '" alt="' + perf.title + ' — Live Performance" loading="lazy" onerror="this.src=\'https://img.youtube.com/vi/' + perf.video_id + '/hqdefault.jpg\'">' +
             '<div class="performance-play-overlay">▶</div>' +
           '</div>' +
           '<div class="performance-info">' +
-            (perf.format ? '<span class="performance-format">' + perf.format + '</span>' : '') +
             '<div class="performance-title">' + perf.title + '</div>' +
-            '<div class="performance-meta">' + perf.venue + ' · ' + perf.location + ' · ' + perf.year + '</div>' +
+            '<div class="performance-meta">' + perf.venue + ' · ' + (yearStr ? yearStr : perf.event_date) + '</div>' +
           '</div>' +
         '</div>'
       );
@@ -605,7 +570,7 @@
         if (id && window.openVideoModal) window.openVideoModal(id);
       });
     });
-  })();
+  }
 </script>
 
 </body>
