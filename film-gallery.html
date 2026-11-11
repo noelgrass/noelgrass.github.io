@@ -767,9 +767,9 @@
      ═══════════════════════════════════════════════════════════════ */
   let GALLERY = { films: [], clients: [] };
 
-  Promise.all([
-    fetch("https://master-brain.noelgrass.workers.dev/api/films").then(res => res.json()),
-    fetch("https://master-brain.noelgrass.workers.dev/api/clients").then(res => res.json())
+    Promise.all([
+    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=films&published=1").then(res => res.json()),
+    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=clients&published=1").then(res => res.json())
   ]).then(([filmsData, clientsData]) => {
     
     // 1. Process Films
