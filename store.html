@@ -481,50 +481,14 @@
         <div class="feature-release" id="featuredRelease"></div>
       </details>
 
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
-          <span class="mood-count" data-count>0 releases</span>
-        </summary>
-        <div class="store-gallery" data-category="solo-piano"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
-          <span class="mood-count" data-count>0 releases</span>
-        </summary>
-        <div class="store-gallery" data-category="orchestral"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
-          <span class="mood-count" data-count>0 releases</span>
-        </summary>
-        <div class="store-gallery" data-category="experimental"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
-          <span class="mood-count" data-count>0 releases</span>
-        </summary>
-        <div class="store-gallery" data-category="ambient"></div>
-      </details>
+      <div class="music-sections"></div>
 
     </div>
 
     <div class="section-divider"><span>Digital Products</span></div>
     <p class="section-note">Sheet music, stems, and more</p>
     <div class="mood-groups">
-      <details class="mood-group" id="digitalGroup">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Digital Products</span></span>
-          <span class="mood-count" id="digitalCount">0 products</span>
-        </summary>
-        <div class="store-gallery" id="digitalGallery"></div>
-      </details>
+      <div class="digital-sections"></div>
     </div>
 
     <div class="recovery-box" id="already-purchased">
@@ -827,209 +791,95 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER (MUSIC)
+     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER (MUSIC & DIGITAL)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  let STORE_ITEMS = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
+  var musicSectionsEl   = document.querySelector('.music-sections');
+  var featuredEl        = document.getElementById('featuredRelease');
+  var featuredBadgeEl   = document.querySelector('[data-featured-badge]');
+  var digitalSectionsEl = document.querySelector('.digital-sections');
 
-  // Fetch live data from the Database
-  fetch("https://master-brain.noelgrass.workers.dev/api/music")
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(item => {
-        // Map database columns to the format the HTML expects
-        const mapped = {
-          // If the image is in R2 (starts with /), append the worker URL
-          img: item.cover_url && item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : (item.cover_url || "images/placeholder.jpg"),
-          alt: item.title,
-          title: item.title,
-          format: item.format_label || "Music",
-          badge: item.badge || "Album",
-          id: item.id,
-          amount: item.price,
-          currency: "KES"
-        };
-
-        // If it's featured, put it in the top slot
-        if (item.is_featured) {
-          STORE_ITEMS.featured = mapped;
-        }
-        
-        // Push it to its category (this automatically moves an old featured item into the category when replaced)
-        if (STORE_ITEMS[item.category]) {
-          STORE_ITEMS[item.category].push(mapped);
-        }
-      });
-      
-      renderStore(); // Run the render logic once data is ready
-    })
-    .catch(err => {
-      console.error("Failed to load music:", err);
-      document.getElementById('featuredRelease').innerHTML = '<p style="color:#aaa;">Failed to load catalogue. Please try again later.</p>';
-    });
-
-  function renderStore() {
-    // --- 1. Render Featured Release ---
-    var feat = STORE_ITEMS.featured;
-    var featMount = document.getElementById('featuredRelease');
-    var featBadge = document.querySelector('[data-featured-badge]');
-    
-    if (feat && featMount) {
-      featMount.innerHTML =
-        '<div class="feature-item">' +
-          '<div class="poster js-buy" ' +
-            'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
-            'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '">' +
-            '<img src="' + feat.img + '" alt="' + feat.alt + '" loading="lazy">' +
-            '<span class="badge">' + feat.badge + '</span>' +
-          '</div>' +
-          '<div class="caption">' + feat.title + '</div>' +
-          '<div class="format-label">Latest Release</div>' +
-          '<div class="item-actions">' +
-            '<button type="button" class="action-link js-buy-btn" ' +
-              'data-id="' + feat.id + '" data-title="' + feat.title + '" ' +
-              'data-amount="' + feat.amount + '" data-currency="' + feat.currency + '" ' +
-              'aria-label="Buy ' + feat.title + '">' +
-              '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
-              'Buy' +
-            '</button>' +
-            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + feat.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + feat.id + '\', \'' + feat.title + '\', ' + feat.amount + ')" style="color: var(--gold-pale);">' +
-              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
-              'Add to Cart' +
-            '</button>' +
-          '</div>' +
-        '</div>';
-      if (featBadge) featBadge.textContent = feat.badge;
-    }
-
-    // --- 2. Render Category Grids ---
-    Object.keys(STORE_ITEMS).forEach(function(category) {
-      if (category === 'featured') return;
-      var gallery = document.querySelector('.store-gallery[data-category="' + category + '"]');
-      if (!gallery) return;
-      var items = STORE_ITEMS[category] || [];
-
-      gallery.innerHTML = items.map(function(item) {
-        return (
-          '<div class="store-item">' +
-            '<div class="poster js-buy" ' +
-              'data-id="' + item.id + '" data-title="' + item.title + '" ' +
-              'data-amount="' + item.amount + '" data-currency="' + item.currency + '">' +
-              '<img src="' + item.img + '" alt="' + item.alt + '" loading="lazy">' +
-              '<span class="badge">' + item.badge + '</span>' +
-            '</div>' +
-            '<div class="caption">' + item.title + '</div>' +
-            '<div class="format-label">' + item.format + '</div>' +
-            '<div class="item-actions">' +
-              '<button type="button" class="action-link js-buy-btn" ' +
-                'data-id="' + item.id + '" data-title="' + item.title + '" ' +
-                'data-amount="' + item.amount + '" data-currency="' + item.currency + '" ' +
-                'aria-label="Buy ' + item.title + '">' +
-                '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
-                'Buy' +
-              '</button>' +
-              '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + item.amount + ')" style="color: var(--gold-pale);">' +
-                '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
-                'Add to Cart' +
-              '</button>' +
-            '</div>' +
-          '</div>'
-        );
-      }).join('');
-
-      var countEl = gallery.closest('.mood-group').querySelector('[data-count]');
-      if (countEl) {
-        var n = items.length;
-        countEl.textContent = n + (n === 1 ? ' release' : ' releases');
-      }
-    });
-
-    // --- 3. Wire up all Buy buttons and clickable posters ---
+  Promise.all([
+    fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=music").then(r => r.json()),
+    fetch("https://master-brain.noelgrass.workers.dev/api/music").then(r => r.json()),
+    fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=digital").then(r => r.json()),
+    fetch("https://master-brain.noelgrass.workers.dev/api/digital").then(r => r.json())
+  ]).then(([musicCats, musicItems, digitalCats, digitalItems]) => {
+    buildStorefront({ featuredEl, featuredBadgeEl, sectionsEl: musicSectionsEl, categories: musicCats, items: musicItems, sectionType: 'music' });
+    buildStorefront({ featuredEl: null, featuredBadgeEl: null, sectionsEl: digitalSectionsEl, categories: digitalCats, items: digitalItems, sectionType: 'digital' });
     wireBuyButtons();
-  }
+  }).catch(err => {
+    console.error("Store load failed:", err);
+    if (featuredEl) featuredEl.innerHTML = '<p style="color:#aaa;">Failed to load catalogue.</p>';
+  });
 
-  // ═══════════════════════════════════════════════════════════════
-  // 💿 DIGITAL PRODUCTS — fetch from /api/digital
-  // ═══════════════════════════════════════════════════════════════
-  fetch("https://master-brain.noelgrass.workers.dev/api/digital")
-    .then(res => res.json())
-    .then(data => {
-      renderDigitalProducts(data);
-    })
-    .catch(err => {
-      console.error("Failed to load digital products:", err);
-    });
-
-  function renderDigitalProducts(items) {
-    var gallery = document.getElementById('digitalGallery');
-    var countEl = document.getElementById('digitalCount');
-    if (!gallery) return;
-
-    if (!items || !items.length) {
-      gallery.parentElement.querySelector('.store-gallery').innerHTML = 
-        '<div class="coming-soon" style="width:100%;"><p>Sheet music, stems, and other digital releases will appear here. Coming soon.</p></div>';
-      if (countEl) countEl.textContent = "Coming soon";
+  function buildStorefront({ featuredEl, featuredBadgeEl, sectionsEl, categories, items, sectionType }) {
+    if (featuredEl && sectionType === 'music') {
+      var feat = items.find(i => i.is_featured === 1);
+      if (feat) {
+        featuredEl.innerHTML = renderCard(feat, true);
+        if (featuredBadgeEl) featuredBadgeEl.textContent = feat.badge || 'Album';
+      } else {
+        featuredEl.innerHTML = '<p style="color:var(--muted); font-style:italic;">No featured release yet.</p>';
+      }
+    }
+    if (!sectionsEl) return;
+    if (!categories || !categories.length) {
+      sectionsEl.innerHTML = '<p style="color:var(--muted); font-style:italic; text-align:center; padding:30px 0;">No categories yet.</p>';
       return;
     }
-
-    gallery.innerHTML = items.map(function(item) {
-      var img = item.cover_url && item.cover_url.startsWith('/') 
-        ? "https://master-brain.noelgrass.workers.dev" + item.cover_url 
-        : (item.cover_url || "images/placeholder.jpg");
-
+    sectionsEl.innerHTML = categories.map((cat, idx) => {
+      var catItems = items.filter(i => i.category === cat.id);
+      var count = catItems.length;
       return (
-        '<div class="store-item">' +
-          '<div class="poster js-buy" ' +
-            'data-id="' + item.id + '" data-title="' + item.title + '" ' +
-            'data-amount="' + (item.price || 0) + '" data-currency="KES">' +
-            '<img src="' + img + '" alt="' + item.title + '" loading="lazy">' +
-            '<span class="badge">' + (item.format_label || 'Digital') + '</span>' +
+        '<details class="mood-group"' + (idx === 0 ? ' open' : '') + '>' +
+          '<summary>' +
+            '<span><span class="mood-indicator"></span><span class="mood-label">' + cat.label + '</span></span>' +
+            '<span class="mood-count">' + count + (count === 1 ? ' release' : ' releases') + '</span>' +
+          '</summary>' +
+          '<div class="store-gallery">' +
+            (count ? catItems.map(i => renderCard(i, false)).join('') :
+              '<p style="color:var(--muted); font-style:italic; text-align:center; padding:30px 0; grid-column:1/-1;">Nothing here yet.</p>') +
           '</div>' +
-          '<div class="caption">' + item.title + '</div>' +
-          '<div class="format-label">' + (item.description || item.format_label || 'Digital Product') + '</div>' +
-          '<div class="item-actions">' +
-            '<button type="button" class="action-link js-buy-btn" ' +
-              'data-id="' + item.id + '" data-title="' + item.title + '" ' +
-              'data-amount="' + (item.price || 0) + '" data-currency="KES" ' +
-              'aria-label="Buy ' + item.title + '">' +
-              '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
-              'Buy' +
-            '</button>' +
-            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + (item.price || 0) + ')" style="color: var(--gold-pale);">' +
-              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
-              'Add to Cart' +
-            '</button>' +
-          '</div>' +
-        '</div>'
+        '</details>'
       );
     }).join('');
-
-    if (countEl) {
-      var n = items.length;
-      countEl.textContent = n + (n === 1 ? ' product' : ' products');
-    }
-
-    wireBuyButtons();
   }
 
-  // Shared function to wire Buy/Cart buttons (called after each render)
-  function wireBuyButtons() {
-    document.querySelectorAll('.js-buy, .js-buy-btn').forEach(function(el) {
-      if (el.dataset.wired) return; // prevent double-wiring
-      el.dataset.wired = 'true';
+  function renderCard(item, isFeature) {
+    var img = item.cover_url && item.cover_url.startsWith('/')
+      ? "https://master-brain.noelgrass.workers.dev" + item.cover_url
+      : (item.cover_url || "images/placeholder.jpg");
+    var containerClass = isFeature ? 'feature-item' : 'store-item';
+    var formatLabel = isFeature ? 'Latest Release' : (item.format_label || item.description || 'Product');
+    return (
+      '<div class="' + containerClass + '">' +
+        '<div class="poster js-buy" data-id="' + item.id + '" data-title="' + item.title + '" data-amount="' + (item.price || 0) + '" data-currency="KES">' +
+          '<img src="' + img + '" alt="' + item.title + '" loading="lazy">' +
+          '<span class="badge">' + (item.badge || item.format_label || 'Item') + '</span>' +
+        '</div>' +
+        '<div class="caption">' + item.title + '</div>' +
+        '<div class="format-label">' + formatLabel + '</div>' +
+        '<div class="item-actions">' +
+          '<button type="button" class="action-link js-buy-btn" data-id="' + item.id + '" data-title="' + item.title + '" data-amount="' + (item.price || 0) + '" data-currency="KES" aria-label="Buy ' + item.title + '">' +
+            '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>Buy' +
+          '</button>' +
+          '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + (item.price || 0) + ')" style="color: var(--gold-pale);">' +
+            '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>Add to Cart' +
+          '</button>' +
+        '</div>' +
+      '</div>'
+    );
+  }
 
-      if (window.SALES_PAUSED) {
-        if (el.tagName === 'BUTTON') {
-          el.disabled = true; el.setAttribute('aria-disabled', 'true'); el.style.pointerEvents = 'none';
-          el.style.opacity = '0.5'; el.style.cursor = 'not-allowed'; el.style.color = '#555'; el.innerHTML = 'Paused';
-        }
-        return;
-      }
-      
-      el.addEventListener('click', function(e) {
+  function wireBuyButtons() {
+    document.querySelectorAll('.js-buy, .js-buy-btn').forEach(el => {
+      if (el.dataset.wired) return;
+      el.dataset.wired = 'true';
+      el.addEventListener('click', e => {
         if (e.target.closest('.js-add-to-cart-btn')) return;
         e.preventDefault();
-        if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) { e.stopPropagation(); }
+        if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) e.stopPropagation();
         if (window.openCheckout) window.openCheckout(el);
       });
     });
