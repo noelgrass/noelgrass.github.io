@@ -947,26 +947,23 @@
           var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
           if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
         });
-        audio.addEventListener('timeupdate', function () {
-          if (!currentTrackId) return;
+                audio.addEventListener('timeupdate', function () {
+          // Find the currently playing player on the page dynamically
+          var activePlayer = document.querySelector('.inline-player.active');
+          if (!activePlayer) return;
           
-          var player = document.getElementById('player-' + currentTrackId);
-          if (!player) return;
+          var bar = activePlayer.querySelector('.player-progress-bar');
+          var time = activePlayer.querySelector('.player-time');
           
-          var bar = player.querySelector('.player-progress-bar');
-          var time = player.querySelector('.player-time');
-          
-          // 1. Calculate the countdown
-          var remaining = 0;
+          // Only update if duration is a valid number
           if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
-            remaining = audio.duration - audio.currentTime;
+            var remaining = audio.duration - audio.currentTime;
+            var pct = (audio.currentTime / audio.duration) * 100;
+            
+            if (bar) bar.style.width = pct + '%';
+            if (time) time.innerText = fmt(remaining);
           }
-          
-          // 2. Calculate the progress bar percentage
-          var pct = 0;
-          if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
-            pct = (audio.currentTime / audio.duration) * 100;
-          }
+        });
           
           // 3. Force the DOM updates
           if (bar) bar.style.width = pct + '%';
