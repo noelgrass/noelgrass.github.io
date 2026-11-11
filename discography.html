@@ -801,13 +801,6 @@
     border-color: var(--gold);
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     🖼️ FEATURED COVER — sized to match the store poster
-     - Desktop: max-width 300px (like .store-item poster)
-     - Mobile:  max-width 400px (full width of store mobile gallery)
-     - Icon row below was scaled down proportionally:
-       54px → 44px desktop, 44px → 36px mobile
-     ═══════════════════════════════════════════════════════════ */
   .feature-release {
     padding: 50px 0 60px;
     text-align: center;
@@ -821,7 +814,7 @@
     aspect-ratio: 1 / 1;
     margin: 0 auto 30px;
     animation: fadeUp 1s ease-out both;
-    cursor: pointer; /* Added clickable cursor */
+    cursor: pointer;
   }
 
   .feature-cover img {
@@ -838,7 +831,6 @@
     animation-delay: 1.3s;
   }
 
-  /* Feature cover hover — also fires when the Preview button is hovered */
   .feature-cover:hover img,
   .feature-release:has(.action-link:hover) .feature-cover img {
     filter: brightness(0.85) contrast(1.10);
@@ -897,9 +889,6 @@
     display: block;
   }
 
-  /* 🎧 STREAMING ICON ROW — YouTube / Apple Music / Spotify
-     Icon buttons glow + scale on hover. Position is inline in
-     the render script, not here. */
   .feature-icons {
     display: flex;
     justify-content: center;
@@ -978,15 +967,6 @@
     color: var(--gold-pale);
   }
 
-  /* ═══════════════════════════════════════════════════════════
-     ▶️ PREVIEW BUTTON + HALO — film-gallery typography with
-        store Buy button hover behaviour, plus a BIDIRECTIONAL
-        link between the poster image and the button:
-
-     • Hover the image → button halos + pops up.
-     • Hover the button → image brightens + glows + scales.
-     • Direct button hover still works on its own.
-     ═══════════════════════════════════════════════════════════ */
   .item-actions {
     display: flex;
     justify-content: center;
@@ -1037,11 +1017,8 @@
     transition: transform 0.35s ease;
   }
 
-  /* ── Bidirectional trigger: hover the poster OR the button ── */
-  /* 1) Poster hover → button pops up (sibling selector) */
   .store-item .poster:hover ~ .item-actions .action-link,
   .feature-cover:hover ~ .feature-actions .action-link,
-  /* 2) Button hover (direct) → button pops up */
   .action-link:hover {
     color: var(--gold-pale);
     text-shadow: 0 0 15px rgba(197, 168, 128, 0.7);
@@ -1054,7 +1031,6 @@
     transform: scale(1.1);
   }
 
-  /* Halo ring appears on the same triggers (SOFTENED) */
   .store-item .poster:hover ~ .item-actions .action-link::before,
   .feature-cover:hover ~ .feature-actions .action-link::before,
   .action-link:hover::before {
@@ -1066,7 +1042,6 @@
       0 0 35px 8px rgba(197, 168, 128, 0.05);
   }
 
-  /* ── Reverse direction: hover the button → poster reacts ── */
   .store-item:has(.action-link:hover) .poster {
     border-color: var(--gold-soft);
     animation: tileHoverGlow 4s ease-in-out infinite;
@@ -1077,7 +1052,6 @@
   }
   .store-item:has(.action-link:hover) .caption { color: #FCFCF7; }
 
-  /* Sibling dimming should also fire when a button (not just a poster) is hovered */
   .store-gallery:has(.store-item:has(.action-link:hover)) .store-item:not(:has(.action-link:hover)) .poster {
     box-shadow:
       0 0 15px 2px rgba(185, 151, 92, 0.08),
@@ -1129,7 +1103,7 @@
     transition: border-color 0.7s ease;
     animation: tileRestGlow 7s ease-in-out infinite;
     animation-delay: 1.4s;
-    cursor: pointer; /* Added clickable cursor */
+    cursor: pointer;
   }
 
   .store-item .poster img {
@@ -1511,11 +1485,6 @@
 
     <div class="mood-groups">
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 LATEST RELEASE — rendered from DISCOGRAPHY.featured
-           📁 Image lives in: images/discography/
-           ➕ To update it, edit DISCOGRAPHY.featured (bottom of file)
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group" open>
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Latest Release</span></span>
@@ -1524,12 +1493,6 @@
         <div class="feature-release" id="featuredRelease"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 SOLO PIANO — rendered from DISCOGRAPHY["solo-piano"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit DISCOGRAPHY["solo-piano"] below.
-              The count and Preview button update automatically.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Solo Piano</span></span>
@@ -1538,11 +1501,6 @@
         <div class="store-gallery" data-category="solo-piano"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 ORCHESTRAL — rendered from DISCOGRAPHY["orchestral"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit DISCOGRAPHY["orchestral"] below.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Orchestral</span></span>
@@ -1551,11 +1509,6 @@
         <div class="store-gallery" data-category="orchestral"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 EXPERIMENTAL — rendered from DISCOGRAPHY["experimental"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit DISCOGRAPHY["experimental"] below.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Experimental</span></span>
@@ -1564,11 +1517,6 @@
         <div class="store-gallery" data-category="experimental"></div>
       </details>
 
-      <!-- ═══════════════════════════════════════════════════════════
-           💿 AMBIENT — rendered from DISCOGRAPHY["ambient"]
-           📁 Images live in: images/discography/
-           ➕ To add a release, edit DISCOGRAPHY["ambient"] below.
-           ═══════════════════════════════════════════════════════════ -->
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Ambient</span></span>
@@ -1588,9 +1536,7 @@
     <a href="contact">Contact page →</a>
   </p>
 </div>
-    <!-- ═══════════════════════════════════════════════════════════
-         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
-         ═══════════════════════════════════════════════════════════ -->
+
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -1617,9 +1563,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU + ACCORDION + MEDIA MODAL
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -1721,11 +1664,6 @@
       document.body.classList.remove('no-scroll');
     }
 
-    /* ═══════════════════════════════════════════════════════════
-       ⚙️ EXPOSED FOR RENDER SCRIPT — do not rename
-       The render script (below) calls window.openMediaModal
-       because Preview/embed buttons are built dynamically.
-       ═══════════════════════════════════════════════════════════ */
     window.openMediaModal = openModal;
 
     closeBtn.addEventListener('click', closeModal);
@@ -1734,21 +1672,24 @@
   })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     💿 SCRIPT 2 — DISCOGRAPHY DATA + AUTO-RENDER (LIVE DATABASE)
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   let DISCOGRAPHY = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
 
-  // Fetch live data from the Database
   fetch("https://master-brain.noelgrass.workers.dev/api/music")
     .then(res => res.json())
     .then(data => {
       data.forEach(item => {
-        // Map database columns to the format the HTML expects
+        // 1. Safely handle image paths (Fallback if cover_url is null)
+        let imagePath = "images/placeholder.jpg"; 
+        if (item.cover_url) {
+           imagePath = item.cover_url.startsWith('/') 
+             ? "https://master-brain.noelgrass.workers.dev" + item.cover_url 
+             : item.cover_url;
+        }
+
+        // 2. Map database columns
         const mapped = {
-          // If the image is in R2 (starts with /), append the worker URL
-          img: item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : item.cover_url,
+          img: imagePath,
           alt: item.title,
           title: item.title,
           format: item.format_label || "Music",
@@ -1756,7 +1697,7 @@
           video: item.video_id || ""
         };
 
-        // If it's featured, put it in the top slot and add the streaming URLs
+        // 3. Assign to featured or categories
         if (item.is_featured) {
           DISCOGRAPHY.featured = {
             ...mapped,
@@ -1766,13 +1707,12 @@
           };
         }
         
-        // Push it to its category (this automatically moves an old featured item into the category when replaced)
         if (DISCOGRAPHY[item.category]) {
           DISCOGRAPHY[item.category].push(mapped);
         }
       });
       
-      renderDiscography(); // Run the render logic once data is ready
+      renderDiscography();
     })
     .catch(err => {
       console.error("Failed to load discography:", err);
@@ -1780,7 +1720,6 @@
     });
 
   function renderDiscography() {
-    // ---- 1. Featured / Latest Release block ----
     var feat = DISCOGRAPHY.featured;
     var featMount = document.getElementById('featuredRelease');
     var featBadge = document.querySelector('[data-featured-badge]');
@@ -1823,7 +1762,6 @@
       if (featBadge) featBadge.textContent = feat.badge;
     }
 
-    // ---- 2. Category galleries + auto-count ----
     Object.keys(DISCOGRAPHY).forEach(function(category) {
       if (category === 'featured') return;
       var gallery = document.querySelector('.store-gallery[data-category="' + category + '"]');
@@ -1856,10 +1794,8 @@
       }
     });
 
-    // ---- 3. Wire up all dynamically-created buttons ----
     document.querySelectorAll('.js-preview').forEach(function(el) {
       el.addEventListener('click', function(e) {
-        // Prevent double triggering if clicking the button inside the image container
         if (e.target.tagName === 'BUTTON' || e.target.parentNode.tagName === 'BUTTON') {
            e.stopPropagation();
         }
