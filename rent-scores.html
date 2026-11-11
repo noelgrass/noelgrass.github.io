@@ -767,10 +767,11 @@
   /* ═══════════════════════════════════════════════════════════════
      🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
      ═══════════════════════════════════════════════════════════════ */
-  fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=scores")
+    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1")
     .then(res => res.json())
-    .then(categories => {
-       fetch("https://master-brain.noelgrass.workers.dev/api/scores")
+    .then(allCats => {
+       const categories = allCats.filter(c => c.section === 'scores');
+       fetch("https://master-brain.noelgrass.workers.dev/api/data?table=scores&published=1")
          .then(res => res.json())
          .then(scores => {
             initScoresApp(categories, scores);
