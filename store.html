@@ -518,14 +518,12 @@
     <div class="section-divider"><span>Digital Products</span></div>
     <p class="section-note">Sheet music, stems, and more</p>
     <div class="mood-groups">
-      <details class="mood-group">
+      <details class="mood-group" id="digitalGroup">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Digital Products</span></span>
-          <span class="mood-count">Coming soon</span>
+          <span class="mood-count" id="digitalCount">0 products</span>
         </summary>
-        <div class="coming-soon">
-          <p>Sheet music, stems, and other digital releases will appear here. Coming soon.</p>
-        </div>
+        <div class="store-gallery" id="digitalGallery"></div>
       </details>
     </div>
 
@@ -829,7 +827,7 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER (LIVE DATABASE)
+     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER (MUSIC)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   let STORE_ITEMS = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
@@ -842,7 +840,7 @@
         // Map database columns to the format the HTML expects
         const mapped = {
           // If the image is in R2 (starts with /), append the worker URL
-          img: item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : item.cover_url,
+          img: item.cover_url && item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : (item.cover_url || "images/placeholder.jpg"),
           alt: item.title,
           title: item.title,
           format: item.format_label || "Music",
@@ -947,7 +945,79 @@
     });
 
     // --- 3. Wire up all Buy buttons and clickable posters ---
+    wireBuyButtons();
+  }
+
+  // ═══════════════════════════════════════════════════════════════
+  // 💿 DIGITAL PRODUCTS — fetch from /api/digital
+  // ═══════════════════════════════════════════════════════════════
+  fetch("https://master-brain.noelgrass.workers.dev/api/digital")
+    .then(res => res.json())
+    .then(data => {
+      renderDigitalProducts(data);
+    })
+    .catch(err => {
+      console.error("Failed to load digital products:", err);
+    });
+
+  function renderDigitalProducts(items) {
+    var gallery = document.getElementById('digitalGallery');
+    var countEl = document.getElementById('digitalCount');
+    if (!gallery) return;
+
+    if (!items || !items.length) {
+      gallery.parentElement.querySelector('.store-gallery').innerHTML = 
+        '<div class="coming-soon" style="width:100%;"><p>Sheet music, stems, and other digital releases will appear here. Coming soon.</p></div>';
+      if (countEl) countEl.textContent = "Coming soon";
+      return;
+    }
+
+    gallery.innerHTML = items.map(function(item) {
+      var img = item.cover_url && item.cover_url.startsWith('/') 
+        ? "https://master-brain.noelgrass.workers.dev" + item.cover_url 
+        : (item.cover_url || "images/placeholder.jpg");
+
+      return (
+        '<div class="store-item">' +
+          '<div class="poster js-buy" ' +
+            'data-id="' + item.id + '" data-title="' + item.title + '" ' +
+            'data-amount="' + (item.price || 0) + '" data-currency="KES">' +
+            '<img src="' + img + '" alt="' + item.title + '" loading="lazy">' +
+            '<span class="badge">' + (item.format_label || 'Digital') + '</span>' +
+          '</div>' +
+          '<div class="caption">' + item.title + '</div>' +
+          '<div class="format-label">' + (item.description || item.format_label || 'Digital Product') + '</div>' +
+          '<div class="item-actions">' +
+            '<button type="button" class="action-link js-buy-btn" ' +
+              'data-id="' + item.id + '" data-title="' + item.title + '" ' +
+              'data-amount="' + (item.price || 0) + '" data-currency="KES" ' +
+              'aria-label="Buy ' + item.title + '">' +
+              '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+              'Buy' +
+            '</button>' +
+            '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + (item.price || 0) + ')" style="color: var(--gold-pale);">' +
+              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
+              'Add to Cart' +
+            '</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    if (countEl) {
+      var n = items.length;
+      countEl.textContent = n + (n === 1 ? ' product' : ' products');
+    }
+
+    wireBuyButtons();
+  }
+
+  // Shared function to wire Buy/Cart buttons (called after each render)
+  function wireBuyButtons() {
     document.querySelectorAll('.js-buy, .js-buy-btn').forEach(function(el) {
+      if (el.dataset.wired) return; // prevent double-wiring
+      el.dataset.wired = 'true';
+
       if (window.SALES_PAUSED) {
         if (el.tagName === 'BUTTON') {
           el.disabled = true; el.setAttribute('aria-disabled', 'true'); el.style.pointerEvents = 'none';
@@ -979,7 +1049,6 @@
       successModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
       
-            // 🚀 SET UP THE DOWNLOAD BUTTON TO HIT THE MASTER BRAIN
       if (downloadBtn && ref) {
         downloadBtn.innerText = "Download Your Files";
         downloadBtn.style.opacity = "1"; 
@@ -991,32 +1060,24 @@
           downloadBtn.style.opacity = "0.7";
           
           try {
-            // Fetch the secure links from the master brain
             const res = await fetch(`https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`, {
-               // Use HEAD just to get the redirect location without downloading the page
                method: 'HEAD',
                redirect: 'manual' 
             });
 
-            // If the master brain redirected them directly to a file (1 item)
             if (res.type === 'opaqueredirect' || res.status === 0) {
-               // We can't read the redirect URL in fetch due to CORS, so we just open the link
                window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
             } else {
-               // If it's a multiple-item page, we navigate the current tab to the auto-download page
-               // Because the user clicked a button, the browser will allow the downloads on the new page.
                window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
             }
             
           } catch (err) {
             console.error(err);
-            // Fallback
             window.location.href = `https://master-brain.noelgrass.workers.dev/recover?ref=${encodeURIComponent(ref)}`;
           }
         };
       }
       
-      // Clean the URL so they don't accidentally refresh and see the modal again
       window.history.replaceState({}, document.title, window.location.pathname);
     }
   }
