@@ -839,7 +839,7 @@
             title: j.title,
             desc: j.description,
             duration: j.duration,
-            file: j.id + ".mp3", 
+            file: j.preview_path, // Using exact path from DB
             folder: j.folder,
             amount: j.price
          }));
@@ -848,9 +848,13 @@
       })
       .catch(err => console.error("Failed to load jingles:", err));
 
-    var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) {
-      return PREVIEW_BASE + "?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder) + "&v=final5";
+      // If the path starts with a slash, point it to master-brain
+      if (t.file && t.file.startsWith('/')) {
+        return "https://master-brain.noelgrass.workers.dev" + t.file;
+      }
+      // Fallback to the old vault route if needed
+      return "https://rent-jingles.noelgrass.workers.dev/preview?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
     }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -1298,7 +1302,6 @@
 
   .cart-total-row { display: flex; justify-content: space-between; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.2em; color: var(--gold-pale); margin-bottom: 30px; }
 
-  /* Main Page Quantity Controls */
   .main-qty-controls {
     display: inline-flex;
     align-items: center;
@@ -1359,7 +1362,6 @@
 <script>
   window.cartData = JSON.parse(localStorage.getItem('noelgrass_cart') || '[]');
 
-  // Function to sync the Main Page buttons with the Cart data
   window.syncMainPageButtons = function() {
     var buttons = document.querySelectorAll('.js-add-to-cart-btn');
     
@@ -1382,7 +1384,6 @@
     });
   };
 
-  // Function to update the Cart Modal UI
   window.updateCartUI = function() {
     var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
     var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
@@ -1415,7 +1416,6 @@
     window.syncMainPageButtons();
   };
 
-  // Master function to handle +/- from BOTH main page and modal
   window.handleMainQty = function(id, delta, event) {
     if(event) {
       event.preventDefault();
@@ -1433,7 +1433,6 @@
       
       localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
       
-      // Update the cart modal
       var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
       var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
       document.getElementById('floatingCartCount').innerText = count;
@@ -1461,7 +1460,6 @@
         }).join('');
       }
       
-      // Update ONLY the button on the main page that was clicked
       var buttons = document.querySelectorAll('.js-add-to-cart-btn');
       buttons.forEach(function(btn) {
         if (btn.getAttribute('data-id') === id) {
