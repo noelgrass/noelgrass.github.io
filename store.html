@@ -829,64 +829,53 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER
+     💿 SCRIPT 3 — STORE DATA + AUTO-RENDER (LIVE DATABASE)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var STORE_ITEMS = {
+  let STORE_ITEMS = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
 
-    // ═══════════════════════════════════════════════════════════
-    // ⭐ LATEST RELEASE (Shows at the very top)
-    // To change it, update the details here.
-    // ═══════════════════════════════════════════════════════════
-    featured: {
-      img: "images/discography/into-a-stillness.jpg",
-      alt: "Into A Stillness That Answers — EP by Noel Grass",
-      title: "Into A Stillness That Answers",
-      badge: "EP",
-      id: "into-a-stillness",
-      amount: 50000,
-      currency: "KES"
-    },
+  // Fetch live data from the Database
+  fetch("https://master-brain.noelgrass.workers.dev/api/music")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(item => {
+        // Map database columns to the format the HTML expects
+        const mapped = {
+          // If the image is in R2 (starts with /), append the worker URL
+          img: item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : item.cover_url,
+          alt: item.title,
+          title: item.title,
+          format: item.format_label || "Music",
+          badge: item.badge || "Album",
+          id: item.id,
+          amount: item.price,
+          currency: "KES"
+        };
 
-    // ═══════════════════════════════════════════════════════════
-    // 🎹 SOLO PIANO
-    // ═══════════════════════════════════════════════════════════
-    "solo-piano": [
-      { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers", title: "Into A Stillness That Answers", format: "Solo Piano",   badge: "EP",    id: "into-a-stillness",    amount: 50000, currency: "KES" },
-      { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again",           title: "Where I Begin Again",           format: "Solo Piano",   badge: "EP",    id: "where-i-begin-again", amount: 50000, currency: "KES" },
-      { img: "images/discography/the-impressionist.jpg",   alt: "The Impressionist",             title: "The Impressionist",             format: "Solo Piano",   badge: "Album", id: "the-impressionist",   amount: 90000, currency: "KES" },
-      { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II",          title: "The Impressionist II",          format: "Solo Piano",   badge: "Album", id: "the-impressionist-2", amount: 90000, currency: "KES" }
-    ],
+        // If it's featured, put it in the top slot
+        if (item.is_featured) {
+          STORE_ITEMS.featured = mapped;
+        }
+        
+        // Push it to its category (this automatically moves an old featured item into the category when replaced)
+        if (STORE_ITEMS[item.category]) {
+          STORE_ITEMS[item.category].push(mapped);
+        }
+      });
+      
+      renderStore(); // Run the render logic once data is ready
+    })
+    .catch(err => {
+      console.error("Failed to load music:", err);
+      document.getElementById('featuredRelease').innerHTML = '<p style="color:#aaa;">Failed to load catalogue. Please try again later.</p>';
+    });
 
-    // ═══════════════════════════════════════════════════════════
-    // 🎻 ORCHESTRAL
-    // ═══════════════════════════════════════════════════════════
-    "orchestral": [
-      { img: "images/discography/introspect.jpg",        alt: "Introspect",        title: "Introspect",        format: "Orchestral", badge: "EP",    id: "introspect",        amount: 50000, currency: "KES" },
-      { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", id: "seven-deadly-sins", amount: 90000, currency: "KES" }
-    ],
-
-    // ═══════════════════════════════════════════════════════════
-    // 🌀 EXPERIMENTAL
-    // ═══════════════════════════════════════════════════════════
-    "experimental": [
-      { img: "images/discography/agent-254.jpg",           alt: "Agent 254",             title: "Agent 254",             format: "Experimental", badge: "EP",    id: "agent-254",           amount: 50000, currency: "KES" },
-      { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III", title: "The Impressionist III", format: "Experimental", badge: "Album", id: "the-impressionist-3", amount: 90000, currency: "KES" }
-    ],
-
-    // ═══════════════════════════════════════════════════════════
-    // 🌫️ AMBIENT
-    // ═══════════════════════════════════════════════════════════
-    "ambient": [
-      { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align", title: "When Stars Align", format: "Ambient", badge: "Single", id: "when-stars-align", amount: 20000, currency: "KES" }
-    ]
-  };
-
-  (function renderStore() {
+  function renderStore() {
     // --- 1. Render Featured Release ---
     var feat = STORE_ITEMS.featured;
     var featMount = document.getElementById('featuredRelease');
     var featBadge = document.querySelector('[data-featured-badge]');
+    
     if (feat && featMount) {
       featMount.innerHTML =
         '<div class="feature-item">' +
@@ -961,28 +950,20 @@
     document.querySelectorAll('.js-buy, .js-buy-btn').forEach(function(el) {
       if (window.SALES_PAUSED) {
         if (el.tagName === 'BUTTON') {
-          el.disabled = true;
-          el.setAttribute('aria-disabled', 'true');
-          el.style.pointerEvents = 'none';
-          el.style.opacity = '0.5';
-          el.style.cursor = 'not-allowed';
-          el.style.color = '#555';
-          el.innerHTML = 'Paused';
+          el.disabled = true; el.setAttribute('aria-disabled', 'true'); el.style.pointerEvents = 'none';
+          el.style.opacity = '0.5'; el.style.cursor = 'not-allowed'; el.style.color = '#555'; el.innerHTML = 'Paused';
         }
         return;
       }
       
       el.addEventListener('click', function(e) {
         if (e.target.closest('.js-add-to-cart-btn')) return;
-        
         e.preventDefault();
-        if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) {
-           e.stopPropagation();
-        }
+        if (e.target.tagName === 'BUTTON' || e.target.closest('.js-buy-btn')) { e.stopPropagation(); }
         if (window.openCheckout) window.openCheckout(el);
       });
     });
-  })();
+  }
 </script>
 
 <script>
@@ -1042,7 +1023,7 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🛒 SCRIPT 4 — CART SYSTEM (NEW)
+     🛒 SCRIPT 4 — CART SYSTEM
      ═══════════════════════════════════════════════════════════════ -->
 <style>
   @keyframes cartGlow {
@@ -1093,7 +1074,6 @@
 
   .cart-total-row { display: flex; justify-content: space-between; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.2em; color: var(--gold-pale); margin-bottom: 30px; }
 
-  /* Main Page Quantity Controls */
   .main-qty-controls {
     display: inline-flex;
     align-items: center;
@@ -1154,7 +1134,6 @@
 <script>
   window.cartData = JSON.parse(localStorage.getItem('noelgrass_cart') || '[]');
 
-  // Function to sync the Main Page buttons with the Cart data
   window.syncMainPageButtons = function() {
     var buttons = document.querySelectorAll('.js-add-to-cart-btn');
     
@@ -1177,7 +1156,6 @@
     });
   };
 
-  // Function to update the Cart Modal UI
   window.updateCartUI = function() {
     var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
     var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
@@ -1210,7 +1188,6 @@
     window.syncMainPageButtons();
   };
 
-  // Master function to handle +/- from BOTH main page and modal
   window.handleMainQty = function(id, delta, event) {
     if(event) {
       event.preventDefault();
@@ -1228,7 +1205,6 @@
       
       localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
       
-      // Update the cart modal
       var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
       var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
       document.getElementById('floatingCartCount').innerText = count;
@@ -1256,7 +1232,6 @@
         }).join('');
       }
       
-      // Update ONLY the button on the main page that was clicked
       var buttons = document.querySelectorAll('.js-add-to-cart-btn');
       buttons.forEach(function(btn) {
         if (btn.getAttribute('data-id') === id) {
