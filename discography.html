@@ -1618,22 +1618,6 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     📌 QUICK REFERENCE — where to edit what
-
-     Want to…                         Go to…
-     ─────────────────────────────    ─────────────────────────
-     Add / remove a category card     SCRIPT 2 → DISCOGRAPHY["<cat>"]
-     Change the featured release      SCRIPT 2 → DISCOGRAPHY.featured
-     Update a YouTube video ID        SCRIPT 2 → item.video
-     Add a new category to the page   SCRIPT 2 (add array) + HTML
-                                      (add <details> block + gallery)
-     Change button text / style       <style> → .action-link
-     Change featured cover size       <style> → .feature-cover
-     Change the icon row              SCRIPT 2 → featured block in
-                                      renderDiscography()
-     ═══════════════════════════════════════════════════════════════ -->
-
-<!-- ═══════════════════════════════════════════════════════════════
      🧭 SCRIPT 1 — MENU + ACCORDION + MEDIA MODAL
      ═══════════════════════════════════════════════════════════════ -->
 <script>
@@ -1751,101 +1735,51 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     💿 SCRIPT 2 — DISCOGRAPHY DATA + AUTO-RENDER
-
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD A NEW RELEASE.
-     Add ONE line to any category array. The card, badge,
-     Preview button, and "X releases" count update automatically.
-
-     ➕ To ADD       → paste one line below
-     ➖ To DELETE    → delete its line
-     🔁 To REORDER   → move the line up/down
-     📝 To EDIT      → change the line in place
-
-     📁 Images live in: images/discography/
-
-     Item fields:
-       img    = path to cover image (images/discography/FILE.jpg)
-       alt    = accessibility / SEO text
-       title  = album / EP / single title
-       format = "Solo Piano" | "Orchestral" | "Experimental" | "Ambient"
-       badge  = "Album" | "EP" | "Single"
-       video  = YouTube video ID (the part after v= in the URL)
-
-     Featured block extra fields:
-       youtube = full YouTube embed URL
-       apple   = full Apple Music embed URL
-       spotify = full Spotify embed URL
-
-     ⚠️ No amount/currency — this page is listen-only.
+     💿 SCRIPT 2 — DISCOGRAPHY DATA + AUTO-RENDER (LIVE DATABASE)
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var DISCOGRAPHY = {
+  let DISCOGRAPHY = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 FEATURED / LATEST RELEASE — top of the page
-       📁 Image in: images/discography/
-       ➕ To swap the featured release, edit this object only.
-       ═══════════════════════════════════════════════════════════ */
-    featured: {
-      img: "images/discography/into-a-stillness.jpg",
-      alt: "Into A Stillness That Answers — EP by Noel Grass",
-      title: "Into A Stillness That Answers",
-      badge: "EP",
-      video: "T6jDLG2Acbk",
-      youtube: "https://www.youtube.com/embed/T6jDLG2Acbk?autoplay=1&rel=0",
-      apple:   "https://embed.music.apple.com/us/album/into-a-stillness-that-answers-ep/6773708812",
-      spotify: "https://open.spotify.com/embed/album/5dglJq4fALStu3S6Jm46J4"
-    },
+  // Fetch live data from the Database
+  fetch("https://master-brain.noelgrass.workers.dev/api/music")
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(item => {
+        // Map database columns to the format the HTML expects
+        const mapped = {
+          // If the image is in R2 (starts with /), append the worker URL
+          img: item.cover_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + item.cover_url : item.cover_url,
+          alt: item.title,
+          title: item.title,
+          format: item.format_label || "Music",
+          badge: item.badge || "Album",
+          video: item.video_id || ""
+        };
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 SOLO PIANO — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
-    "solo-piano": [
-      { img: "images/discography/into-a-stillness.jpg",    alt: "Into A Stillness That Answers — solo piano EP by Noel Grass", title: "Into A Stillness That Answers", format: "Solo Piano", badge: "EP",    video: "T6jDLG2Acbk" },
-      { img: "images/discography/where-i-begin-again.jpg", alt: "Where I Begin Again — solo piano EP by Noel Grass",           title: "Where I Begin Again",           format: "Solo Piano", badge: "EP",    video: "dgQjOQKJwnw" },
-      { img: "images/discography/the-impressionist.jpg",   alt: "The Impressionist — solo piano album by Noel Grass",          title: "The Impressionist",             format: "Solo Piano", badge: "Album", video: "hQsG4VxJSws" },
-      { img: "images/discography/the-impressionist-2.jpg", alt: "The Impressionist II — solo piano album by Noel Grass",       title: "The Impressionist II",          format: "Solo Piano", badge: "Album", video: "f9vpu1eTEYE" }
-    ],
+        // If it's featured, put it in the top slot and add the streaming URLs
+        if (item.is_featured) {
+          DISCOGRAPHY.featured = {
+            ...mapped,
+            youtube: "https://www.youtube.com/embed/" + item.video_id + "?autoplay=1&rel=0",
+            apple:   item.stream_apple || "",
+            spotify: item.stream_spotify || ""
+          };
+        }
+        
+        // Push it to its category (this automatically moves an old featured item into the category when replaced)
+        if (DISCOGRAPHY[item.category]) {
+          DISCOGRAPHY[item.category].push(mapped);
+        }
+      });
+      
+      renderDiscography(); // Run the render logic once data is ready
+    })
+    .catch(err => {
+      console.error("Failed to load discography:", err);
+      document.getElementById('featuredRelease').innerHTML = '<p style="color:#aaa;">Failed to load catalogue. Please try again later.</p>';
+    });
 
-    /* ═══════════════════════════════════════════════════════════
-       💿 ORCHESTRAL — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
-    "orchestral": [
-      { img: "images/discography/introspect.jpg",        alt: "Introspect — orchestral EP by Noel Grass",           title: "Introspect",        format: "Orchestral", badge: "EP",    video: "N6GS8OGD2GY" },
-      { img: "images/discography/seven-deadly-sins.jpg", alt: "Seven Deadly Sins — orchestral album by Noel Grass", title: "Seven Deadly Sins", format: "Orchestral", badge: "Album", video: "Ksw5e9IyGzs" }
-    ],
-
-    /* ═══════════════════════════════════════════════════════════
-       💿 EXPERIMENTAL — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
-    "experimental": [
-      { img: "images/discography/agent-254.jpg",           alt: "Agent 254 — experimental EP by Noel Grass",                title: "Agent 254",             format: "Experimental", badge: "EP",    video: "z-LEJuI9u6A" },
-      { img: "images/discography/the-impressionist-3.jpg", alt: "The Impressionist III — experimental album by Noel Grass", title: "The Impressionist III", format: "Experimental", badge: "Album", video: "iLW3pvDHahI" }
-    ],
-
-    /* ═══════════════════════════════════════════════════════════
-       💿 AMBIENT — images in: images/discography/
-       ➕ ADD a release  → paste one line below
-       ➖ DELETE         → delete its line
-       ═══════════════════════════════════════════════════════════ */
-    "ambient": [
-      { img: "images/discography/when-stars-align.jpg", alt: "When Stars Align — ambient single by Noel Grass", title: "When Stars Align", format: "Ambient", badge: "Single", video: "zNHjyFSfxuc" }
-    ]
-  };
-
-  /* renderDiscography() does three things, in order:
-       1. Builds the featured release block from DISCOGRAPHY.featured
-       2. Loops all categories and builds each gallery + count
-       3. Wires the .js-preview and .js-embed buttons to the modal
-     Any button created in steps 1–2 must be wired in step 3. */
-  (function renderDiscography() {
+  function renderDiscography() {
     // ---- 1. Featured / Latest Release block ----
     var feat = DISCOGRAPHY.featured;
     var featMount = document.getElementById('featuredRelease');
@@ -1945,7 +1879,7 @@
         if (src && window.openMediaModal) window.openMediaModal(src, mode);
       });
     });
-  })();
+  }
 </script>
 
 </body>
