@@ -1060,32 +1060,21 @@
     });
 
     if (audio) {
-             // 🎯 1. Set the initial time the moment the MP3 header is read
-        audio.addEventListener('loadedmetadata', function () {
-          if (!currentTrackId) return;
-          var player = document.getElementById('player-' + currentTrackId);
-          if (!player) return;
-          var time = player.querySelector('.player-time');
-          if (time && audio.duration) {
-            time.innerText = fmt(audio.duration);
-          }
-        });
+       
+      audio.addEventListener('timeupdate', function () {
+        if (!currentCueId) return;
+        var cue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
+        if (!cue) return;
+        var bar = cue.querySelector('.cue-progress-bar');
+        var time = cue.querySelector('.cue-time');
 
-        // 🎯 2. Update on every tick (mirrors rent-scores.html exactly)
-        audio.addEventListener('timeupdate', function () {
-          if (!currentTrackId) return;
-          var player = document.getElementById('player-' + currentTrackId);
-          if (!player) return;
-          var bar = player.querySelector('.player-progress-bar');
-          var time = player.querySelector('.player-time');
-
-          var pct = (audio.currentTime / (audio.duration || 1)) * 100;
+        // Only update if duration is a valid number
+        if (audio.duration && !isNaN(audio.duration)) {
+          var pct = (audio.currentTime / audio.duration) * 100;
           if (bar) bar.style.width = pct + '%';
-
-          if (time && audio.duration) {
-            time.innerText = fmt(audio.duration - audio.currentTime);
-          }
-        });
+          if (time) time.textContent = fmt(audio.duration - audio.currentTime);
+        }
+      });
 
       audio.addEventListener('ended', function () { stopCue(); });
 
