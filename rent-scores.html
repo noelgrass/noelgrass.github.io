@@ -766,56 +766,40 @@
 <script>
   var PREVIEW_BASE = "https://rent-scores.noelgrass.workers.dev/preview";
 
-  function buildPreviewUrl(code, cueNumber) {
-    var prefix = code.substring(0, 2).toLowerCase();
-    var folder = prefix + "/" + code;
+  function buildPreviewUrl(folder, code, cueNumber) {
+    var path = folder + "/" + code;
     var file = "cue-" + cueNumber + ".mp3";
-    return PREVIEW_BASE + "?folder=" + encodeURIComponent(folder) + "&file=" + encodeURIComponent(file) + "&v=final1";
+    return PREVIEW_BASE + "?folder=" + encodeURIComponent(path) + "&file=" + encodeURIComponent(file) + "&v=final1";
   }
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🚨🚨🚨 DATA ENTRY — SCORES & SHELVES 🚨🚨🚨
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var SCORES = [
-    // ── TENSION & SUSPENSE ─────────────────────────────────────
-    { cat: "tension", code: "TN01", title: "Theme 1",  desc: ["Synth", "Synth · Piano", "Synth · Piano · Cello"], amount: "800000" },
-    { cat: "tension", code: "TN02", title: "Theme 2",  desc: ["Synth · Cello · Violin · Percussion", "Synth", "Percussion · Synth"], amount: "800000" },
-    { cat: "tension", code: "TN03", title: "Theme 3",  desc: ["Cello · Percussion · Synth · Piano", "Piano · Synth", "Cello · Percussion · Synth · Piano"], amount: "800000" },
-    { cat: "tension", code: "TN04", title: "Theme 4",  desc: ["Synth · Piano · Cello", "Synth · Piano", "Percussion · Cello · Piano"], amount: "800000" },
-    { cat: "tension", code: "TN05", title: "Theme 5",  desc: ["Percussion · Cello", "Piano · Cello · Synth", "Percussion · Synth"], amount: "800000" },
-    { cat: "tension", code: "TN06", title: "Theme 6",  desc: ["Piano · Synth · Cello", "Piano · Synth · Choir", "Piano · Synth"], amount: "800000" },
-    { cat: "tension", code: "TN07", title: "Theme 7",  desc: ["Strings · Percussion", "Synth · Choir · Cello", "Synth · Percussion"], amount: "800000" },
-    { cat: "tension", code: "TN08", title: "Theme 8",  desc: ["Violin · Percussion · Piano", "Strings · Synths", "Piano · Cello · Synth · Percussions"], amount: "800000" },
-    { cat: "tension", code: "TN09", title: "Theme 9",  desc: ["Synths", "Synth · Strings · Oboe", "Synth · Percussion · Choir"], amount: "800000" },
-    { cat: "tension", code: "TN10", title: "Theme 10", desc: ["Piano · Synth", "Cello · Synth", "Synth · Cello · Choir"], amount: "800000" },
-    { cat: "tension", code: "TN11", title: "Theme 11", desc: ["Percussions · Strings · Choir", "Percussions · Cello · Choir", "Percussion · Cello · Violin · Choir"], amount: "800000" },
-    { cat: "tension", code: "TN12", title: "Theme 12", desc: ["Synth · Piano", "Bass · Choir", "Piano · Violin · Synth · Percussions"], amount: "800000" },
-    { cat: "tension", code: "TN13", title: "Theme 13", desc: ["Synth · Piano", "Piano · Bass", "Synth · Strings · Choir · Percussions"], amount: "800000" },
-
-    // ── DRAMA & EMOTION ────────────────────────────────────────
-    { cat: "drama",   code: "DR01", title: "Theme 1",  desc: ["Synth · Cello", "Piano · Strings", "Piano · Violin"], amount: "800000" },
-    { cat: "drama",   code: "DR02", title: "Theme 2",  desc: ["Synth · Piano · Strings", "Piano", "Piano"], amount: "800000" },
-
-    // ── QUIET & STILL ──────────────────────────────────────────
-    { cat: "quiet",   code: "QS01", title: "Theme 1",  desc: ["Synth · Piano", "Synth · Piano", "Synth · Piano"], amount: "800000" }
+  let SCORES = [];
+  let SHELVES = [
+    { cat: "tn", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
+    { cat: "dr", label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
+    { cat: "qs", label: "Quiet & Still",      desc: "For unsettling stillness, ambient drones, and quiet dread." }
   ];
 
-  var SHELVES = [
-    { cat: "tension", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
-    { cat: "drama",   label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
-    { cat: "place",   label: "Place & Heritage",   desc: "For period, cultural, and heritage films" },
-    { cat: "quiet",   label: "Quiet & Still",      desc: "For unsettling stillness, ambient drones, and quiet dread." },
-    { cat: "modern",  label: "Modern & Hybrid",    desc: "For contemporary thrillers, sci-fi, tech, urban" },
-    { cat: "trailer", label: "Trailer & Promo",    desc: "For trailers, teasers, and title sequences" }
-  ];
-</script>
+  fetch("https://master-brain.noelgrass.workers.dev/api/scores")
+    .then(res => res.json())
+    .then(data => {
+       SCORES = data.map(s => {
+          // Parse the JSON cues string from the DB back into an array of descriptions
+          const cuesArr = JSON.parse(s.cues || "[]");
+          return {
+             cat: s.folder, 
+             code: s.id,
+             title: s.title,
+             desc: cuesArr.map(c => c.desc), 
+             amount: s.price
+          };
+       });
+       initScoresApp(); // Start the app once data is ready
+    })
+    .catch(err => console.error("Failed to load scores:", err));
 
-<script>
-  (function () {
-    "use strict";
-
+  function initScoresApp() {
     var mount = document.getElementById('shelvesMount');
     if (!mount) return;
 
@@ -848,7 +832,7 @@
       var cuesHtml = '';
       for (var i = 1; i <= cueCount; i++) {
         var cueId = suite.code + '-' + i;
-        var url = buildPreviewUrl(suite.code, i);
+        var url = buildPreviewUrl(suite.cat, suite.code, i);
         var cueDesc = suite.desc[i - 1] || '';
         cuesHtml +=
           '<div class="cue" data-cue-id="' + cueId + '">' +
@@ -1273,8 +1257,7 @@
         recBtn.disabled = false;
       }, 1500);
     });
-
-  })();
+  }
 </script>
 
 <script>
@@ -1310,7 +1293,7 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🛒 SCRIPT 4 — CART SYSTEM (NEW)
+     🛒 SCRIPT 4 — CART SYSTEM
      ═══════════════════════════════════════════════════════════════ -->
 <style>
   @keyframes cartGlow {
