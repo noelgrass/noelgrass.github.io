@@ -1675,9 +1675,11 @@
 <script>
   let DISCOGRAPHY = { featured: null, "solo-piano": [], "orchestral": [], "experimental": [], "ambient": [] };
 
-  fetch("https://master-brain.noelgrass.workers.dev/api/music")
+  fetch("https://master-brain.noelgrass.workers.dev/api/data?table=catalogue&published=1")
     .then(res => res.json())
     .then(data => {
+        // Filter to only show music (not digital products)
+        data = data.filter(item => item.kind === 'music');
       data.forEach(item => {
         // 1. Safely handle image paths (Fallback if cover_url is null)
         let imagePath = "images/placeholder.jpg"; 
