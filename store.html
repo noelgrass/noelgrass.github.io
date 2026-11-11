@@ -799,12 +799,14 @@
   var featuredBadgeEl   = document.querySelector('[data-featured-badge]');
   var digitalSectionsEl = document.querySelector('.digital-sections');
 
-  Promise.all([
-    fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=music").then(r => r.json()),
-    fetch("https://master-brain.noelgrass.workers.dev/api/music").then(r => r.json()),
-    fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=digital").then(r => r.json()),
-    fetch("https://master-brain.noelgrass.workers.dev/api/digital").then(r => r.json())
-  ]).then(([musicCats, musicItems, digitalCats, digitalItems]) => {
+    Promise.all([
+    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1").then(r => r.json()),
+    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=catalogue&published=1").then(r => r.json())
+  ]).then(([allCats, allItems]) => {
+    const musicCats = allCats.filter(c => c.section === 'music');
+    const digitalCats = allCats.filter(c => c.section === 'digital');
+    const musicItems = allItems.filter(i => i.kind === 'music');
+    const digitalItems = allItems.filter(i => i.kind === 'digital');
     buildStorefront({ featuredEl, featuredBadgeEl, sectionsEl: musicSectionsEl, categories: musicCats, items: musicItems, sectionType: 'music' });
     buildStorefront({ featuredEl: null, featuredBadgeEl: null, sectionsEl: digitalSectionsEl, categories: digitalCats, items: digitalItems, sectionType: 'digital' });
     wireBuyButtons();
