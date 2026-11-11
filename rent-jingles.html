@@ -624,12 +624,12 @@
 
     <a href="#recoveryBox" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
-    <div class="mood-groups">
+    <div class="mood-groups" id="jingles-container">
 
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Anthems &amp; Campaigns</span></span>
-          <span class="mood-count" data-count-for="anthems">1 track</span>
+          <span class="mood-count" data-count-for="anthems">0 tracks</span>
         </summary>
         <div class="track-list" data-category="anthems"></div>
       </details>
@@ -637,7 +637,7 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">African &amp; Cultural</span></span>
-          <span class="mood-count" data-count-for="african">8 tracks</span>
+          <span class="mood-count" data-count-for="african">0 tracks</span>
         </summary>
         <div class="track-list" data-category="african"></div>
       </details>
@@ -645,7 +645,7 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Cinematic &amp; Reflective</span></span>
-          <span class="mood-count" data-count-for="cinematic">6 tracks</span>
+          <span class="mood-count" data-count-for="cinematic">0 tracks</span>
         </summary>
         <div class="track-list" data-category="cinematic"></div>
       </details>
@@ -653,7 +653,7 @@
       <details class="mood-group">
         <summary>
           <span><span class="mood-indicator"></span><span class="mood-label">Modern &amp; Corporate</span></span>
-          <span class="mood-count" data-count-for="modern">5 tracks</span>
+          <span class="mood-count" data-count-for="modern">0 tracks</span>
         </summary>
         <div class="track-list" data-category="modern"></div>
       </details>
@@ -827,35 +827,26 @@
   document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
-    var TRACKS = [
-      // ── ANTHEMS & CAMPAIGNS ─────────────────────────────────────
-      { cat: "anthems",   code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions",  duration: "Anthem · 0:59",    file: "AC01.mp3", folder: "ac", amount: "500000" },
+    // 1. Fetch Live Jingles from Database
+    let TRACKS = [];
 
-      // ── AFRICAN & CULTURAL ──────────────────────────────────────
-      { cat: "african",   code: "AF01", title: "Theme 1", desc: "Ethnic and Orchestral",    duration: "African · 0:32",   file: "AF01.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "African · 0:40",   file: "AF02.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF03", title: "Theme 3", desc: "Ethnic and Orchestral",    duration: "African · 0:34",   file: "AF03.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF04", title: "Theme 4", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF04.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF05", title: "Theme 5", desc: "Ethnic and Orchestral",    duration: "African · 1:38",   file: "AF05.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF06", title: "Theme 6", desc: "Orchestral",               duration: "African · 0:40",   file: "AF06.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF07", title: "Theme 7", desc: "Ethnic & Percussions",     duration: "African · 0:40",   file: "AF07.mp3", folder: "af", amount: "500000" },
-      { cat: "african",   code: "AF08", title: "Theme 8", desc: "Ethnic and Orchestral",    duration: "African · 1:29",   file: "AF08.mp3", folder: "af", amount: "500000" },
-
-      // ── CINEMATIC & REFLECTIVE ──────────────────────────────────
-      { cat: "cinematic", code: "CR01", title: "Theme 1", desc: "Piano & Orchestral",       duration: "Cinematic · 1:26", file: "CR01.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR02", title: "Theme 2", desc: "Orchestral & Percussions", duration: "Cinematic · 2:12", file: "CR02.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR03", title: "Theme 3", desc: "Ambient",                  duration: "Cinematic · 1:04", file: "CR03.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR04", title: "Theme 4", desc: "Orchestral",               duration: "Cinematic · 0:44", file: "CR04.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR05", title: "Theme 5", desc: "Piano & Orchestral",       duration: "Cinematic · 1:35", file: "CR05.mp3", folder: "cr", amount: "500000" },
-      { cat: "cinematic", code: "CR06", title: "Theme 6", desc: "Piano & Orchestral",       duration: "Cinematic · 0:44", file: "CR06.mp3", folder: "cr", amount: "500000" },
-
-      // ── MODERN & CORPORATE ──────────────────────────────────────
-      { cat: "modern",    code: "MC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Modern · 1:36",    file: "MC01.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC02", title: "Theme 2", desc: "Ethnic and Orchestral",    duration: "Modern · 0:34",    file: "MC02.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC03", title: "Theme 3", desc: "Orchestral",               duration: "Modern · 2:04",    file: "MC03.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC04", title: "Theme 4", desc: "Ethnic and Orchestral",    duration: "Modern · 2:03",    file: "MC04.mp3", folder: "mc", amount: "500000" },
-      { cat: "modern",    code: "MC05", title: "Theme 5", desc: "Orchestral & Percussions", duration: "Modern · 2:04",    file: "MC05.mp3", folder: "mc", amount: "500000" }
-    ];
+    fetch("https://master-brain.noelgrass.workers.dev/api/jingles")
+      .then(res => res.json())
+      .then(data => {
+         TRACKS = data.map(j => ({
+            cat: j.folder, 
+            code: j.id,
+            title: j.title,
+            desc: j.description,
+            duration: j.duration,
+            file: j.id + ".mp3", 
+            folder: j.folder,
+            amount: j.price
+         }));
+         renderTracks(); 
+         initAudioLogic(); // Start the players once tracks are rendered
+      })
+      .catch(err => console.error("Failed to load jingles:", err));
 
     var PREVIEW_BASE = "https://rent-jingles.noelgrass.workers.dev/preview";
     function buildPreviewUrl(t) {
@@ -904,132 +895,165 @@
       });
     }
 
-    var audio = document.getElementById('mainAudio');
-    var currentTrackId = null;
+    function initAudioLogic() {
+      var audio = document.getElementById('mainAudio');
+      var currentTrackId = null;
 
-    function stopCurrentTrack() {
-      if (!audio || !currentTrackId) return;
-      audio.pause();
-      audio.currentTime = 0;
-      var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-      if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
-      var player = document.getElementById('player-' + currentTrackId);
-      if (player) {
-        var bar = player.querySelector('.player-progress-bar');
-        var time = player.querySelector('.player-time');
-        if (bar) bar.style.width = '0%';
-        if (time) time.innerText = '0:00';
-        player.classList.remove('active');
-        var volContainer = player.querySelector('.volume-container');
-        if (volContainer) volContainer.classList.remove('active');
-      }
-      currentTrackId = null;
-    }
-
-    document.addEventListener('click', function (e) {
-      var btn = e.target.closest('.action-play');
-      if (btn) {
-        e.preventDefault();
-        var code = btn.getAttribute('data-code');
-        var url = btn.getAttribute('data-url');
-        if (currentTrackId === code) {
-          audio.paused ? audio.play() : audio.pause();
-          return;
-        }
-        stopCurrentTrack();
-        currentTrackId = code;
-        audio.src = url;
-        audio.play().catch(function(err) { console.error("Playback failed:", err); });
-        var player = document.getElementById('player-' + code);
-        if (player) player.classList.add('active');
-      } else {
-        var isProgressBar = e.target.closest('.player-progress-wrap');
-        var isVolume = e.target.closest('.volume-container');
-        if (!isProgressBar && !isVolume && currentTrackId) {
-          stopCurrentTrack();
-        }
-      }
-    });
-
-    if (audio) {
-      audio.addEventListener('play', function () {
-        var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
-        if (b) { b.innerHTML = '❚❚'; b.classList.add('playing'); }
-      });
-      audio.addEventListener('pause', function () {
+      window.stopCurrentTrack = function() {
+        if (!audio || !currentTrackId) return;
+        audio.pause();
+        audio.currentTime = 0;
         var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
         if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
-      });
-      audio.addEventListener('timeupdate', function () {
-        if (!currentTrackId) return;
         var player = document.getElementById('player-' + currentTrackId);
-        if (!player) return;
-        var pct = (audio.currentTime / (audio.duration || 1)) * 100;
-        var bar = player.querySelector('.player-progress-bar');
-        var time = player.querySelector('.player-time');
-        if (bar) bar.style.width = pct + '%';
-        if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
-      });
-      audio.addEventListener('ended', function () {
-        stopCurrentTrack();
-      });
-
-      var isDragging = false;
-      var activeProgressWrap = null;
-
-      function seekToEvent(e, wrap) {
-        if (!audio.duration) return;
-        var rect = wrap.getBoundingClientRect();
-        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        var clickX = clientX - rect.left;
-        var pct = Math.max(0, Math.min(1, clickX / rect.width));
-        audio.currentTime = pct * audio.duration;
-        var bar = wrap.querySelector('.player-progress-bar');
-        if (bar) bar.style.width = (pct * 100) + '%';
+        if (player) {
+          var bar = player.querySelector('.player-progress-bar');
+          var time = player.querySelector('.player-time');
+          if (bar) bar.style.width = '0%';
+          if (time) time.innerText = '0:00';
+          player.classList.remove('active');
+          var volContainer = player.querySelector('.volume-container');
+          if (volContainer) volContainer.classList.remove('active');
+        }
+        currentTrackId = null;
       }
 
-      document.addEventListener('mousedown', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap');
-        if (wrap) {
-          isDragging = true;
-          activeProgressWrap = wrap;
-          seekToEvent(e, wrap);
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest('.action-play');
+        if (btn) {
           e.preventDefault();
+          var code = btn.getAttribute('data-code');
+          var url = btn.getAttribute('data-url');
+          if (currentTrackId === code) {
+            audio.paused ? audio.play() : audio.pause();
+            return;
+          }
+          window.stopCurrentTrack();
+          currentTrackId = code;
+          audio.src = url;
+          audio.play().catch(function(err) { console.error("Playback failed:", err); });
+          var player = document.getElementById('player-' + code);
+          if (player) player.classList.add('active');
+        } else {
+          var isProgressBar = e.target.closest('.player-progress-wrap');
+          var isVolume = e.target.closest('.volume-container');
+          if (!isProgressBar && !isVolume && currentTrackId) {
+            window.stopCurrentTrack();
+          }
         }
       });
 
-      document.addEventListener('mousemove', function(e) {
-        if (isDragging && activeProgressWrap) {
-          seekToEvent(e, activeProgressWrap);
+      if (audio) {
+        audio.addEventListener('play', function () {
+          var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+          if (b) { b.innerHTML = '❚❚'; b.classList.add('playing'); }
+        });
+        audio.addEventListener('pause', function () {
+          var b = document.querySelector('.action-play[data-code="' + currentTrackId + '"]');
+          if (b) { b.innerHTML = '▶'; b.classList.remove('playing'); }
+        });
+        audio.addEventListener('timeupdate', function () {
+          if (!currentTrackId) return;
+          var player = document.getElementById('player-' + currentTrackId);
+          if (!player) return;
+          var pct = (audio.currentTime / (audio.duration || 1)) * 100;
+          var bar = player.querySelector('.player-progress-bar');
+          var time = player.querySelector('.player-time');
+          if (bar) bar.style.width = pct + '%';
+          if (time) time.innerText = fmt((audio.duration || 0) - audio.currentTime);
+        });
+        audio.addEventListener('ended', function () {
+          window.stopCurrentTrack();
+        });
+
+        var isDragging = false;
+        var activeProgressWrap = null;
+
+        function seekToEvent(e, wrap) {
+          if (!audio.duration) return;
+          var rect = wrap.getBoundingClientRect();
+          var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          var clickX = clientX - rect.left;
+          var pct = Math.max(0, Math.min(1, clickX / rect.width));
+          audio.currentTime = pct * audio.duration;
+          var bar = wrap.querySelector('.player-progress-bar');
+          if (bar) bar.style.width = (pct * 100) + '%';
+        }
+
+        document.addEventListener('mousedown', function(e) {
+          var wrap = e.target.closest('.player-progress-wrap');
+          if (wrap) {
+            isDragging = true;
+            activeProgressWrap = wrap;
+            seekToEvent(e, wrap);
+            e.preventDefault();
+          }
+        });
+
+        document.addEventListener('mousemove', function(e) {
+          if (isDragging && activeProgressWrap) {
+            seekToEvent(e, activeProgressWrap);
+          }
+        });
+
+        document.addEventListener('mouseup', function() {
+          isDragging = false;
+          activeProgressWrap = null;
+        });
+
+        document.addEventListener('touchstart', function(e) {
+          var wrap = e.target.closest('.player-progress-wrap');
+          if (wrap) {
+            isDragging = true;
+            activeProgressWrap = wrap;
+            seekToEvent(e, wrap);
+          }
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+          if (isDragging && activeProgressWrap) {
+            seekToEvent(e, activeProgressWrap);
+          }
+        }, { passive: true });
+
+        document.addEventListener('touchend', function() {
+          isDragging = false;
+          activeProgressWrap = null;
+        });
+      }
+
+      var moodGroups = document.querySelectorAll('.mood-groups details.mood-group');
+      moodGroups.forEach(function (group) {
+        group.addEventListener('toggle', function () {
+          if (!group.open) return;
+          window.stopCurrentTrack();
+          moodGroups.forEach(function (other) {
+            if (other !== group && other.open) {
+              other.open = false;
+            }
+          });
+        });
+      });
+
+      document.addEventListener('click', function(e) {
+        var volIcon = e.target.closest('.volume-icon');
+        if (volIcon) {
+          e.stopPropagation();
+          var container = volIcon.closest('.volume-container');
+          container.classList.toggle('active');
         }
       });
 
-      document.addEventListener('mouseup', function() {
-        isDragging = false;
-        activeProgressWrap = null;
-      });
-
-      document.addEventListener('touchstart', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap');
-        if (wrap) {
-          isDragging = true;
-          activeProgressWrap = wrap;
-          seekToEvent(e, wrap);
+      document.addEventListener('input', function(e) {
+        if (e.target.classList.contains('volume-slider')) {
+          if (audio) {
+            audio.volume = e.target.value;
+          }
         }
-      }, { passive: true });
-
-      document.addEventListener('touchmove', function(e) {
-        if (isDragging && activeProgressWrap) {
-          seekToEvent(e, activeProgressWrap);
-        }
-      }, { passive: true });
-
-      document.addEventListener('touchend', function() {
-        isDragging = false;
-        activeProgressWrap = null;
       });
     }
 
+    // --- Checkout Logic ---
     var STORAGE_KEY = "noelgrass_email";
     var modal      = document.getElementById('checkoutModal');
     var modalTitle = document.getElementById('checkoutTitle');
@@ -1088,7 +1112,6 @@
       closeCheckout();
 
       try {
-        // 🧠 TALK TO THE MASTER BRAIN
         const response = await fetch("https://master-brain.noelgrass.workers.dev/create-checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1102,7 +1125,6 @@
         const data = await response.json();
 
         if (data.auth_url) {
-          // 🚀 REDIRECT THE USER TO PAYSTACK
           window.location.href = data.auth_url;
         } else {
           alert("Payment error: " + (data.error || "Could not initialize payment."));
@@ -1139,7 +1161,7 @@
       this.value = formatted;
     });
 
-       if (recBtn) recBtn.addEventListener('click', async function () {
+    if (recBtn) recBtn.addEventListener('click', async function () {
       var ref = recInput.value.trim();
       if (!ref) {
         recError.innerText = "Please enter a reference code.";
@@ -1151,15 +1173,13 @@
       recBtn.innerText = "Verifying...";
       recBtn.disabled = true;
 
-      // 1. Silently ask Master Brain if the link is valid without downloading it
       try {
         const check = await fetch("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), {
           method: "HEAD",
-          redirect: "manual" // Stops the browser from downloading the file right now
+          redirect: "manual" 
         });
 
         if (check.status === 403 || check.status === 400) {
-          // 2. It's invalid! Show the error and stop.
           recError.innerText = "Invalid reference or payment incomplete.";
           recError.style.display = "block";
           recBtn.innerText = "Generate Fresh Link";
@@ -1167,7 +1187,6 @@
           return;
         }
 
-        // 3. It's valid! Show the modal and navigate.
         if (downloadBtn) {
           downloadBtn.innerText = "Downloading...";
           downloadBtn.style.opacity = "0.5"; 
@@ -1191,40 +1210,7 @@
       }
     });
 
-    renderTracks();
-
-    var moodGroups = document.querySelectorAll('.mood-groups details.mood-group');
-    moodGroups.forEach(function (group) {
-      group.addEventListener('toggle', function () {
-        if (!group.open) return;
-        stopCurrentTrack();
-        moodGroups.forEach(function (other) {
-          if (other !== group && other.open) {
-            other.open = false;
-          }
-        });
-      });
-    });
-
     if (window.location.hash) window.scrollTo(0, 0);
-
-    document.addEventListener('click', function(e) {
-      var volIcon = e.target.closest('.volume-icon');
-      if (volIcon) {
-        e.stopPropagation();
-        var container = volIcon.closest('.volume-container');
-        container.classList.toggle('active');
-      }
-    });
-
-    document.addEventListener('input', function(e) {
-      if (e.target.classList.contains('volume-slider')) {
-        if (audio) {
-          audio.volume = e.target.value;
-        }
-      }
-    });
-
   });
 </script>
 
