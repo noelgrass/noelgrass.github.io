@@ -364,7 +364,7 @@
   /* ═══════════════════════════════════════════════════════════════
      📅 LIVE DATA FETCHING FROM API (DATABASE)
      ═══════════════════════════════════════════════════════════════ */
-  fetch("https://master-brain.noelgrass.workers.dev/api/tour-dates")
+ fetch("https://master-brain.noelgrass.workers.dev/api/data?table=tour_dates&published=1")
     .then(res => res.json())
     .then(data => {
       renderTourDates(data);
