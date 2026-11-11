@@ -796,10 +796,11 @@
     // 1. Fetch both Categories and Jingles from the Database
     let TRACKS = [];
 
-    Promise.all([
-      fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=jingles").then(r => r.json()),
-      fetch("https://master-brain.noelgrass.workers.dev/api/jingles").then(r => r.json())
-    ]).then(([categories, jinglesData]) => {
+       Promise.all([
+      fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1").then(r => r.json()),
+      fetch("https://master-brain.noelgrass.workers.dev/api/data?table=jingles&published=1").then(r => r.json())
+    ]).then(([allCats, jinglesData]) => {
+      const categories = allCats.filter(c => c.section === 'jingles');
       
       // 2. Map the tracks to their category IDs (e.g., 'ac' -> 'anthems')
       TRACKS = jinglesData.map(j => {
