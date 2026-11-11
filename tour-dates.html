@@ -285,12 +285,6 @@
     <h1>Tour Dates</h1>
     <p class="hero-subhead">Live performance of original works, shaped for the room.</p>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         📅 TOUR DATES MOUNT — filled automatically by JavaScript
-         ⚠️ Do NOT add dates here by hand.
-         ➕ To add a date, edit TOUR_DATES (bottom of file).
-         If TOUR_DATES is empty, the "Coming Soon" block appears.
-         ═══════════════════════════════════════════════════════════════ -->
     <div id="tourDatesMount"></div>
 
     <div class="footer-cta">
@@ -302,9 +296,6 @@
       </p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         🖼️ SIGNATURE LOGO — image in: images/noel-grass-logo.png
-         ═══════════════════════════════════════════════════════════ -->
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
@@ -318,9 +309,6 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -372,60 +360,26 @@
   })();
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     📅 SCRIPT 2 — TOUR DATE DATA + AUTO-RENDER
-
-     ⚠️ THIS IS THE ONLY PLACE YOU EDIT TO ADD / DELETE SHOWS.
-
-     ➕ To ADD a show → paste one line into TOUR_DATES
-     ➖ To DELETE → delete its line
-     🔁 To REORDER → move the line up/down
-     📝 To EDIT → change the line in place
-
-     Field reference:
-       date       = raw date (YYYY-MM-DD) — for sorting
-       dateLabel  = how it shows on the page (e.g. "Sat 14 June")
-       venue      = venue name
-       city       = city name
-       country    = country name
-       time       = show time ("7:30 PM")
-       ticketUrl  = full URL for the ticket page, or "#" if none
-       status     = "available" | "soldout" | "free"
-                    • available → Buy Tickets button (opens ticketUrl)
-                    • soldout   → Sold Out label (disabled)
-                    • free      → "Free Entry" label (opens ticketUrl if set)
-
-     When TOUR_DATES has at least one item → schedule appears,
-     "Coming Soon" block disappears automatically.
-     ═══════════════════════════════════════════════════════════════ -->
 <script>
-  var TOUR_DATES = [
-    // ✏️ Uncomment and fill in the template below when you have your first date:
-    //
-    // {
-    //   date: "2025-06-14",
-    //   dateLabel: "Sat 14 June",
-    //   venue: "Alliance Française",
-    //   city: "Nairobi",
-    //   country: "Kenya",
-    //   time: "7:30 PM",
-    //   ticketUrl: "https://tickets.example.com/noel-grass-nairobi",
-    //   status: "available"
-    // },
-    //
-    // Paste new dates here — one per line.
-  ];
+  /* ═══════════════════════════════════════════════════════════════
+     📅 LIVE DATA FETCHING FROM API (DATABASE)
+     ═══════════════════════════════════════════════════════════════ */
+  fetch("https://master-brain.noelgrass.workers.dev/api/tour-dates")
+    .then(res => res.json())
+    .then(data => {
+      renderTourDates(data);
+    })
+    .catch(err => {
+      console.error("Failed to load tour dates:", err);
+      document.getElementById('tourDatesMount').innerHTML = '<p style="color:#aaa;">Failed to load tour dates. Please try again later.</p>';
+    });
 
-  /* ═══════════════════════════════════════════════════════════
-     ⚙️ RENDER — everything below runs automatically.
-     You should never need to edit below this line.
-     ═══════════════════════════════════════════════════════════ */
-  (function renderTourDates() {
+  function renderTourDates(TOUR_DATES) {
     var mount = document.getElementById('tourDatesMount');
     if (!mount) return;
 
     // No dates yet → show "Coming Soon" block
-    if (!TOUR_DATES.length) {
+    if (!TOUR_DATES || !TOUR_DATES.length) {
       mount.innerHTML =
         '<div class="coming-soon">' +
           '<span class="ornament" aria-hidden="true"></span>' +
@@ -436,28 +390,39 @@
       return;
     }
 
-    // Sort by date ascending
+    // Sort by event_date ascending
     var sorted = TOUR_DATES.slice().sort(function (a, b) {
-      return (a.date || '').localeCompare(b.date || '');
+      return (a.event_date || '').localeCompare(b.event_date || '');
     });
 
     var listHtml = sorted.map(function (show) {
-      var status = show.status || 'available';
+      // Format the date for display (e.g., "Sat 14 June")
+      let dateObj = new Date(show.event_date);
+      let dateLabel = "";
+      if (!isNaN(dateObj)) {
+        dateLabel = dateObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long' });
+      } else {
+        dateLabel = show.event_date; // fallback if formatting fails
+      }
+
+      // Default to "available" unless ticket_url is missing (then "free" or "soldout" logic applies)
+      let status = "available"; 
+      if (!show.ticket_url) status = "soldout"; 
+
       var btnClass = 'tour-date-btn' + (status === 'soldout' ? ' sold-out' : '') + (status === 'free' ? ' free' : '');
       var btnLabel = status === 'soldout' ? 'Sold Out' : (status === 'free' ? 'Free Entry' : 'Buy Tickets');
-      var href = show.ticketUrl || '#';
+      var href = show.ticket_url || '#';
       var target = (status !== 'soldout' && href !== '#') ? ' target="_blank" rel="noopener"' : '';
       var urlPart = (status === 'soldout') ? '' : ' href="' + href + '"' + target;
 
       return (
         '<div class="tour-date">' +
           '<div class="tour-date-when">' +
-            '<span class="tour-date-day">' + (show.dateLabel || show.date || '') + '</span>' +
+            '<span class="tour-date-day">' + dateLabel + '</span>' +
           '</div>' +
           '<div class="tour-date-what">' +
             '<span class="tour-date-venue">' + show.venue + '</span>' +
             '<span class="tour-date-location">' + show.city + (show.country ? ', ' + show.country : '') + '</span>' +
-            (show.time ? '<span class="tour-date-time">' + show.time + '</span>' : '') +
           '</div>' +
           '<a class="' + btnClass + '"' + urlPart + '>' + btnLabel + '</a>' +
         '</div>'
@@ -465,7 +430,7 @@
     }).join('');
 
     mount.innerHTML = '<div class="tour-list">' + listHtml + '</div>';
-  })();
+  }
 </script>
 
 </body>
