@@ -764,42 +764,42 @@
 </script>
 
 <script>
-  var PREVIEW_BASE = "https://rent-scores.noelgrass.workers.dev/preview";
-
-  function buildPreviewUrl(folder, code, cueNumber) {
-    var path = folder + "/" + code;
-    var file = "cue-" + cueNumber + ".mp3";
-    return PREVIEW_BASE + "?folder=" + encodeURIComponent(path) + "&file=" + encodeURIComponent(file) + "&v=final1";
-  }
-</script>
-
-<script>
-  let SCORES = [];
-  let SHELVES = [
-    { cat: "tn", label: "Tension & Suspense", desc: "For thrillers, crime, reveals, and mounting unease" },
-    { cat: "dr", label: "Drama & Emotion",    desc: "For character-driven scenes, intimacy, and quiet turning points" },
-    { cat: "qs", label: "Quiet & Still",      desc: "For unsettling stillness, ambient drones, and quiet dread." }
-  ];
-
-  fetch("https://master-brain.noelgrass.workers.dev/api/scores")
+  /* ═══════════════════════════════════════════════════════════════
+     🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
+     ═══════════════════════════════════════════════════════════════ */
+  fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=scores")
     .then(res => res.json())
-    .then(data => {
-       SCORES = data.map(s => {
-          // Parse the JSON cues string from the DB back into an array of descriptions
-          const cuesArr = JSON.parse(s.cues || "[]");
-          return {
-             cat: s.folder, 
-             code: s.id,
-             title: s.title,
-             desc: cuesArr.map(c => c.desc), 
-             amount: s.price
-          };
-       });
-       initScoresApp(); // Start the app once data is ready
+    .then(categories => {
+       fetch("https://master-brain.noelgrass.workers.dev/api/scores")
+         .then(res => res.json())
+         .then(scores => {
+            initScoresApp(categories, scores);
+         })
+         .catch(err => console.error("Failed to load scores:", err));
     })
-    .catch(err => console.error("Failed to load scores:", err));
+    .catch(err => console.error("Failed to load score categories:", err));
 
-  function initScoresApp() {
+  function buildPreviewUrl(previewPath) {
+    if (previewPath && previewPath.startsWith('/')) {
+      return "https://master-brain.noelgrass.workers.dev" + previewPath;
+    }
+    return "https://rent-scores.noelgrass.workers.dev/preview?file=" + encodeURIComponent(previewPath);
+  }
+
+  function initScoresApp(categories, scoresData) {
+    var SCORES = scoresData.map(s => {
+      // Parse the JSON cues string from the DB back into an array
+      const cuesArr = JSON.parse(s.cues || "[]");
+      return {
+        cat: s.folder,
+        code: s.id,
+        title: s.title,
+        desc: cuesArr.map(c => c.desc),
+        cues: cuesArr, // full cue objects with preview_path
+        amount: s.price
+      };
+    });
+
     var mount = document.getElementById('shelvesMount');
     if (!mount) return;
 
@@ -832,8 +832,11 @@
       var cuesHtml = '';
       for (var i = 1; i <= cueCount; i++) {
         var cueId = suite.code + '-' + i;
-        var url = buildPreviewUrl(suite.cat, suite.code, i);
-        var cueDesc = suite.desc[i - 1] || '';
+        // Use the cue preview path if it exists in the DB, otherwise fall back
+        var previewPath = (suite.cues[i - 1] && suite.cues[i - 1].preview) ? suite.cues[i - 1].preview : '';
+        var url = buildPreviewUrl(previewPath);
+        var cueDesc = (suite.cues[i - 1] && suite.cues[i - 1].desc) ? suite.cues[i - 1].desc : (suite.desc[i - 1] || '');
+        
         cuesHtml +=
           '<div class="cue" data-cue-id="' + cueId + '">' +
             '<div class="cue-info">' +
@@ -879,8 +882,9 @@
       );
     }
 
-    function buildShelfHtml(shelf) {
-      var suites = SCORES.filter(function (s) { return s.cat === shelf.cat; });
+    function buildShelfHtml(category) {
+      var folderCode = category.folder_code;
+      var suites = SCORES.filter(function (s) { return s.cat === folderCode; });
       var cueTotal = suites.length * 3;
       var countLabel = suites.length + (suites.length === 1 ? " suite · " : " suites · ") + cueTotal + " cues";
 
@@ -892,18 +896,23 @@
       }
 
       return (
-        '<details class="shelf" data-cat="' + shelf.cat + '">' +
+        '<details class="shelf" data-cat="' + folderCode + '">' +
           '<summary>' +
-            '<span><span class="shelf-indicator"></span><span class="shelf-label">' + shelf.label + '</span></span>' +
+            '<span><span class="shelf-indicator"></span><span class="shelf-label">' + category.label + '</span></span>' +
             '<span class="shelf-count">' + countLabel + '</span>' +
           '</summary>' +
-          '<p class="shelf-desc">' + shelf.desc + '</p>' +
+          '<p class="shelf-desc">' + (category.description || '') + '</p>' +
           '<div class="shelf-body">' + bodyHtml + '</div>' +
         '</details>'
       );
     }
 
-    mount.innerHTML = '<div class="shelves">' + SHELVES.map(buildShelfHtml).join('') + '</div>';
+    if (!categories || !categories.length) {
+      mount.innerHTML = '<p style="color:var(--muted); font-style:italic; text-align:center; padding:40px 0;">No score categories yet.</p>';
+      return;
+    }
+
+    mount.innerHTML = '<div class="shelves">' + categories.map(buildShelfHtml).join('') + '</div>';
 
     var shelves = mount.querySelectorAll('.shelf');
     shelves.forEach(function (shelf) {
