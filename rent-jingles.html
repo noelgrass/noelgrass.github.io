@@ -624,41 +624,7 @@
 
     <a href="#recoveryBox" class="hero-top-link" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
-    <div class="mood-groups" id="jingles-container">
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Anthems &amp; Campaigns</span></span>
-          <span class="mood-count" data-count-for="anthems">0 tracks</span>
-        </summary>
-        <div class="track-list" data-category="anthems"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">African &amp; Cultural</span></span>
-          <span class="mood-count" data-count-for="african">0 tracks</span>
-        </summary>
-        <div class="track-list" data-category="african"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Cinematic &amp; Reflective</span></span>
-          <span class="mood-count" data-count-for="cinematic">0 tracks</span>
-        </summary>
-        <div class="track-list" data-category="cinematic"></div>
-      </details>
-
-      <details class="mood-group">
-        <summary>
-          <span><span class="mood-indicator"></span><span class="mood-label">Modern &amp; Corporate</span></span>
-          <span class="mood-count" data-count-for="modern">0 tracks</span>
-        </summary>
-        <div class="track-list" data-category="modern"></div>
-      </details>
-
-    </div>
+    <div class="mood-groups" id="jingles-container"></div>
 
     <div class="recovery-box" id="recoveryBox" style="margin-top: 80px;">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
@@ -827,42 +793,50 @@
   document.addEventListener("DOMContentLoaded", function () {
     "use strict";
 
-    // 1. Fetch Live Jingles from Database
+    // 1. Fetch both Categories and Jingles from the Database
     let TRACKS = [];
 
-    fetch("https://master-brain.noelgrass.workers.dev/api/jingles")
-      .then(res => res.json())
-      .then(data => {
-         TRACKS = data.map(j => ({
-            cat: j.folder, 
-            code: j.id,
-            title: j.title,
-            desc: j.description,
-            duration: j.duration,
-            file: j.preview_path, // Using exact path from DB
-            folder: j.folder,
-            amount: j.price
-         }));
-         renderTracks(); 
-         initAudioLogic(); // Start the players once tracks are rendered
-      })
-      .catch(err => console.error("Failed to load jingles:", err));
+    Promise.all([
+      fetch("https://master-brain.noelgrass.workers.dev/api/categories?section=jingles").then(r => r.json()),
+      fetch("https://master-brain.noelgrass.workers.dev/api/jingles").then(r => r.json())
+    ]).then(([categories, jinglesData]) => {
+      
+      // 2. Map the tracks to their category IDs (e.g., 'ac' -> 'anthems')
+      TRACKS = jinglesData.map(j => {
+        var matchingCategory = categories.find(c => c.folder_code === j.folder);
+        return {
+          cat: matchingCategory ? matchingCategory.id : 'uncategorized',
+          code: j.id,
+          title: j.title,
+          desc: j.description,
+          duration: j.duration,
+          file: j.preview_path,
+          folder: j.folder,
+          amount: j.price
+        };
+      });
 
-    function buildPreviewUrl(t) {
-      // If the path starts with a slash, point it to master-brain
-      if (t.file && t.file.startsWith('/')) {
-        return "https://master-brain.noelgrass.workers.dev" + t.file;
+      // 3. Render the HTML dynamically from the categories
+      renderTracks(categories); 
+      initAudioLogic();
+
+    }).catch(err => console.error("Failed to load jingles:", err));
+
+    function renderTracks(categories) {
+      var container = document.getElementById('jingles-container');
+      if (!container) return;
+
+      if (!categories || !categories.length) {
+        container.innerHTML = '<p style="text-align:center; color:#aaa;">No categories yet.</p>';
+        return;
       }
-      // Fallback to the old vault route if needed
-      return "https://rent-jingles.noelgrass.workers.dev/preview?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
-    }
-    function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
-    function renderTracks() {
-      document.querySelectorAll('.track-list[data-category]').forEach(function (list) {
-        var cat = list.getAttribute('data-category');
-        var items = TRACKS.filter(function (t) { return t.cat === cat; });
-        list.innerHTML = items.map(function (t) {
+      // Build the <details> blocks dynamically
+      container.innerHTML = categories.map(function(cat, idx) {
+        var catTracks = TRACKS.filter(function(t) { return t.cat === cat.id; });
+        var count = catTracks.length;
+        
+        var tracksHtml = catTracks.map(function(t) {
           var url = buildPreviewUrl(t);
           return '<div class="track" id="track-' + t.code + '">' +
             '<div class="track-info">' +
@@ -894,9 +868,26 @@
             '</div>' +
           '</div>';
         }).join('');
-        var countEl = document.querySelector('.mood-count[data-count-for="' + cat + '"]');
-        if (countEl) { var n = items.length; countEl.textContent = n + (n === 1 ? " track" : " tracks"); }
-      });
+
+        return (
+          '<details class="mood-group"' + (idx === 0 ? ' open' : '') + '>' +
+            '<summary>' +
+              '<span><span class="mood-indicator"></span><span class="mood-label">' + cat.label + '</span></span>' +
+              '<span class="mood-count">' + count + (count === 1 ? ' track' : ' tracks') + '</span>' +
+            '</summary>' +
+            '<div class="track-list">' + 
+              (count ? tracksHtml : '<p style="padding:20px 0; font-style:italic; color:#aaa;">No tracks yet.</p>') + 
+            '</div>' +
+          '</details>'
+        );
+      }).join('');
+    }
+
+    function buildPreviewUrl(t) {
+      if (t.file && t.file.startsWith('/')) {
+        return "https://master-brain.noelgrass.workers.dev" + t.file;
+      }
+      return "https://rent-jingles.noelgrass.workers.dev/preview?file=" + encodeURIComponent(t.file) + "&folder=" + encodeURIComponent(t.folder);
     }
 
     function initAudioLogic() {
