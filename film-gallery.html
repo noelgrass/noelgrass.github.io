@@ -782,10 +782,13 @@
 
     // 2. Process Clients
     GALLERY.clients = clientsData.map(client => {
-      // Logic: If DB has an audio_file, use the new master-brain route. Otherwise use old rent-jingles route.
       let folder = client.audio_folder || "mc";
       let file = client.audio_file || "";
-      let useNewRoute = !!file; 
+
+      // NEW ROUTE only if audio_file is a full path (contains a "/").
+      // OLD CLIENTS: audio_file = "MC03.mp3" → no slash → use old rent-jingles route.
+      // NEW CLIENTS: audio_file = "clients/previews/xyz.mp3" → has slash → use new master-brain route.
+      let useNewRoute = file.includes('/');
 
       return {
         img: client.logo_url ? (client.logo_url.startsWith('/') ? "https://master-brain.noelgrass.workers.dev" + client.logo_url : client.logo_url) : "images/placeholder-logo.png",
@@ -902,10 +905,10 @@
 
       var audioUrl;
       if (useNewRoute) {
-        // Route 1: New direct master-brain route
-        audioUrl = 'https://master-brain.noelgrass.workers.dev/clients/previews/' + file;
+        // NEW ROUTE: file is a full path like "clients/previews/xyz.mp3"
+        audioUrl = 'https://master-brain.noelgrass.workers.dev/' + file;
       } else {
-        // Route 2: Old rent-jingles vault route
+        // OLD ROUTE: file is a bare filename like "MC03.mp3", folder is "mc"
         audioUrl = 'https://rent-jingles.noelgrass.workers.dev/preview?folder=' + folder + '&file=' + file;
       }
 
