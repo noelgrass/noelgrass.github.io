@@ -1,4 +1,4 @@
-var MAINTENANCE_MODE = true; 
+var MAINTENANCE_MODE = false; 
 
 if (window.location.search.includes('admin=true')) {
     MAINTENANCE_MODE = false; 
