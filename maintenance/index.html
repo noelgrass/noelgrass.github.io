@@ -35,7 +35,7 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
-  @keyframes glowPulse { 0%, 100% { opacity: 0.1; transform: scale(0.98); } 50% { opacity: 0.3; transform: scale(1.02); } }
+  @keyframes glowPulse { 0%, 100% { opacity: 0.15; transform: scale(0.98); } 50% { opacity: 0.35; transform: scale(1.02); } }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
@@ -107,9 +107,9 @@
     content: '';
     position: absolute;
     top: 50%; left: 50%;
-    width: 400px; height: 400px;
+    width: 500px; height: 500px;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(197, 168, 128, 0.15) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(197, 168, 128, 0.12) 0%, transparent 60%);
     z-index: -1;
     animation: glowPulse 6s ease-in-out infinite;
     pointer-events: none;
@@ -141,30 +141,48 @@
     font-size: 1.25em;
     line-height: 1.8;
     color: var(--offwhite);
-    margin-bottom: 40px;
+    margin-bottom: 50px;
     opacity: 0.9;
   }
 
-  .return-btn {
+  /* ═══════════════════════════════════════════════════════════
+     ELEGANT ENTRY POINT (Replaces the plain button)
+     ═══════════════════════════════════════════════════════════ */
+  .entry-point {
     display: inline-block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 0.8em;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.4em;
+    font-style: italic;
+    letter-spacing: 0.05em;
     color: var(--gold-pale);
-    background: transparent;
-    border: 1px solid var(--gold-soft);
-    padding: 16px 40px;
-    transition: all 0.4s ease;
-    cursor: pointer;
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 4px;
+    transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
   }
 
-  .return-btn:hover {
-    background: rgba(197, 168, 128, 0.1);
+  .entry-point::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: var(--gold-soft);
+    transform: scaleX(0.3);
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+  }
+
+  .entry-point:hover {
     color: #FCFCF7;
-    border-color: var(--gold);
-    box-shadow: 0 0 25px rgba(197, 168, 128, 0.3);
+    text-shadow: 0 0 15px rgba(197, 168, 128, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .entry-point:hover::after {
+    transform: scaleX(1);
+    background: var(--gold);
   }
 
   @media (max-width: 700px) {
@@ -183,8 +201,8 @@
     .menu-bottom { margin-top: 10px; }
     
     h1 { font-size: 2.2em; }
-    .maintenance-message { font-size: 1.1em; }
-    .return-btn { padding: 14px 30px; font-size: 0.7em; }
+    .maintenance-message { font-size: 1.1em; margin-bottom: 40px; }
+    .entry-point { font-size: 1.2em; }
   }
 </style>
 </head>
@@ -198,7 +216,6 @@
   </button>
 </header>
 
-<!-- 🚨 EXACT MENU COPY FROM INDEX.HTML 🚨 -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
   <div class="menu-inner">
@@ -230,8 +247,8 @@
     <div class="divider"></div>
     <p class="maintenance-message">We are currently refining the system and updating a few details to ensure the best possible experience. We will be back shortly.</p>
     
-    <!-- Optional: Add a button that redirects you back home, or delete it for pure minimalism -->
-    <a href="../" class="return-btn">Return to Home</a>
+    <!-- The Elegant Entry Point -->
+    <a href="../" class="entry-point">Return to Home &rarr;</a>
   </div>
 </div>
 
