@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Under Maintenance | Noel Grass</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        body { background: #000; color: #EDEAE3; font-family: 'Montserrat', sans-serif; display: flex; align-items: center; justify-content: center; min-height: 100vh; margin: 0; padding: 24px; text-align: center; }
+        .box { max-width: 500px; border: 1px solid #B9975C; padding: 60px 40px; background: #0a0a0a; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
+        h1 { font-family: 'Cormorant Garamond', serif; color: #C5A880; font-size: 2.2em; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 20px; }
+        p { font-style: italic; font-size: 1.1em; line-height: 1.6; color: #9a958c; }
+        
+        #loginModal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.9); align-items: center; justify-content: center; z-index: 1000; }
+        .login-box { background: #111; border: 1px solid #C5A880; padding: 40px; width: 100%; max-width: 350px; }
+        input { width: 100%; padding: 12px; background: #000; border: 1px solid #333; color: #fff; margin-bottom: 20px; font-family: 'Montserrat'; outline: none; }
+        input:focus { border-color: #C5A880; }
+        button { background: #C5A880; color: #000; border: none; padding: 12px 20px; font-family: 'Montserrat'; font-weight: bold; cursor: pointer; width: 100%; text-transform: uppercase; letter-spacing: 0.1em; }
+        button:hover { background: #E8D5B5; }
+        #errorMsg { color: #ff6b6b; font-size: 0.8em; margin-bottom: 15px; display: none; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h1>Under Maintenance</h1>
+        <p>We are currently updating the system and making a few refinements. We'll be back shortly.</p>
+        
+        <p style="margin-top: 40px; font-size: 0.8em; opacity: 0.3; cursor: pointer;" onclick="document.getElementById('loginModal').style.display='flex'">Admin Login</p>
+    </div>
+
+    <div id="loginModal">
+        <div class="login-box">
+            <h2 style="font-family: 'Cormorant Garamond'; color: #C5A880; margin-bottom: 20px;">Admin Access</h2>
+            <div id="errorMsg">Incorrect password.</div>
+            <input type="password" id="adminPassword" placeholder="Enter Password">
+            <button onclick="login()">Enter</button>
+        </div>
+    </div>
+
+    <script>
+        async function login() {
+            var pass = document.getElementById('adminPassword').value;
+            var error = document.getElementById('errorMsg');
+            
+            // Send the password to the Cloudflare Worker to check securely
+            const response = await fetch('/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: pass })
+            });
+
+            if (response.ok) {
+                // The Worker confirmed the password and set the cookie. Reload page.
+                window.location.reload();
+            } else {
+                error.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
