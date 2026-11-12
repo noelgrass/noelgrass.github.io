@@ -7,7 +7,7 @@ if (window.location.search.includes('admin=true')) {
 }
 
 if (MAINTENANCE_MODE) {
-    // 🛑 CHANGED HERE: Point to the new folder path
+    // 🛑 Pointing to the folder now
     if (!window.location.pathname.includes('/maintenance/')) {
         window.location.href = "/maintenance/";
     }
