@@ -6,7 +6,7 @@
 <title>System Under Maintenance | Noel Grass</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #000000;
@@ -35,6 +35,7 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+  @keyframes glowPulse { 0%, 100% { opacity: 0.1; transform: scale(0.98); } 50% { opacity: 0.3; transform: scale(1.02); } }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
@@ -50,8 +51,8 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
   .menu-toggle::after { content: ''; position: absolute; left: 34px; right: 4px; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; transition: transform 0.4s ease; }
   .menu-toggle:hover::after { transform: scaleX(1); transform-origin: left center; }
-
-  .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+  
+  .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
 
   .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
@@ -69,22 +70,17 @@
   .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
   .menu-close .x::before { transform: rotate(45deg); }
   .menu-close .x::after { transform: rotate(-45deg); }
-  .menu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; justify-content: center; align-items: start; text-align: center; max-width: 900px; width: 100%; }
+  .menu-columns { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 40px; text-align: center; max-width: 900px; width: 100%; }
   .menu-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
   .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease; }
   .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
   .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 0; }
   .menu-item { position: relative; opacity: 0; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.72s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.84s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.96s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.08s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.20s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.82s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.94s forwards; }
+  .menu-panel.open .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
+  .menu-panel.open .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.72s forwards; }
+  .menu-panel.open .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.84s forwards; }
+  .menu-panel.open .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.96s forwards; }
+  .menu-panel.open .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.08s forwards; }
   .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
   .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
@@ -94,39 +90,83 @@
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
-  .page { max-width: 900px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-  .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-  .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
+  /* ═══════════════════════════════════════════════════════════
+     MAINTENANCE PAGE CENTERPIECE
+     ═══════════════════════════════════════════════════════════ */
+  .maintenance-center {
+    text-align: center;
+    max-width: 800px;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 10;
+    animation: fadeUp 1.2s ease-out both;
+    animation-delay: 0.2s;
+  }
 
-  .fork { margin: 100px auto 70px; max-width: 960px; width: 100%; }
-  .fork-intro { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--gold-pale); text-align: center; margin-bottom: 40px; }
-  .fork-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; position: relative; }
-  .fork-row::before { content: ''; position: absolute; left: 50%; top: 50%; width: 10px; height: 10px; background: var(--gold); transform: translate(-50%, -50%) rotate(45deg); z-index: 3; }
-  
-  .fork-card { display: block; position: relative; text-align: center; border-radius: 4px; opacity: 0; transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.6s ease; background: var(--bg); }
-  .fork-card::before { content: ''; position: absolute; inset: -2px; border-radius: 4px; background: var(--gold-soft); z-index: -1; opacity: 0.3; filter: blur(15px); transition: opacity 0.4s ease, filter 0.4s ease; animation: elegantPulse 4s ease-in-out infinite; }
-  .fork-card:hover::before { opacity: 0.8; filter: blur(25px); animation: elegantPulseHover 3s ease-in-out infinite; }
-  .fork-card:nth-child(1) { transform: translate3d(0, 30px, 0) scale(0.95); }
-  .fork-card:nth-child(2) { transform: translate3d(0, 30px, 0) scale(0.95); }
-  .fork-card.in-view { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-  .fork-card:hover { transform: translateY(-12px) scale(1.02); }
+  .maintenance-center::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 400px; height: 400px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(197, 168, 128, 0.15) 0%, transparent 60%);
+    z-index: -1;
+    animation: glowPulse 6s ease-in-out infinite;
+    pointer-events: none;
+  }
 
-  .fork-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 4px; }
-  .fork-bg img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.9; transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), filter 0.4s ease, opacity 0.4s ease; }
-  .fork-bg--artist img { filter: grayscale(100%) brightness(0.28) contrast(1.15); }
-  .fork-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.4) 55%, rgba(0,0,0,0.92) 95%), linear-gradient(180deg, rgba(0,0,0,0.45) 0%, transparent 35%, transparent 55%, rgba(0,0,0,0.75) 100%); z-index: 1; }
-  .fork-card:hover .fork-bg img { transform: scale(1.08); filter: grayscale(100%) brightness(0.65) contrast(1.15); opacity: 1; }
-  .fork-card:hover .fork-bg--artist img { filter: grayscale(100%) brightness(0.45) contrast(1.15); }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    color: var(--gold);
+    font-size: 3.5em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin: 0 0 20px;
+    line-height: 1.1;
+    text-shadow: 0 0 20px rgba(197, 168, 128, 0.3);
+  }
 
-  .fork-content { position: relative; z-index: 2; padding: 42px 30px 48px; display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 260px; border-radius: 4px; background: rgba(0,0,0,0.1); }
-  .fork-label { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; font-size: 2em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 18px rgba(197, 168, 128, 0.35); transition: color 0.4s ease, text-shadow 0.4s ease; }
-  .fork-card:hover .fork-label { color: #FCFCF7; text-shadow: 0 6px 10px rgba(0,0,0,0.35), 0 0 24px rgba(197, 168, 128, 0.65); }
-  .fork-desc { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--offwhite); opacity: 0.85; margin-bottom: 24px; }
-  .fork-enter { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); opacity: 0.65; }
+  .divider {
+    width: 60px;
+    height: 1px;
+    background: var(--gold-soft);
+    margin: 0 auto 30px;
+    opacity: 0.7;
+  }
 
-  .recovery-box { max-width: 460px; margin: 60px auto 0; text-align: center; border: 1px solid rgba(197,168,128,0.3); padding: 50px 30px; background: #080808; }
-  .recovery-box p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.05em; color: var(--offwhite); margin-bottom: 24px; line-height: 1.6; }
-  
+  .maintenance-message {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 1.25em;
+    line-height: 1.8;
+    color: var(--offwhite);
+    margin-bottom: 40px;
+    opacity: 0.9;
+  }
+
+  .return-btn {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.8em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: transparent;
+    border: 1px solid var(--gold-soft);
+    padding: 16px 40px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .return-btn:hover {
+    background: rgba(197, 168, 128, 0.1);
+    color: #FCFCF7;
+    border-color: var(--gold);
+    box-shadow: 0 0 25px rgba(197, 168, 128, 0.3);
+  }
+
   @media (max-width: 700px) {
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
@@ -141,58 +181,42 @@
     .menu-section { margin-bottom: 20px; }
     .menu-links { gap: 16px; }
     .menu-bottom { margin-top: 10px; }
-    .page { padding: 60px 22px 60px; }
-    h1 { font-size: 2em; letter-spacing: 0.1em; margin-bottom: 24px; }
-    .fork { margin: 60px auto 50px; }
-    .fork-row { grid-template-columns: 1fr; gap: 24px; }
-    .fork-row::before { display: none; }
-    .fork-card:nth-child(1), .fork-card:nth-child(2) { transform: translate3d(0, 24px, 0); }
-    .fork-card.in-view { transform: translate3d(0, 0, 0); }
-    .fork-content { padding: 40px 24px 40px; min-height: auto; justify-content: center; }
-    .fork-label { font-size: 1.3em; }
-    .fork-desc { font-size: 0.85em; }
-    .fork-enter { font-size: 0.65em; }
+    
+    h1 { font-size: 2.2em; }
+    .maintenance-message { font-size: 1.1em; }
+    .return-btn { padding: 14px 30px; font-size: 0.7em; }
   }
 </style>
 </head>
 <body>
 
 <header class="topnav">
-  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+  <a href="../" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
     <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
     <span>Menu</span>
   </button>
 </header>
 
+<!-- 🚨 EXACT MENU COPY FROM INDEX.HTML 🚨 -->
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
   <div class="menu-inner">
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
       <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
-        Close
-        <span class="x" aria-hidden="true"></span>
+        Close <span class="x" aria-hidden="true"></span>
       </button>
     </div>
     <div class="menu-columns">
       <div class="menu-column">
-        <span class="menu-section">Music</span>
+        <span class="menu-section">Explore</span>
         <ul class="menu-links">
-          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
-          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
-          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
-          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
-          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
-          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
-        </ul>
-      </div>
-      <div class="menu-column">
-        <span class="menu-section">Elsewhere</span>
-        <ul class="menu-links">
-          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
-          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
-          <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+          <li class="menu-item"><a href="../biography" class="menu-link">Biography</a></li>
+          <li class="menu-item"><a href="../" class="menu-link">Home</a></li>
+          <li class="menu-item"><a href="../artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="../film-composer" class="menu-link">Film Composer</a></li>
+          <li class="menu-item"><a href="../contact" class="menu-link">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -201,36 +225,13 @@
 </nav>
 
 <div class="page-wrap" id="pageWrap">
-  <div class="page">
+  <div class="maintenance-center">
     <h1>Under Maintenance</h1>
-    <p class="hero-subhead">We are currently updating the system and making a few refinements. We'll be back shortly.</p>
-    <p class="section-banner">System Under Maintenance · We'll be back shortly</p>
-
-    <div class="fork" id="fork">
-      <p class="fork-intro">Two practices. One name. Choose your door.</p>
-      <div class="fork-row">
-        <a href="artist" class="fork-card" aria-label="Enter the Artist side">
-          <div class="fork-bg fork-bg--artist" aria-hidden="true">
-            <img src="../images/noel-grass-artist.jpg" alt="Noel Grass - Contemporary Classical and Neoclassical Pianist" loading="lazy">
-          </div>
-          <div class="fork-content">
-            <span class="fork-label">Artist</span>
-            <span class="fork-desc">Contemporary classical composer &amp; pianist. Solo piano, orchestral, and neoclassical works.</span>
-            <span class="fork-enter">Enter</span>
-          </div>
-        </a>
-        <a href="film-composer" class="fork-card" aria-label="Enter the Film Composer side — score your film">
-          <div class="fork-bg" aria-hidden="true">
-            <img src="../images/film/film-strip.jpg" alt="Cinematic film scoring and soundtrack composition" loading="lazy">
-          </div>
-          <div class="fork-content">
-            <span class="fork-label">Film Composer</span>
-            <span class="fork-desc">Score your film · original soundtracks, cinematic composition, and sonic branding.</span>
-            <span class="fork-enter">Enter</span>
-          </div>
-        </a>
-      </div>
-    </div>
+    <div class="divider"></div>
+    <p class="maintenance-message">We are currently refining the system and updating a few details to ensure the best possible experience. We will be back shortly.</p>
+    
+    <!-- Optional: Add a button that redirects you back home, or delete it for pure minimalism -->
+    <a href="../" class="return-btn">Return to Home</a>
   </div>
 </div>
 
