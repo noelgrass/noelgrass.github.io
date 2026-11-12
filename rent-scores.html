@@ -4,12 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
-        <script src="/maintenance/maintenance.js"></script>
-
+<script src="/maintenance/maintenance.js"></script>
 
 <title>Rent Film Scores — Stock Music Library Kenya | Noel Grass</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
 <meta name="description" content="License cinematic film scores from Kenya's stock music library. Pre-cleared suites for film production companies and independent filmmakers — no subscription, per-suite pricing.">
@@ -29,11 +27,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🤖 STRUCTURED DATA — 3 SCHEMAS (WebPage + Service + FAQPage)
-     ═══════════════════════════════════════════════════════════════ -->
-
-<!-- 1. WEBPAGE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -49,7 +42,6 @@
 }
 </script>
 
-<!-- 2. SERVICE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -92,7 +84,6 @@
 }
 </script>
 
-<!-- 3. FAQ PAGE -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -1063,7 +1054,6 @@
     });
 
     if (audio) {
-       
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId) return;
         var cue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
@@ -1071,7 +1061,6 @@
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
 
-        // Only update if duration is a valid number
         if (audio.duration && !isNaN(audio.duration)) {
           var pct = (audio.currentTime / audio.duration) * 100;
           if (bar) bar.style.width = pct + '%';
@@ -1101,6 +1090,8 @@
 
       function handleSeekStart(e, wrap) {
         var wrapCueId = getCueIdFromWrap(wrap);
+        
+        // BUG FIX 2: If they are seeking a different cue, switch the audio source AND update the UI button
         if (wrapCueId && wrapCueId !== currentCueId) {
           stopCue();
           var playBtn = mount.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
@@ -1108,6 +1099,11 @@
           var url = playBtn.getAttribute('data-url');
           currentCueId = wrapCueId;
           audio.src = url;
+          
+          // Update the button to show it's playing
+          playBtn.innerHTML = '❚❚';
+          playBtn.classList.add('playing');
+
           audio.addEventListener('loadedmetadata', function onMeta() {
             audio.removeEventListener('loadedmetadata', onMeta);
             seekToEvent(e, wrap);
@@ -1115,8 +1111,10 @@
           });
           return;
         }
+        
         isDragging = true;
         activeWrap = wrap;
+        // BUG FIX 1: If it's the same cue, we just seek. We do NOT reset the audio source.
         seekToEvent(e, wrap);
       }
 
