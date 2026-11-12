@@ -1,5 +1,5 @@
 // 🚦 THE SWITCH 🚦
-var MAINTENANCE_MODE = true; 
+var MAINTENANCE_MODE = false; 
 
 // Secret bypass
 if (window.location.search.includes('admin=true')) {
