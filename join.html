@@ -369,36 +369,47 @@
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // --- CUSTOM MODAL LOGIC ---
-    // Watch for Kit's success message to appear
-    var observer = new MutationObserver(function() {
-      var successBox = document.querySelector('.formkit-alert-success');
-      
-      // If the success box appears on the page...
-      if (successBox && successBox.offsetParent !== null) {
-        var modal = document.getElementById('confirmModal');
-        if (modal) {
-          modal.style.display = 'flex'; // Show our custom modal
-        }
-        // Hide Kit's inline message so you don't have two messages
-        successBox.style.display = 'none'; 
-      }
-    });
-    
-    // Start watching the page for changes
-    observer.observe(document.body, { childList: true, subtree: true });
-    
-    // Close the modal when the button is clicked
-    document.getElementById('closeModalBtn').addEventListener('click', function() {
-      document.getElementById('confirmModal').style.display = 'none';
-    });
+    // --- 🟢 CUSTOM MODAL LOGIC (INTERCEPT SUBMIT) ---
+    var modal = document.getElementById('confirmModal');
+    var closeBtn = document.getElementById('closeModalBtn');
 
-    // Close the modal if the user clicks outside the black box
-    document.getElementById('confirmModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        this.style.display = 'none';
-      }
-    });
+    if (modal && closeBtn) {
+      // Close the modal when the button is clicked
+      closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        // Optional: Reset the form so they can submit again
+        var form = document.querySelector('.formkit-form form');
+        if (form) form.reset();
+      });
+
+      // Close the modal if the user clicks outside the black box
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          modal.style.display = 'none';
+        }
+      });
+
+      // Listen for the form submission to stop the redirect and show the popup
+      document.addEventListener('submit', function(e) {
+        if (e.target.classList.contains('formkit-form') || e.target.closest('.formkit-form')) {
+          
+          // Stop the page from reloading/redirecting
+          e.preventDefault(); 
+          
+          // Show the modal
+          modal.style.display = 'flex';
+          
+          // Submit the form data to Kit in the background
+          var form = e.target;
+          var formData = new FormData(form);
+          fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            mode: 'no-cors' // Prevents CORS errors
+          }).catch(function(err) { console.error(err); });
+        }
+      });
+    }
 
   })();
 </script>
