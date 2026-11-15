@@ -407,7 +407,7 @@
   .cat-modal-inner {
     position: relative;
     width: 100%;
-    max-width: 950px; /* UPDATED: Wider modal */
+    max-width: 950px;
     max-height: 88vh;
     display: flex;
     flex-direction: column;
@@ -615,6 +615,30 @@
     margin-left: 12px;
   }
   .cat-load-all:hover { color: var(--gold-pale); }
+  
+  /* Collapse list state */
+  .cat-collapse-wrap {
+    display: none;
+    width: 100%;
+    justify-content: center;
+    padding-top: 18px;
+    margin-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .cat-collapse-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(197,168,128,0.4);
+    color: var(--gold-pale);
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .cat-collapse-btn:hover { border-color: var(--gold); color: #FCFCF7; }
 
   /* ── CUE MODAL ──────────────────────────────────────── */
   .cue-modal {
@@ -910,11 +934,10 @@
      - #shelvesMount: Displays the category rows.
      
   3. MODALS (FIXED OVERLAYS)
-     - Category Modal (NEW): Opened by clicking a category row. 
-       Contains a live search bar, instrument filter chips (OR logic), 
-       pagination controls, and the full list of suites.
-     - Cue Modal: Opened by clicking ▶ on a suite. Displays the 3 
-       cues with playback, volume, and Buy/Add to Cart actions.
+     - Category Modal: Contains search, filter chips (OR logic), 
+       pagination controls (Prev/Next/Load All/Collapse), and the list.
+     - Cue Modal: Displays the 3 cues with playback, volume, 
+       and Buy/Add to Cart actions.
      - Checkout Modal: Single item checkout prompt.
      - Success Modal: Post-payment download link & instructions.
      - Cart Modal: Floating cart summary & multi-item checkout.
@@ -1124,6 +1147,7 @@
       <!-- Suites will be injected here -->
     </div>
 
+    <!-- Pagination Controls -->
     <div class="cat-pagination" id="catPagination">
       <button type="button" class="cat-page-btn" id="catPrevBtn">← Previous 10</button>
       <div class="cat-page-info">
@@ -1132,6 +1156,12 @@
       </div>
       <button type="button" class="cat-page-btn" id="catNextBtn">Next 10 →</button>
     </div>
+
+    <!-- Collapse Controls (Shows when Load All is active) -->
+    <div class="cat-collapse-wrap" id="catCollapseWrap">
+      <button type="button" class="cat-collapse-btn" id="catCollapseBtn">← Collapse List</button>
+    </div>
+
   </div>
 </div>
 
@@ -1225,6 +1255,7 @@
 
     var audio = document.getElementById('mainAudio');
     var currentCueId = null;
+    var pendingSeekTime = null; // Tracks drag position while audio is buffering
 
     // ── CATEGORY MODAL REFS ───────────────────────────────────
     var catModal      = document.getElementById('catModal');
@@ -1241,6 +1272,8 @@
     var catNextBtn    = document.getElementById('catNextBtn');
     var catPageInfo   = document.getElementById('catPageInfo');
     var catLoadAllBtn = document.getElementById('catLoadAllBtn');
+    var catCollapseWrap = document.getElementById('catCollapseWrap');
+    var catCollapseBtn = document.getElementById('catCollapseBtn');
 
     var activeCategory = null;
     var searchQuery = '';
@@ -1405,6 +1438,7 @@
       if (currentFilteredSuites.length === 0) {
         catResults.innerHTML = '<div class="cat-empty">No themes found matching your search.<br>Try a different keyword or clear your filters.</div>';
         catPagination.style.display = 'none';
+        catCollapseWrap.style.display = 'none';
         return;
       }
 
@@ -1425,12 +1459,20 @@
       catResults.innerHTML = paginatedSuites.map(buildSuiteHtml).join('');
 
       // Update Pagination Controls
-      if (isLoadAll || totalItems <= itemsPerPage) {
+      if (isLoadAll) {
+        // Hide Pagination, Show Collapse
         catPagination.style.display = 'none';
+        catCollapseWrap.style.display = 'flex';
+      } else if (totalItems <= itemsPerPage) {
+        // Hide both
+        catPagination.style.display = 'none';
+        catCollapseWrap.style.display = 'none';
       } else {
+        // Show Pagination, Hide Collapse
         catPagination.style.display = 'flex';
-        catPageInfo.innerHTML = 'Page ' + currentPage + ' of ' + totalPages;
+        catCollapseWrap.style.display = 'none';
         
+        catPageInfo.innerHTML = 'Page ' + currentPage + ' of ' + totalPages;
         catPrevBtn.disabled = (currentPage === 1);
         catNextBtn.disabled = (currentPage === totalPages);
         
@@ -1558,6 +1600,13 @@
       renderCategoryResults();
     });
 
+    catCollapseBtn.addEventListener('click', function() {
+      isLoadAll = false;
+      currentPage = 1; // Reset to page 1 on collapse
+      renderCategoryResults();
+      catResults.scrollTop = 0;
+    });
+
     // Main page shelf row click
     mount.addEventListener('click', function(e) {
       var shelfRow = e.target.closest('.shelf');
@@ -1626,6 +1675,7 @@
       if (!currentCueId) return;
       var id = currentCueId;
       currentCueId = null;
+      pendingSeekTime = null;
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
@@ -1645,6 +1695,7 @@
       if (!audio) return;
       audio.pause();
       currentCueId = cueId;
+      pendingSeekTime = null; // Reset pending seek when loading a new track
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
@@ -1731,6 +1782,13 @@
     });
 
     if (audio) {
+      audio.addEventListener('loadedmetadata', function () {
+        if (pendingSeekTime !== null && audio.duration) {
+          audio.currentTime = pendingSeekTime;
+          pendingSeekTime = null;
+        }
+      });
+
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId) return;
         var cue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
@@ -1756,13 +1814,22 @@
       }
 
       function seekToEvent(e, wrap) {
-        if (!audio.duration) return;
         var rect = wrap.getBoundingClientRect();
         var clientX = e.touches ? e.touches[0].clientX : e.clientX;
         var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        audio.currentTime = pct * audio.duration;
+        
+        // Update visual bar immediately for responsiveness
         var bar = wrap.querySelector('.cue-progress-bar');
         if (bar) bar.style.width = (pct * 100) + '%';
+
+        if (audio.duration && !isNaN(audio.duration)) {
+          audio.currentTime = pct * audio.duration;
+          pendingSeekTime = null;
+        } else {
+          // If duration isn't known yet, store the drag target as a percentage
+          // We'll calculate the exact seconds in the loadedmetadata event
+          pendingSeekTime = pct; 
+        }
       }
 
       function handleSeekStart(e, wrap) {
@@ -1779,9 +1846,15 @@
           playBtn.innerHTML = '❚❚';
           playBtn.classList.add('playing');
 
+          // We must wait for the new audio to load before we can seek
+          pendingSeekTime = null;
+          var rect = wrap.getBoundingClientRect();
+          var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+          
           audio.addEventListener('loadedmetadata', function onMeta() {
             audio.removeEventListener('loadedmetadata', onMeta);
-            seekToEvent(e, wrap);
+            audio.currentTime = pct * audio.duration;
             audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
           });
           return;
@@ -2271,4 +2344,3 @@
 
 </body>
 </html>
-```
