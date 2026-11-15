@@ -416,6 +416,33 @@
 </head>
 <body>
 
+<!-- 🚧 PAGE MAINTENANCE BLOCK -->
+<script>
+    async function checkPageBlock() {
+        if (localStorage.getItem('adminToken')) return; // Admin bypass
+
+        const currentPath = window.location.pathname;
+        try {
+            const res = await fetch(`https://admin-api.noelgrass.workers.dev/check-blocked-page?path=${currentPath}`);
+            const data = await res.json();
+            
+            if (data.blocked) {
+                document.body.innerHTML = `
+                    <div style="height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #000; color: #C5A880; font-family: sans-serif; text-align: center; padding: 20px;">
+                        <h1 style="font-size: 3em; margin-bottom: 10px;">Noel Grass</h1>
+                        <h2 style="font-size: 1.5em; color: #E8D5B5;">Page Temporarily Unavailable</h2>
+                        <p style="color: #888; margin-top: 20px;">We are updating this section. Please check back later.</p>
+                        <a href="/" style="margin-top: 30px; color: #C5A880; text-decoration: underline;">Back to Home</a>
+                    </div>
+                `;
+            }
+        } catch (e) { console.log("Could not check page status."); }
+    }
+    checkPageBlock();
+</script>
+
+<!-- Rest of your store HTML... -->
+
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
