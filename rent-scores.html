@@ -1,3 +1,14 @@
+Here is the complete, updated HTML file. 
+
+The Category Modal now has:
+1. **OR logic** for filter chips (prevents blank screens).
+2. **Wider layout** (950px).
+3. **Hidden scrollbar** (elegant look).
+4. **Pagination controls** (Previous 10, Next 10, Load All, Page X of Y) that appear only when needed.
+5. **Updated explainer text** ("Piano" instead of "Dark").
+6. **Row layout** for the action buttons inside the list.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -254,7 +265,7 @@
     margin: 4px 0;
   }
 
-  .suite-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .suite-actions { display: flex; flex-direction: row; gap: 16px; align-items: center; justify-content: flex-end; }
 
   .action-preview {
     position: relative;
@@ -407,8 +418,8 @@
   .cat-modal-inner {
     position: relative;
     width: 100%;
-    max-width: 640px;
-    max-height: 85vh;
+    max-width: 950px; /* UPDATED: Wider modal */
+    max-height: 88vh;
     display: flex;
     flex-direction: column;
     background: #0a0a0a;
@@ -554,6 +565,12 @@
     overflow-y: auto;
     min-height: 0;
     padding-right: 4px;
+    /* Hide scrollbar for elegance */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+  .cat-results::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
   }
   .cat-empty {
     font-family: 'Playfair Display', Georgia, serif;
@@ -562,6 +579,53 @@
     color: var(--muted);
     padding: 40px 20px;
   }
+
+  /* Pagination Footer */
+  .cat-pagination {
+    display: none; /* hidden by default */
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    margin-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+  .cat-page-btn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(197,168,128,0.4);
+    color: var(--gold-pale);
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .cat-page-btn:hover:not(:disabled) { border-color: var(--gold); color: #FCFCF7; }
+  .cat-page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .cat-page-info {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.68em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .cat-load-all {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65em;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px 4px;
+    text-decoration: underline;
+    transition: color 0.3s ease;
+    margin-left: 12px;
+  }
+  .cat-load-all:hover { color: var(--gold-pale); }
 
   /* ── CUE MODAL ──────────────────────────────────────── */
   .cue-modal {
@@ -835,6 +899,9 @@
     .volume-container.active .volume-slider-wrap { width: 45px; }
     .cue-modal-inner { padding: 34px 22px 24px; max-height: 90vh; }
     .cat-modal-inner { padding: 34px 22px 24px; max-height: 92vh; }
+    .cat-pagination { flex-wrap: wrap; gap: 12px; justify-content: center; }
+    .cat-page-btn { font-size: 0.65em; padding: 6px 12px; }
+    .cat-page-info { font-size: 0.6em; width: 100%; text-align: center; }
   }
 </style>
 </head>
@@ -855,8 +922,8 @@
      
   3. MODALS (FIXED OVERLAYS)
      - Category Modal (NEW): Opened by clicking a category row. 
-       Contains a live search bar, instrument filter chips, and 
-       the full list of suites in that category.
+       Contains a live search bar, instrument filter chips (OR logic), 
+       pagination controls, and the full list of suites.
      - Cue Modal: Opened by clicking ▶ on a suite. Displays the 3 
        cues with playback, volume, and Buy/Add to Cart actions.
      - Checkout Modal: Single item checkout prompt.
@@ -867,7 +934,7 @@
      - Menu toggling & accessibility.
      - API Data Fetching (Categories + Scores).
      - Suite/Cue HTML Generation.
-     - Search & Filter Logic (Category Modal).
+     - Search, Filter (OR logic), & Pagination Logic.
      - Audio Playback Logic (Play, Pause, Seek, Volume).
      - Cart Logic (Add, Remove, Checkout).
      - Recovery Logic (Paystack reference lookup).
@@ -1053,7 +1120,7 @@
     <p class="cat-modal-title" id="catModalTitle">—</p>
     
     <div class="cat-controls">
-      <p class="cat-explainer">Search by theme number, title, or instrument (e.g., "Theme 4", "Strings", or "Dark").</p>
+      <p class="cat-explainer">Search by theme number, title, or instrument (e.g., "Theme 4", "Piano", or "Strings").</p>
       <div class="cat-search-wrap">
         <span class="cat-search-icon">🔍</span>
         <input type="text" id="catSearch" class="cat-search-input" placeholder="Search themes or instruments..." autocomplete="off">
@@ -1066,6 +1133,15 @@
 
     <div class="cat-results" id="catResults">
       <!-- Suites will be injected here -->
+    </div>
+
+    <div class="cat-pagination" id="catPagination">
+      <button type="button" class="cat-page-btn" id="catPrevBtn">← Previous 10</button>
+      <div class="cat-page-info">
+        <span id="catPageInfo">Page 1 of 1</span>
+        <button type="button" class="cat-load-all" id="catLoadAllBtn">Load All</button>
+      </div>
+      <button type="button" class="cat-page-btn" id="catNextBtn">Next 10 →</button>
     </div>
   </div>
 </div>
@@ -1169,10 +1245,21 @@
     var catFilters    = document.getElementById('catFilters');
     var catClearBtn   = document.getElementById('catClearBtn');
     var catResults    = document.getElementById('catResults');
+    
+    // Pagination Refs
+    var catPagination = document.getElementById('catPagination');
+    var catPrevBtn    = document.getElementById('catPrevBtn');
+    var catNextBtn    = document.getElementById('catNextBtn');
+    var catPageInfo   = document.getElementById('catPageInfo');
+    var catLoadAllBtn = document.getElementById('catLoadAllBtn');
 
     var activeCategory = null;
     var searchQuery = '';
     var activeFilters = [];
+    var currentPage = 1;
+    var itemsPerPage = 10;
+    var isLoadAll = false;
+    var currentFilteredSuites = [];
 
     // ── CUE MODAL REFS ────────────────────────────────────────
     var cueModal        = document.getElementById('cueModal');
@@ -1310,8 +1397,8 @@
                         instString.includes(q) ||
                         descString.includes(q);
 
-        // 2. Filter Chips Match (AND Logic - must have ALL active chips)
-        var chipMatch = activeFilters.every(function(filter) {
+        // 2. Filter Chips Match (OR Logic - must have AT LEAST ONE active chip)
+        var chipMatch = activeFilters.length === 0 || activeFilters.some(function(filter) {
           return instString.includes(filter.toLowerCase());
         });
 
@@ -1322,23 +1409,47 @@
 
     function renderCategoryResults() {
       if (!activeCategory) return;
-      var category = categories.find(function(c) { return c.folder_code === activeCategory; });
-      if (!category) return;
-
+      
       var suites = SCORES.filter(function (s) { return s.cat === activeCategory; });
-      var filtered = filterSuites(suites);
+      currentFilteredSuites = filterSuites(suites);
 
-      if (filtered.length === 0) {
+      if (currentFilteredSuites.length === 0) {
         catResults.innerHTML = '<div class="cat-empty">No themes found matching your search.<br>Try a different keyword or clear your filters.</div>';
-      } else {
-        catResults.innerHTML = filtered.map(buildSuiteHtml).join('');
+        catPagination.style.display = 'none';
+        return;
       }
 
-      // Update Active State Summary (Optional but helpful)
-      var chipState = activeFilters.length > 0 ? activeFilters.join(' + ') : 'None';
-      var searchState = searchQuery ? '"' + searchQuery + '"' : 'None';
-      // We don't need a summary text, the chips and input show it.
+      // Handle Pagination Logic
+      var totalItems = currentFilteredSuites.length;
+      var totalPages = Math.ceil(totalItems / itemsPerPage);
       
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      var paginatedSuites = currentFilteredSuites;
+      if (!isLoadAll) {
+        var startIndex = (currentPage - 1) * itemsPerPage;
+        var endIndex = startIndex + itemsPerPage;
+        paginatedSuites = currentFilteredSuites.slice(startIndex, endIndex);
+      }
+
+      catResults.innerHTML = paginatedSuites.map(buildSuiteHtml).join('');
+
+      // Update Pagination Controls
+      if (isLoadAll || totalItems <= itemsPerPage) {
+        catPagination.style.display = 'none';
+      } else {
+        catPagination.style.display = 'flex';
+        catPageInfo.innerHTML = 'Page ' + currentPage + ' of ' + totalPages;
+        
+        catPrevBtn.disabled = (currentPage === 1);
+        catNextBtn.disabled = (currentPage === totalPages);
+        
+        // Show/Hide Load All button based on current state
+        catLoadAllBtn.style.display = isLoadAll ? 'none' : 'inline-block';
+        catLoadAllBtn.innerText = 'Load All (' + totalItems + ')';
+      }
+
       // Toggle clear button visibility
       if (searchQuery || activeFilters.length > 0) {
         catClearBtn.style.display = 'inline-block';
@@ -1364,6 +1475,8 @@
       activeCategory = catCode;
       searchQuery = '';
       activeFilters = [];
+      currentPage = 1;
+      isLoadAll = false;
       
       var category = categories.find(function(c) { return c.folder_code === catCode; });
       if (!category) return;
@@ -1377,6 +1490,9 @@
       catModal.classList.add('open');
       catModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
+      
+      // Scroll to top of results
+      catResults.scrollTop = 0;
     }
 
     function closeCategoryModal() {
@@ -1398,6 +1514,8 @@
 
     catSearch.addEventListener('input', function(e) {
       searchQuery = e.target.value;
+      currentPage = 1; // Reset to page 1 on new search
+      isLoadAll = false; // Reset load all
       renderCategoryResults();
     });
 
@@ -1413,6 +1531,8 @@
         activeFilters.push(inst);
       }
       
+      currentPage = 1; // Reset to page 1 on filter change
+      isLoadAll = false;
       buildFilterChips();
       renderCategoryResults();
     });
@@ -1421,7 +1541,31 @@
       searchQuery = '';
       activeFilters = [];
       catSearch.value = '';
+      currentPage = 1;
+      isLoadAll = false;
       buildFilterChips();
+      renderCategoryResults();
+    });
+
+    // Pagination Events
+    catPrevBtn.addEventListener('click', function() {
+      if (currentPage > 1) {
+        currentPage--;
+        renderCategoryResults();
+        catResults.scrollTop = 0;
+      }
+    });
+
+    catNextBtn.addEventListener('click', function() {
+      if (currentPage < Math.ceil(currentFilteredSuites.length / itemsPerPage)) {
+        currentPage++;
+        renderCategoryResults();
+        catResults.scrollTop = 0;
+      }
+    });
+
+    catLoadAllBtn.addEventListener('click', function() {
+      isLoadAll = true;
       renderCategoryResults();
     });
 
@@ -2138,3 +2282,4 @@
 
 </body>
 </html>
+```
