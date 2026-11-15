@@ -663,6 +663,37 @@
 </head>
   
 <body>
+<!-- 
+  ═══════════════════════════════════════════════════════════════
+  🎬 EXPLAINER: RENT SCORES PAGE ARCHITECTURE
+  
+  1. MAINTENANCE & NAVIGATION
+     - Maintenance block script (checks API for page blocks).
+     - Top navigation (Wordmark + Hamburger Menu).
+     - Full-screen menu panel (Opens with hamburger).
+     
+  2. MAIN PAGE CONTENT
+     - Header, hero, intro copy, back links.
+     - #shelvesMount: The container where categories and suites are 
+       dynamically injected via the API.
+       
+  3. MODALS (FIXED OVERLAYS)
+     - Checkout Modal: Single item checkout prompt.
+     - Success Modal: Post-payment download link & instructions.
+     - Cue Modal: NEW. Displays the 3 cues for a specific suite 
+       with playback, volume, and Buy/Add to Cart actions.
+     - Cart Modal: Floating cart summary & multi-item checkout.
+     
+  4. SCRIPT LOGIC
+     - Menu toggling & accessibility.
+     - API Data Fetching (Categories + Scores).
+     - Suite/Cue HTML Generation.
+     - Audio Playback Logic (Play, Pause, Seek, Volume).
+     - Cart Logic (Add, Remove, Checkout).
+     - Recovery Logic (Paystack reference lookup).
+  ═══════════════════════════════════════════════════════════════
+-->
+
 <!-- 🚧 PAGE MAINTENANCE BLOCK -->
 <script>
     async function checkPageBlock() {
@@ -687,8 +718,6 @@
 </script>
 
 <header class="topnav">
-  
-
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
     <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
@@ -845,6 +874,7 @@
     <div class="cue-modal-instruments" id="cueModalInstruments"></div>
     <div class="cue-modal-divider"></div>
     <div class="suite-cues" id="cueModalBody"></div>
+    <div class="cue-modal-actions" id="cueModalActions"></div>
   </div>
 </div>
 
@@ -933,6 +963,7 @@
     var cueModalTitle   = document.getElementById('cueModalTitle');
     var cueModalInstr   = document.getElementById('cueModalInstruments');
     var cueModalBody    = document.getElementById('cueModalBody');
+    var cueModalActions = document.getElementById('cueModalActions');
 
     function fmt(sec) {
       if (isNaN(sec)) return "0:00";
@@ -1055,7 +1086,7 @@
       });
     });
 
-    // ── OPEN / CLOSE CUE MODAL (NEW) ───────────────────────────
+    // ── OPEN / CLOSE CUE MODAL ─────────────────────────────────
     function openCueModal(code) {
       var suite = SCORES.find(function (s) { return s.code === code; });
       if (!suite) return;
@@ -1064,12 +1095,23 @@
       cueModalTitle.textContent = suite.title;
       cueModalInstr.textContent = buildMasterInstrumentList(suite.desc);
       cueModalBody.innerHTML = buildCueRowsHtml(suite);
+      
+      // Inject the Buy and Add to Cart buttons into the modal footer
+      cueModalActions.innerHTML = 
+        '<button type="button" class="action-buy" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '" style="font-size: 0.75em;">' +
+          '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
+          'Buy' +
+        '</button>' +
+        '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + suite.code + '" onclick="event.stopPropagation(); window.addToCart(\'' + suite.code + '\', \'' + suite.code + ' — ' + suite.title + '\', ' + suite.amount + ')" style="font-size: 0.75em;">' +
+          '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
+          'Add to Cart' +
+        '</button>';
 
       cueModal.classList.add('open');
       cueModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
 
-      // Auto-play first cue (preserves the old "click preview → hear it" behavior)
+      // Auto-play first cue
       var firstCueBtn = cueModalBody.querySelector('.cue-play');
       if (firstCueBtn) {
         var id = firstCueBtn.getAttribute('data-cue-id');
@@ -1084,6 +1126,7 @@
       document.body.classList.remove('no-scroll');
       stopCue();
       cueModalBody.innerHTML = '';
+      cueModalActions.innerHTML = '';
     }
 
     if (cueModalClose) cueModalClose.addEventListener('click', closeCueModal);
@@ -1115,7 +1158,7 @@
       if (audio) { audio.pause(); audio.src = ""; audio.load(); }
     }
 
-    // Close any open shelf when clicking outside (preserved behavior)
+    // Close any open shelf when clicking outside
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.shelf') && !e.target.closest('.action-preview')) {
         shelves.forEach(function (shelf) {
@@ -1193,9 +1236,16 @@
         openCueModal(code);
         return;
       }
+      
+      var buyBtn = e.target.closest('.action-buy');
+      if (buyBtn) { e.preventDefault(); openCheckout(buyBtn); }
     });
 
     cueModalBody.addEventListener('click', handleCueAreaClick);
+    cueModalActions.addEventListener('click', function(e) {
+      var buyBtn = e.target.closest('.action-buy');
+      if (buyBtn) { e.preventDefault(); openCheckout(buyBtn); }
+    });
 
     cueModalBody.addEventListener('input', function(e) {
       if (e.target.classList.contains('volume-slider')) {
@@ -1243,7 +1293,6 @@
       function handleSeekStart(e, wrap) {
         var wrapCueId = getCueIdFromWrap(wrap);
         
-        // BUG FIX 2: If they are seeking a different cue, switch the audio source AND update the UI button
         if (wrapCueId && wrapCueId !== currentCueId) {
           stopCue();
           var playBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
@@ -1252,7 +1301,6 @@
           currentCueId = wrapCueId;
           audio.src = url;
           
-          // Update the button to show it's playing
           playBtn.innerHTML = '❚❚';
           playBtn.classList.add('playing');
 
@@ -1266,7 +1314,6 @@
         
         isDragging = true;
         activeWrap = wrap;
-        // BUG FIX 1: If it's the same cue, we just seek. We do NOT reset the audio source.
         seekToEvent(e, wrap);
       }
 
@@ -1321,11 +1368,6 @@
       document.body.style.overflow = ''; clearError();
     }
 
-    mount.addEventListener('click', function (e) {
-      var buyBtn = e.target.closest('.action-buy');
-      if (buyBtn) { e.preventDefault(); openCheckout(buyBtn); }
-    });
-
     if (submitBtn) submitBtn.addEventListener('click', async function () {
       if (!pendingBtn) return;
       var email = (emailInput.value || '').trim();
@@ -1342,7 +1384,6 @@
       closeCheckout();
 
       try {
-        // 🧠 TALK TO THE MASTER BRAIN
         const response = await fetch("https://master-brain.noelgrass.workers.dev/create-checkout", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -1356,7 +1397,6 @@
         const data = await response.json();
 
         if (data.auth_url) {
-          // 🚀 REDIRECT THE USER TO PAYSTACK
           window.location.href = data.auth_url;
         } else {
           alert("Payment error: " + (data.error || "Could not initialize payment."));
