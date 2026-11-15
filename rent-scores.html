@@ -572,9 +572,34 @@
   }
 </style>
 </head>
+  
 <body>
+<!-- 🚧 PAGE MAINTENANCE BLOCK -->
+<script>
+    async function checkPageBlock() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const bypassKey = urlParams.get('key');
+
+        let apiUrl = `https://admin-api.noelgrass.workers.dev/check-blocked-page?path=${window.location.pathname}`;
+        if (bypassKey) apiUrl += `&key=${bypassKey}`;
+
+        try {
+            const res = await fetch(apiUrl);
+            const data = await res.json();
+            
+            if (data.blocked) {
+                window.location.replace('/maintenance.html');
+            }
+        } catch (e) { 
+            console.log("Could not check page status."); 
+        }
+    }
+    checkPageBlock();
+</script>
 
 <header class="topnav">
+  
+
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
     <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
