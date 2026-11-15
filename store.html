@@ -553,6 +553,22 @@
     <span class="checkout-label">Checkout</span>
     <p class="checkout-title" id="checkoutTitle">Album</p>
     <p class="checkout-price" id="checkoutPrice">KES 0</p>
+    
+    <div class="tip-container" style="margin-top: 20px; margin-bottom: 20px; text-align: left; background: rgba(197,168,128,0.03); padding: 16px; border: 1px solid rgba(197,168,128,0.15);">
+      <button type="button" id="tipToggle" style="background: transparent; border: 0; color: var(--gold-soft); font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease; font-weight: 500;">
+        <span id="tipIcon" style="font-size: 1.2em; line-height: 1;">+</span> Let fans pay more (optional)
+      </button>
+      
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.85em; color: var(--muted); margin-top: 8px; margin-bottom: 0; line-height: 1.5;">
+        Optional extra support for the artist's work.
+      </p>
+
+      <div id="tipInputWrap" style="display: none; margin-top: 16px;">
+        <label for="checkoutTip" style="font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 8px;">Extra Amount (KES)</label>
+        <input type="number" id="checkoutTip" class="checkout-input" placeholder="e.g. 500" min="0" style="width: 100%; font-size: 1.1em; padding: 12px 0;">
+      </div>
+    </div>
+
     <div class="checkout-divider"></div>
     <label for="checkoutEmail" class="checkout-field-label">Email — for your receipt</label>
     <input type="email" id="checkoutEmail" class="checkout-input" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
@@ -685,6 +701,37 @@
 
     var pendingBtn = null;
 
+    // --- TIP LOGIC ---
+    var tipToggle = document.getElementById('tipToggle');
+    var tipIcon = document.getElementById('tipIcon');
+    var tipInputWrap = document.getElementById('tipInputWrap');
+    var tipInput = document.getElementById('checkoutTip');
+    var basePrice = 0;
+    var baseCurrency = 'KES';
+
+    if (tipToggle) {
+      tipToggle.addEventListener('click', function() {
+        var isHidden = tipInputWrap.style.display === 'none';
+        tipInputWrap.style.display = isHidden ? 'block' : 'none';
+        tipIcon.innerText = isHidden ? '−' : '+';
+        if (!isHidden) { tipInput.value = ''; }
+        updateModalPrice();
+      });
+    }
+
+    if (tipInput) {
+      tipInput.addEventListener('input', updateModalPrice);
+    }
+
+    function updateModalPrice() {
+      if (!pendingBtn) return;
+      var tipValue = parseFloat(tipInput.value) || 0;
+      var tipCents = tipValue * 100;
+      var total = basePrice + tipCents;
+      var displayTotal = (total / 100).toLocaleString();
+      document.getElementById('checkoutPrice').textContent = baseCurrency + ' ' + displayTotal;
+    }
+
     function showSuccess() { successModal.classList.add('open'); successModal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
     function hideSuccess() { successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('no-scroll'); }
     successDoneBtn.addEventListener('click', hideSuccess);
@@ -698,10 +745,17 @@
     function openCheckout(btn) {
       pendingBtn = btn;
       var title    = btn.getAttribute('data-title')    || 'Noel Grass';
-      var amount   = parseInt(btn.getAttribute('data-amount'), 10) || 0;
-      var currency = btn.getAttribute('data-currency') || 'KES';
+      basePrice    = parseInt(btn.getAttribute('data-amount'), 10) || 0;
+      baseCurrency = btn.getAttribute('data-currency') || 'KES';
+      
       modalTitle.textContent = title;
-      modalPrice.textContent = formatPrice(amount, currency);
+      document.getElementById('checkoutPrice').textContent = formatPrice(basePrice, baseCurrency);
+      
+      // Reset Tip UI
+      if (tipInputWrap) tipInputWrap.style.display = 'none';
+      if (tipIcon) tipIcon.innerText = '+';
+      if (tipInput) tipInput.value = '';
+
       clearError();
       var saved = '';
       try { saved = localStorage.getItem(STORAGE_KEY) || ''; } catch (e) {}
@@ -733,6 +787,12 @@
       var btn      = pendingBtn;
       var title    = btn.getAttribute('data-title')    || 'Noel Grass';
       var productId = btn.getAttribute('data-id') || '';
+      
+      var tipValue = 0;
+      if (tipInput && tipInput.value) {
+        tipValue = parseFloat(tipInput.value) * 100;
+      }
+      var finalAmount = basePrice + tipValue;
 
       submitBtn.innerText = "Connecting...";
       submitBtn.disabled = true;
@@ -747,7 +807,8 @@
           body: JSON.stringify({
             email: email,
             product_id: productId,
-            title: title
+            title: title,
+            amount: finalAmount // ✅ Send the total to the backend
           })
         });
 
@@ -883,8 +944,12 @@
       : (item.cover_url || "images/placeholder.jpg");
     var containerClass = isFeature ? 'feature-item' : 'store-item';
     var formatLabel = isFeature ? 'Latest Release' : (item.format_label || item.description || 'Product');
+    
+    // Create a clean URL slug from the title
+    var slug = item.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    
     return (
-      '<div class="' + containerClass + '">' +
+      '<div class="' + containerClass + '" id="' + slug + '">' +
         '<div class="poster js-buy" data-id="' + item.id + '" data-title="' + item.title + '" data-amount="' + (item.price || 0) + '" data-currency="KES">' +
           '<img src="' + img + '" alt="' + item.title + '" loading="lazy">' +
           '<span class="badge">' + (item.badge || item.format_label || 'Item') + '</span>' +
@@ -897,6 +962,9 @@
           '</button>' +
           '<button type="button" class="action-link js-add-to-cart-btn" data-id="' + item.id + '" onclick="event.stopPropagation(); window.addToCart(\'' + item.id + '\', \'' + item.title + '\', ' + (item.price || 0) + ')" style="color: var(--gold-pale);">' +
             '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>Add to Cart' +
+          '</button>' +
+          '<button type="button" class="action-link" onclick="event.stopPropagation(); copyProductLink(\'' + slug + '\');" style="color: var(--muted); font-size: 0.75em; margin-left: 10px;">' +
+            'Share' +
           '</button>' +
         '</div>' +
       '</div>'
@@ -1255,6 +1323,60 @@
   };
 
   window.updateCartUI();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     🔗 SCRIPT 5 — SHARE & DEEP LINKS
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+  // Function to copy the link to clipboard
+  window.copyProductLink = function(slug) {
+    var url = window.location.origin + window.location.pathname + '#' + slug;
+    navigator.clipboard.writeText(url).then(function() {
+      alert('Link copied to clipboard!');
+    }).catch(function(err) {
+      console.error('Could not copy text: ', err);
+    });
+  };
+
+  // Function to auto-open the link on page load
+  window.addEventListener('load', function() {
+    var hash = window.location.hash;
+    if (!hash || hash.length < 2) return;
+
+    var targetId = hash.replace('#', '');
+    var targetEl = document.getElementById(targetId);
+    
+    if (targetEl) {
+      // 1. Find the closest <details> parent and open it
+      var parentDetails = targetEl.closest('details');
+      if (parentDetails && !parentDetails.open) {
+        parentDetails.open = true;
+      }
+
+      // 2. Scroll to the item
+      setTimeout(function() {
+        var headerOffset = 100;
+        var elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({
+          top: elementPosition - headerOffset,
+          behavior: 'smooth'
+        });
+
+        // 3. Glow it gold
+        var poster = targetEl.querySelector('.poster');
+        if (poster) {
+          poster.style.boxShadow = '0 0 40px 8px rgba(197,168,128,0.8)';
+          poster.style.borderColor = 'var(--gold)';
+          
+          setTimeout(function() {
+            poster.style.boxShadow = '';
+            poster.style.borderColor = '';
+          }, 3000);
+        }
+      }, 300);
+    }
+  });
 </script>
 
 </body>
