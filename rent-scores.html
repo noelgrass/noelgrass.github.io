@@ -497,6 +497,54 @@
   .cat-search-input::placeholder { color: rgba(154,149,140,0.6); }
   .cat-search-input:focus { border-color: var(--gold); }
   
+  /* Filter Dropdown */
+  .cat-filter-dropdown {
+    position: relative;
+  }
+  .cat-filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.75em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    background: transparent;
+    border: 1px solid rgba(197,168,128,0.35);
+    padding: 10px 16px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cat-filter-toggle:hover { border-color: var(--gold); color: #FCFCF7; }
+  .cat-filter-toggle svg { width: 14px; height: 14px; fill: currentColor; transition: transform 0.3s ease; }
+  .cat-filter-toggle.open svg { transform: rotate(180deg); }
+  .cat-filter-badge {
+    background: var(--gold-soft);
+    color: #0a0a0a;
+    font-size: 0.85em;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 4px;
+  }
+  .cat-filter-panel {
+    display: none;
+    margin-top: 12px;
+    padding: 16px;
+    background: #050505;
+    border: 1px solid var(--rule);
+    max-height: 200px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-dim) transparent;
+  }
+  .cat-filter-panel.open { display: block; }
+  .cat-filter-panel::-webkit-scrollbar { width: 4px; }
+  .cat-filter-panel::-webkit-scrollbar-track { background: transparent; }
+  .cat-filter-panel::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
   .cat-filters {
     display: flex;
     flex-wrap: wrap;
@@ -546,6 +594,7 @@
     text-decoration: underline;
     transition: color 0.3s ease;
     display: none;
+    margin-top: 12px;
   }
   .cat-clear-btn:hover { color: var(--gold-pale); }
 
@@ -554,13 +603,10 @@
     overflow-y: auto;
     min-height: 0;
     padding-right: 4px;
-    /* Hide scrollbar for elegance */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE/Edge */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
-  .cat-results::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
-  }
+  .cat-results::-webkit-scrollbar { display: none; }
   .cat-empty {
     font-family: 'Playfair Display', Georgia, serif;
     font-style: italic;
@@ -571,7 +617,7 @@
 
   /* Pagination Footer */
   .cat-pagination {
-    display: none; /* hidden by default */
+    display: none;
     align-items: center;
     justify-content: space-between;
     padding-top: 18px;
@@ -934,7 +980,7 @@
      - #shelvesMount: Displays the category rows.
      
   3. MODALS (FIXED OVERLAYS)
-     - Category Modal: Contains search, filter chips (OR logic), 
+     - Category Modal: Contains search, collapsible filter dropdown, 
        pagination controls (Prev/Next/Load All/Collapse), and the list.
      - Cue Modal: Displays the 3 cues with playback, volume, 
        and Buy/Add to Cart actions.
@@ -1137,9 +1183,22 @@
         <span class="cat-search-icon">🔍</span>
         <input type="text" id="catSearch" class="cat-search-input" placeholder="Search themes or instruments..." autocomplete="off">
       </div>
-      <div class="cat-filters" id="catFilters">
-        <!-- Filter chips will be injected here -->
+      
+      <!-- Filter Dropdown -->
+      <div class="cat-filter-dropdown">
+        <button type="button" class="cat-filter-toggle" id="catFilterToggle">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
+          Filter by Instrument
+          <span class="cat-filter-badge" id="catFilterBadge" style="display:none;">0</span>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+        </button>
+        <div class="cat-filter-panel" id="catFilterPanel">
+          <div class="cat-filters" id="catFilters">
+            <!-- Filter chips will be injected here -->
+          </div>
+        </div>
       </div>
+
       <button type="button" class="cat-clear-btn" id="catClearBtn">Clear Filters</button>
     </div>
 
@@ -1262,10 +1321,15 @@
     var catModalClose = document.getElementById('catModalClose');
     var catModalTitle = document.getElementById('catModalTitle');
     var catSearch     = document.getElementById('catSearch');
-    var catFilters    = document.getElementById('catFilters');
     var catClearBtn   = document.getElementById('catClearBtn');
     var catResults    = document.getElementById('catResults');
     
+    // Filter Dropdown Refs
+    var catFilterToggle = document.getElementById('catFilterToggle');
+    var catFilterPanel  = document.getElementById('catFilterPanel');
+    var catFilterBadge  = document.getElementById('catFilterBadge');
+    var catFilters      = document.getElementById('catFilters');
+
     // Pagination Refs
     var catPagination = document.getElementById('catPagination');
     var catPrevBtn    = document.getElementById('catPrevBtn');
@@ -1460,15 +1524,12 @@
 
       // Update Pagination Controls
       if (isLoadAll) {
-        // Hide Pagination, Show Collapse
         catPagination.style.display = 'none';
         catCollapseWrap.style.display = 'flex';
       } else if (totalItems <= itemsPerPage) {
-        // Hide both
         catPagination.style.display = 'none';
         catCollapseWrap.style.display = 'none';
       } else {
-        // Show Pagination, Hide Collapse
         catPagination.style.display = 'flex';
         catCollapseWrap.style.display = 'none';
         
@@ -1476,7 +1537,6 @@
         catPrevBtn.disabled = (currentPage === 1);
         catNextBtn.disabled = (currentPage === totalPages);
         
-        // Show/Hide Load All button based on current state
         catLoadAllBtn.style.display = isLoadAll ? 'none' : 'inline-block';
         catLoadAllBtn.innerText = 'Load All (' + totalItems + ')';
       }
@@ -1486,6 +1546,15 @@
         catClearBtn.style.display = 'inline-block';
       } else {
         catClearBtn.style.display = 'none';
+      }
+    }
+
+    function updateFilterUI() {
+      if (activeFilters.length > 0) {
+        catFilterBadge.textContent = activeFilters.length;
+        catFilterBadge.style.display = 'inline-block';
+      } else {
+        catFilterBadge.style.display = 'none';
       }
     }
 
@@ -1500,6 +1569,8 @@
                inst + (isActive ? ' <span class="chip-x">✕</span>' : '') + 
                '</button>';
       }).join('');
+      
+      updateFilterUI();
     }
 
     function openCategoryModal(catCode) {
@@ -1515,6 +1586,10 @@
       catModalTitle.textContent = category.label;
       catSearch.value = '';
       
+      // Reset filter dropdown state
+      catFilterToggle.classList.remove('open');
+      catFilterPanel.classList.remove('open');
+
       buildFilterChips();
       renderCategoryResults();
 
@@ -1522,7 +1597,6 @@
       catModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
       
-      // Scroll to top of results
       catResults.scrollTop = 0;
     }
 
@@ -1531,7 +1605,6 @@
       catModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('no-scroll');
       
-      // Stop any audio playing
       stopCue();
       
       activeCategory = null;
@@ -1545,11 +1618,18 @@
 
     catSearch.addEventListener('input', function(e) {
       searchQuery = e.target.value;
-      currentPage = 1; // Reset to page 1 on new search
-      isLoadAll = false; // Reset load all
+      currentPage = 1;
+      isLoadAll = false;
       renderCategoryResults();
     });
 
+    // Filter Dropdown Toggle
+    catFilterToggle.addEventListener('click', function() {
+      catFilterToggle.classList.toggle('open');
+      catFilterPanel.classList.toggle('open');
+    });
+
+    // Filter Chips Click
     catFilters.addEventListener('click', function(e) {
       var chip = e.target.closest('.cat-filter-chip');
       if (!chip) return;
@@ -1562,7 +1642,7 @@
         activeFilters.push(inst);
       }
       
-      currentPage = 1; // Reset to page 1 on filter change
+      currentPage = 1;
       isLoadAll = false;
       buildFilterChips();
       renderCategoryResults();
@@ -1602,7 +1682,7 @@
 
     catCollapseBtn.addEventListener('click', function() {
       isLoadAll = false;
-      currentPage = 1; // Reset to page 1 on collapse
+      currentPage = 1;
       renderCategoryResults();
       catResults.scrollTop = 0;
     });
@@ -1826,8 +1906,6 @@
           audio.currentTime = pct * audio.duration;
           pendingSeekTime = null;
         } else {
-          // If duration isn't known yet, store the drag target as a percentage
-          // We'll calculate the exact seconds in the loadedmetadata event
           pendingSeekTime = pct; 
         }
       }
@@ -1846,7 +1924,6 @@
           playBtn.innerHTML = '❚❚';
           playBtn.classList.add('playing');
 
-          // We must wait for the new audio to load before we can seek
           pendingSeekTime = null;
           var rect = wrap.getBoundingClientRect();
           var clientX = e.touches ? e.touches[0].clientX : e.clientX;
