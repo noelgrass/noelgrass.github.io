@@ -1133,6 +1133,21 @@
       <span>KES <span id="cartTotalPrice">0</span></span>
     </div>
 
+    <div class="tip-container" style="margin-top: 20px; margin-bottom: 20px; text-align: left; background: rgba(197,168,128,0.03); padding: 16px; border: 1px solid rgba(197,168,128,0.15);">
+      <button type="button" id="cartTipToggle" style="background: transparent; border: 0; color: var(--gold-soft); font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; padding: 0; display: flex; align-items: center; gap: 8px; transition: color 0.3s ease; font-weight: 500;">
+        <span id="cartTipIcon" style="font-size: 1.2em; line-height: 1;">+</span> Let fans pay more (optional)
+      </button>
+      
+      <p style="font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.85em; color: var(--muted); margin-top: 8px; margin-bottom: 0; line-height: 1.5;">
+        Optional extra support for the artist's work.
+      </p>
+
+      <div id="cartTipInputWrap" style="display: none; margin-top: 16px;">
+        <label for="cartTip" style="font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 8px;">Extra Amount (KES)</label>
+        <input type="number" id="cartTip" class="checkout-input" placeholder="e.g. 500" min="0" style="width: 100%; font-size: 1.1em; padding: 12px 0;">
+      </div>
+    </div>
+
     <label for="cartEmail" class="checkout-field-label">Email — for your receipt</label>
     <input type="email" id="cartEmail" class="checkout-input" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
     <div class="checkout-error" id="cartError"></div>
@@ -1277,9 +1292,52 @@
     setTimeout(function() { btn.style.transform = ''; }, 300);
   };
 
+  // --- CART TIP LOGIC ---
+  var cartTipToggle = document.getElementById('cartTipToggle');
+  var cartTipIcon = document.getElementById('cartTipIcon');
+  var cartTipInputWrap = document.getElementById('cartTipInputWrap');
+  var cartTipInput = document.getElementById('cartTip');
+  var cartBaseTotal = 0;
+
+  if (cartTipToggle) {
+    cartTipToggle.addEventListener('click', function() {
+      var isHidden = cartTipInputWrap.style.display === 'none';
+      cartTipInputWrap.style.display = isHidden ? 'block' : 'none';
+      cartTipIcon.innerText = isHidden ? '−' : '+';
+      if (!isHidden) { cartTipInput.value = ''; }
+      updateCartCheckoutButton();
+    });
+  }
+
+  if (cartTipInput) {
+    cartTipInput.addEventListener('input', updateCartCheckoutButton);
+  }
+
+  function updateCartCheckoutButton() {
+    var tipValue = parseFloat(cartTipInput.value) || 0;
+    var tipCents = tipValue * 100;
+    var finalTotal = cartBaseTotal + tipCents;
+    var btn = document.getElementById('cartCheckoutBtn');
+    
+    if (tipCents > 0) {
+      btn.innerText = "Checkout Cart (KES " + (finalTotal / 100).toLocaleString() + ") →";
+    } else {
+      btn.innerText = "Checkout Cart →";
+    }
+  }
+
   window.openCartModal = function() { 
     document.getElementById('cartModal').classList.add('open'); 
     document.body.classList.add('no-scroll');
+    
+    // Calculate base total for tip tracking
+    cartBaseTotal = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty); }, 0);
+    
+    // Reset Tip UI
+    if (cartTipInputWrap) cartTipInputWrap.style.display = 'none';
+    if (cartTipIcon) cartTipIcon.innerText = '+';
+    if (cartTipInput) cartTipInput.value = '';
+    updateCartCheckoutButton();
   };
   
   window.closeCartModal = function() { 
@@ -1293,6 +1351,13 @@
     
     if (!email) { errorEl.innerText = "Please enter your email."; errorEl.classList.add('visible'); return; }
     
+    // Calculate final amount with tip
+    var tipValue = 0;
+    if (cartTipInput && cartTipInput.value) {
+      tipValue = parseFloat(cartTipInput.value) * 100;
+    }
+    var finalAmount = cartBaseTotal + tipValue;
+
     this.innerText = "Connecting...";
     this.disabled = true;
     errorEl.classList.remove('visible');
@@ -1301,7 +1366,11 @@
       const res = await fetch("https://master-brain.noelgrass.workers.dev/create-checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, cart: window.cartData })
+        body: JSON.stringify({ 
+          email: email, 
+          cart: window.cartData,
+          amount: finalAmount // ✅ Send the custom amount (base + tip) to backend
+        })
       });
       const data = await res.json();
       
@@ -1348,33 +1417,36 @@
     var targetEl = document.getElementById(targetId);
     
     if (targetEl) {
-      // 1. Find the closest <details> parent and open it
+      // 1. Find the closest <details> parent
       var parentDetails = targetEl.closest('details');
+      
+      // 2. If it's in a closed group, open it
       if (parentDetails && !parentDetails.open) {
         parentDetails.open = true;
       }
 
-      // 2. Scroll to the item
+      // 3. Wait a moment for the page to expand and images to load, then scroll
       setTimeout(function() {
-        var headerOffset = 100;
+        var headerOffset = 100; // Offset for the sticky top nav
         var elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
         window.scrollTo({
           top: elementPosition - headerOffset,
           behavior: 'smooth'
         });
 
-        // 3. Glow it gold
+        // 4. Glow it gold
         var poster = targetEl.querySelector('.poster');
         if (poster) {
           poster.style.boxShadow = '0 0 40px 8px rgba(197,168,128,0.8)';
           poster.style.borderColor = 'var(--gold)';
           
+          // Remove the glow after 3 seconds so it doesn't stay forever
           setTimeout(function() {
             poster.style.boxShadow = '';
             poster.style.borderColor = '';
           }, 3000);
         }
-      }, 300);
+      }, 400); // 400ms delay ensures the group fully opens before scrolling
     }
   });
 </script>
