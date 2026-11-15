@@ -387,9 +387,88 @@
       0 0 56px 16px rgba(197,168,128,0.10);
   }
 
-  .suite-cues { display: none; padding: 0 0 20px 66px; }
-  .suite-cues.active { display: block; animation: fadeUp 0.4s ease both; }
+  /* ── CUE MODAL (NEW) ──────────────────────────────────────── */
+  .cue-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 960;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0,0,0,0.88);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .cue-modal.open { opacity: 1; pointer-events: auto; }
+  .cue-modal-inner {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    max-height: 85vh;
+    overflow-y: auto;
+    background: #0a0a0a;
+    border: 1px solid var(--gold-soft);
+    padding: 42px 32px 32px;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15);
+    transform: scale(0.96);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    text-align: left;
+  }
+  .cue-modal.open .cue-modal-inner { transform: scale(1); }
+  .cue-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: 0;
+    color: var(--muted);
+    font-size: 1.1em;
+    line-height: 1;
+    padding: 6px 8px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .cue-modal-close:hover { color: var(--gold-pale); }
+  .cue-modal-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .cue-modal-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.5em;
+    color: var(--gold-pale);
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+  .cue-modal-instruments {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.62em;
+    color: var(--gold-soft);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    line-height: 1.4;
+    margin-bottom: 22px;
+  }
+  .cue-modal-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent 0%, rgba(197,168,128,0.4) 50%, transparent 100%);
+    margin: 0 0 18px;
+  }
+
+  .suite-cues { display: block; padding: 0; }
   .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .cue:first-child { border-top: none; padding-top: 4px; }
   .cue-info { display: flex; flex-direction: column; gap: 4px; }
   .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); }
 
@@ -463,6 +542,16 @@
     opacity: 1;
     border-color: rgba(197,168,128,0.35);
     box-shadow: 0 0 8px 1px rgba(197,168,128,0.35);
+  }
+
+  .cue-modal-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 1px solid var(--rule);
   }
 
   .custom-link { text-align: center; margin: 60px 0 20px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); }
@@ -542,7 +631,6 @@
     .suite-actions { gap: 8px; }
     .action-preview { width: 34px; height: 34px; font-size: 0.85em; }
     .action-buy { font-size: 0.68em; padding: 6px 0; }
-    .suite-cues { padding-left: 58px; }
     .cue { gap: 10px; padding: 12px 0; }
     .cue-title { font-size: 1em; min-width: 60px; }
     .topnav { padding: 18px 22px; }
@@ -569,6 +657,7 @@
     .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
     .checkout-inner, .success-inner { padding: 34px 24px 30px; }
     .volume-container.active .volume-slider-wrap { width: 45px; }
+    .cue-modal-inner { padding: 34px 22px 24px; max-height: 90vh; }
   }
 </style>
 </head>
@@ -747,6 +836,18 @@
   </div>
 </div>
 
+<!-- ── CUE MODAL (NEW) ──────────────────────────────────────── -->
+<div class="cue-modal" id="cueModal" aria-hidden="true" role="dialog" aria-label="Preview cues">
+  <div class="cue-modal-inner">
+    <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close">✕</button>
+    <span class="cue-modal-label" id="cueModalLabel">Suite</span>
+    <p class="cue-modal-title" id="cueModalTitle">—</p>
+    <div class="cue-modal-instruments" id="cueModalInstruments"></div>
+    <div class="cue-modal-divider"></div>
+    <div class="suite-cues" id="cueModalBody"></div>
+  </div>
+</div>
+
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -825,6 +926,14 @@
     var audio = document.getElementById('mainAudio');
     var currentCueId = null;
 
+    // ── CUE MODAL REFS (NEW) ───────────────────────────────────
+    var cueModal        = document.getElementById('cueModal');
+    var cueModalClose   = document.getElementById('cueModalClose');
+    var cueModalLabel   = document.getElementById('cueModalLabel');
+    var cueModalTitle   = document.getElementById('cueModalTitle');
+    var cueModalInstr   = document.getElementById('cueModalInstruments');
+    var cueModalBody    = document.getElementById('cueModalBody');
+
     function fmt(sec) {
       if (isNaN(sec)) return "0:00";
       var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
@@ -846,16 +955,16 @@
       return all.join(' · ');
     }
 
-    function buildSuiteHtml(suite) {
+    // Builds ONLY the cue rows (used inside the modal now)
+    function buildCueRowsHtml(suite) {
       var cueCount = 3;
       var cuesHtml = '';
       for (var i = 1; i <= cueCount; i++) {
         var cueId = suite.code + '-' + i;
-        // Use the cue preview path if it exists in the DB, otherwise fall back
         var previewPath = (suite.cues[i - 1] && suite.cues[i - 1].preview) ? suite.cues[i - 1].preview : '';
         var url = buildPreviewUrl(previewPath);
         var cueDesc = (suite.cues[i - 1] && suite.cues[i - 1].desc) ? suite.cues[i - 1].desc : (suite.desc[i - 1] || '');
-        
+
         cuesHtml +=
           '<div class="cue" data-cue-id="' + cueId + '">' +
             '<div class="cue-info">' +
@@ -873,7 +982,11 @@
             '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '">▶</button>' +
           '</div>';
       }
+      return cuesHtml;
+    }
 
+    // Builds the suite row — cue panel is NO LONGER inline
+    function buildSuiteHtml(suite) {
       return (
         '<div class="suite" data-code="' + suite.code + '">' +
           '<div class="suite-head">' +
@@ -896,7 +1009,6 @@
               '</button>' +
             '</div>' +
           '</div>' +
-          '<div class="suite-cues" id="cues-' + suite.code + '">' + cuesHtml + '</div>' +
         '</div>'
       );
     }
@@ -937,11 +1049,51 @@
     shelves.forEach(function (shelf) {
       shelf.addEventListener('toggle', function () {
         if (!shelf.open) return;
-        closeAllSuites();
         shelves.forEach(function (other) {
           if (other !== shelf && other.open) other.open = false;
         });
       });
+    });
+
+    // ── OPEN / CLOSE CUE MODAL (NEW) ───────────────────────────
+    function openCueModal(code) {
+      var suite = SCORES.find(function (s) { return s.code === code; });
+      if (!suite) return;
+
+      cueModalLabel.textContent = suite.code;
+      cueModalTitle.textContent = suite.title;
+      cueModalInstr.textContent = buildMasterInstrumentList(suite.desc);
+      cueModalBody.innerHTML = buildCueRowsHtml(suite);
+
+      cueModal.classList.add('open');
+      cueModal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+
+      // Auto-play first cue (preserves the old "click preview → hear it" behavior)
+      var firstCueBtn = cueModalBody.querySelector('.cue-play');
+      if (firstCueBtn) {
+        var id = firstCueBtn.getAttribute('data-cue-id');
+        var url = firstCueBtn.getAttribute('data-url');
+        playCue(id, url);
+      }
+    }
+
+    function closeCueModal() {
+      cueModal.classList.remove('open');
+      cueModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+      stopCue();
+      cueModalBody.innerHTML = '';
+    }
+
+    if (cueModalClose) cueModalClose.addEventListener('click', closeCueModal);
+    if (cueModal) {
+      cueModal.addEventListener('click', function (e) {
+        if (e.target === cueModal) closeCueModal();
+      });
+    }
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && cueModal.classList.contains('open')) closeCueModal();
     });
 
     function stopCue() {
@@ -949,10 +1101,10 @@
       var id = currentCueId;
       currentCueId = null;
 
-      var btn = mount.querySelector('.cue-play[data-cue-id="' + id + '"]');
+      var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
 
-      var cue = mount.querySelector('.cue[data-cue-id="' + id + '"]');
+      var cue = cueModalBody.querySelector('.cue[data-cue-id="' + id + '"]');
       if (cue) {
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
@@ -963,26 +1115,11 @@
       if (audio) { audio.pause(); audio.src = ""; audio.load(); }
     }
 
-    function closeAllSuites() {
-      stopCue();
-      mount.querySelectorAll('.suite-cues.active').forEach(function (el) {
-        el.classList.remove('active');
-      });
-      mount.querySelectorAll('.action-preview').forEach(function (btn) {
-        btn.innerHTML = '▶';
-      });
-      mount.querySelectorAll('.volume-container.active').forEach(function(el) {
-        el.classList.remove('active');
-      });
-    }
-
+    // Close any open shelf when clicking outside (preserved behavior)
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.shelf') && !e.target.closest('.action-preview')) {
-        closeAllSuites();
         shelves.forEach(function (shelf) {
-          if (shelf.open) {
-            shelf.open = false;
-          }
+          if (shelf.open) shelf.open = false;
         });
       }
     });
@@ -995,42 +1132,20 @@
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
 
-      var btn = mount.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
+      var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
     }
 
-    mount.addEventListener('click', function (e) {
+    // ── CLICK ROUTER (mount + modal) ───────────────────────────
+    function handleCueAreaClick(e) {
       var volIcon = e.target.closest('.volume-icon');
       if (volIcon) {
         e.stopPropagation();
         var container = volIcon.closest('.volume-container');
-        mount.querySelectorAll('.volume-container.active').forEach(function(c) {
+        cueModalBody.querySelectorAll('.volume-container.active').forEach(function(c) {
           if (c !== container) c.classList.remove('active');
         });
         container.classList.toggle('active');
-        return;
-      }
-
-      var previewBtn = e.target.closest('.action-preview');
-      if (previewBtn) {
-        e.preventDefault();
-        var code = previewBtn.getAttribute('data-code');
-        var cues = document.getElementById('cues-' + code);
-        if (!cues) return;
-        var isOpen = cues.classList.contains('active');
-        if (!isOpen) {
-          closeAllSuites();
-          cues.classList.add('active');
-          previewBtn.innerHTML = '✕';
-          var firstCueBtn = cues.querySelector('.cue-play');
-          if (firstCueBtn) {
-            var id = firstCueBtn.getAttribute('data-cue-id');
-            var url = firstCueBtn.getAttribute('data-url');
-            playCue(id, url);
-          }
-        } else {
-          closeAllSuites();
-        }
         return;
       }
 
@@ -1054,9 +1169,9 @@
         }
 
         if (currentCueId) {
-          var oldBtn = mount.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
+          var oldBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
           if (oldBtn) { oldBtn.innerHTML = '▶'; oldBtn.classList.remove('playing'); }
-          var oldCue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
+          var oldCue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
           if (oldCue) {
             var oldBar = oldCue.querySelector('.cue-progress-bar');
             var oldTime = oldCue.querySelector('.cue-time');
@@ -1068,9 +1183,21 @@
         playCue(cueId, url);
         return;
       }
+    }
+
+    mount.addEventListener('click', function (e) {
+      var previewBtn = e.target.closest('.action-preview');
+      if (previewBtn) {
+        e.preventDefault();
+        var code = previewBtn.getAttribute('data-code');
+        openCueModal(code);
+        return;
+      }
     });
 
-    mount.addEventListener('input', function(e) {
+    cueModalBody.addEventListener('click', handleCueAreaClick);
+
+    cueModalBody.addEventListener('input', function(e) {
       if (e.target.classList.contains('volume-slider')) {
         if (audio) {
           audio.volume = e.target.value;
@@ -1081,7 +1208,7 @@
     if (audio) {
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId) return;
-        var cue = mount.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
+        var cue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
         if (!cue) return;
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
@@ -1119,7 +1246,7 @@
         // BUG FIX 2: If they are seeking a different cue, switch the audio source AND update the UI button
         if (wrapCueId && wrapCueId !== currentCueId) {
           stopCue();
-          var playBtn = mount.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
+          var playBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
           if (!playBtn) return;
           var url = playBtn.getAttribute('data-url');
           currentCueId = wrapCueId;
@@ -1143,14 +1270,14 @@
         seekToEvent(e, wrap);
       }
 
-      mount.addEventListener('mousedown', function (e) {
+      cueModalBody.addEventListener('mousedown', function (e) {
         var wrap = e.target.closest('.cue-progress');
         if (wrap) { handleSeekStart(e, wrap); e.preventDefault(); }
       });
       document.addEventListener('mousemove', function (e) { if (isDragging && activeWrap) seekToEvent(e, activeWrap); });
       document.addEventListener('mouseup', function () { isDragging = false; activeWrap = null; });
 
-      mount.addEventListener('touchstart', function (e) {
+      cueModalBody.addEventListener('touchstart', function (e) {
         var wrap = e.target.closest('.cue-progress');
         if (wrap) { handleSeekStart(e, wrap); }
       }, { passive: true });
