@@ -1398,7 +1398,11 @@
      🔗 SCRIPT 5 — SHARE & DEEP LINKS
      ═══════════════════════════════════════════════════════════════ -->
 <script>
-  // Function to copy the link to clipboard
+  // 1. Prevent the browser's default instant jump on load
+  if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+  }
+
   window.copyProductLink = function(slug) {
     var url = window.location.origin + window.location.pathname + '#' + slug;
     navigator.clipboard.writeText(url).then(function() {
@@ -1408,44 +1412,56 @@
     });
   };
 
-  // Function to auto-open the link on page load
   window.addEventListener('load', function() {
     var hash = window.location.hash;
     if (!hash || hash.length < 2) return;
 
     var targetId = hash.replace('#', '');
-    var targetEl = document.getElementById(targetId);
+    var attempts = 0;
     
-    if (targetEl) {
-      // 1. Find the closest <details> parent and open it
-      var parentDetails = targetEl.closest('details');
-      if (parentDetails && !parentDetails.open) {
-        parentDetails.open = true;
-      }
+    // 2. Retry loop to wait for your API data to render the item
+    var checkExist = setInterval(function() {
+      var targetEl = document.getElementById(targetId);
+      attempts++;
 
-      // 2. Wait for the layout to settle, then scroll
-      setTimeout(function() {
-        var headerOffset = 100; // Offset for the sticky top nav
-        var elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+      if (targetEl) {
+        clearInterval(checkExist);
         
-        window.scrollTo({
-          top: elementPosition - headerOffset,
-          behavior: 'smooth'
-        });
-
-        // 3. Glow it gold
-        var poster = targetEl.querySelector('.poster');
-        if (poster) {
-          poster.style.boxShadow = '0 0 40px 8px rgba(197,168,128,0.8)';
-          poster.style.borderColor = 'var(--gold)';
-          
-          setTimeout(function() {
-            poster.style.boxShadow = '';
-            poster.style.borderColor = '';
-          }, 3000);
+        // 3. Open the folder
+        var parentDetails = targetEl.closest('details');
+        if (parentDetails && !parentDetails.open) {
+          parentDetails.open = true;
         }
-      }, 600); // Increased to 600ms to ensure the folder fully expands before scrolling
-    }
+
+        // 4. Wait for the folder to expand, then scroll
+        setTimeout(function() {
+          var headerOffset = 100; 
+          var elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+          
+          // Jump directly without smooth scroll to guarantee accuracy
+          window.scrollTo({
+            top: elementPosition - headerOffset,
+            behavior: 'smooth'
+          });
+
+          // 5. Glow it gold
+          var poster = targetEl.querySelector('.poster');
+          if (poster) {
+            poster.style.boxShadow = '0 0 40px 8px rgba(197,168,128,0.8)';
+            poster.style.borderColor = 'var(--gold)';
+            
+            setTimeout(function() {
+              poster.style.boxShadow = '';
+              poster.style.borderColor = '';
+            }, 3000);
+          }
+        }, 500); // 500ms gives the folder time to expand and images to load
+        
+      } else if (attempts >= 20) {
+        clearInterval(checkExist);
+        console.log("Could not find item with ID: " + targetId);
+      }
+    }, 100); // Checks every 100ms (up to 2 seconds)
   });
 </script>
 
