@@ -1417,36 +1417,34 @@
     var targetEl = document.getElementById(targetId);
     
     if (targetEl) {
-      // 1. Find the closest <details> parent
+      // 1. Find the closest <details> parent and open it
       var parentDetails = targetEl.closest('details');
-      
-      // 2. If it's in a closed group, open it
       if (parentDetails && !parentDetails.open) {
         parentDetails.open = true;
       }
 
-      // 3. Wait a moment for the page to expand and images to load, then scroll
+      // 2. Wait for the layout to settle, then scroll
       setTimeout(function() {
         var headerOffset = 100; // Offset for the sticky top nav
         var elementPosition = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        
         window.scrollTo({
           top: elementPosition - headerOffset,
           behavior: 'smooth'
         });
 
-        // 4. Glow it gold
+        // 3. Glow it gold
         var poster = targetEl.querySelector('.poster');
         if (poster) {
           poster.style.boxShadow = '0 0 40px 8px rgba(197,168,128,0.8)';
           poster.style.borderColor = 'var(--gold)';
           
-          // Remove the glow after 3 seconds so it doesn't stay forever
           setTimeout(function() {
             poster.style.boxShadow = '';
             poster.style.borderColor = '';
           }, 3000);
         }
-      }, 400); // 400ms delay ensures the group fully opens before scrolling
+      }, 600); // Increased to 600ms to ensure the folder fully expands before scrolling
     }
   });
 </script>
