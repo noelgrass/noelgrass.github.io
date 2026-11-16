@@ -626,6 +626,22 @@
     cursor: not-allowed;
   }
 
+  /* Hide Turnstile by default, but keep it in the DOM so it runs */
+  .cf-turnstile {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.4s ease, height 0.4s ease;
+  }
+  
+  /* When the user interacts, we show it */
+  .cf-turnstile.active {
+    opacity: 1;
+    height: auto;
+    margin-top: 15px;
+    margin-bottom: 20px;
+  }
+
   .honeypot {
     position: absolute;
     left: -9999px;
@@ -915,7 +931,7 @@
       </div>
 
       <!-- CLOUDFLARE TURNSTILE (Anti-Bot Widget) -->
-      <div class="cf-turnstile" data-sitekey="0x4AAAAAAGC_Er3aPBOu_GJs" style="margin-bottom: 20px;"></div>
+      <div id="turnstileWidget" class="cf-turnstile" data-sitekey="0x4AAAAAAGC_Er3aPBOu_GJs"></div>
       
       <div id="formMessage" style="margin-bottom: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1em; display: none;"></div>
 
@@ -1034,15 +1050,15 @@
       closeModalBtn.addEventListener('click', function() {
         modal.style.display = 'none';
         // Bring back the Turnstile widget
-        var turnstileWidget = document.querySelector('.cf-turnstile');
-        if (turnstileWidget) turnstileWidget.style.display = 'block';
+        var turnstileWidget = document.getElementById('turnstileWidget');
+        if (turnstileWidget) turnstileWidget.classList.remove('active');
       });
       
       modal.addEventListener('click', function(e) {
         if (e.target === this) {
           modal.style.display = 'none';
-          var turnstileWidget = document.querySelector('.cf-turnstile');
-          if (turnstileWidget) turnstileWidget.style.display = 'block';
+          var turnstileWidget = document.getElementById('turnstileWidget');
+          if (turnstileWidget) turnstileWidget.classList.remove('active');
         }
       });
     }
@@ -1055,8 +1071,19 @@
     var formMessage = document.getElementById('formMessage');
     var isConfirming = false;
     var confirmTimeout;
+    var turnstileWidget = document.getElementById('turnstileWidget');
 
+    // Show Turnstile only when the user interacts with the form
     if (form) {
+      var formInputs = form.querySelectorAll('input, textarea, select');
+      formInputs.forEach(function(input) {
+        input.addEventListener('input', function() {
+          if (turnstileWidget && !turnstileWidget.classList.contains('active')) {
+            turnstileWidget.classList.add('active');
+          }
+        });
+      });
+
       form.addEventListener('submit', async function(e) {
         e.preventDefault(); // Stop the page from reloading
 
@@ -1132,13 +1159,15 @@
             // Reset and hide the Turnstile widget completely
             if (window.turnstile) {
               window.turnstile.reset();
-              var turnstileWidget = document.querySelector('.cf-turnstile');
-              if (turnstileWidget) turnstileWidget.style.display = 'none';
+              if (turnstileWidget) turnstileWidget.classList.remove('active');
             }
           } else {
             formMessage.style.display = 'block';
             formMessage.style.color = "#ff4444";
             formMessage.textContent = data.error || "Something went wrong. Please try again.";
+            
+            // If it failed, make sure the widget is visible
+            if (turnstileWidget) turnstileWidget.classList.add('active');
           }
         } catch (err) {
           formMessage.style.display = 'block';
