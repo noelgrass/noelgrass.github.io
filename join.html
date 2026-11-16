@@ -12,6 +12,7 @@
 <meta name="description" content="Join Noel Grass's list. Step into a world of dreams. New releases, studio notes, and the key to the Vault.">
 <link rel="canonical" href="https://noelgrass.com/join">
 
+<!-- SOCIAL MEDIA PREVIEW TAGS -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Noel Grass — Join">
 <meta property="og:description" content="Join Noel Grass's list. Step into a world of dreams.">
@@ -22,6 +23,7 @@
 <meta name="twitter:description" content="Join Noel Grass's list. Step into a world of dreams.">
 <meta name="twitter:image" content="https://noelgrass.com/images/noel-grass.jpeg">
 
+<!-- SEARCH ENGINE STRUCTURED DATA -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -37,11 +39,15 @@
 }
 </script>
 
+<!-- FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
+  /* =========================================
+     GLOBAL VARIABLES (YOUR BRAND COLORS)
+     ========================================= */
   :root {
     --bg: #000000;
     --gold: #C5A880;
@@ -63,6 +69,9 @@
   a { color: var(--gold); text-decoration: none; transition: color 0.25s ease; }
   a:hover { color: #FCFCF7; }
 
+  /* =========================================
+     ANIMATIONS & MENU STYLES (Unchanged)
+     ========================================= */
   @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
@@ -136,9 +145,9 @@
 
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
 
-  /* ═══════════════════════════════════════════════════════════════
-     📜 THE OPENING LETTER
-     ═══════════════════════════════════════════════════════════════ */
+  /* =========================================
+     OPENING LETTER TYPOGRAPHY
+     ========================================= */
   .opening-letter {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.1em;
@@ -155,30 +164,22 @@
   .opening-letter em { font-style: italic; }
   .opening-letter strong { color: var(--gold-pale); font-weight: 600; }
 
-  .kit-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
-
-  /* Kit Form Overrides (keep the black and gold aesthetic) */
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] { background: transparent !important; border: none !important; box-shadow: none !important; max-width: 100% !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-background { display: none !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] [data-style="minimal"], .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] [data-style="clean"] { padding: 0 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-header, .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-subheader { display: none !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-fields { display: flex !important; flex-direction: column !important; gap: 16px !important; margin: 0 !important; padding: 0 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-field, .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit { margin: 0 !important; flex: 1 1 100% !important; width: 100% !important; min-width: 0 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-input { width: 100% !important; background: transparent !important; border: 1px solid var(--rule) !important; color: var(--offwhite) !important; font-family: 'Playfair Display', Georgia, serif !important; font-size: 1em !important; padding: 16px 18px !important; border-radius: 0 !important; transition: border-color 0.3s ease, background 0.3s ease !important; outline: none !important; box-shadow: none !important; -webkit-appearance: none !important; appearance: none !important; line-height: 1.5 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-input:focus { border-color: var(--gold-soft) !important; background: rgba(197, 168, 128, 0.03) !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-input::placeholder { color: var(--muted) !important; font-style: italic !important; opacity: 1 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit { background: transparent !important; border: 1px solid var(--gold-soft) !important; color: var(--gold-pale) !important; font-family: 'Montserrat', sans-serif !important; font-weight: 400 !important; font-size: 0.8em !important; letter-spacing: 0.3em !important; text-transform: uppercase !important; padding: 18px 40px !important; cursor: pointer !important; border-radius: 0 !important; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease !important; text-align: center !important; display: block !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit:hover, .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit:focus { color: #FCFCF7 !important; border-color: var(--gold) !important; background: rgba(197, 168, 128, 0.06) !important; letter-spacing: 0.38em !important; outline: none !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit > span { padding: 0 !important; display: inline-block !important; background: transparent !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit:hover > span, .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit:focus > span { background-color: transparent !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-spinner > div { background-color: var(--gold-soft) !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-guarantee { color: var(--muted) !important; font-family: 'Playfair Display', Georgia, serif !important; font-style: italic !important; font-size: 0.85em !important; text-align: center !important; margin: 18px 0 0 0 !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-alert { background: rgba(197, 168, 128, 0.06) !important; border: 1px solid var(--gold-soft) !important; color: var(--gold-pale) !important; border-radius: 0 !important; font-family: 'Playfair Display', Georgia, serif !important; font-size: 0.95em !important; padding: 14px 18px !important; margin: 0 0 18px 0 !important; text-align: center !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-alert:empty { display: none !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-alert-success { background: rgba(197, 168, 128, 0.08) !important; border-color: var(--gold) !important; color: var(--gold-pale) !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-alert-error { background: rgba(197, 168, 128, 0.06) !important; border-color: var(--gold-dim) !important; color: var(--offwhite) !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-powered-by-convertkit-container { margin: 20px 0 0 0 !important; opacity: 0.4 !important; transition: opacity 0.3s ease !important; justify-content: center !important; }
-  .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-powered-by-convertkit-container:hover { opacity: 0.75 !important; }
+  /* =========================================
+     CUSTOM FORM STYLES (Replaced Kit)
+     This handles the look of the Name/Email inputs
+     ========================================= */
+  .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
+  .custom-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
+  
+  /* The input boxes */
+  .custom-input { width: 100%; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; font-size: 1em; padding: 16px 18px; border-radius: 0; transition: border-color 0.3s ease, background 0.3s ease; outline: none; line-height: 1.5; }
+  .custom-input:focus { border-color: var(--gold-soft); background: rgba(197, 168, 128, 0.03); }
+  .custom-input::placeholder { color: var(--muted); font-style: italic; opacity: 1; }
+  
+  /* The submit button */
+  .custom-submit { background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.3em; text-transform: uppercase; padding: 18px 40px; cursor: pointer; border-radius: 0; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease; text-align: center; display: block; }
+  .custom-submit:hover:not(:disabled) { color: #FCFCF7; border-color: var(--gold); background: rgba(197, 168, 128, 0.06); letter-spacing: 0.38em; }
+  .custom-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.15s; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
@@ -192,8 +193,8 @@
     .page { padding: 60px 22px 60px; }
     h1 { font-size: 1.9em; letter-spacing: 0.2em; margin-bottom: 24px; }
     .opening-letter { font-size: 1em; margin-bottom: 40px; }
-    .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-input { font-size: 0.95em !important; padding: 14px 16px !important; }
-    .kit-form-wrap .formkit-form[data-uid="03b7d9f76e"] .formkit-submit { padding: 16px 32px !important; font-size: 0.75em !important; letter-spacing: 0.25em !important; }
+    .custom-input { font-size: 0.95em; padding: 14px 16px; }
+    .custom-submit { padding: 16px 32px; font-size: 0.75em; letter-spacing: 0.25em; }
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -224,6 +225,9 @@
 </head>
 <body>
 
+<!-- =========================================
+     NAVIGATION BAR & MENU
+     ========================================= -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
@@ -267,14 +271,15 @@
   </div>
 </nav>
 
+<!-- =========================================
+     PAGE CONTENT
+     ========================================= -->
 <div class="page-wrap" id="pageWrap">
   <div class="page">
 
     <h1>Join</h1>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         📜 THE OPENING LETTER
-         ═══════════════════════════════════════════════════════════════ -->
+    <!-- THE OPENING LETTER -->
     <div class="opening-letter">
       <p>I daydream. I create stories. Music is what gives them shape.</p>
       <p>My music moves through quiet rooms and sweeping orchestras, but the goal is always the same: <strong>to help you find a story of your own.</strong></p>
@@ -282,12 +287,23 @@
       <p>Welcome to the dream.</p>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════════
-         📧 THE DAYDREAMER FORM (Kit)
-         This is the email capture form.
-         ═══════════════════════════════════════════════════════════════ -->
-    <div class="kit-form-wrap">
-      <script async data-uid="03b7d9f76e" src="https://noel-grass.kit.com/03b7d9f76e/index.js"></script>
+    <!-- =========================================
+         THE FORM (This is where they enter Name & Email)
+         ========================================= -->
+    <div class="custom-form-wrap">
+      <form id="joinForm" class="custom-form">
+        <!-- 1. Name Input -->
+        <input type="text" id="name" name="name" required placeholder="Your Name" class="custom-input">
+        
+        <!-- 2. Email Input -->
+        <input type="email" id="email" name="email" required placeholder="Your Email" class="custom-input">
+        
+        <!-- 3. Submit Button -->
+        <button type="submit" id="submitBtn" class="custom-submit">Join the Dream</button>
+      </form>
+      
+      <!-- This div is hidden by default. It only shows if there is an error (e.g. Network down) -->
+      <div id="formMessage" style="margin-top: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05em; display: none;"></div>
     </div>
 
     <div class="signature">
@@ -303,14 +319,14 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🟢 CUSTOM SUCCESS MODAL
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- =========================================
+     SUCCESS MODAL (Pops up when they join)
+     ========================================= -->
 <div id="confirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
   <div style="background:#000000; border:1px solid #B9975C; padding:40px; max-width:420px; text-align:center; margin:20px; box-shadow: 0 0 40px rgba(197,168,128,0.15);">
     
     <p style="font-family:'Playfair Display', Georgia, serif; color:#E8D5B5; font-size:1.1em; line-height:1.8; margin-bottom: 30px;">
-      Thank you for joining. Please check your email to confirm your subscription.
+      Thank you for joining the dream. You are now a Daydreamer.
     </p>
     
     <button id="closeModalBtn" style="background:transparent; border:1px solid #B9975C; color:#E8D5B5; padding:14px 40px; font-family:'Montserrat', sans-serif; font-size:0.8em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition: all 0.3s ease;">
@@ -322,7 +338,9 @@
 
 <script>
   (function () {
-    // --- MENU LOGIC ---
+    // =========================================
+    // 1. MENU LOGIC (Unchanged)
+    // =========================================
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
@@ -369,48 +387,72 @@
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    // --- 🟢 CUSTOM MODAL LOGIC (INTERCEPT SUBMIT) ---
+
+    // =========================================
+    // 2. FORM SUBMISSION LOGIC (The important part)
+    // =========================================
+    var form = document.getElementById('joinForm');
+    var submitBtn = document.getElementById('submitBtn');
+    var formMessage = document.getElementById('formMessage');
     var modal = document.getElementById('confirmModal');
-    var closeBtn = document.getElementById('closeModalBtn');
+    var closeModalBtn = document.getElementById('closeModalBtn');
 
-    if (modal && closeBtn) {
-      // Close the modal when the button is clicked
-      closeBtn.addEventListener('click', function() {
+    // Close modal logic
+    if (closeModalBtn) {
+      closeModalBtn.addEventListener('click', function() {
         modal.style.display = 'none';
-        // Optional: Reset the form so they can submit again
-        var form = document.querySelector('.formkit-form form');
-        if (form) form.reset();
       });
-
-      // Close the modal if the user clicks outside the black box
       modal.addEventListener('click', function(e) {
-        if (e.target === this) {
-          modal.style.display = 'none';
-        }
-      });
-
-      // Listen for the form submission to stop the redirect and show the popup
-      document.addEventListener('submit', function(e) {
-        if (e.target.classList.contains('formkit-form') || e.target.closest('.formkit-form')) {
-          
-          // Stop the page from reloading/redirecting
-          e.preventDefault(); 
-          
-          // Show the modal
-          modal.style.display = 'flex';
-          
-          // Submit the form data to Kit in the background
-          var form = e.target;
-          var formData = new FormData(form);
-          fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            mode: 'no-cors' // Prevents CORS errors
-          }).catch(function(err) { console.error(err); });
-        }
+        if (e.target === this) modal.style.display = 'none';
       });
     }
 
+    // Listen for the user clicking "Join the Dream"
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Stop the page from reloading
+        
+        // Grab what they typed
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+
+        // Change button text so they know it's working
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Joining...";
+        formMessage.style.display = 'none';
+
+        try {
+          // Send the data to your master-brain Worker
+          var response = await fetch('https://master-brain.noelgrass.workers.dev/api/join', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name, email: email })
+          });
+
+          var data = await response.json();
+
+          if (response.ok) {
+            // Success! Show the custom modal
+            modal.style.display = 'flex';
+            form.reset(); // Clear the form
+          } else {
+            // Error (e.g. "Email already subscribed")
+            formMessage.style.display = 'block';
+            formMessage.style.color = "#ff4444";
+            formMessage.textContent = data.error || "Something went wrong. Please try again.";
+          }
+        } catch (err) {
+          // Network error (e.g. offline)
+          formMessage.style.display = 'block';
+          formMessage.style.color = "#ff4444";
+          formMessage.textContent = "Network error. Please check your connection.";
+        } finally {
+          // Reset the button back to normal
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Join the Dream";
+        }
+      });
+    }
   })();
 </script>
 
