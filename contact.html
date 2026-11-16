@@ -6,11 +6,13 @@
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 
 <title>Noel Grass — Contact | Film Composer &amp; Neoclassical Pianist</title>
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
+
+<!-- 👇 FAVICON -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 <meta name="description" content="Contact Noel Grass, neoclassical pianist, contemporary classical composer, orchestrator, and film composer from Kenya. Available for live performance bookings, commissions, music arrangement, orchestral arrangement, music production, press, and general inquiries, across East Africa and internationally.">
 <link rel="canonical" href="https://noelgrass.com/contact">
 
+<!-- SOCIAL MEDIA PREVIEW TAGS -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="Noel Grass — Contact | Film Composer &amp; Neoclassical Pianist">
 <meta property="og:description" content="Contact Noel Grass, neoclassical pianist and film composer from Kenya.">
@@ -21,6 +23,7 @@
 <meta name="twitter:description" content="Contact Noel Grass, neoclassical pianist and film composer from Kenya.">
 <meta name="twitter:image" content="https://noelgrass.com/images/noel-grass.jpeg">
 
+<!-- SEARCH ENGINE STRUCTURED DATA -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -36,11 +39,18 @@
 }
 </script>
 
+<!-- FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
+<!-- CLOUDFLARE TURNSTILE SCRIPT (For Spam Protection) -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 <style>
+  /* =========================================
+     GLOBAL VARIABLES (YOUR BRAND COLORS)
+     ========================================= */
   :root {
     --bg: #000000;
     --gold: #C5A880;
@@ -86,6 +96,9 @@
 
   a:hover { color: #FCFCF7; }
 
+  /* =========================================
+     ANIMATIONS
+     ========================================= */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -102,25 +115,13 @@
   }
 
   @keyframes menuLinkIn {
-    from {
-      opacity: 0;
-      transform: translate3d(-12px, 0, 0);
-    }
-    to {
-      opacity: 1;
-      transform: translate3d(0, 0, 0);
-    }
+    from { opacity: 0; transform: translate3d(-12px, 0, 0); }
+    to   { opacity: 1; transform: translate3d(0, 0, 0); }
   }
 
   @keyframes menuHeadingIn {
-    from {
-      opacity: 0;
-      letter-spacing: 0.5em;
-    }
-    to {
-      opacity: 1;
-      letter-spacing: 0.35em;
-    }
+    from { opacity: 0; letter-spacing: 0.5em; }
+    to   { opacity: 1; letter-spacing: 0.35em; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -131,6 +132,9 @@
     }
   }
 
+  /* =========================================
+     NAVIGATION BAR & MENU
+     ========================================= */
   .topnav {
     position: sticky;
     top: 0;
@@ -158,9 +162,7 @@
 
   .wordmark:hover {
     color: #FCFCF7;
-    text-shadow:
-      0 0 18px rgba(197, 168, 128, 0.55),
-      0 0 40px rgba(197, 168, 128, 0.25);
+    text-shadow: 0 0 18px rgba(197, 168, 128, 0.55), 0 0 40px rgba(197, 168, 128, 0.25);
   }
 
   .menu-toggle {
@@ -200,22 +202,12 @@
     background: currentColor;
     border-radius: 2px;
     transform-origin: center;
-    transition:
-      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
-      opacity 0.3s ease,
-      width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease, width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
-    transform: translateY(6.25px) rotate(45deg);
-  }
-  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) {
-    opacity: 0;
-    width: 0;
-  }
-  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
-    transform: translateY(-6.25px) rotate(-45deg);
-  }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
 
   .menu-toggle::after {
     content: '';
@@ -236,8 +228,7 @@
   }
 
   .page-wrap {
-    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: filter 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   body.menu-open .page-wrap {
@@ -253,17 +244,11 @@
     inset: 0;
     z-index: 400;
     background: #000000;
-    background-image: radial-gradient(
-      ellipse at 50% 50%,
-      rgba(197, 168, 128, 0.07) 0%,
-      transparent 65%
-    );
+    background-image: radial-gradient(ellipse at 50% 50%, rgba(197, 168, 128, 0.07) 0%, transparent 65%);
     opacity: 0;
     pointer-events: none;
     transform: scale(1.02);
-    transition:
-      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-y: auto;
     overscroll-behavior: contain;
   }
@@ -355,9 +340,7 @@
   .menu-close:hover {
     color: #FCFCF7;
     letter-spacing: 0.45em;
-    text-shadow:
-      0 0 20px rgba(197, 168, 128, 0.7),
-      0 0 45px rgba(197, 168, 128, 0.3);
+    text-shadow: 0 0 20px rgba(197, 168, 128, 0.7), 0 0 45px rgba(197, 168, 128, 0.3);
   }
 
   .menu-close .x {
@@ -368,9 +351,7 @@
     transition: transform 0.4s ease;
   }
 
-  .menu-close:hover .x {
-    transform: rotate(90deg);
-  }
+  .menu-close:hover .x { transform: rotate(90deg); }
 
   .menu-close .x::before,
   .menu-close .x::after {
@@ -442,19 +423,12 @@
     text-transform: uppercase;
     color: var(--gold-pale);
     padding: 8px 0 8px 0;
-    transition:
-      color 0.6s ease,
-      opacity 0.5s ease,
-      text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .menu-link:hover {
     color: #FCFCF7;
-    text-shadow:
-      0 0 12px rgba(197, 168, 128, 0.75),
-      0 0 30px rgba(197, 168, 128, 0.55),
-      0 0 70px rgba(197, 168, 128, 0.30),
-      0 0 130px rgba(197, 168, 128, 0.15);
+    text-shadow: 0 0 12px rgba(197, 168, 128, 0.75), 0 0 30px rgba(197, 168, 128, 0.55), 0 0 70px rgba(197, 168, 128, 0.30), 0 0 130px rgba(197, 168, 128, 0.15);
   }
 
   .menu-link.current {
@@ -463,13 +437,8 @@
     cursor: default;
   }
 
-  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) {
-    opacity: 0.25;
-  }
-
-  .menu-links:has(.menu-link:hover) .menu-section {
-    opacity: 0.15;
-  }
+  .menu-links:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
+  .menu-links:has(.menu-link:hover) .menu-section { opacity: 0.15; }
 
   .menu-bottom {
     font-family: 'Montserrat', sans-serif;
@@ -493,6 +462,9 @@
     cursor: pointer;
   }
 
+  /* =========================================
+     PAGE CONTENT
+     ========================================= */
   .page {
     max-width: 780px;
     margin: 0 auto;
@@ -550,6 +522,9 @@
     margin: 0;
   }
 
+  /* =========================================
+     CONTACT FORM STYLES
+     ========================================= */
   .contact-form {
     text-align: left;
     animation: fadeUp 1s ease-out both;
@@ -613,10 +588,8 @@
     cursor: pointer;
     background-image: linear-gradient(45deg, transparent 50%, var(--gold-soft) 50%),
                       linear-gradient(135deg, var(--gold-soft) 50%, transparent 50%);
-    background-position: calc(100% - 20px) center,
-                         calc(100% - 14px) center;
-    background-size: 6px 6px,
-                     6px 6px;
+    background-position: calc(100% - 20px) center, calc(100% - 14px) center;
+    background-size: 6px 6px, 6px 6px;
     background-repeat: no-repeat;
     padding-right: 40px;
   }
@@ -642,10 +615,15 @@
     margin-top: 10px;
   }
 
-  .form-submit:hover {
+  .form-submit:hover:not(:disabled) {
     color: #FCFCF7;
     border-color: var(--gold);
     background: rgba(197, 168, 128, 0.05);
+  }
+  
+  .form-submit:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   .honeypot {
@@ -758,9 +736,6 @@
     opacity: 0.95;
   }
 
-  /* ============================================================
-     FOOTER LOCATION
-     ============================================================ */
   .footer-location {
     text-align: right;
     font-family: 'Montserrat', sans-serif;
@@ -812,110 +787,43 @@
     .routing p { font-size: 0.95em; }
 
     .topnav { padding: 18px 22px; }
+    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
+    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
+    .hamburger { width: 20px; height: 13px; }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
 
-    .wordmark {
-      font-size: 0.95em;
-      letter-spacing: 0.28em;
-    }
-
-    .menu-toggle {
-      font-size: 0.7em;
-      letter-spacing: 0.22em;
-      gap: 10px;
-    }
-
-    .hamburger {
-      width: 20px;
-      height: 13px;
-    }
-
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) {
-      transform: translateY(5.75px) rotate(45deg);
-    }
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) {
-      transform: translateY(-5.75px) rotate(-45deg);
-    }
-
-    .menu-inner {
-      padding: 90px 24px 60px;
-      gap: 32px;
-    }
-
-    .menu-top {
-      top: 22px;
-      left: 24px;
-      right: 24px;
-    }
-
-    .menu-close {
-      font-size: 0.85em;
-      letter-spacing: 0.35em;
-      gap: 12px;
-    }
-
-    .menu-close .x {
-      width: 15px;
-      height: 15px;
-    }
-
-    .menu-links {
-      gap: 24px;
-      padding-top: 10px;
-    }
-
-    .menu-link {
-      font-size: 1.5em;
-      letter-spacing: 0.22em;
-    }
-
-    .menu-bottom {
-      margin-top: 10px;
-    }
+    .menu-inner { padding: 90px 24px 60px; gap: 32px; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
+    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
+    .menu-close .x { width: 15px; height: 15px; }
+    .menu-links { gap: 24px; padding-top: 10px; }
+    .menu-link { font-size: 1.5em; letter-spacing: 0.22em; }
+    .menu-bottom { margin-top: 10px; }
 
     .location-note { margin-top: 30px; }
     .signature { margin-top: 60px; }
     .signature-logo { height: 55px; }
-
-    .footer-location {
-      text-align: center;
-      padding-right: 0;
-      margin-top: 20px;
-    }
+    .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
   }
 
   @media (max-width: 380px) {
-    .wordmark {
-      font-size: 0.8em;
-      letter-spacing: 0.22em;
-    }
-    .menu-toggle {
-      font-size: 0.65em;
-      letter-spacing: 0.18em;
-    }
-    .menu-toggle::after {
-      left: 30px;
-    }
-
-    .menu-link {
-      font-size: 1.2em;
-      letter-spacing: 0.18em;
-    }
+    .wordmark { font-size: 0.8em; letter-spacing: 0.22em; }
+    .menu-toggle { font-size: 0.65em; letter-spacing: 0.18em; }
+    .menu-toggle::after { left: 30px; }
+    .menu-link { font-size: 1.2em; letter-spacing: 0.18em; }
   }
 </style>
 </head>
 <body>
 
+<!-- =========================================
+     NAVIGATION BAR & MENU
+     ========================================= -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
 
-  <button
-    class="menu-toggle"
-    id="menuToggle"
-    aria-label="Open menu"
-    aria-expanded="false"
-    aria-controls="menuPanel"
-    type="button"
-  >
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
     <span class="hamburger" aria-hidden="true">
       <span></span>
       <span></span>
@@ -925,16 +833,10 @@
   </button>
 </header>
 
-<nav
-  class="menu-panel"
-  id="menuPanel"
-  aria-label="Primary"
-  aria-hidden="true"
->
+<nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
   <div class="menu-backdrop" id="menuBackdrop"></div>
 
   <div class="menu-inner">
-
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
       <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
@@ -953,12 +855,13 @@
     </ul>
 
     <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
-
   </div>
 </nav>
 
+<!-- =========================================
+     PAGE CONTENT
+     ========================================= -->
 <div class="page-wrap" id="pageWrap">
-
   <div class="page">
 
     <h1>Contact</h1>
@@ -970,15 +873,10 @@
       <p>Available for live performances of original works: contemporary classical, neoclassical, and cinematic compositions from the catalogue. Performances range from solo piano to ensemble and orchestral settings. Performed live and in studio settings, in Kenya and internationally. Suited to intimate venues, private events, film festivals, and cultural programmes.</p>
     </div>
 
-    <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
-
-      <input type="hidden" name="access_key" value="cd979eba-3b20-4241-a19f-7dd88f39d0ec">
-
-      <input type="hidden" name="from_name" value="Noel Grass Website">
-
-      <input type="hidden" name="subject" value="New inquiry from noelgrass.com/contact">
-
-      <input type="hidden" name="redirect" value="https://noelgrass.com/thank-you">
+    <!-- =========================================
+         THE FORM (This is where they send a message)
+         ========================================= -->
+    <form id="contactForm" class="contact-form">
 
       <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off">
 
@@ -1016,32 +914,31 @@
         <textarea id="message" name="message" required placeholder="Tell me about your project or inquiry."></textarea>
       </div>
 
-      <button type="submit" class="form-submit">Send Inquiry</button>
+      <!-- CLOUDFLARE TURNSTILE (Anti-Bot Widget) -->
+      <!-- Note: Replace YOUR_SITE_KEY with the Site Key from your Cloudflare Turnstile Dashboard -->
+      <div class="cf-turnstile" data-sitekey="YOUR_SITE_KEY" style="margin-bottom: 20px;"></div>
+      
+      <div id="formMessage" style="margin-bottom: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1em; display: none;"></div>
+
+      <button type="submit" id="submitBtn" class="form-submit">Send Inquiry</button>
 
     </form>
 
     <div class="contact-methods">
-
       <div class="method">
         <span class="label">Email</span>
         <a href="mailto:info@noelgrass.com" class="value">info@noelgrass.com</a>
       </div>
-
       <div class="method">
         <span class="label">WhatsApp</span>
         <a href="https://wa.me/254705872970" target="_blank" rel="noopener" class="value">+254 705 872 970</a>
       </div>
-
     </div>
 
     <div class="routing">
-
       <p>For live performance bookings, music arrangement, or music production, use the form above.</p>
-
       <p>For film scoring and commissions, see <a href="commission">Commission a Scene →</a></p>
-
       <p>For the press kit, <a href="https://drive.google.com/file/d/14bVMsBoOCG3RkBoR4ojGNDSnpQjPkDOe/view" target="_blank" rel="noopener">download the profile →</a></p>
-
     </div>
 
     <div class="location-note">
@@ -1059,115 +956,133 @@
     </p>
 
   </div>
-
 </div>
 
 <script>
   (function () {
+    // =========================================
+    // 1. MENU LOGIC (Unchanged)
+    // =========================================
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
     var backdrop = document.getElementById('menuBackdrop');
 
-    function getScrollbarWidth() {
-      return window.innerWidth - document.documentElement.clientWidth;
-    }
+    function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
+    function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
+    function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
+    function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
+    function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
 
-    function lockScroll() {
-      var sw = getScrollbarWidth();
-      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
-      document.documentElement.classList.add('menu-lock');
-    }
-
-    function unlockScroll() {
-      document.documentElement.classList.remove('menu-lock');
-      document.documentElement.style.removeProperty('--scrollbar-width');
-    }
-
-    function openMenu() {
-      panel.classList.add('open');
-      panel.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('menu-open');
-      lockScroll();
-      toggle.setAttribute('aria-expanded', 'true');
-      toggle.setAttribute('aria-label', 'Close menu');
-    }
-
-    function closeMenu() {
-      panel.classList.remove('open');
-      panel.setAttribute('aria-hidden', 'true');
-      document.body.classList.remove('menu-open');
-      unlockScroll();
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.setAttribute('aria-label', 'Open menu');
-    }
-
-    toggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (panel.classList.contains('open')) {
-        closeMenu();
-      } else {
-        openMenu();
-      }
-    });
-
+    toggle.addEventListener('click', function (e) { e.stopPropagation(); if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); } });
     closeBtn.addEventListener('click', closeMenu);
     backdrop.addEventListener('click', closeMenu);
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) {
-        closeMenu();
-      }
-    });
-
-    panel.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', closeMenu);
-    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
+    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
 
     function normalizePath(path) {
       path = path.split('?')[0].split('#')[0];
       path = path.replace(/\.html?$/i, '');
-      if (path.length > 1 && path.endsWith('/')) {
-        path = path.slice(0, -1);
-      }
+      if (path.length > 1 && path.endsWith('/')) { path = path.slice(0, -1); }
       path = path.replace(/\/index$/i, '/');
       if (!path.startsWith('/')) path = '/' + path;
       return path;
     }
-
     var current = normalizePath(window.location.pathname);
     var links = panel.querySelectorAll('a.menu-link');
     var matched = null;
-
     links.forEach(function (link) {
       var href = link.getAttribute('href');
       if (!href) return;
       if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-
       var linkPath = normalizePath(href);
-      if (linkPath === current) {
-        matched = link;
-      }
+      if (linkPath === current) { matched = link; }
     });
-
     if (!matched && (current === '/' || current === '')) {
       links.forEach(function (link) {
         var href = link.getAttribute('href');
-        if (href === './' || href === '/' || href === 'index.html') {
-          matched = link;
+        if (href === './' || href === '/' || href === 'index.html') { matched = link; }
+      });
+    }
+    if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
+    var yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+    // =========================================
+    // 2. FORM SUBMISSION LOGIC (To master-brain)
+    // =========================================
+    var form = document.getElementById('contactForm');
+    var submitBtn = document.getElementById('submitBtn');
+    var formMessage = document.getElementById('formMessage');
+
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault(); // Stop the page from reloading
+
+        // Grab the Turnstile token
+        var token = document.querySelector('[name="cf-turnstile-response"]').value;
+
+        if (!token) {
+          formMessage.style.display = 'block';
+          formMessage.style.color = "#ff4444";
+          formMessage.textContent = "Please complete the spam verification.";
+          return;
+        }
+
+        // Grab what they typed
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        
+        // Combine Company and Inquiry Type into the message so the Worker receives one string
+        var company = document.getElementById('company').value;
+        var inquiry = document.getElementById('inquiry').value;
+        var rawMessage = document.getElementById('message').value;
+        
+        var fullMessage = "Inquiry: " + inquiry + "\nCompany: " + (company || "N/A") + "\n\n" + rawMessage;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        formMessage.style.display = 'none';
+
+        try {
+          var response = await fetch('https://master-brain.noelgrass.workers.dev/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: name,
+              email: email,
+              message: fullMessage,
+              token: token
+            })
+          });
+
+          var data = await response.json();
+
+          if (response.ok) {
+            formMessage.style.display = 'block';
+            formMessage.style.color = "#C5A880"; // Your gold color
+            formMessage.textContent = "Message sent successfully! I'll be in touch soon.";
+            form.reset();
+            if (window.turnstile) {
+              window.turnstile.reset();
+            }
+          } else {
+            formMessage.style.display = 'block';
+            formMessage.style.color = "#ff4444";
+            formMessage.textContent = data.error || "Something went wrong. Please try again.";
+          }
+        } catch (err) {
+          formMessage.style.display = 'block';
+          formMessage.style.color = "#ff4444";
+          formMessage.textContent = "Network error. Please check your connection.";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send Inquiry";
         }
       });
     }
-
-    if (matched) {
-      matched.classList.add('current');
-      matched.setAttribute('aria-current', 'page');
-    }
-
-    var yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
 </script>
 
 </body>
-</html>  
+</html>
