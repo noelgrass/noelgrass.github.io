@@ -626,20 +626,12 @@
     cursor: not-allowed;
   }
 
-  /* Hide Turnstile by default, but keep it in the DOM so it runs */
+  /* Keep Turnstile completely hidden from view */
   .cf-turnstile {
+    position: absolute;
+    left: -9999px;
     opacity: 0;
-    height: 0;
-    overflow: hidden;
-    transition: opacity 0.4s ease, height 0.4s ease;
-  }
-  
-  /* When the user interacts, we show it */
-  .cf-turnstile.active {
-    opacity: 1;
-    height: auto;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    pointer-events: none;
   }
 
   .honeypot {
@@ -1049,16 +1041,11 @@
     if (closeModalBtn && modal) {
       closeModalBtn.addEventListener('click', function() {
         modal.style.display = 'none';
-        // Bring back the Turnstile widget
-        var turnstileWidget = document.getElementById('turnstileWidget');
-        if (turnstileWidget) turnstileWidget.classList.remove('active');
       });
       
       modal.addEventListener('click', function(e) {
         if (e.target === this) {
           modal.style.display = 'none';
-          var turnstileWidget = document.getElementById('turnstileWidget');
-          if (turnstileWidget) turnstileWidget.classList.remove('active');
         }
       });
     }
@@ -1071,19 +1058,8 @@
     var formMessage = document.getElementById('formMessage');
     var isConfirming = false;
     var confirmTimeout;
-    var turnstileWidget = document.getElementById('turnstileWidget');
 
-    // Show Turnstile only when the user interacts with the form
     if (form) {
-      var formInputs = form.querySelectorAll('input, textarea, select');
-      formInputs.forEach(function(input) {
-        input.addEventListener('input', function() {
-          if (turnstileWidget && !turnstileWidget.classList.contains('active')) {
-            turnstileWidget.classList.add('active');
-          }
-        });
-      });
-
       form.addEventListener('submit', async function(e) {
         e.preventDefault(); // Stop the page from reloading
 
@@ -1156,18 +1132,14 @@
             
             form.reset();
             
-            // Reset and hide the Turnstile widget completely
+            // Reset the Cloudflare widget
             if (window.turnstile) {
               window.turnstile.reset();
-              if (turnstileWidget) turnstileWidget.classList.remove('active');
             }
           } else {
             formMessage.style.display = 'block';
             formMessage.style.color = "#ff4444";
             formMessage.textContent = data.error || "Something went wrong. Please try again.";
-            
-            // If it failed, make sure the widget is visible
-            if (turnstileWidget) turnstileWidget.classList.add('active');
           }
         } catch (err) {
           formMessage.style.display = 'block';
