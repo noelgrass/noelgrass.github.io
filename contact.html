@@ -915,7 +915,6 @@
       </div>
 
       <!-- CLOUDFLARE TURNSTILE (Anti-Bot Widget) -->
-      <!-- Note: Replace YOUR_SITE_KEY with the Site Key from your Cloudflare Turnstile Dashboard -->
       <div class="cf-turnstile" data-sitekey="0x4AAAAAAGC_Er3aPBOu_GJs" style="margin-bottom: 20px;"></div>
       
       <div id="formMessage" style="margin-bottom: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1em; display: none;"></div>
@@ -954,6 +953,23 @@
       <span class="footer-sep">·</span>
       <span>Worldwide</span>
     </p>
+
+  </div>
+</div>
+
+<!-- =========================================
+     SUCCESS MODAL
+     ========================================= -->
+<div id="contactSuccessModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#000000; border:1px solid #B9975C; padding:40px; max-width:420px; text-align:center; margin:20px; box-shadow: 0 0 40px rgba(197,168,128,0.15);">
+    
+    <p style="font-family:'Playfair Display', Georgia, serif; color:#E8D5B5; font-size:1.1em; line-height:1.8; margin-bottom: 30px;">
+      Thank you. Your message has been received. I will be in touch shortly.
+    </p>
+    
+    <button id="closeContactModal" style="background:transparent; border:1px solid #B9975C; color:#E8D5B5; padding:14px 40px; font-family:'Montserrat', sans-serif; font-size:0.8em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition: all 0.3s ease;">
+      Close
+    </button>
 
   </div>
 </div>
@@ -1009,11 +1025,36 @@
     if (yearEl) yearEl.textContent = new Date().getFullYear();
 
     // =========================================
-    // 2. FORM SUBMISSION LOGIC (To master-brain)
+    // 2. SUCCESS MODAL LOGIC
+    // =========================================
+    var modal = document.getElementById('contactSuccessModal');
+    var closeModalBtn = document.getElementById('closeContactModal');
+    
+    if (closeModalBtn && modal) {
+      closeModalBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        // Bring back the Turnstile widget
+        var turnstileWidget = document.querySelector('.cf-turnstile');
+        if (turnstileWidget) turnstileWidget.style.display = 'block';
+      });
+      
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          modal.style.display = 'none';
+          var turnstileWidget = document.querySelector('.cf-turnstile');
+          if (turnstileWidget) turnstileWidget.style.display = 'block';
+        }
+      });
+    }
+
+    // =========================================
+    // 3. FORM SUBMISSION LOGIC (With 2-Step Confirm)
     // =========================================
     var form = document.getElementById('contactForm');
     var submitBtn = document.getElementById('submitBtn');
     var formMessage = document.getElementById('formMessage');
+    var isConfirming = false;
+    var confirmTimeout;
 
     if (form) {
       form.addEventListener('submit', async function(e) {
@@ -1029,20 +1070,44 @@
           return;
         }
 
-        // Grab what they typed
+        // --- STEP 1: THE CONFIRMATION ---
+        if (!isConfirming) {
+          // Change button to confirm state
+          submitBtn.textContent = "Confirm Send?";
+          submitBtn.style.borderColor = "#E8D5B5"; // Lighter gold
+          
+          formMessage.style.display = 'block';
+          formMessage.style.color = "#C5A880";
+          formMessage.textContent = "Click the button again to confirm your message.";
+          
+          isConfirming = true;
+          
+          // If they don't click again within 4 seconds, reset the button
+          confirmTimeout = setTimeout(function() {
+            isConfirming = false;
+            submitBtn.textContent = "Send Inquiry";
+            submitBtn.style.borderColor = ""; // Reset border
+            formMessage.style.display = 'none';
+          }, 4000);
+          
+          return; // Stop here and wait for the second click
+        }
+
+        // --- STEP 2: ACTUAL SEND ---
+        clearTimeout(confirmTimeout); // Clear the reset timer
+        isConfirming = false;
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        formMessage.style.display = 'none';
+
         var name = document.getElementById('name').value;
         var email = document.getElementById('email').value;
-        
-        // Combine Company and Inquiry Type into the message so the Worker receives one string
         var company = document.getElementById('company').value;
         var inquiry = document.getElementById('inquiry').value;
         var rawMessage = document.getElementById('message').value;
         
         var fullMessage = "Inquiry: " + inquiry + "\nCompany: " + (company || "N/A") + "\n\n" + rawMessage;
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = "Sending...";
-        formMessage.style.display = 'none';
 
         try {
           var response = await fetch('https://master-brain.noelgrass.workers.dev/api/contact', {
@@ -1059,12 +1124,16 @@
           var data = await response.json();
 
           if (response.ok) {
-            formMessage.style.display = 'block';
-            formMessage.style.color = "#C5A880"; // Your gold color
-            formMessage.textContent = "Message sent successfully! I'll be in touch soon.";
+            // Show the modal
+            if (modal) modal.style.display = 'flex';
+            
             form.reset();
+            
+            // Reset and hide the Turnstile widget completely
             if (window.turnstile) {
               window.turnstile.reset();
+              var turnstileWidget = document.querySelector('.cf-turnstile');
+              if (turnstileWidget) turnstileWidget.style.display = 'none';
             }
           } else {
             formMessage.style.display = 'block';
@@ -1078,6 +1147,7 @@
         } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = "Send Inquiry";
+          submitBtn.style.borderColor = ""; 
         }
       });
     }
