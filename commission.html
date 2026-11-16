@@ -727,6 +727,14 @@
     cursor: not-allowed;
   }
 
+  /* Keep Turnstile completely hidden from view */
+  .cf-turnstile {
+    position: absolute;
+    left: -9999px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   /* Hides the honeypot field from humans */
   .honeypot {
     position: absolute;
@@ -981,8 +989,7 @@
       </div>
 
       <!-- CLOUDFLARE TURNSTILE (Anti-Bot Widget) -->
-      <!-- Note: Replace YOUR_SITE_KEY with the Site Key from your Cloudflare Turnstile Dashboard -->
-      <div class="cf-turnstile" data-sitekey="0x4AAAAAAGC_Er3aPBOu_GJs" style="margin-bottom: 20px;"></div>
+      <div id="turnstileWidget" class="cf-turnstile" data-sitekey="0x4AAAAAAGC_Er3aPBOu_GJs"></div>
       
       <div id="formMessage" style="margin-bottom: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1em; display: none;"></div>
 
@@ -1007,6 +1014,23 @@
       <span class="footer-sep">·</span>
       <span>Worldwide</span>
     </p>
+
+  </div>
+</div>
+
+<!-- =========================================
+     SUCCESS MODAL
+     ========================================= -->
+<div id="contactSuccessModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#000000; border:1px solid #B9975C; padding:40px; max-width:420px; text-align:center; margin:20px; box-shadow: 0 0 40px rgba(197,168,128,0.15);">
+    
+    <p style="font-family:'Playfair Display', Georgia, serif; color:#E8D5B5; font-size:1.1em; line-height:1.8; margin-bottom: 30px;">
+      Thank you. Your message has been received. I will be in touch shortly.
+    </p>
+    
+    <button id="closeContactModal" style="background:transparent; border:1px solid #B9975C; color:#E8D5B5; padding:14px 40px; font-family:'Montserrat', sans-serif; font-size:0.8em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition: all 0.3s ease;">
+      Close
+    </button>
 
   </div>
 </div>
@@ -1084,20 +1108,39 @@
 
 
     // =========================================
-    // 2. FORM SUBMISSION LOGIC (To master-brain)
+    // 2. SUCCESS MODAL LOGIC
+    // =========================================
+    var modal = document.getElementById('contactSuccessModal');
+    var closeModalBtn = document.getElementById('closeContactModal');
+    
+    if (closeModalBtn && modal) {
+      closeModalBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+      });
+      
+      modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+          modal.style.display = 'none';
+        }
+      });
+    }
+
+    // =========================================
+    // 3. FORM SUBMISSION LOGIC (With 2-Step Confirm)
     // =========================================
     var form = document.getElementById('contactForm');
     var submitBtn = document.getElementById('submitBtn');
     var formMessage = document.getElementById('formMessage');
+    var isConfirming = false;
+    var confirmTimeout;
 
     if (form) {
       form.addEventListener('submit', async function(e) {
         e.preventDefault(); // Stop the page from reloading
 
-        // Grab the Turnstile token (created automatically by the Cloudflare script)
+        // Grab the Turnstile token
         var token = document.querySelector('[name="cf-turnstile-response"]').value;
 
-        // If they didn't pass the bot check, warn them
         if (!token) {
           formMessage.style.display = 'block';
           formMessage.style.color = "#ff4444";
@@ -1105,54 +1148,81 @@
           return;
         }
 
-        // Grab what they typed
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
-        var message = document.getElementById('message').value;
+        // --- STEP 1: THE CONFIRMATION ---
+        if (!isConfirming) {
+          // Change button to confirm state
+          submitBtn.textContent = "Confirm Send?";
+          submitBtn.style.borderColor = "#E8D5B5"; // Lighter gold
+          
+          formMessage.style.display = 'block';
+          formMessage.style.color = "#C5A880";
+          formMessage.textContent = "Click the button again to confirm your message.";
+          
+          isConfirming = true;
+          
+          // If they don't click again within 4 seconds, reset the button
+          confirmTimeout = setTimeout(function() {
+            isConfirming = false;
+            submitBtn.textContent = "Send Inquiry";
+            submitBtn.style.borderColor = ""; // Reset border
+            formMessage.style.display = 'none';
+          }, 4000);
+          
+          return; // Stop here and wait for the second click
+        }
 
+        // --- STEP 2: ACTUAL SEND ---
+        clearTimeout(confirmTimeout); // Clear the reset timer
+        isConfirming = false;
+        
         submitBtn.disabled = true;
         submitBtn.textContent = "Sending...";
         formMessage.style.display = 'none';
 
+        var name = document.getElementById('name').value;
+        var email = document.getElementById('email').value;
+        var company = document.getElementById('company').value;
+        var message = document.getElementById('message').value;
+
+        var fullMessage = "Company: " + (company || "N/A") + "\n\n" + message;
+
         try {
-          // Send the data to master-brain
           var response = await fetch('https://master-brain.noelgrass.workers.dev/api/contact', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               name: name,
               email: email,
-              message: message,
-              token: token // Send the bot token to the Worker for verification
+              message: fullMessage,
+              token: token
             })
           });
 
           var data = await response.json();
 
           if (response.ok) {
-            // Success!
-            formMessage.style.display = 'block';
-            formMessage.style.color = "#C5A880"; // Your gold color
-            formMessage.textContent = "Message sent successfully! I'll be in touch soon.";
-            form.reset(); // Clear the form
+            // Show the modal
+            if (modal) modal.style.display = 'flex';
+            
+            form.reset();
+            
+            // Reset the Cloudflare widget
             if (window.turnstile) {
-              window.turnstile.reset(); // Reset the Cloudflare widget for another submission
+              window.turnstile.reset();
             }
           } else {
-            // Error (e.g. "Spam verification failed")
             formMessage.style.display = 'block';
             formMessage.style.color = "#ff4444";
             formMessage.textContent = data.error || "Something went wrong. Please try again.";
           }
         } catch (err) {
-          // Network error
           formMessage.style.display = 'block';
           formMessage.style.color = "#ff4444";
           formMessage.textContent = "Network error. Please check your connection.";
         } finally {
-          // Reset the button back to normal
           submitBtn.disabled = false;
           submitBtn.textContent = "Send Inquiry";
+          submitBtn.style.borderColor = ""; 
         }
       });
     }
