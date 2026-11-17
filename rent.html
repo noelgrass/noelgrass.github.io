@@ -750,11 +750,6 @@
     }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
-    /* 
-      EXPLAINER: buildTrackHtml dynamically creates HTML elements for jingles and score suites.
-      We attach data-id, data-url, and data-issuite attributes directly to the progress bars
-      so that clicking/scrubbing them knows exactly which track or cue to play and switch to.
-    */
     function buildTrackHtml(group) {
       var t = group.track;
       var url = buildPreviewUrl(t);
@@ -767,7 +762,6 @@
           cuesHtml += '<div class="cue" data-cue-id="' + cueId + '">' +
               '<div class="cue-info">' +
                 '<span class="cue-title">Cue ' + i + '</span>' +
-                /* EXPLAINER: Data attributes mapped onto score cue progress bars */
                 '<div class="cue-progress-wrap" data-id="' + cueId + '" data-url="' + cueUrl + '" data-issuite="true"><div class="cue-progress-bar"></div></div>' +
                 '<span class="cue-time">0:00</span>' +
                 '<div class="volume-container">' +
@@ -781,7 +775,6 @@
         trackContent = '<div class="suite-cues" id="suite-' + t.code + '">' + cuesHtml + '</div>';
       } else {
         trackContent = '<div class="inline-player" id="player-' + t.code + '">' +
-            /* EXPLAINER: Data attributes mapped onto jingle progress bars */
             '<div class="player-progress-wrap" data-id="' + t.code + '" data-url="' + url + '" data-issuite="false"><div class="player-progress-bar"></div></div>' +
             '<div class="player-time">0:00</div>' +
             '<div class="volume-container">' +
@@ -823,9 +816,9 @@
     var audio = document.getElementById('mainAudio');
     var currentTrackId = null;
     var isDragging = false;
+    var isSeeking = false; // Flag to prevent timeupdate from resetting progress bar while seeking
     var activeProgressWrap = null;
 
-    /* EXPLAINER: Resets all players, progress bars, and timings back to default state */
     function stopCurrentTrack() {
       if (!audio) return;
       audio.pause();
@@ -842,17 +835,12 @@
       currentTrackId = null;
     }
 
-    /* EXPLAINER: Helper to handle launching single tracks vs score suites */
     function playTrackOrCue(id, url, isSuite) {
       if (isSuite) {
         playCue(id, url);
       } else {
         if (currentTrackId === id) {
-          if (audio.paused) {
-            audio.play();
-          } else {
-            audio.pause();
-          }
+          if (audio.paused) { audio.play(); } else { audio.pause(); }
           return;
         }
         stopCurrentTrack();
@@ -948,7 +936,6 @@
       if (!audio) return;
       document.querySelectorAll('.cue-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
       
-      /* EXPLAINER: Only load new source if switching to a completely different cue */
       if (currentTrackId !== cueId) {
         audio.src = url;
         audio.load();
@@ -972,9 +959,8 @@
     });
 
     if (audio) {
-      /* EXPLAINER: Updates the visual progress bar width and countdown timer as audio plays */
       audio.addEventListener('timeupdate', function () {
-        if (!currentTrackId || isDragging) return;
+        if (!currentTrackId || isDragging || isSeeking) return;
         if (!audio.duration || isNaN(audio.duration)) return;
         var pct = (audio.currentTime / audio.duration) * 100;
         
@@ -996,16 +982,12 @@
       
       audio.addEventListener('ended', function () { stopCurrentTrack(); });
 
-      /* 
-        EXPLAINER: seekToEvent handles progress bar clicks and scrubbing. 
-        It immediately checks if you clicked a different track/cue than the one playing, 
-        switches to it, computes click percentage, and updates audio.currentTime smoothly 
-        without resetting to zero.
-      */
       function seekToEvent(e, wrap) {
         var trackId = wrap.getAttribute('data-id');
         var url = wrap.getAttribute('data-url');
         var isSuite = wrap.getAttribute('data-issuite') === 'true';
+
+        isSeeking = true; // Lock out timeupdate resets
 
         if (currentTrackId !== trackId) {
           if (isSuite) {
@@ -1031,9 +1013,10 @@
         if (audio.duration && !isNaN(audio.duration)) {
           audio.currentTime = pct * audio.duration;
         }
+
+        setTimeout(function() { isSeeking = false; }, 150);
       }
 
-      /* Mouse & Touch drag events for scrub control */
       document.addEventListener('mousedown', function(e) {
         var wrap = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
         if (wrap) { 
@@ -1053,6 +1036,7 @@
       document.addEventListener('mouseup', function() { 
         isDragging = false; 
         activeProgressWrap = null; 
+        isSeeking = false;
       });
       
       document.addEventListener('touchstart', function(e) {
@@ -1074,6 +1058,7 @@
       document.addEventListener('touchend', function() { 
         isDragging = false; 
         activeProgressWrap = null; 
+        isSeeking = false;
       });
     }
 
