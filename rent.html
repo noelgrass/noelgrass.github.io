@@ -1003,7 +1003,11 @@
           switchAndPlayTrack(trackId, url, isSuite);
         } else {
           if (audio.duration && !isNaN(audio.duration) && audio.readyState >= 1) {
-            audio.currentTime = pct * audio.duration;
+            try {
+              audio.currentTime = pct * audio.duration;
+            } catch (err) {
+              pendingSeekPct = pct;
+            }
           } else {
             pendingSeekPct = pct;
           }
