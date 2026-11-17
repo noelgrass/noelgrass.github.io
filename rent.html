@@ -816,7 +816,7 @@
     var audio = document.getElementById('mainAudio');
     var currentTrackId = null;
     var isDragging = false;
-    var isSeeking = false; // Flag to prevent timeupdate from resetting progress bar while seeking
+    var isSeeking = false;
     var activeProgressWrap = null;
 
     function stopCurrentTrack() {
@@ -835,23 +835,43 @@
       currentTrackId = null;
     }
 
-    function playTrackOrCue(id, url, isSuite) {
+    function switchAndPlayTrack(id, url, isSuite, callback) {
       if (isSuite) {
-        playCue(id, url);
-      } else {
-        if (currentTrackId === id) {
-          if (audio.paused) { audio.play(); } else { audio.pause(); }
-          return;
+        var suiteCode = id.split('-')[0];
+        var parentSuite = document.getElementById('suite-' + suiteCode);
+        if (parentSuite) parentSuite.classList.add('active');
+
+        document.querySelectorAll('.cue-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
+        
+        if (currentTrackId !== id) {
+          audio.src = url;
+          audio.load();
         }
-        stopCurrentTrack();
         currentTrackId = id;
-        audio.src = url;
-        audio.play().catch(function() {});
+        
+        var btn = document.querySelector('.cue-play[data-cue-id="' + id + '"]');
+        if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
+      } else {
+        document.querySelectorAll('.action-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
+        document.querySelectorAll('.inline-player').forEach(function(p) { p.classList.remove('active'); });
+
+        if (currentTrackId !== id) {
+          audio.src = url;
+          audio.load();
+        }
+        currentTrackId = id;
+
         var mainBtn = document.querySelector('.action-play[data-code="' + id + '"]');
         if (mainBtn) { mainBtn.innerHTML = '❚❚'; mainBtn.classList.add('playing'); }
         var player = document.getElementById('player-' + id);
         if (player) player.classList.add('active');
       }
+
+      audio.play().then(function() {
+        if (typeof callback === 'function') callback();
+      }).catch(function(err) {
+        console.log("Playback error:", err);
+      });
     }
 
     document.addEventListener('click', function (e) {
@@ -885,7 +905,7 @@
             suite.classList.add('active');
             var firstCueBtn = suite.querySelector('.cue-play');
             if (firstCueBtn) {
-              playCue(firstCueBtn.getAttribute('data-cue-id'), firstCueBtn.getAttribute('data-url'));
+              switchAndPlayTrack(firstCueBtn.getAttribute('data-cue-id'), firstCueBtn.getAttribute('data-url'), true);
             }
           }
           mainPlayBtn.innerHTML = '✕';
@@ -907,13 +927,7 @@
         }
 
         stopCurrentTrack();
-        currentTrackId = code;
-        audio.src = url;
-        audio.play().catch(function() {});
-        mainPlayBtn.innerHTML = '❚❚';
-        mainPlayBtn.classList.add('playing');
-        var player = document.getElementById('player-' + code);
-        if (player) player.classList.add('active');
+        switchAndPlayTrack(code, url, false);
         return;
       }
 
@@ -927,27 +941,10 @@
           else { audio.pause(); cuePlayBtn.innerHTML = '▶'; cuePlayBtn.classList.remove('playing'); }
           return;
         }
-        playCue(cueId, cueUrl);
+        switchAndPlayTrack(cueId, cueUrl, true);
         return;
       }
     });
-
-    function playCue(cueId, url) {
-      if (!audio) return;
-      document.querySelectorAll('.cue-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-      
-      if (currentTrackId !== cueId) {
-        audio.src = url;
-        audio.load();
-        audio.play().catch(function() {});
-      } else if (audio.paused) {
-        audio.play().catch(function() {});
-      }
-
-      var btn = document.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
-      if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
-      currentTrackId = cueId;
-    }
 
     var licensingBox = document.querySelector('.licensing-intro');
     if (licensingBox) {
@@ -987,34 +984,29 @@
         var url = wrap.getAttribute('data-url');
         var isSuite = wrap.getAttribute('data-issuite') === 'true';
 
-        isSeeking = true; // Lock out timeupdate resets
-
-        if (currentTrackId !== trackId) {
-          if (isSuite) {
-            var suiteCode = trackId.split('-')[0];
-            var parentSuite = document.getElementById('suite-' + suiteCode);
-            if (parentSuite) parentSuite.classList.add('active');
-            playCue(trackId, url);
-          } else {
-            playTrackOrCue(trackId, url, false);
-            var player = document.getElementById('player-' + trackId);
-            if (player) player.classList.add('active');
-          }
-        }
-
         var rect = wrap.getBoundingClientRect();
         var clientX = e.touches ? e.touches[0].clientX : e.clientX;
         var clickX = clientX - rect.left;
         var pct = Math.max(0, Math.min(1, clickX / rect.width));
-        
+
+        isSeeking = true;
+
         var bar = wrap.querySelector('.player-progress-bar') || wrap.querySelector('.cue-progress-bar');
         if (bar) bar.style.width = (pct * 100) + '%';
-        
-        if (audio.duration && !isNaN(audio.duration)) {
-          audio.currentTime = pct * audio.duration;
-        }
 
-        setTimeout(function() { isSeeking = false; }, 150);
+        if (currentTrackId !== trackId) {
+          switchAndPlayTrack(trackId, url, isSuite, function() {
+            if (audio.duration && !isNaN(audio.duration)) {
+              audio.currentTime = pct * audio.duration;
+            }
+            setTimeout(function() { isSeeking = false; }, 250);
+          });
+        } else {
+          if (audio.duration && !isNaN(audio.duration)) {
+            audio.currentTime = pct * audio.duration;
+          }
+          setTimeout(function() { isSeeking = false; }, 150);
+        }
       }
 
       document.addEventListener('mousedown', function(e) {
