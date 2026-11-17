@@ -849,32 +849,26 @@
 
 <!-- 
   ═══════════════════════════════════════════════════════════════
-  🎬 EXPLAINER: RENT JINGLES PAGE ARCHITECTURE
+  🎬 ARCHITECTURE EXPLAINER: RENT JINGLES PAGE
   
-  1. MAINTENANCE & NAVIGATION
-     - Maintenance block script (checks API for page blocks).
-     - Top navigation (Wordmark + Hamburger Menu).
-     - Full-screen menu panel (Opens with hamburger).
-     
-  2. MAIN PAGE CONTENT
-     - Header, hero, intro copy, back links.
-     - #jingles-container: Displays the category rows.
-     
-  3. MODALS (FIXED OVERLAYS)
-     - Category Modal (NEW): Opened by clicking a category row. 
-       Contains a live search bar, duration filter chips, 
-       pagination controls, and the full list of tracks.
-     - Checkout Modal: Single item checkout prompt.
-     - Success Modal: Post-payment download link & instructions.
-     - Cart Modal: Floating cart summary & multi-item checkout.
-     
-  4. SCRIPT LOGIC
-     - Menu toggling & accessibility.
-     - API Data Fetching (Categories + Jingles).
-     - Search, Filter (OR logic), & Pagination Logic.
-     - Audio Playback Logic (Play, Pause, Seek, Volume).
-     - Cart Logic (Add, Remove, Checkout).
-     - Recovery Logic (Paystack reference lookup).
+  This file serves as the public storefront page for licensing original
+  commercial jingles and brand tracks from Noel Grass's catalogue.
+  
+  CORE SYSTEMS INCLUDED:
+  1. Maintenance & Safety Check: Dynamically pings the admin API on page load
+     to verify if the page has been restricted or blocked.
+  2. Responsive Navigation & Overlay Menu: Fully accessible slide-over menu
+     with focus trapping and animated SVG hamburger toggle.
+  3. Dynamic Catalogue Fetching: Pulls categories and jingles asynchronously
+     from the Cloudflare D1 database (`master-brain` worker API).
+  4. Interactive Category Modal: Clicking a category row opens a modal 
+     featuring live search, duration filtering chips, pagination, and 
+     a "Load All" toggle.
+  5. Audio Preview Engine: Custom HTML5 audio player supporting play/pause, 
+     scrubbing/seeking, volume adjustment, and cleanup handling.
+  6. E-Commerce & Checkout Flow: Integrates Paystack checkout initialization, 
+     modal-based single item purchasing, a persistent shopping cart system, 
+     and digital delivery recovery via purchase reference numbers.
   ═══════════════════════════════════════════════════════════════
 -->
 
@@ -1107,7 +1101,15 @@
 <audio id="mainAudio"></audio>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🧭 SCRIPT 1 — MENU + ACCORDION + AUDIO
+     🧭 SCRIPT 1 — NAVIGATION, ACCORDION & AUDIO STREAMING ENGINE
+     
+     EXPLAINER:
+     - Handles mobile menu open/close states and body scroll locking.
+     - Fetches categories and jingle records asynchronously from the API.
+     - Populates category modal containers and handles live filtering/pagination.
+     - Controls HTML5 audio playback (`#mainAudio`), streaming byte-ranges 
+       directly from Cloudflare R2 via the worker backend to ensure 
+       smooth seeking and scrub progress bar behavior without resetting to 0.
      ═══════════════════════════════════════════════════════════════ -->
 <script>
   (function () {
@@ -1324,7 +1326,6 @@
                         t.desc.toLowerCase().includes(q);
 
         var chipMatch = activeFilters.length === 0 || activeFilters.some(function(filter) {
-          // Simple duration matching
           return t.duration.includes(filter);
         });
 
@@ -1400,7 +1401,6 @@
       if (!activeCategory) return;
       var tracks = TRACKS.filter(function (t) { return t.cat === activeCategory; });
       
-      // Extracting unique durations (e.g., 0:30, 1:00)
       var durations = [];
       tracks.forEach(function(t) {
         if (t.duration && durations.indexOf(t.duration) === -1) {
@@ -1857,7 +1857,6 @@
 </script>
 
 <script>
-  // Check if the user is returning from a successful payment
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('vault') === '1') {
     const ref = urlParams.get('ref');
@@ -1889,7 +1888,13 @@
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     🛒 SCRIPT 4 — CART SYSTEM (NEW)
+     🛒 SCRIPT 2 — SHOPPING CART & MULTI-ITEM CHECKOUT ENGINE
+     
+     EXPLAINER:
+     - Manages local storage cart persistence (`noelgrass_cart`).
+     - Renders floating cart badge and slide-out cart modal.
+     - Handles dynamic quantity increments/decrements.
+     - Initiates Paystack multi-item or cart checkout requests.
      ═══════════════════════════════════════════════════════════════ -->
 <style>
   @keyframes cartGlow {
