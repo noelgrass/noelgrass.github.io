@@ -821,6 +821,112 @@
     .menu-toggle::after { left: 30px; }
     .menu-link { font-size: 1.2em; letter-spacing: 0.18em; }
   }
+
+  /* =========================================
+     ELEGANT SUCCESS MODAL (matches Join page)
+     ========================================= */
+  #contactSuccessModal { display: none !important; }
+
+  .eg-modal-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.85);
+    background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    pointer-events: none;
+  }
+  .eg-modal-overlay.open { opacity: 1; pointer-events: auto; }
+
+  .eg-modal-panel {
+    position: relative;
+    width: 100%; max-width: 440px;
+    padding: 56px 40px 44px;
+    background: #000;
+    border-top: 1px solid var(--gold-dim);
+    border-bottom: 1px solid var(--gold-dim);
+    text-align: center;
+    box-shadow: 0 40px 90px rgba(0,0,0,0.85), 0 0 80px rgba(197,168,128,0.10);
+    transform: translateY(10px) scale(0.985);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .eg-modal-overlay.open .eg-modal-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+  .eg-modal-overline {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 18px;
+  }
+  .eg-modal-rule {
+    display: block;
+    width: 60px; height: 1px;
+    margin: 0 auto 24px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: center;
+  }
+  .eg-modal-overlay.open .eg-modal-rule {
+    animation: egRuleDraw 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards;
+  }
+  @keyframes egRuleDraw { to { transform: scaleX(1); } }
+
+  .eg-modal-text {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.75em;
+    line-height: 1.55;
+    letter-spacing: 0.06em;
+    color: var(--gold-pale);
+    margin-bottom: 36px;
+  }
+
+  .eg-modal-close {
+    background: transparent; border: 0; cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.78em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 10px 8px;
+    display: inline-flex; align-items: center; gap: 14px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .eg-modal-close:hover {
+    color: #FCFCF7;
+    letter-spacing: 0.45em;
+    text-shadow: 0 0 20px rgba(197,168,128,0.7), 0 0 45px rgba(197,168,128,0.3);
+  }
+  .eg-modal-close .eg-x {
+    display: inline-block; width: 15px; height: 15px;
+    position: relative; transition: transform 0.4s ease;
+  }
+  .eg-modal-close:hover .eg-x { transform: rotate(90deg); }
+  .eg-modal-close .eg-x::before,
+  .eg-modal-close .eg-x::after {
+    content: ''; position: absolute; top: 50%; left: 0; right: 0;
+    height: 1.5px; background: currentColor; transform-origin: center;
+  }
+  .eg-modal-close .eg-x::before { transform: rotate(45deg); }
+  .eg-modal-close .eg-x::after  { transform: rotate(-45deg); }
+
+  body.eg-modal-lock { overflow: hidden; }
+
+  @media (max-width: 480px) {
+    .eg-modal-panel { padding: 44px 26px 34px; }
+    .eg-modal-text  { font-size: 1.4em; letter-spacing: 0.04em; margin-bottom: 28px; }
+    .eg-modal-close { letter-spacing: 0.32em; gap: 10px; }
+  }
 </style>
 </head>
 <body>
@@ -1152,6 +1258,100 @@
         }
       });
     }
+
+    /* =========================================
+       ELEGANT SUCCESS MODAL (matches Join page)
+       Watches the old #contactSuccessModal and
+       swaps in the elegant one on success.
+       ========================================= */
+    (function () {
+      var origModal = document.getElementById('contactSuccessModal');
+      if (!origModal) return;
+
+      var overlay = document.createElement('div');
+      overlay.className = 'eg-modal-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'egModalText');
+      overlay.hidden = true;
+      overlay.innerHTML =
+        '<div class="eg-modal-panel" role="document">' +
+          '<span class="eg-modal-overline">Message Received</span>' +
+          '<span class="eg-modal-rule" aria-hidden="true"></span>' +
+          '<p id="egModalText" class="eg-modal-text">Thank you. Your message has been received. I will be in touch shortly.</p>' +
+          '<button type="button" class="eg-modal-close" aria-label="Close dialog">Close <span class="eg-x" aria-hidden="true"></span></button>' +
+        '</div>';
+      document.body.appendChild(overlay);
+
+      var egClose = overlay.querySelector('.eg-modal-close');
+      var lastFocus = null;
+      var isOpen = false;
+
+      function lockScrollEg() {
+        var sw = window.innerWidth - document.documentElement.clientWidth;
+        document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+        document.body.style.paddingRight = sw + 'px';
+        document.body.classList.add('eg-modal-lock');
+      }
+      function unlockScrollEg() {
+        document.body.classList.remove('eg-modal-lock');
+        document.body.style.paddingRight = '';
+        document.documentElement.style.removeProperty('--scrollbar-width');
+      }
+      function openEg() {
+        if (isOpen) return;
+        isOpen = true;
+        lastFocus = document.activeElement;
+        overlay.hidden = false;
+        void overlay.offsetWidth;
+        overlay.classList.add('open');
+        lockScrollEg();
+        setTimeout(function () { egClose.focus(); }, 60);
+      }
+      function closeEg() {
+        if (!isOpen) return;
+        isOpen = false;
+        overlay.classList.remove('open');
+        var done = function () {
+          overlay.hidden = true;
+          overlay.removeEventListener('transitionend', done);
+        };
+        overlay.addEventListener('transitionend', done);
+        setTimeout(function () { if (!overlay.classList.contains('open')) overlay.hidden = true; }, 700);
+        unlockScrollEg();
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+        lastFocus = null;
+      }
+
+      egClose.addEventListener('click', closeEg);
+      overlay.addEventListener('click', function (e) { if (e.target === overlay) closeEg(); });
+      document.addEventListener('keydown', function (e) {
+        if (!isOpen) return;
+        if (e.key === 'Escape') { e.preventDefault(); closeEg(); return; }
+        if (e.key === 'Tab') {
+          var f = overlay.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+          if (!f.length) return;
+          var first = f[0], last = f[f.length - 1];
+          if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+          else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      });
+
+      /* Watch the legacy modal — when the form success handler sets
+         display:flex, hide it immediately and open the elegant one. */
+      var obs = new MutationObserver(function () {
+        if (origModal.style.display === 'flex') {
+          origModal.style.display = 'none';
+          openEg();
+        }
+      });
+      obs.observe(origModal, { attributes: true, attributeFilter: ['style'] });
+
+      if (origModal.style.display === 'flex') {
+        origModal.style.display = 'none';
+        openEg();
+      }
+    })();
   })();
 </script>
 
