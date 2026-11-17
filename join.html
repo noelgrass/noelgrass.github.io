@@ -165,18 +165,15 @@
   .opening-letter strong { color: var(--gold-pale); font-weight: 600; }
 
   /* =========================================
-     CUSTOM FORM STYLES (Replaced Kit)
-     This handles the look of the Name/Email inputs
+     CUSTOM FORM STYLES
      ========================================= */
   .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
   .custom-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
-  
-  /* The input boxes */
+
   .custom-input { width: 100%; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; font-size: 1em; padding: 16px 18px; border-radius: 0; transition: border-color 0.3s ease, background 0.3s ease; outline: none; line-height: 1.5; }
   .custom-input:focus { border-color: var(--gold-soft); background: rgba(197, 168, 128, 0.03); }
   .custom-input::placeholder { color: var(--muted); font-style: italic; opacity: 1; }
-  
-  /* The submit button */
+
   .custom-submit { background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.3em; text-transform: uppercase; padding: 18px 40px; cursor: pointer; border-radius: 0; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease; text-align: center; display: block; }
   .custom-submit:hover:not(:disabled) { color: #FCFCF7; border-color: var(--gold); background: rgba(197, 168, 128, 0.06); letter-spacing: 0.38em; }
   .custom-submit:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -188,6 +185,118 @@
   .footer-location a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.3s ease, border-color 0.3s ease; }
   .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
   .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
+
+  /* =========================================
+     CONFIRM STEP + ELEGANT MODAL
+     ========================================= */
+  .confirm-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 0.98em;
+    line-height: 1.6;
+    color: var(--muted);
+    text-align: center;
+    margin: -4px 0 4px;
+    animation: fadeUp 0.5s ease-out both;
+  }
+  .confirm-line strong { color: var(--gold-pale); font-style: normal; font-weight: 600; }
+
+  .custom-submit.armed {
+    border-color: var(--gold);
+    color: #FCFCF7;
+    background: rgba(197, 168, 128, 0.06);
+    letter-spacing: 0.38em;
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.85);
+    background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%);
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .modal-overlay.open { opacity: 1; }
+
+  .modal-panel {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    padding: 56px 40px 44px;
+    background: #000;
+    border-top: 1px solid var(--gold-dim);
+    border-bottom: 1px solid var(--gold-dim);
+    text-align: center;
+    box-shadow: 0 40px 90px rgba(0,0,0,0.85), 0 0 80px rgba(197,168,128,0.10);
+    transform: translateY(10px) scale(0.985);
+    opacity: 0;
+    transition: transform 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1);
+  }
+  .modal-overlay.open .modal-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+  .modal-overline {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 18px;
+  }
+  .modal-rule {
+    display: block;
+    width: 60px; height: 1px;
+    margin: 0 auto 24px;
+    background: var(--gold);
+    transform: scaleX(0); transform-origin: center;
+  }
+  .modal-overlay.open .modal-rule { animation: modalRuleDraw 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s forwards; }
+  @keyframes modalRuleDraw { to { transform: scaleX(1); } }
+
+  .modal-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    font-size: 1.9em;
+    letter-spacing: 0.12em;
+    color: var(--gold-pale);
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
+  .modal-body {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1em;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 36px;
+  }
+  .modal-body strong { color: var(--gold-pale); font-style: normal; font-weight: 600; }
+
+  .modal-close {
+    background: transparent; border: 0; cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.78em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    padding: 10px 8px;
+    display: inline-flex; align-items: center; gap: 14px;
+    transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .modal-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197,168,128,0.7), 0 0 45px rgba(197,168,128,0.3); }
+  .modal-close .x { display: inline-block; width: 15px; height: 15px; position: relative; transition: transform 0.4s ease; }
+  .modal-close:hover .x { transform: rotate(90deg); }
+  .modal-close .x::before, .modal-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 1.5px; background: currentColor; transform-origin: center; }
+  .modal-close .x::before { transform: rotate(45deg); }
+  .modal-close .x::after { transform: rotate(-45deg); }
+
+  body.modal-lock { overflow: hidden; }
 
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
@@ -213,6 +322,13 @@
     .signature { margin-top: 50px; }
     .signature-logo { height: 55px; }
     .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
+  }
+
+  @media (max-width: 480px) {
+    .modal-panel { padding: 44px 26px 34px; }
+    .modal-title { font-size: 1.5em; letter-spacing: 0.08em; }
+    .modal-body { font-size: 0.95em; margin-bottom: 28px; }
+    .modal-close { letter-spacing: 0.32em; gap: 10px; }
   }
 
   @media (max-width: 380px) {
@@ -288,21 +404,20 @@
     </div>
 
     <!-- =========================================
-         THE FORM (This is where they enter Name & Email)
+         THE FORM (two-step: arm → confirm)
          ========================================= -->
     <div class="custom-form-wrap">
-      <form id="joinForm" class="custom-form">
-        <!-- 1. Name Input -->
-        <input type="text" id="name" name="name" required placeholder="Your Name" class="custom-input">
-        
-        <!-- 2. Email Input -->
-        <input type="email" id="email" name="email" required placeholder="Your Email" class="custom-input">
-        
-        <!-- 3. Submit Button -->
+      <form id="joinForm" class="custom-form" novalidate>
+        <input type="text" id="name" name="name" required placeholder="Your Name" class="custom-input" autocomplete="name">
+        <input type="email" id="email" name="email" required placeholder="Your Email" class="custom-input" autocomplete="email">
+
+        <p id="confirmLine" class="confirm-line" aria-live="polite" hidden>
+          Is this correct? <strong id="confirmEmail"></strong>
+        </p>
+
         <button type="submit" id="submitBtn" class="custom-submit">Join the Dream</button>
       </form>
-      
-      <!-- This div is hidden by default. It only shows if there is an error (e.g. Network down) -->
+
       <div id="formMessage" style="margin-top: 20px; font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.05em; display: none;"></div>
     </div>
 
@@ -320,19 +435,20 @@
 </div>
 
 <!-- =========================================
-     SUCCESS MODAL (Pops up when they join)
+     SUCCESS MODAL (elegant)
      ========================================= -->
-<div id="confirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
-  <div style="background:#000000; border:1px solid #B9975C; padding:40px; max-width:420px; text-align:center; margin:20px; box-shadow: 0 0 40px rgba(197,168,128,0.15);">
-    
-    <p style="font-family:'Playfair Display', Georgia, serif; color:#E8D5B5; font-size:1.1em; line-height:1.8; margin-bottom: 30px;">
-      Thank you for joining the dream. You are now a Daydreamer.
+<div id="confirmModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalBody" hidden>
+  <div class="modal-panel" role="document">
+    <span class="modal-overline">Daydreamer</span>
+    <span class="modal-rule" aria-hidden="true"></span>
+    <h2 id="modalTitle" class="modal-title">Welcome to the dream.</h2>
+    <p id="modalBody" class="modal-body">
+      We've sent a welcome to <strong id="modalEmail"></strong>.<br>
+      One more step and the Vault is yours.
     </p>
-    
-    <button id="closeModalBtn" style="background:transparent; border:1px solid #B9975C; color:#E8D5B5; padding:14px 40px; font-family:'Montserrat', sans-serif; font-size:0.8em; letter-spacing:0.2em; text-transform:uppercase; cursor:pointer; transition: all 0.3s ease;">
-      Close
+    <button id="closeModalBtn" class="modal-close" type="button" aria-label="Close dialog">
+      Close <span class="x" aria-hidden="true"></span>
     </button>
-
   </div>
 </div>
 
@@ -389,67 +505,175 @@
 
 
     // =========================================
-    // 2. FORM SUBMISSION LOGIC (The important part)
+    // 2. FORM SUBMISSION LOGIC (two-step: arm → confirm)
     // =========================================
-    var form = document.getElementById('joinForm');
-    var submitBtn = document.getElementById('submitBtn');
-    var formMessage = document.getElementById('formMessage');
-    var modal = document.getElementById('confirmModal');
-    var closeModalBtn = document.getElementById('closeModalBtn');
+    var form         = document.getElementById('joinForm');
+    var submitBtn    = document.getElementById('submitBtn');
+    var formMessage  = document.getElementById('formMessage');
+    var modal        = document.getElementById('confirmModal');
+    var closeModalBtn= document.getElementById('closeModalBtn');
+    var nameInput    = document.getElementById('name');
+    var emailInput   = document.getElementById('email');
+    var confirmLine  = document.getElementById('confirmLine');
+    var confirmEmail = document.getElementById('confirmEmail');
+    var modalEmail   = document.getElementById('modalEmail');
 
-    // Close modal logic
-    if (closeModalBtn) {
-      closeModalBtn.addEventListener('click', function() {
-        modal.style.display = 'none';
-      });
-      modal.addEventListener('click', function(e) {
-        if (e.target === this) modal.style.display = 'none';
-      });
+    var armed = false;
+    var lastFocused = null;
+    var modalLocked = false;
+
+    function lockModalScroll() {
+      if (modalLocked) return;
+      var sw = window.innerWidth - document.documentElement.clientWidth;
+      document.documentElement.style.setProperty('--scrollbar-width', sw + 'px');
+      document.body.style.paddingRight = sw + 'px';
+      document.body.classList.add('modal-lock');
+      modalLocked = true;
+    }
+    function unlockModalScroll() {
+      if (!modalLocked) return;
+      document.documentElement.style.removeProperty('--scrollbar-width');
+      document.body.style.paddingRight = '';
+      document.body.classList.remove('modal-lock');
+      modalLocked = false;
     }
 
-    // Listen for the user clicking "Join the Dream"
-    if (form) {
-      form.addEventListener('submit', async function(e) {
-        e.preventDefault(); // Stop the page from reloading
-        
-        // Grab what they typed
-        var name = document.getElementById('name').value;
-        var email = document.getElementById('email').value;
+    function resetArmed() {
+      if (!armed) return;
+      armed = false;
+      submitBtn.textContent = 'Join the Dream';
+      submitBtn.classList.remove('armed');
+      confirmLine.hidden = true;
+      confirmEmail.textContent = '';
+    }
 
-        // Change button text so they know it's working
+    function armSubmit() {
+      armed = true;
+      confirmEmail.textContent = emailInput.value.trim();
+      confirmLine.hidden = false;
+      submitBtn.textContent = 'Confirm & Join';
+      submitBtn.classList.add('armed');
+      submitBtn.focus();
+    }
+
+    function openModal(email) {
+      modalEmail.textContent = email;
+      lastFocused = document.activeElement;
+      modal.hidden = false;
+      void modal.offsetWidth; // force reflow so the transition runs
+      modal.classList.add('open');
+      lockModalScroll();
+      window.setTimeout(function () { closeModalBtn.focus(); }, 60);
+    }
+
+    function closeModal() {
+      if (!modal.classList.contains('open')) return;
+      modal.classList.remove('open');
+      var onEnd = function () {
+        modal.hidden = true;
+        modal.removeEventListener('transitionend', onEnd);
+      };
+      modal.addEventListener('transitionend', onEnd);
+      // Fallback if transitionend doesn't fire
+      window.setTimeout(function () { if (!modal.classList.contains('open')) modal.hidden = true; }, 700);
+      unlockModalScroll();
+      if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus();
+      lastFocused = null;
+    }
+
+    // Focus trap while modal open
+    document.addEventListener('keydown', function (e) {
+      if (!modal.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+      if (e.key === 'Tab') {
+        var focusable = modal.querySelectorAll('button, [href], input, [tabindex]:not([tabindex="-1"])');
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last  = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+
+    // Close on overlay click
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeModal();
+    });
+    if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+    // Re-arm on edit: any change to name/email drops the confirm state
+    [nameInput, emailInput].forEach(function (el) {
+      el.addEventListener('input', function () {
+        resetArmed();
+        formMessage.style.display = 'none';
+      });
+    });
+
+    if (form) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Step 1: arm
+        if (!armed) {
+          if (!nameInput.value.trim() || !emailInput.value.trim()) {
+            formMessage.style.display = 'block';
+            formMessage.style.color = 'var(--muted)';
+            formMessage.textContent = 'Please enter your name and email.';
+            return;
+          }
+          if (emailInput.validity && !emailInput.validity.valid) {
+            formMessage.style.display = 'block';
+            formMessage.style.color = 'var(--muted)';
+            formMessage.textContent = 'That email address doesn\u2019t look quite right.';
+            return;
+          }
+          formMessage.style.display = 'none';
+          armSubmit();
+          return;
+        }
+
+        // Step 2: confirm — fire the request
+        var name  = nameInput.value.trim();
+        var email = emailInput.value.trim();
+
         submitBtn.disabled = true;
-        submitBtn.textContent = "Joining...";
+        submitBtn.textContent = 'Joining\u2026';
         formMessage.style.display = 'none';
 
         try {
-          // Send the data to your master-brain Worker
+          var controller = new AbortController();
+          var timeout = window.setTimeout(function () { controller.abort(); }, 15000);
+
           var response = await fetch('https://master-brain.noelgrass.workers.dev/api/join', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: name, email: email })
+            body: JSON.stringify({ name: name, email: email }),
+            signal: controller.signal
           });
+          window.clearTimeout(timeout);
 
-          var data = await response.json();
+          var data = await response.json().catch(function () { return {}; });
 
           if (response.ok) {
-            // Success! Show the custom modal
-            modal.style.display = 'flex';
-            form.reset(); // Clear the form
+            resetArmed();
+            form.reset();
+            openModal(email);
           } else {
-            // Error (e.g. "Email already subscribed")
             formMessage.style.display = 'block';
-            formMessage.style.color = "#ff4444";
-            formMessage.textContent = data.error || "Something went wrong. Please try again.";
+            formMessage.style.color = 'var(--gold-soft)';
+            formMessage.textContent = data.error || 'Something went wrong. Please try again.';
+            // Keep armed state so they can retry with one click
+            submitBtn.textContent = 'Confirm & Join';
           }
         } catch (err) {
-          // Network error (e.g. offline)
           formMessage.style.display = 'block';
-          formMessage.style.color = "#ff4444";
-          formMessage.textContent = "Network error. Please check your connection.";
+          formMessage.style.color = 'var(--gold-soft)';
+          formMessage.textContent = (err && err.name === 'AbortError')
+            ? 'The request timed out. Please try again.'
+            : 'Network error. Please check your connection.';
+          submitBtn.textContent = 'Confirm & Join';
         } finally {
-          // Reset the button back to normal
           submitBtn.disabled = false;
-          submitBtn.textContent = "Join the Dream";
         }
       });
     }
