@@ -27,9 +27,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🤖 STRUCTURED DATA — Connected Entity Graph
-     ═══════════════════════════════════════════════════════════════ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -46,39 +43,6 @@
 }
 </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "@id": "https://noelgrass.com/rent#breadcrumb",
-  "itemListElement": [
-    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://noelgrass.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Rent / License", "item": "https://noelgrass.com/rent" }
-  ]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Service",
-  "@id": "https://noelgrass.com/rent#service",
-  "name": "Music Licensing for Film & TV",
-  "serviceType": "Music Licensing",
-  "category": "Stock Music Library",
-  "url": "https://noelgrass.com/rent",
-  "description": "Pre-cleared licensing for film production companies in Kenya and African filmmakers. Film scores, cinematic cues, and commercial jingles licensed per track for synchronization in film, TV, streaming, and brand campaigns.",
-  "provider": { "@id": "https://noelgrass.com/#person" },
-  "areaServed": [
-    { "@type": "City", "name": "Nairobi" },
-    { "@type": "Country", "name": "Kenya" },
-    { "@type": "Place", "name": "East Africa" },
-    { "@type": "Place", "name": "Africa" },
-    { "@type": "Place", "name": "Worldwide" }
-  ]
-}
-</script>
-
 <style>
   :root {
     --bg: #000000; --gold: #C5A880; --gold-soft: #B9975C; --gold-pale: #E8D5B5;
@@ -91,6 +55,7 @@
   html.menu-lock { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
   html, body { color: var(--offwhite); scroll-behavior: smooth; }
   body { background: var(--bg); font-family: 'Playfair Display', Georgia, serif; font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body.no-scroll { overflow: hidden; }
   a { color: var(--gold); text-decoration: none; transition: color 0.25s ease; }
   a:hover { color: #FCFCF7; }
 
@@ -101,10 +66,6 @@
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
   @keyframes licensingPulse { 0% { box-shadow: 0 0 8px 1px rgba(197,168,128,0.08), 0 0 18px 2px rgba(197,168,128,0.03); } 50% { box-shadow: 0 0 12px 2px rgba(197,168,128,0.14), 0 0 24px 4px rgba(197,168,128,0.05); } 100% { box-shadow: 0 0 8px 1px rgba(197,168,128,0.08), 0 0 18px 2px rgba(197,168,128,0.03); } }
   @keyframes licensingPulseHover { 0% { box-shadow: 0 0 10px 1px rgba(197,168,128,0.14), 0 0 22px 3px rgba(197,168,128,0.05); } 50% { box-shadow: 0 0 16px 3px rgba(197,168,128,0.22), 0 0 32px 6px rgba(197,168,128,0.08); } 100% { box-shadow: 0 0 10px 1px rgba(197,168,128,0.14), 0 0 22px 3px rgba(197,168,128,0.05); } }
-
-  @media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-  }
 
   .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
   .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; }
@@ -117,50 +78,25 @@
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
-  .menu-toggle::after { content: ''; position: absolute; left: 34px; right: 4px; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; transition: transform 0.4s ease; }
-  .menu-toggle:hover::after { transform: scaleX(1); transform-origin: left center; }
 
   .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
-  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
-  body.menu-open .licensing-intro { animation-play-state: paused; }
+  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; }
 
-  .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
+  .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; }
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
   .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
   .menu-top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
   .menu-heading { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: inline-flex; align-items: center; gap: 20px; opacity: 0; }
   .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s forwards; }
-  .menu-heading::after { content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
-  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; }
-  .menu-close { background: transparent; border: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px; transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease; opacity: 0; -webkit-tap-highlight-color: transparent; }
+  .menu-close { background: transparent; border: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px; opacity: 0; }
   .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards; }
-  .menu-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197,168,128,0.7), 0 0 45px rgba(197,168,128,0.3); }
-  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; transition: transform 0.4s ease; }
-  .menu-close:hover .x { transform: rotate(90deg); }
-  .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
-  .menu-close .x::before { transform: rotate(45deg); }
-  .menu-close .x::after { transform: rotate(-45deg); }
   .menu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; justify-content: center; align-items: start; text-align: center; max-width: 900px; width: 100%; }
   .menu-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
-  .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 0; }
-  .menu-item { position: relative; opacity: 0; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.72s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.84s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.96s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.08s forwards; }
-  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.20s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.82s forwards; }
-  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.94s forwards; }
-  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
-  .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
-  .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
-  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
-  .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
+  .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; }
+  .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 0; }
+  .menu-link { display: inline-block; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0; transition: color 0.6s ease; }
+  .menu-link:hover { color: #FCFCF7; }
+  .menu-link.current { color: var(--gold-dim); pointer-events: none; }
   .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
@@ -168,307 +104,78 @@
   .page { max-width: 900px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-
   .section-banner { font-family: 'Montserrat', sans-serif; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 40px; animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
 
-  .licensing-intro { display: block; text-align: left; margin: 0 auto 60px; max-width: 720px; padding: 0; border: 1px solid var(--gold-soft); background: rgba(197,168,128,0.02); animation: fadeUp 1s ease-out both, licensingPulse 6s ease-in-out infinite; animation-delay: 0.7s, 1.7s; transition: border-color 0.4s ease, background 0.4s ease; }
-  .licensing-intro:hover { border-color: var(--gold); background: rgba(197,168,128,0.04); animation: fadeUp 1s ease-out both, licensingPulseHover 6s ease-in-out infinite; animation-delay: 0.7s, 0s; }
+  .licensing-intro { display: block; text-align: left; margin: 0 auto 60px; max-width: 720px; padding: 0; border: 1px solid var(--gold-soft); background: rgba(197,168,128,0.02); animation: fadeUp 1s ease-out both, licensingPulse 6s ease-in-out infinite; }
   .licensing-intro > summary { list-style: none; cursor: pointer; padding: 42px 44px 30px; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "eyebrow toggle" "headline headline" "leadpara leadpara"; gap: 0 24px; align-items: start; }
   .licensing-intro > summary::-webkit-details-marker { display: none; }
-  .licensing-intro > summary::marker { content: ''; }
-  .licensing-intro .intro-eyebrow { grid-area: eyebrow; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 18px; align-self: center; }
-  .licensing-intro .intro-headline { grid-area: headline; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-style: italic; font-size: 1.5em; color: var(--gold); letter-spacing: 0.02em; line-height: 1.4; display: block; margin-bottom: 22px; transition: color 0.3s ease; }
-  .licensing-intro:hover .intro-headline { color: #FCFCF7; }
+  .licensing-intro .intro-eyebrow { grid-area: eyebrow; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 18px; }
+  .licensing-intro .intro-headline { grid-area: headline; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-style: italic; font-size: 1.5em; color: var(--gold); line-height: 1.4; display: block; margin-bottom: 22px; }
   .licensing-intro .intro-lead { grid-area: leadpara; font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; line-height: 1.85; color: var(--offwhite); margin: 0; display: block; }
-  .licensing-intro .intro-lead strong { color: var(--gold-pale); font-weight: 600; }
-  .open-notice { display: block; margin-top: 20px; font-family: 'Montserrat', sans-serif; font-size: 0.72em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); transition: opacity 0.3s ease; }
+  .open-notice { display: block; margin-top: 20px; font-family: 'Montserrat', sans-serif; font-size: 0.72em; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); }
   .licensing-intro[open] .open-notice { display: none; }
-  .licensing-toggle-icon { grid-area: toggle; display: inline-flex; align-items: center; justify-content: center; width: 14px; height: 9px; flex-shrink: 0; position: relative; margin-top: 6px; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1); }
-  .licensing-toggle-icon::before { content: ''; display: block; width: 10px; height: 10px; border-right: 1.5px solid var(--gold-soft); border-bottom: 1.5px solid var(--gold-soft); transform: rotate(45deg) translate(-1px, -1px); transition: border-color 0.3s ease; }
-  .licensing-toggle-icon::after { content: none; }
+  .licensing-toggle-icon { grid-area: toggle; width: 14px; height: 9px; position: relative; margin-top: 6px; transition: transform 0.45s ease; }
+  .licensing-toggle-icon::before { content: ''; display: block; width: 10px; height: 10px; border-right: 1.5px solid var(--gold-soft); border-bottom: 1.5px solid var(--gold-soft); transform: rotate(45deg); }
   .licensing-intro[open] .licensing-toggle-icon { transform: rotate(180deg); }
-  .licensing-intro:hover .licensing-toggle-icon::before { border-color: var(--gold); }
   .licensing-content { padding: 0 44px 50px; }
   .licensing-content .divider { display: block; width: 40px; height: 1px; background: var(--gold-soft); opacity: 0.5; margin: 0 0 32px; }
-  .licensing-content .mini-heading { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 14px; }
-  .licensing-content p { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; line-height: 1.85; color: var(--offwhite); margin: 0 0 20px; }
-  .licensing-content p:last-of-type { margin-bottom: 0; }
-  .licensing-content strong { color: var(--gold-pale); font-weight: 600; }
+  .licensing-content .mini-heading { font-family: 'Montserrat', sans-serif; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 14px; }
   .licensing-list { list-style: none; padding: 0; margin: 0 0 26px; }
-  .licensing-list li { font-family: 'Playfair Display', Georgia, serif; font-size: 1em; line-height: 1.75; color: var(--offwhite); padding: 6px 0 6px 22px; position: relative; }
-  .licensing-list li::before { content: '—'; color: var(--gold); position: absolute; left: 0; font-family: 'Cormorant Garamond', Georgia, serif; }
-  .licensing-steps { counter-reset: step; list-style: none; padding: 0; margin: 0 0 26px; }
-  .licensing-steps li { font-family: 'Playfair Display', Georgia, serif; font-size: 1em; line-height: 1.75; color: var(--offwhite); padding: 8px 0 8px 36px; position: relative; counter-increment: step; }
-  .licensing-steps li::before { content: counter(step) "."; color: var(--gold-soft); position: absolute; left: 0; font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.1em; font-weight: 500; }
-  .licensing-content .intro-cta { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; margin-top: 8px; transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
-  .licensing-content .intro-cta:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
-  .commission-link { display: block; margin-top: 36px; padding-top: 28px; border-top: 1px solid rgba(197,168,128,0.25); }
-  .commission-link p { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.7; color: var(--offwhite); margin: 0 0 12px; }
-  .commission-link a { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
-  .commission-link a:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
+  .licensing-list li { font-size: 1em; line-height: 1.75; padding: 6px 0 6px 22px; position: relative; }
+  .licensing-list li::before { content: '—'; color: var(--gold); position: absolute; left: 0; }
 
-  .section { text-align: left; margin-bottom: 90px; scroll-margin-top: 120px; }
+  .section { text-align: left; margin-bottom: 90px; }
   .section-heading { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.6em; color: var(--offwhite); letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--gold-soft); }
   .section-poetic { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); margin-bottom: 20px; }
 
-  .hub-category { margin-bottom: 50px; }
-  .hub-category-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 10px; margin-bottom: 10px; }
-  .hub-category-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.3em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--offwhite); }
-  .hub-category-meta { display: flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-  .hub-category-link { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; letter-spacing: 0; text-transform: none; color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.4); padding-bottom: 1px; transition: color 0.3s ease, border-color 0.3s ease; }
-  .hub-category-link:hover { color: #FCFCF7; border-bottom-color: var(--gold); }
+  /* Shelves & Category Browser Modal Styles */
+  .shelves { text-align: left; margin-top: 20px; }
+  .shelf { border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
+  .shelf-row { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 28px 0 20px; border-bottom: 1px solid var(--rule); cursor: pointer; }
+  .shelf-label { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.15em; text-transform: uppercase; }
+  .shelf-count { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
+  .shelf-indicator { display: inline-block; width: 8px; height: 8px; margin-right: 14px; border-right: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); transform: rotate(-45deg) translateY(-2px); vertical-align: middle; }
 
-  .view-all-btn { display: inline-block; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-pale); background: transparent; border: 1px solid var(--gold-soft); padding: 16px 32px; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease; }
-  .view-all-btn:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 22px rgba(197,168,128,0.30); transform: translateY(-1px); }
+  .cat-modal { position: fixed; inset: 0; z-index: 950; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .cat-modal.open { opacity: 1; pointer-events: auto; }
+  .cat-modal-inner { position: relative; width: 100%; max-width: 950px; max-height: 88vh; display: flex; flex-direction: column; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 42px 32px 32px; text-align: left; }
+  .cat-modal-close { position: absolute; top: 10px; right: 12px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; cursor: pointer; }
+  .cat-modal-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.8em; color: var(--gold-pale); margin-bottom: 16px; }
 
-  .track { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: center; padding: 26px 0; border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
-  .track:last-of-type { border-bottom: none; }
-  .track:hover { border-bottom-color: var(--gold-soft); }
-  .track-info { display: flex; align-items: flex-start; gap: 16px; }
-  .track-numeral { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; line-height: 1.4; }
-  .track-text-container { display: flex; flex-direction: column; gap: 4px; }
-  .track-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
-  .track:hover .track-title { color: #FCFCF7; }
-  .track-desc { font-family: 'Montserrat', sans-serif; font-size: 0.68em; font-style: normal; font-weight: 400; color: #a8a39a; letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.4; }
-  .track-meta { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-top: 4px; display: block; }
-  .track-actions { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .suite { border-bottom: 1px solid var(--rule); padding: 22px 0; }
+  .suite-head { display: grid; grid-template-columns: 1fr auto; gap: 20px; align-items: start; }
+  .suite-info { display: flex; align-items: flex-start; gap: 16px; }
+  .suite-code { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: 1.3em; color: var(--gold-soft); min-width: 50px; }
+  .suite-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.5em; color: var(--offwhite); }
+  .suite-instruments { font-family: 'Montserrat', sans-serif; font-size: 0.68em; color: var(--gold-soft); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+  .suite-actions { display: flex; gap: 16px; align-items: center; }
 
-  .action-play {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    border: 0;
-    width: 38px;
-    height: 38px;
-    padding: 0;
-    font-size: 0.95em;
-    color: var(--gold-soft);
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.25s ease, text-shadow 0.35s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .action-play::before {
-    content: '';
-    position: absolute;
-    inset: -4px;
-    border-radius: 50%;
-    border: 1px solid transparent;
-    box-shadow: 0 0 0 0 rgba(197,168,128,0);
-    opacity: 0;
-    transition: opacity 0.35s ease, box-shadow 0.45s ease, border-color 0.35s ease;
-    pointer-events: none;
-  }
-  .action-play:hover {
-    color: #FCFCF7;
-    transform: scale(1.12);
-    text-shadow: 0 0 12px rgba(197,168,128,0.8);
-  }
-  .action-play:hover::before {
-    opacity: 1;
-    border-color: rgba(197,168,128,0.55);
-    box-shadow:
-      0 0 12px 2px rgba(197,168,128,0.55),
-      0 0 26px 6px rgba(197,168,128,0.30),
-      0 0 48px 12px rgba(197,168,128,0.15);
-  }
-  .action-play.playing { color: var(--gold-pale); }
-  .action-play.playing::before {
-    opacity: 1;
-    border-color: rgba(197,168,128,0.35);
-    box-shadow: 0 0 10px 1px rgba(197,168,128,0.35);
-  }
+  .action-preview { background: transparent; border: 0; width: 38px; height: 38px; color: var(--gold-soft); cursor: pointer; font-size: 0.95em; transition: transform 0.25s ease; }
+  .action-preview:hover { color: #FCFCF7; transform: scale(1.12); }
+  .action-buy, .action-link { font-family: 'Montserrat', sans-serif; font-size: 0.85em; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold-soft); background: transparent; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .action-buy:hover, .action-link:hover { color: var(--gold-pale); }
 
-  .inline-player { display: none; width: 100%; padding: 16px 0 8px 66px; grid-column: 1 / -1; }
-  .inline-player.active { display: flex; align-items: center; gap: 16px; animation: fadeUp 0.4s ease both; }
-  .player-progress-wrap { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
-  .player-progress-wrap::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
-  .player-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
-  .player-progress-bar::after { content: ''; position: absolute; right: -4px; top: -3px; width: 9px; height: 9px; background: var(--gold-pale); border-radius: 50%; opacity: 0; transition: opacity 0.2s ease; }
-  .player-progress-wrap:hover .player-progress-bar::after { opacity: 1; }
-  .player-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
-
-  .volume-container { display: flex; align-items: center; justify-content: center; margin-left: 8px; height: 24px; }
-  .volume-icon { color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: color 0.3s ease; z-index: 2; padding: 4px; }
-  .volume-icon:hover { color: var(--gold-pale); }
-  .volume-slider-wrap { width: 0; overflow: hidden; opacity: 0; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; align-items: center; }
-  .volume-container.active .volume-slider-wrap { width: 60px; opacity: 1; margin-left: 8px; }
-  .volume-slider { -webkit-appearance: none; width: 100%; height: 2px; background: rgba(122, 107, 79, 0.4); outline: none; cursor: pointer; }
-  .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 8px; height: 8px; border-radius: 50%; background: var(--gold-pale); cursor: pointer; transition: transform 0.1s ease; }
-  .volume-slider::-webkit-slider-thumb:hover { transform: scale(1.3); }
-
-  .track-preview-label { font-family: 'Montserrat', sans-serif; font-size: 0.62em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); margin-left: 8px; font-style: normal; }
-
-  .suite-cues { display: none; width: 100%; padding: 10px 0 10px 0; grid-column: 1 / -1; }
-  .suite-cues.active { display: block; animation: fadeUp 0.4s ease both; }
-  .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.05); }
-  .cue-info { display: flex; align-items: center; gap: 12px; }
-  .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.1em; color: var(--offwhite); min-width: 60px; }
-  .cue-progress-wrap { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
-  .cue-progress-wrap::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
-  .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
-  .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
-
-  .cue-play {
-    position: relative;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    background: transparent;
-    border: 0;
-    width: 32px;
-    height: 32px;
-    padding: 0;
-    font-size: 0.8em;
-    color: var(--gold-soft);
-    cursor: pointer;
-    transition: color 0.3s ease, transform 0.25s ease, text-shadow 0.35s ease;
-    -webkit-tap-highlight-color: transparent;
-  }
-  .cue-play::before {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 50%;
-    border: 1px solid transparent;
-    box-shadow: 0 0 0 0 rgba(197,168,128,0);
-    opacity: 0;
-    transition: opacity 0.35s ease, box-shadow 0.45s ease, border-color 0.35s ease;
-    pointer-events: none;
-  }
-  .cue-play:hover {
-    color: #FCFCF7;
-    transform: scale(1.12);
-    text-shadow: 0 0 10px rgba(197,168,128,0.8);
-  }
-  .cue-play:hover::before {
-    opacity: 1;
-    border-color: rgba(197,168,128,0.55);
-    box-shadow:
-      0 0 10px 2px rgba(197,168,128,0.55),
-      0 0 22px 5px rgba(197,168,128,0.30),
-      0 0 40px 10px rgba(197,168,128,0.15);
-  }
-  .cue-play.playing { color: var(--gold-pale); }
-  .cue-play.playing::before {
-    opacity: 1;
-    border-color: rgba(197,168,128,0.35);
-    box-shadow: 0 0 8px 1px rgba(197,168,128,0.35);
-  }
-
-  .signature { margin-top: 90px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
-  .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
-  .footer-location { text-align: right; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0.6; margin-top: 24px; padding-right: 6px; transition: opacity 0.3s ease; }
-  .footer-location a { color: var(--muted); text-decoration: none; border-bottom: 1px solid transparent; transition: color 0.3s ease, border-color 0.3s ease; }
-  .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
-  .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
-
-  /* 👇 FAQ CSS 👇 */
-  .faq-wrap {
-    text-align: left; margin: 60px auto 0; max-width: 720px;
-    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-  }
-  .faq-wrap summary {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 16px 2px; cursor: pointer; list-style: none;
-    transition: color 0.3s ease;
-  }
-  .faq-wrap summary::-webkit-details-marker { display: none; }
-  .faq-wrap summary::marker { content: ''; }
-  .faq-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em;
-    letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted);
-    transition: color 0.3s ease;
-  }
-  .faq-wrap summary:hover .faq-label { color: var(--gold-pale); }
-  .faq-indicator {
-    display: inline-block; width: 6px; height: 6px;
-    border-right: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft);
-    transform: rotate(-45deg) translateY(-2px);
-    transition: transform 0.4s ease, border-color 0.4s ease; flex: 0 0 auto;
-  }
-  .faq-wrap[open] .faq-indicator { transform: rotate(45deg) translateY(-2px); border-color: var(--gold); }
-  .faq-body { padding: 4px 0 18px; }
-  .faq-item { padding: 12px 0; border-top: 1px solid rgba(42,42,42,0.7); }
-  .faq-item:first-child { border-top: none; padding-top: 4px; }
-  .faq-item h3 {
-    font-family: 'Playfair Display', Georgia, serif; font-style: normal; font-weight: 400;
-    font-size: 0.88em; color: var(--offwhite); letter-spacing: 0;
-    margin-bottom: 5px; line-height: 1.5; opacity: 0.9;
-  }
-  .faq-item p { font-size: 0.82em; line-height: 1.75; margin: 0; color: var(--muted); }
-  .faq-item p a {
-    color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.35);
-    padding-bottom: 1px; transition: border-color 0.3s ease, color 0.3s ease;
-  }
-  .faq-item p a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
-
-  .action-link { display: none !important; }
+  /* Cue Preview Modal */
+  .cue-modal { position: fixed; inset: 0; z-index: 960; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
+  .cue-modal.open { opacity: 1; pointer-events: auto; }
+  .cue-modal-inner { position: relative; width: 100%; max-width: 440px; max-height: 85vh; overflow-y: auto; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 42px 32px 32px; text-align: left; }
+  .cue-modal-close { position: absolute; top: 10px; right: 12px; background: transparent; border: 0; color: var(--muted); cursor: pointer; }
+  .cue { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: center; padding: 14px 0; border-top: 1px solid var(--rule); }
+  .cue-info { display: flex; flex-direction: column; gap: 4px; width: 100%; }
+  .cue-title { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.1em; color: var(--offwhite); }
+  .cue-desc { font-family: 'Montserrat', sans-serif; font-size: 0.62em; color: var(--gold-soft); text-transform: uppercase; }
   
-  @media (max-width: 700px) {
-    .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
-    .page { padding: 60px 22px 60px; }
-    h1 { font-size: 1.35em; letter-spacing: 0.12em; margin-bottom: 16px; line-height: 1.35; }
-    .hero-subhead { font-size: 1.02em; line-height: 1.6; }
-    .section-banner { font-size: 0.6em; letter-spacing: 0.12em; margin-bottom: 30px; line-height: 1.6; }
-    .licensing-intro { margin: 0 auto 40px; }
-    .licensing-intro > summary { padding: 32px 24px 24px; gap: 0 16px; }
-    .licensing-content { padding: 0 24px 36px; }
-    .licensing-intro .intro-eyebrow { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 14px; }
-    .licensing-intro .intro-headline { font-size: 1.25em; margin-bottom: 18px; }
-    .licensing-intro .intro-lead { font-size: 1em; }
-    .open-notice { font-size: 0.65em; margin-top: 16px; }
-    .licensing-content .divider { margin: 0 0 24px; }
-    .licensing-content .mini-heading { font-size: 0.65em; letter-spacing: 0.22em; }
-    .licensing-list li, .licensing-steps li { font-size: 1em; }
-    .licensing-toggle-icon { width: 12px; height: 8px; }
-    .licensing-toggle-icon::before { width: 8px; height: 8px; }
-    .commission-link { margin-top: 28px; padding-top: 22px; }
-    .commission-link p { font-size: 0.98em; }
-    .section-heading { font-size: 1.3em; letter-spacing: 0.2em; }
-    .section-poetic { font-size: 1em; }
-    .hub-category-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .hub-category-title { font-size: 1.15em; }
-    .hub-category-meta { width: 100%; justify-content: space-between; }
-    .view-all-btn { font-size: 0.65em; padding: 14px 20px; width: 100%; text-align: center; }
-    .track { gap: 12px; padding: 20px 0; }
-    .track-numeral { min-width: 46px; font-size: 1.15em; }
-    .track-title { font-size: 1.25em; }
-    .track-desc { font-size: 0.65em; }
-    .track-meta { font-size: 0.7em; }
-    .track-actions { gap: 8px; }
-    .action-play { width: 34px; height: 34px; font-size: 0.85em; }
-    .inline-player { padding: 12px 0 8px 58px; }
-    .track-preview-label { font-size: 0.58em; display: block; margin-left: 0; margin-top: 4px; }
-    .topnav { padding: 18px 22px; }
-    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
-    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
-    .hamburger { width: 20px; height: 13px; }
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
-    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
-    .menu-top { top: 22px; left: 24px; right: 24px; }
-    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
-    .menu-close .x { width: 15px; height: 15px; }
-    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
-    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
-    .menu-section { margin-bottom: 20px; }
-    .menu-links { gap: 16px; }
-    .menu-bottom { margin-top: 10px; }
-    .signature-logo { height: 55px; }
-    .cue { gap: 10px; padding: 12px 0; }
-    .cue-title { font-size: 1em; min-width: 50px; }
-    .suite-cues { padding-left: 0; }
-    .volume-container.active .volume-slider-wrap { width: 45px; }
-  }
+  .cue-progress-container { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 4px; }
+  .cue-progress { flex-grow: 1; height: 22px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; user-select: none; }
+  .cue-progress::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; position: relative; z-index: 1; pointer-events: none; }
+  .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; color: var(--muted); min-width: 35px; text-align: right; }
 
-  @media (max-width: 380px) {
-    .wordmark { font-size: 0.8em; letter-spacing: 0.22em; }
-    .menu-toggle { font-size: 0.65em; letter-spacing: 0.18em; }
-    .menu-toggle::after { left: 30px; }
-    .menu-link { font-size: 1.15em; letter-spacing: 0.18em; }
-  }
+  .cue-play { background: transparent; border: 0; width: 32px; height: 32px; color: var(--gold-soft); cursor: pointer; }
+  .cue-play.playing { color: var(--gold-pale); }
+
+  .signature { margin-top: 70px; text-align: center; }
+  .signature-logo { height: 70px; width: auto; }
 </style>
 </head>
 <body>
@@ -486,9 +193,7 @@
   <div class="menu-inner">
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
-      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
-        Close <span class="x" aria-hidden="true"></span>
-      </button>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">Close <span class="x"></span></button>
     </div>
     <div class="menu-columns">
       <div class="menu-column">
@@ -511,550 +216,256 @@
         </ul>
       </div>
     </div>
-    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
   </div>
 </nav>
 
 <div class="page-wrap" id="pageWrap">
   <div class="page">
-
     <h1>Stock Music Library - Kenya &amp; Africa</h1>
     <p class="hero-subhead">Stock music library of pre-cleared film scores and commercial jingles built for Kenyan film production companies and African filmmakers. No subscription. License per track/suite.</p>
-
-    <details class="licensing-intro">
-      <summary>
-        <span class="intro-eyebrow">New to Licensing?</span>
-        <span class="licensing-toggle-icon" aria-hidden="true"></span>
-        <span class="intro-headline">Renting / licensing music. Here's what it actually means.</span>
-        <span class="intro-lead">
-          <span class="open-notice">↓ Click to open - what's included and what you can do with it</span>
-        </span>
-      </summary>
-
-      <div class="licensing-content">
-        <p style="margin-bottom: 32px;">When you rent / license music from this catalogue, you are buying the <strong>right to use</strong> it in your production, a <strong>license</strong>. You do not own the music. Noel Grass still owns it. But you receive a signed, legal permission to use the track exactly as agreed.</p>
-        <p style="margin-bottom: 32px;">When you complete your download, your license is included with your files. You can <a href="license" style="color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 1px;">check the full licensing terms</a> anytime to review the details of your agreement.</p>
-        <span class="divider"></span>
-        <span class="mini-heading">What You Receive</span>
-        <ul class="licensing-list">
-          <li>The high-quality audio file, the <strong>master</strong>, ready to drop into your edit.</li>
-          <li>A written license stating exactly what you can and cannot do with it.</li>
-          <li>Confirmation of the terms: duration, territory, and permitted uses.</li>
-        </ul>
-        <span class="mini-heading">What You Can Use It For</span>
-        <ul class="licensing-list">
-          <li>Films, shorts, documentaries, and series.</li>
-          <li>TV, streaming, and online distribution.</li>
-          <li>Brand films, advertisements, and campaigns.</li>
-          <li>Podcasts, trailers, and promotional pieces.</li>
-          <li>Pre-cleared background music for ready-made edits, corporate videos, and commercials.</li>
-        </ul>
-        <span class="mini-heading">What You Can't Do Without Upgrading</span>
-        <ul class="licensing-list">
-          <li>Resell the music on its own as a standalone track.</li>
-          <li>Claim the composition as your own work.</li>
-          <li>Use it in more projects than your license covers.</li>
-        </ul>
-        <span class="divider"></span>
-        <span class="mini-heading">How It Works</span>
-        <ol class="licensing-steps">
-          <li>Browse the catalogue and preview the tracks.</li>
-          <li>Choose the track and confirm the license terms for your project.</li>
-          <li>Pay, then you receive the master file and the written license.</li>
-          <li>Drop it into your production. Credit Noel Grass where reasonable.</li>
-        </ol>
-        <p>That's the whole process. If you're unsure what license fits your project, tell me what you're making and I'll guide you.</p>
-        <a href="license" class="intro-cta">Read the full license terms →</a>
-        <div class="commission-link">
-          <p>Prefer something made just for your project?</p>
-          <a href="commission">Commission a Scene →</a>
-        </div>
-      </div>
-    </details>
-
-    <div class="section" id="for-production-companies">
-      <h2 class="section-heading">For Kenyan Film Production Companies &amp; Independent Filmmakers</h2>
-      
-      <p>Built for producers and independent filmmakers across Kenya and East Africa, this library exists for those who need pre-cleared cinematic music without commissioning original scores for every project. It is an extension of Noel Grass's film scoring practice. Your clients get cinematic sound; you get clean legal clearance, fast turnaround, and music already cleared for worldwide synchronization.</p>
-      
-      <p>Whether you're producing documentaries in Nairobi, ad campaigns for East African brands, or narrative films for streaming platforms, these tracks are licensed specifically for production company workflows including client work and multi-project use.</p>
-
-      <details class="licensing-intro" style="margin-top: 30px; margin-bottom: 0;">
-        <summary>
-          <span class="intro-eyebrow">More about the catalogue</span>
-          <span class="licensing-toggle-icon" aria-hidden="true"></span>
-          <span class="intro-lead">
-            <span class="open-notice">↓ Click to open - filmography, licensing details, and how to use</span>
-          </span>
-        </summary>
-
-        <div class="licensing-content">
-          <p>The catalogue is composed by Noel Grass, a two-time Kalasha International Film Awards nominee for Best Original Score, whose work includes <em>Ziwa</em> (Najib Ayyed Grand Prize) and <em>Lost in Time</em> (five Kalasha Awards including Best Feature Film). <a href="film-composer">See the full filmography →</a></p>
-          
-          <span class="divider"></span>
-          
-          <ul class="licensing-list">
-            <li>License once, use in client productions with clear written terms.</li>
-            <li>Pre-cleared for synchronization — film, TV, streaming, and brand campaigns across Africa.</li>
-            <li>Individual licenses for independent filmmakers, editors, and solo creators.</li>
-            <li>No subscription. Pay per track, per project.</li>
-          </ul>
-          
-          <p>Browse the jingles and film score catalogues below, or <a href="commission" class="intro-cta" style="display:inline; margin-top:0;">commission a custom score →</a> for a specific production.</p>
-        </div>
-      </details>
-    </div>
-
-    <div class="section" id="jingles">
-      <h2 class="section-heading">Commercial Jingles &amp; Brand Tracks</h2>
-      <p class="section-poetic">Short-form music for brand, broadcast, and identity.</p>
-      <p class="section-banner">Browse → Preview → License · Pre-cleared jingles &amp; brand tracks · Ksh 5,000 per track</p>
-      <div id="jingleTrackList"></div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="rent-jingles" class="view-all-btn">Browse more jingles &amp; brand tracks →</a>
-      </div>
-    </div>
 
     <div class="section" id="scores">
       <h2 class="section-heading">Cinematic Film Scores &amp; Soundtracks</h2>
       <p class="section-poetic">Cinematic masters for film, television, and documentary productions.</p>
       <p class="section-banner">Browse → Preview → License · Ready-made film score suites · Ksh 8,000 per suite</p>
-      <div id="scoreTrackList"></div>
-      <div style="text-align: center; margin-top: 40px;">
-        <a href="rent-scores" class="view-all-btn">Browse more film score suites →</a>
-      </div>
-    </div>
-
-    <div class="section" id="faq">
-      <details class="faq-wrap">
-        <summary>
-          <span class="faq-label">Questions</span>
-          <span class="faq-indicator" aria-hidden="true"></span>
-        </summary>
-
-        <div class="faq-body">
-
-          <div class="faq-item">
-            <h3>What is a stock music library?</h3>
-            <p>A stock music library is a pre-made catalogue of music you can license instantly, with no commissioning and no waiting. At Noel Grass, the library covers film scores, cinematic cues, and commercial jingles, all pre-cleared for synchronization in film, TV, and brand work across Kenya and Africa.</p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Can Kenyan film production companies license these tracks?</h3>
-            <p>Yes. Film production companies in Kenya and across Africa can license these tracks for client productions, documentaries, ad campaigns, and streaming projects. Licenses cover synchronization and distribution, and the written license is attached to the download.</p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Can I use these tracks in a production distributed outside Kenya?</h3>
-            <p>Yes. Every license issued by Noel Grass covers worldwide synchronization, so a production scored with these tracks can be distributed internationally. That includes film festivals, streaming platforms, broadcast, and brand campaigns in any territory. The written license states the worldwide scope explicitly, so international distributors, broadcasters, and clients can accept it without a further clearance step. If your project requires territory-specific terms, that can be arranged at the point of licensing.</p>
-          </div>
-
-          <div class="faq-item">
-            <h3>Is this royalty-free or pre-cleared music?</h3>
-            <p>These are pre-cleared master licenses. You pay once and use as agreed, with no ongoing royalties for synchronization. Details are in the <a href="license">full licensing terms</a>.</p>
-          </div>
-
-        </div>
-      </details>
+      
+      <div id="shelvesMount"></div>
     </div>
 
     <div class="signature">
       <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
     </div>
-
-    <p class="footer-location">
-      <a href="https://maps.app.goo.gl/xbHvJUkBfNAFv9jw8" target="_blank" rel="noopener">Nairobi, Kenya</a>
-      <span class="footer-sep">·</span>
-      <span>Worldwide</span>
-    </p>
-
   </div>
 </div>
 
-<audio id="mainAudio"></audio>
+<audio id="mainAudio" preload="metadata"></audio>
+
+<!-- Category Modal -->
+<div class="cat-modal" id="catModal">
+  <div class="cat-modal-inner">
+    <button type="button" class="cat-modal-close" id="catModalClose">✕</button>
+    <p class="cat-modal-title" id="catModalTitle">Category</p>
+    <div id="catResults" style="overflow-y:auto; flex:1; min-height:0;"></div>
+  </div>
+</div>
+
+<!-- Cue Preview Modal -->
+<div class="cue-modal" id="cueModal">
+  <div class="cue-modal-inner">
+    <button type="button" class="cue-modal-close" id="cueModalClose">✕</button>
+    <p class="cat-modal-title" id="cueModalTitle" style="font-size:1.3em; margin-bottom:12px;">Suite Preview</p>
+    <div id="cueModalBody"></div>
+  </div>
+</div>
 
 <script>
   (function () {
-    var toggle   = document.getElementById('menuToggle');
-    var panel    = document.getElementById('menuPanel');
+    // Menu Controller
+    var toggle = document.getElementById('menuToggle');
+    var panel = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
     var backdrop = document.getElementById('menuBackdrop');
+    
+    function openMenu() { panel.classList.add('open'); document.body.classList.add('menu-open'); toggle.setAttribute('aria-expanded', 'true'); }
+    function closeMenu() { panel.classList.remove('open'); document.body.classList.remove('menu-open'); toggle.setAttribute('aria-expanded', 'false'); }
+    if(toggle) toggle.addEventListener('click', openMenu);
+    if(closeBtn) closeBtn.addEventListener('click', closeMenu);
+    if(backdrop) backdrop.addEventListener('click', closeMenu);
 
-    function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
-    function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
-    function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
-    function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
-    function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
-
-    toggle.addEventListener('click', function (e) { e.stopPropagation(); if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); } });
-    closeBtn.addEventListener('click', closeMenu);
-    backdrop.addEventListener('click', closeMenu);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
-    panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
-
-    function normalizePath(path) {
-      path = path.split('?')[0].split('#')[0];
-      path = path.replace(/\.html?$/i, '');
-      if (path.length > 1 && path.endsWith('/')) { path = path.slice(0, -1); }
-      path = path.replace(/\/index$/i, '/');
-      if (!path.startsWith('/')) path = '/' + path;
-      return path;
-    }
-
-    var current = normalizePath(window.location.pathname);
-    var links = panel.querySelectorAll('a.menu-link');
-    var matched = null;
-    links.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-      var linkPath = normalizePath(href);
-      if (linkPath === current) { matched = link; }
-    });
-    if (!matched && (current === '/' || current === '')) {
-      links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (href === './' || href === '/' || href === 'index.html') { matched = link; }
+    // Fetch and Initialize Catalogue
+    Promise.all([
+      fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1").then(r => r.json()),
+      fetch("https://master-brain.noelgrass.workers.dev/api/data?table=scores&published=1").then(r => r.json())
+    ]).then(([cats, scoresData]) => {
+      var categories = cats.filter(c => c.section === 'scores');
+      var SCORES = scoresData.map(s => {
+        const cuesArr = JSON.parse(s.cues || "[]");
+        return {
+          cat: s.folder,
+          code: s.id,
+          title: s.title,
+          desc: cuesArr.map(c => c.desc),
+          cues: cuesArr,
+          amount: s.price
+        };
       });
-    }
-    if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
-    var yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-    var licensingBox = document.querySelector('.licensing-intro');
-    if (licensingBox) {
-      document.addEventListener('click', function (e) {
-        if (!licensingBox.open) return;
-        if (licensingBox.contains(e.target)) return;
-        licensingBox.open = false;
-      });
-    }
-  })();
-</script>
+      var mount = document.getElementById('shelvesMount');
+      if (!mount) return;
 
-<script>
-  (function () {
-    "use strict";
+      mount.innerHTML = '<div class="shelves">' + categories.map(cat => 
+        '<div class="shelf" data-cat="' + cat.folder_code + '">' +
+          '<div class="shelf-row">' +
+            '<span><span class="shelf-indicator"></span><span class="shelf-label">' + cat.label + '</span></span>' +
+            '<span class="shelf-count">' + SCORES.filter(s => s.cat === cat.folder_code).length + ' suites</span>' +
+          '</div>' +
+        '</div>'
+      ).join('') + '</div>';
 
-    var HUB_DATA = [
-      { cat: "anthems", label: "Anthems & Campaigns", count: "1 track", link: "rent-jingles", track: { code: "AC01", title: "Theme 1", desc: "Orchestral & Percussions", duration: "Anthem · 0:59", file: "AC01.mp3", folder: "ac", isSuite: false } },
-      { cat: "tension", label: "Tension & Suspense", count: "13 suites", link: "rent-scores", track: { code: "TN01", title: "Theme 1", desc: "Synth · Piano · Cello", duration: "Tension", file: "cue-1.mp3", folder: "tn/TN01", isSuite: true } }
-    ];
+      var audio = document.getElementById('mainAudio');
+      var currentCueId = null;
+      var pendingSeekFraction = null;
+      var isDragging = false;
+      var activeWrap = null;
 
-    var PREVIEW_BASE_JINGLES = "https://rent-jingles.noelgrass.workers.dev/preview";
-    var PREVIEW_BASE_SCORES  = "https://rent-scores.noelgrass.workers.dev/preview";
+      function fmt(sec) {
+        if (isNaN(sec) || sec < 0) return "0:00";
+        var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
+        return m + ":" + (s < 10 ? "0" : "") + s;
+      }
 
-    function buildPreviewUrl(t) {
-      var base = t.isSuite ? PREVIEW_BASE_SCORES : PREVIEW_BASE_JINGLES;
-      return base + "?folder=" + encodeURIComponent(t.folder) + "&file=" + encodeURIComponent(t.file);
-    }
-    function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
+      function buildPreviewUrl(previewPath) {
+        if (previewPath && previewPath.startsWith('/')) {
+          return "https://master-brain.noelgrass.workers.dev" + previewPath;
+        }
+        return "https://rent-scores.noelgrass.workers.dev/preview?file=" + encodeURIComponent(previewPath);
+      }
 
-    function buildTrackHtml(group) {
-      var t = group.track;
-      var url = buildPreviewUrl(t);
-      var trackContent = '';
-      if (t.isSuite) {
-        var cuesHtml = '';
-        for (var i = 1; i <= 3; i++) {
-          var cueId = t.code + '-' + i;
-          var cueUrl = PREVIEW_BASE_SCORES + "?folder=" + encodeURIComponent(t.folder) + "&file=" + encodeURIComponent("cue-" + i + ".mp3");
-          cuesHtml += '<div class="cue" data-cue-id="' + cueId + '">' +
-              '<div class="cue-info">' +
-                '<span class="cue-title">Cue ' + i + '</span>' +
-                '<div class="cue-progress-wrap" data-id="' + cueId + '" data-url="' + cueUrl + '" data-issuite="true"><div class="cue-progress-bar"></div></div>' +
-                '<span class="cue-time">0:00</span>' +
-                '<div class="volume-container">' +
-                  '<div class="volume-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>' +
-                  '<div class="volume-slider-wrap"><input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1"></div>' +
+      // Modal Handlers
+      var catModal = document.getElementById('catModal');
+      var cueModal = document.getElementById('cueModal');
+
+      document.getElementById('catModalClose').onclick = () => catModal.classList.remove('open');
+      document.getElementById('cueModalClose').onclick = () => { cueModal.classList.remove('open'); if(audio) audio.pause(); };
+
+      mount.addEventListener('click', function(e) {
+        var shelf = e.target.closest('.shelf');
+        if(!shelf) return;
+        var catCode = shelf.getAttribute('data-cat');
+        var catSuites = SCORES.filter(s => s.cat === catCode);
+        
+        document.getElementById('catModalTitle').textContent = shelf.querySelector('.shelf-label').textContent;
+        document.getElementById('catResults').innerHTML = catSuites.map(suite => 
+          '<div class="suite">' +
+            '<div class="suite-head">' +
+              '<div class="suite-info">' +
+                '<span class="suite-code">' + suite.code + '</span>' +
+                '<div>' +
+                  '<span class="suite-title">' + suite.title + '</span>' +
+                  '<div class="suite-instruments">' + suite.desc.join(' · ') + '</div>' +
                 '</div>' +
               '</div>' +
-              '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + cueUrl + '">▶</button>' +
-            '</div>';
-        }
-        trackContent = '<div class="suite-cues" id="suite-' + t.code + '">' + cuesHtml + '</div>';
-      } else {
-        trackContent = '<div class="inline-player" id="player-' + t.code + '">' +
-            '<div class="player-progress-wrap" data-id="' + t.code + '" data-url="' + url + '" data-issuite="false"><div class="player-progress-bar"></div></div>' +
-            '<div class="player-time">0:00</div>' +
-            '<div class="volume-container">' +
-              '<div class="volume-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg></div>' +
-              '<div class="volume-slider-wrap"><input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1"></div>' +
+              '<div class="suite-actions">' +
+                '<button type="button" class="action-preview" data-code="' + suite.code + '">▶</button>' +
+              '</div>' +
             '</div>' +
+          '</div>'
+        ).join('');
+        catModal.classList.add('open');
+      });
+
+      // Suite Cues Preview & Audio Scrubber
+      document.getElementById('catResults').addEventListener('click', function(e) {
+        var btn = e.target.closest('.action-preview');
+        if(!btn) return;
+        var suite = SCORES.find(s => s.code === btn.getAttribute('data-code'));
+        if(!suite) return;
+
+        var cuesHtml = '';
+        for (var i = 1; i <= 3; i++) {
+          var cueId = suite.code + '-' + i;
+          var url = buildPreviewUrl(suite.cues[i-1] ? suite.cues[i-1].preview : '');
+          cuesHtml += '<div class="cue" data-cue-id="' + cueId + '">' +
+            '<div class="cue-info">' +
+              '<span class="cue-title">Cue ' + i + '</span>' +
+              '<span class="cue-desc">' + (suite.desc[i-1] || '') + '</span>' +
+              '<div class="cue-progress-container">' +
+                '<div class="cue-progress"><div class="cue-progress-bar"></div></div>' +
+                '<span class="cue-time">0:00</span>' +
+              '</div>' +
+            '</div>' +
+            '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '">▶</button>' +
           '</div>';
-      }
-      var previewNote = t.isSuite ? '<span class="track-preview-label">3 cues included</span>' : '';
-      return '<div class="hub-category">' +
-        '<div class="hub-category-header">' +
-          '<span class="hub-category-title">' + group.label + '</span>' +
-          '<span class="hub-category-meta">' + group.count + ' <span style="opacity:0.5;">·</span> <a href="' + group.link + '" class="hub-category-link">View all &rarr;</a></span>' +
-        '</div>' +
-        '<div class="track" id="track-' + t.code + '">' +
-          '<div class="track-info">' +
-            '<span class="track-numeral">' + t.code + '</span>' +
-            '<div class="track-text-container">' +
-              '<span class="track-title">' + t.title + '</span>' +
-              '<span class="track-desc">(' + t.desc + ')' + previewNote + '</span>' +
-              '<span class="track-meta">' + t.duration + '</span>' +
-            '</div>' +
-          '</div>' +
-          '<div class="track-actions">' +
-            '<button type="button" class="action-play" data-code="' + t.code + '" data-url="' + url + '" data-issuite="' + t.isSuite + '">▶</button>' +
-          '</div>' +
-          trackContent +
-        '</div>' +
-      '</div>';
-    }
-
-    function renderHub() {
-      var jingleList = document.getElementById('jingleTrackList');
-      var scoreList  = document.getElementById('scoreTrackList');
-      if (jingleList) { jingleList.innerHTML = HUB_DATA.filter(function (g) { return !g.track.isSuite; }).map(buildTrackHtml).join(''); }
-      if (scoreList) { scoreList.innerHTML = HUB_DATA.filter(function (g) { return g.track.isSuite; }).map(buildTrackHtml).join(''); }
-    }
-
-    var audio = document.getElementById('mainAudio');
-    var currentTrackId = null;
-    var isDragging = false;
-    var isSeeking = false;
-    var activeProgressWrap = null;
-
-    function stopCurrentTrack() {
-      if (!audio) return;
-      audio.pause();
-      audio.currentTime = 0;
-      document.querySelectorAll('.action-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-      document.querySelectorAll('.cue-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-      document.querySelectorAll('.inline-player').forEach(function(p) { p.classList.remove('active'); });
-      document.querySelectorAll('.suite-cues').forEach(function(s) { s.classList.remove('active'); });
-      document.querySelectorAll('.player-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
-      document.querySelectorAll('.cue-progress-bar').forEach(function(bar) { bar.style.width = '0%'; });
-      document.querySelectorAll('.player-time').forEach(function(t) { t.innerText = '0:00'; });
-      document.querySelectorAll('.cue-time').forEach(function(t) { t.innerText = '0:00'; });
-      document.querySelectorAll('.volume-container.active').forEach(function(el) { el.classList.remove('active'); });
-      currentTrackId = null;
-    }
-
-    function switchAndPlayTrack(id, url, isSuite, callback) {
-      if (isSuite) {
-        var suiteCode = id.split('-')[0];
-        var parentSuite = document.getElementById('suite-' + suiteCode);
-        if (parentSuite) parentSuite.classList.add('active');
-
-        document.querySelectorAll('.cue-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-        
-        if (currentTrackId !== id) {
-          audio.src = url;
-          audio.load();
         }
-        currentTrackId = id;
+
+        document.getElementById('cueModalBody').innerHTML = cuesHtml;
+        cueModal.classList.add('open');
         
-        var btn = document.querySelector('.cue-play[data-cue-id="' + id + '"]');
+        // Auto-play first cue
+        var firstBtn = document.querySelector('.cue-play');
+        if(firstBtn) playCue(firstBtn.getAttribute('data-cue-id'), firstBtn.getAttribute('data-url'));
+      });
+
+      function playCue(cueId, url) {
+        if (!audio) return;
+        audio.pause();
+        currentCueId = cueId;
+        pendingSeekFraction = null;
+        audio.src = url;
+        audio.load();
+        audio.play().catch(e => console.warn(e));
+
+        document.querySelectorAll('.cue-play').forEach(b => {
+          b.innerHTML = '▶'; b.classList.remove('playing');
+        });
+        var btn = document.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
         if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
-      } else {
-        document.querySelectorAll('.action-play').forEach(function(b) { b.innerHTML = '▶'; b.classList.remove('playing'); });
-        document.querySelectorAll('.inline-player').forEach(function(p) { p.classList.remove('active'); });
-
-        if (currentTrackId !== id) {
-          audio.src = url;
-          audio.load();
-        }
-        currentTrackId = id;
-
-        var mainBtn = document.querySelector('.action-play[data-code="' + id + '"]');
-        if (mainBtn) { mainBtn.innerHTML = '❚❚'; mainBtn.classList.add('playing'); }
-        var player = document.getElementById('player-' + id);
-        if (player) player.classList.add('active');
       }
 
-      audio.play().then(function() {
-        if (typeof callback === 'function') callback();
-      }).catch(function(err) {
-        console.log("Playback error:", err);
-      });
-    }
-
-    document.addEventListener('click', function (e) {
-      var volIcon = e.target.closest('.volume-icon');
-      if (volIcon) {
-        e.stopPropagation();
-        var container = volIcon.closest('.volume-container');
-        document.querySelectorAll('.volume-container.active').forEach(function(c) { if (c !== container) c.classList.remove('active'); });
-        container.classList.toggle('active');
-        return;
-      }
-
-      var mainPlayBtn = e.target.closest('.action-play');
-      if (mainPlayBtn) {
-        e.preventDefault();
-        var code = mainPlayBtn.getAttribute('data-code');
-        var url = mainPlayBtn.getAttribute('data-url');
-        var isSuite = mainPlayBtn.getAttribute('data-issuite') === 'true';
-
-        if (isSuite) {
-          var suite = document.getElementById('suite-' + code);
-          var isOpen = suite && suite.classList.contains('active');
-          if (isOpen) {
-            stopCurrentTrack();
-            mainPlayBtn.innerHTML = '▶';
-            mainPlayBtn.classList.remove('playing');
-            return;
-          }
-          stopCurrentTrack();
-          if (suite) {
-            suite.classList.add('active');
-            var firstCueBtn = suite.querySelector('.cue-play');
-            if (firstCueBtn) {
-              switchAndPlayTrack(firstCueBtn.getAttribute('data-cue-id'), firstCueBtn.getAttribute('data-url'), true);
-            }
-          }
-          mainPlayBtn.innerHTML = '✕';
-          mainPlayBtn.classList.add('playing');
-          return;
-        }
-
-        if (currentTrackId === code) {
-          if (audio.paused) {
-            audio.play();
-            mainPlayBtn.innerHTML = '❚❚';
-            mainPlayBtn.classList.add('playing');
+      document.getElementById('cueModalBody').addEventListener('click', function(e) {
+        var cueBtn = e.target.closest('.cue-play');
+        if (cueBtn) {
+          var cueId = cueBtn.getAttribute('data-cue-id');
+          var url = cueBtn.getAttribute('data-url');
+          if (currentCueId === cueId) {
+            if (audio.paused) { audio.play(); cueBtn.innerHTML = '❚❚'; cueBtn.classList.add('playing'); }
+            else { audio.pause(); cueBtn.innerHTML = '▶'; cueBtn.classList.remove('playing'); }
           } else {
-            audio.pause();
-            mainPlayBtn.innerHTML = '▶';
-            mainPlayBtn.classList.remove('playing');
+            playCue(cueId, url);
           }
-          return;
-        }
-
-        stopCurrentTrack();
-        switchAndPlayTrack(code, url, false);
-        return;
-      }
-
-      var cuePlayBtn = e.target.closest('.cue-play');
-      if (cuePlayBtn) {
-        e.preventDefault();
-        var cueId = cuePlayBtn.getAttribute('data-cue-id');
-        var cueUrl = cuePlayBtn.getAttribute('data-url');
-        if (currentTrackId === cueId) {
-          if (audio.paused) { audio.play(); cuePlayBtn.innerHTML = '❚❚'; cuePlayBtn.classList.add('playing'); }
-          else { audio.pause(); cuePlayBtn.innerHTML = '▶'; cuePlayBtn.classList.remove('playing'); }
-          return;
-        }
-        switchAndPlayTrack(cueId, cueUrl, true);
-        return;
-      }
-    });
-
-    var licensingBox = document.querySelector('.licensing-intro');
-    if (licensingBox) {
-      licensingBox.addEventListener('toggle', function () { if (licensingBox.open) stopCurrentTrack(); });
-    }
-
-    document.addEventListener('input', function(e) {
-      if (e.target.classList.contains('volume-slider')) { if (audio) { audio.volume = e.target.value; } }
-    });
-
-    if (audio) {
-      audio.addEventListener('timeupdate', function () {
-        if (!currentTrackId || isDragging || isSeeking) return;
-        if (!audio.duration || isNaN(audio.duration)) return;
-        var pct = (audio.currentTime / audio.duration) * 100;
-        
-        var player = document.getElementById('player-' + currentTrackId);
-        if (player) {
-          var bar = player.querySelector('.player-progress-bar');
-          var time = player.querySelector('.player-time');
-          if (bar) bar.style.width = pct + '%';
-          if (time) time.innerText = fmt(audio.duration - audio.currentTime);
-        }
-        var cue = document.querySelector('.cue[data-cue-id="' + currentTrackId + '"]');
-        if (cue) {
-          var cueBar = cue.querySelector('.cue-progress-bar');
-          var cueTime = cue.querySelector('.cue-time');
-          if (cueBar) cueBar.style.width = pct + '%';
-          if (cueTime) cueTime.innerText = fmt(audio.duration - audio.currentTime);
         }
       });
-      
-      audio.addEventListener('ended', function () { stopCurrentTrack(); });
 
-      function seekToEvent(e, wrap) {
-        var trackId = wrap.getAttribute('data-id');
-        var url = wrap.getAttribute('data-url');
-        var isSuite = wrap.getAttribute('data-issuite') === 'true';
+      // Scrubber Events
+      function applyPendingSeek() {
+        if (pendingSeekFraction !== null && audio.duration && isFinite(audio.duration)) {
+          audio.currentTime = pendingSeekFraction * audio.duration;
+          pendingSeekFraction = null;
+        }
+      }
 
-        var rect = wrap.getBoundingClientRect();
-        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-        var clickX = clientX - rect.left;
-        var pct = Math.max(0, Math.min(1, clickX / rect.width));
+      if (audio) {
+        audio.addEventListener('loadedmetadata', applyPendingSeek);
+        audio.addEventListener('canplay', applyPendingSeek);
 
-        isSeeking = true;
+        audio.addEventListener('timeupdate', function () {
+          if (!currentCueId || isDragging) return;
+          var cue = document.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
+          if (!cue || !audio.duration) return;
+          var pct = (audio.currentTime / audio.duration) * 100;
+          cue.querySelector('.cue-progress-bar').style.width = pct + '%';
+          cue.querySelector('.cue-time').textContent = fmt(audio.duration - audio.currentTime);
+        });
 
-        var bar = wrap.querySelector('.player-progress-bar') || wrap.querySelector('.cue-progress-bar');
-        if (bar) bar.style.width = (pct * 100) + '%';
+        audio.addEventListener('ended', function() {
+          currentCueId = null;
+          document.querySelectorAll('.cue-play').forEach(b => { b.innerHTML = '▶'; b.classList.remove('playing'); });
+        });
 
-        if (currentTrackId !== trackId) {
-          switchAndPlayTrack(trackId, url, isSuite, function() {
-            if (audio.duration && !isNaN(audio.duration)) {
-              audio.currentTime = pct * audio.duration;
-            }
-            setTimeout(function() { isSeeking = false; }, 250);
-          });
-        } else {
-          if (audio.duration && !isNaN(audio.duration)) {
+        function seekToEvent(e, wrap) {
+          var rect = wrap.getBoundingClientRect();
+          var clientX = (e.touches && e.touches.length) ? e.touches[0].clientX : e.clientX;
+          var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+          
+          wrap.querySelector('.cue-progress-bar').style.width = (pct * 100) + '%';
+          
+          if (audio.duration && isFinite(audio.duration) && audio.readyState >= 1) {
             audio.currentTime = pct * audio.duration;
+          } else {
+            pendingSeekFraction = pct;
           }
-          setTimeout(function() { isSeeking = false; }, 150);
         }
+
+        document.getElementById('cueModalBody').addEventListener('mousedown', function(e) {
+          var wrap = e.target.closest('.cue-progress');
+          if(wrap) { isDragging = true; activeWrap = wrap; seekToEvent(e, wrap); e.preventDefault(); }
+        });
+        document.addEventListener('mousemove', function(e) {
+          if(isDragging && activeWrap) seekToEvent(e, activeWrap);
+        });
+        document.addEventListener('mouseup', function() { isDragging = false; activeWrap = null; });
       }
-
-      document.addEventListener('mousedown', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
-        if (wrap) { 
-          isDragging = true; 
-          activeProgressWrap = wrap; 
-          seekToEvent(e, wrap); 
-          e.preventDefault(); 
-        }
-      });
-      
-      document.addEventListener('mousemove', function(e) { 
-        if (isDragging && activeProgressWrap) {
-          seekToEvent(e, activeProgressWrap); 
-        }
-      });
-      
-      document.addEventListener('mouseup', function() { 
-        isDragging = false; 
-        activeProgressWrap = null; 
-        isSeeking = false;
-      });
-      
-      document.addEventListener('touchstart', function(e) {
-        var wrap = e.target.closest('.player-progress-wrap') || e.target.closest('.cue-progress-wrap');
-        if (wrap) { 
-          isDragging = true; 
-          activeProgressWrap = wrap; 
-          seekToEvent(e, wrap); 
-        }
-      }, { passive: true });
-      
-      document.addEventListener('touchmove', function(e) {
-        if (isDragging && activeProgressWrap) {
-          if (e.cancelable) e.preventDefault();
-          seekToEvent(e, activeProgressWrap);
-        }
-      }, { passive: false });
-      
-      document.addEventListener('touchend', function() { 
-        isDragging = false; 
-        activeProgressWrap = null; 
-        isSeeking = false;
-      });
-    }
-
-    renderHub();
+    });
   })();
 </script>
 
