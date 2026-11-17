@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- ==========================================================================
+     1. METADATA, SEO & VERIFICATION
+     Sets character encoding, mobile viewport, Google Search Console verification,
+     canonical URL, Open Graph / Twitter social cards, and typography fonts.
+     ========================================================================== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
@@ -27,6 +32,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
+<!-- ==========================================================================
+     2. STRUCTURED DATA (JSON-LD SCHEMA)
+     Provides machine-readable metadata for search engines (WebPage, Service, FAQ).
+     ========================================================================== -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -125,6 +134,11 @@
 }
 </script>
 
+<!-- ==========================================================================
+     3. GLOBAL & COMPONENT STYLES
+     Defines color tokens, typography scale, sticky header, full-screen menu,
+     category shelves, suite rows, audio scrubber, modals, and mobile breakpoints.
+     ========================================================================== -->
 <style>
   :root {
     --bg: #000000; --gold: #C5A880; --gold-soft: #B9975C; --gold-pale: #E8D5B5;
@@ -147,6 +161,7 @@
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
+  /* Top Navigation & Full-Screen Overlay Menu */
   .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
   .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; }
   .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55), 0 0 40px rgba(197,168,128,0.25); }
@@ -203,6 +218,7 @@
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
+  /* Page Hero & Intro Copy */
   .page { max-width: 900px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
   h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
   .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 18px; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
@@ -221,6 +237,7 @@
   .license-link { display: inline-block; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; color: var(--gold-pale); padding-bottom: 2px; margin-bottom: 60px; margin-left: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; transition: transform 0.3s ease, color 0.3s ease; }
   .license-link:hover { transform: translateX(4px); color: #FCFCF7; }
 
+  /* Category Shelves & Suite Rows */
   .shelves { text-align: left; margin-top: 20px; }
   .shelf { border-bottom: 1px solid var(--rule); transition: border-color 0.4s ease; }
   .shelf summary { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; padding: 28px 0 20px; cursor: pointer; list-style: none; }
@@ -256,6 +273,7 @@
 
   .suite-actions { display: flex; flex-direction: row; gap: 16px; align-items: center; justify-content: flex-end; }
 
+  /* Preview, Buy, and Add-to-Cart Action Buttons */
   .action-preview {
     position: relative;
     display: inline-flex;
@@ -387,7 +405,7 @@
       0 0 56px 16px rgba(197,168,128,0.10);
   }
 
-  /* ── CATEGORY MODAL (NEW) ────────────────────────────────── */
+  /* Category Browse Modal */
   .cat-modal {
     position: fixed;
     inset: 0;
@@ -454,7 +472,7 @@
     margin-bottom: 6px;
   }
   
-  /* Search & Filter Area */
+  /* Search & Filter Controls inside Category Modal */
   .cat-controls {
     margin-top: 18px;
     margin-bottom: 18px;
@@ -497,10 +515,8 @@
   .cat-search-input::placeholder { color: rgba(154,149,140,0.6); }
   .cat-search-input:focus { border-color: var(--gold); }
   
-  /* Filter Dropdown */
-  .cat-filter-dropdown {
-    position: relative;
-  }
+  /* Instrument Filter Dropdown */
+  .cat-filter-dropdown { position: relative; }
   .cat-filter-toggle {
     display: inline-flex;
     align-items: center;
@@ -576,10 +592,7 @@
     color: #0a0a0a;
     font-weight: 700;
   }
-  .cat-filter-chip.active .chip-x {
-    font-size: 1.1em;
-    line-height: 1;
-  }
+  .cat-filter-chip.active .chip-x { font-size: 1.1em; line-height: 1; }
   .cat-clear-btn {
     font-family: 'Montserrat', sans-serif;
     font-weight: 300;
@@ -615,7 +628,7 @@
     padding: 40px 20px;
   }
 
-  /* Pagination Footer */
+  /* Category Modal Pagination */
   .cat-pagination {
     display: none;
     align-items: center;
@@ -646,23 +659,22 @@
     text-transform: uppercase;
     color: var(--muted);
   }
-    .cat-load-all {
+  .cat-load-all {
     font-family: 'Montserrat', sans-serif;
-    font-size: 0.8em; /* INCREASED from 0.65em */
+    font-size: 0.8em;
     letter-spacing: 0.15em;
     text-transform: uppercase;
     color: var(--gold-dim);
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 10px 8px; /* INCREASED padding */
+    padding: 10px 8px;
     text-decoration: underline;
     transition: color 0.3s ease;
     margin-left: 14px;
   }
   .cat-load-all:hover { color: var(--gold-pale); }
   
-  /* Collapse list state */
   .cat-collapse-wrap {
     display: none;
     width: 100%;
@@ -686,7 +698,7 @@
   }
   .cat-collapse-btn:hover { border-color: var(--gold); color: #FCFCF7; }
 
-  /* ── CUE MODAL ──────────────────────────────────────── */
+  /* Cue Preview Modal & Interactive Scrubber */
   .cue-modal {
     position: fixed;
     inset: 0;
@@ -782,9 +794,11 @@
   }
 
   .cue-progress-container { display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 4px; }
-  .cue-progress { flex-grow: 1; height: 16px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; }
+  .cue-progress { flex-grow: 1; height: 22px; display: flex; align-items: center; cursor: pointer; position: relative; touch-action: none; user-select: none; }
   .cue-progress::before { content: ''; position: absolute; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; pointer-events: none; }
   .cue-progress-bar { height: 3px; width: 0%; background: var(--gold-soft); border-radius: 2px; pointer-events: none; position: relative; z-index: 1; }
+  .cue-progress-bar::after { content: ''; position: absolute; right: -4px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--gold-pale); opacity: 0; transition: opacity 0.2s ease; }
+  .cue-progress:hover .cue-progress-bar::after { opacity: 1; }
   .cue-time { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.1em; color: var(--muted); min-width: 35px; text-align: right; }
 
   .volume-container { display: flex; align-items: center; justify-content: center; margin-left: 8px; height: 24px; }
@@ -853,6 +867,7 @@
     border-top: 1px solid var(--rule);
   }
 
+  /* Custom Commission Link, Recovery Box & Footer FAQ */
   .custom-link { text-align: center; margin: 60px 0 20px; font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.1em; color: var(--offwhite); }
   .custom-link a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; }
   .custom-link a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
@@ -877,6 +892,7 @@
   .faq-answer a { color: var(--gold-pale); border-bottom: 1px solid rgba(197,168,128,0.3); }
   .faq-answer a:hover { border-bottom-color: var(--gold); color: #FCFCF7; }
 
+  /* Single-Item Checkout & Post-Payment Success Modals */
   .checkout-modal, .success-modal { position: fixed; inset: 0; z-index: 980; display: flex; align-items: center; justify-content: center; padding: 24px; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity 0.35s ease; }
   .checkout-modal.open, .success-modal.open { opacity: 1; pointer-events: auto; }
   .checkout-inner, .success-inner { position: relative; width: 100%; max-width: 460px; background: #0a0a0a; border: 1px solid var(--gold-soft); padding: 48px 40px 40px; box-shadow: 0 30px 80px rgba(0,0,0,0.85), 0 0 60px rgba(197,168,128,0.15); transform: scale(0.96); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); text-align: center; }
@@ -903,6 +919,7 @@
   .success-done { display: block; width: 100%; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); background: transparent; border: 1px solid var(--gold-soft); padding: 14px 20px; cursor: pointer; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease; -webkit-tap-highlight-color: transparent; }
   .success-done:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 22px rgba(197,168,128,0.30); }
 
+  /* Brand Signature & Location Footer */
   .signature { margin-top: 70px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 0.8s; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
   .footer-location { text-align: right; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0.6; margin-top: 24px; padding-right: 6px; }
@@ -910,6 +927,7 @@
   .footer-location a:hover { color: var(--gold-pale); border-bottom-color: var(--gold-dim); }
   .footer-sep { margin: 0 10px; color: var(--muted); opacity: 0.6; }
 
+  /* Mobile Responsive Adjustments */
   @media (max-width: 700px) {
     .page { padding: 70px 22px 60px; }
     h1 { font-size: 1.35em; letter-spacing: 0.12em; margin-bottom: 16px; line-height: 1.35; }
@@ -966,40 +984,10 @@
 </head>
   
 <body>
-<!-- 
-  ═══════════════════════════════════════════════════════════════
-  🎬 EXPLAINER: RENT SCORES PAGE ARCHITECTURE
-  
-  1. MAINTENANCE & NAVIGATION
-     - Maintenance block script (checks API for page blocks).
-     - Top navigation (Wordmark + Hamburger Menu).
-     - Full-screen menu panel (Opens with hamburger).
-     
-  2. MAIN PAGE CONTENT
-     - Header, hero, intro copy, back links.
-     - #shelvesMount: Displays the category rows.
-     
-  3. MODALS (FIXED OVERLAYS)
-     - Category Modal: Contains search, collapsible filter dropdown, 
-       pagination controls (Prev/Next/Load All/Collapse), and the list.
-     - Cue Modal: Displays the 3 cues with playback, volume, 
-       and Buy/Add to Cart actions.
-     - Checkout Modal: Single item checkout prompt.
-     - Success Modal: Post-payment download link & instructions.
-     - Cart Modal: Floating cart summary & multi-item checkout.
-     
-  4. SCRIPT LOGIC
-     - Menu toggling & accessibility.
-     - API Data Fetching (Categories + Scores).
-     - Suite/Cue HTML Generation.
-     - Search, Filter (OR logic), & Pagination Logic.
-     - Audio Playback Logic (Play, Pause, Seek, Volume).
-     - Cart Logic (Add, Remove, Checkout).
-     - Recovery Logic (Paystack reference lookup).
-  ═══════════════════════════════════════════════════════════════
--->
-
-<!-- 🚧 PAGE MAINTENANCE BLOCK -->
+<!-- ==========================================================================
+     4. PAGE MAINTENANCE GUARD
+     Queries admin-api on page load; redirects to /maintenance.html if blocked.
+     ========================================================================== -->
 <script>
     async function checkPageBlock() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -1022,6 +1010,9 @@
     checkPageBlock();
 </script>
 
+<!-- ==========================================================================
+     5. TOP HEADER & FULL-SCREEN NAVIGATION DRAWER
+     ========================================================================== -->
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
   <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
@@ -1064,6 +1055,11 @@
   </div>
 </nav>
 
+<!-- ==========================================================================
+     6. MAIN STOREFRONT CONTAINER
+     Contains hero headings, licensing info, dynamic category shelves mount,
+     Paystack recovery box, and accordion FAQ.
+     ========================================================================== -->
 <div class="page-wrap" id="pageWrap">
   <div class="page">
 
@@ -1084,12 +1080,14 @@
 
     <a href="#recoveryBox" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
 
+    <!-- Dynamic Category Shelves Injected Here by JavaScript -->
     <div id="shelvesMount"></div>
 
     <div class="custom-link">
       Need something custom-made for your film? <a href="commission">Commission a Score →</a>
     </div>
 
+    <!-- Order Recovery Section (Paystack Reference Lookup) -->
     <div class="recovery-box" id="recoveryBox">
       <p class="checkout-label" style="text-align:center; font-size: 0.8em;">Already Purchased?</p>
       <p style="font-style: normal; color: var(--offwhite);">If your download link expired or you closed the window, enter your Paystack reference below to get a fresh link.</p>
@@ -1099,6 +1097,7 @@
       <div id="recoveryError" style="font-family:'Montserrat';font-size:0.65em;color:#e08b7a;margin-top:12px;display:none;"></div>
     </div>
 
+    <!-- Frequently Asked Questions -->
     <div class="faq-footer">
       <details>
         <summary><span class="faq-indicator"></span>Do I own the score after renting it?</summary>
@@ -1131,8 +1130,14 @@
   </div>
 </div>
 
-<audio id="mainAudio"></audio>
+<!-- Single Shared HTML5 Audio Element for Cue Previews -->
+<audio id="mainAudio" preload="metadata"></audio>
 
+<!-- ==========================================================================
+     7. MODALS (CHECKOUT, SUCCESS, CATEGORY BROWSER, CUE PREVIEW PLAYER)
+     ========================================================================== -->
+
+<!-- Single-Suite Checkout Modal -->
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
     <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
@@ -1148,6 +1153,7 @@
   </div>
 </div>
 
+<!-- Post-Payment Download & Confirmation Modal -->
 <div class="success-modal" id="successModal" aria-hidden="true" role="dialog" aria-label="Payment successful">
   <div class="success-inner">
     <div class="success-mark" aria-hidden="true">✓</div>
@@ -1170,7 +1176,7 @@
   </div>
 </div>
 
-<!-- ── CATEGORY MODAL (NEW) ───────────────────────────────── -->
+<!-- Category Browser Modal (Search, Instrument Filters, Pagination) -->
 <div class="cat-modal" id="catModal" aria-hidden="true" role="dialog" aria-label="Browse Category">
   <div class="cat-modal-inner">
     <button type="button" class="cat-modal-close" id="catModalClose" aria-label="Close">✕</button>
@@ -1184,7 +1190,6 @@
         <input type="text" id="catSearch" class="cat-search-input" placeholder="Search themes or instruments..." autocomplete="off">
       </div>
       
-      <!-- Filter Dropdown -->
       <div class="cat-filter-dropdown">
         <button type="button" class="cat-filter-toggle" id="catFilterToggle">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/></svg>
@@ -1193,20 +1198,15 @@
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
         </button>
         <div class="cat-filter-panel" id="catFilterPanel">
-          <div class="cat-filters" id="catFilters">
-            <!-- Filter chips will be injected here -->
-          </div>
+          <div class="cat-filters" id="catFilters"></div>
         </div>
       </div>
 
       <button type="button" class="cat-clear-btn" id="catClearBtn">Clear Filters</button>
     </div>
 
-    <div class="cat-results" id="catResults">
-      <!-- Suites will be injected here -->
-    </div>
+    <div class="cat-results" id="catResults"></div>
 
-    <!-- Pagination Controls -->
     <div class="cat-pagination" id="catPagination">
       <button type="button" class="cat-page-btn" id="catPrevBtn">← Previous 10</button>
       <div class="cat-page-info">
@@ -1216,15 +1216,13 @@
       <button type="button" class="cat-page-btn" id="catNextBtn">Next 10 →</button>
     </div>
 
-    <!-- Collapse Controls (Shows when Load All is active) -->
     <div class="cat-collapse-wrap" id="catCollapseWrap">
       <button type="button" class="cat-collapse-btn" id="catCollapseBtn">← Collapse List</button>
     </div>
-
   </div>
 </div>
 
-<!-- ── CUE MODAL ──────────────────────────────────────────── -->
+<!-- Cue Preview Player Modal (3 Cues per Suite with Scrubber & Volume) -->
 <div class="cue-modal" id="cueModal" aria-hidden="true" role="dialog" aria-label="Preview cues">
   <div class="cue-modal-inner">
     <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close">✕</button>
@@ -1237,6 +1235,9 @@
   </div>
 </div>
 
+<!-- ==========================================================================
+     8. SCRIPT 1 — NAVIGATION DRAWER & ACTIVE ROUTE HIGHLIGHTING
+     ========================================================================== -->
 <script>
   (function () {
     var toggle   = document.getElementById('menuToggle');
@@ -1256,7 +1257,6 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
     panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
 
-    var current = window.location.pathname.replace(/\.html?$/i, '').replace(/\/$/, '');
     var links = panel.querySelectorAll('a.menu-link');
     var matched = null;
     links.forEach(function (link) {
@@ -1271,11 +1271,12 @@
   })();
 </script>
 
+<!-- ==========================================================================
+     9. SCRIPT 2 — DATA FETCHING, CATALOGUE FILTERING, AUDIO SCRUBBER & CHECKOUT
+     Fetches published categories and scores from D1 via master-brain worker.
+     ========================================================================== -->
 <script>
-  /* ═══════════════════════════════════════════════════════════════
-     🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
-     ═══════════════════════════════════════════════════════════════ */
-    fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1")
+  fetch("https://master-brain.noelgrass.workers.dev/api/data?table=categories&published=1")
     .then(res => res.json())
     .then(allCats => {
        const categories = allCats.filter(c => c.section === 'scores');
@@ -1288,6 +1289,7 @@
     })
     .catch(err => console.error("Failed to load score categories:", err));
 
+  // Resolves preview audio URL (supports relative worker paths or direct R2 file keys)
   function buildPreviewUrl(previewPath) {
     if (previewPath && previewPath.startsWith('/')) {
       return "https://master-brain.noelgrass.workers.dev" + previewPath;
@@ -1297,14 +1299,13 @@
 
   function initScoresApp(categories, scoresData) {
     var SCORES = scoresData.map(s => {
-      // Parse the JSON cues string from the DB back into an array
       const cuesArr = JSON.parse(s.cues || "[]");
       return {
         cat: s.folder,
         code: s.id,
         title: s.title,
         desc: cuesArr.map(c => c.desc),
-        cues: cuesArr, // full cue objects with preview_path
+        cues: cuesArr,
         amount: s.price
       };
     });
@@ -1312,11 +1313,14 @@
     var mount = document.getElementById('shelvesMount');
     if (!mount) return;
 
+    // Audio player & scrubber state
     var audio = document.getElementById('mainAudio');
     var currentCueId = null;
-    var pendingSeekTime = null; // Tracks drag position while audio is buffering
+    var pendingSeekFraction = null; // Stores 0..1 seek ratio while audio buffers
+    var isDragging = false;          // True while user holds mouse/finger on scrubber
+    var activeWrap = null;
 
-    // ── CATEGORY MODAL REFS ───────────────────────────────────
+    // Category Modal DOM references
     var catModal      = document.getElementById('catModal');
     var catModalClose = document.getElementById('catModalClose');
     var catModalTitle = document.getElementById('catModalTitle');
@@ -1324,20 +1328,18 @@
     var catClearBtn   = document.getElementById('catClearBtn');
     var catResults    = document.getElementById('catResults');
     
-    // Filter Dropdown Refs
     var catFilterToggle = document.getElementById('catFilterToggle');
     var catFilterPanel  = document.getElementById('catFilterPanel');
     var catFilterBadge  = document.getElementById('catFilterBadge');
     var catFilters      = document.getElementById('catFilters');
 
-    // Pagination Refs
-    var catPagination = document.getElementById('catPagination');
-    var catPrevBtn    = document.getElementById('catPrevBtn');
-    var catNextBtn    = document.getElementById('catNextBtn');
-    var catPageInfo   = document.getElementById('catPageInfo');
-    var catLoadAllBtn = document.getElementById('catLoadAllBtn');
+    var catPagination   = document.getElementById('catPagination');
+    var catPrevBtn      = document.getElementById('catPrevBtn');
+    var catNextBtn      = document.getElementById('catNextBtn');
+    var catPageInfo     = document.getElementById('catPageInfo');
+    var catLoadAllBtn   = document.getElementById('catLoadAllBtn');
     var catCollapseWrap = document.getElementById('catCollapseWrap');
-    var catCollapseBtn = document.getElementById('catCollapseBtn');
+    var catCollapseBtn  = document.getElementById('catCollapseBtn');
 
     var activeCategory = null;
     var searchQuery = '';
@@ -1347,7 +1349,7 @@
     var isLoadAll = false;
     var currentFilteredSuites = [];
 
-    // ── CUE MODAL REFS ────────────────────────────────────────
+    // Cue Preview Modal DOM references
     var cueModal        = document.getElementById('cueModal');
     var cueModalClose   = document.getElementById('cueModalClose');
     var cueModalLabel   = document.getElementById('cueModalLabel');
@@ -1356,12 +1358,14 @@
     var cueModalBody    = document.getElementById('cueModalBody');
     var cueModalActions = document.getElementById('cueModalActions');
 
+    // Formats seconds into M:SS countdown display
     function fmt(sec) {
-      if (isNaN(sec)) return "0:00";
+      if (isNaN(sec) || sec < 0) return "0:00";
       var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
       return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
+    // Deduplicates instrument tags across all 3 cues in a suite
     function buildMasterInstrumentList(descArray) {
       if (!descArray || !Array.isArray(descArray)) return '';
       var all = [];
@@ -1377,7 +1381,7 @@
       return all.join(' · ');
     }
 
-    // Builds ONLY the cue rows (used inside the modal now)
+    // Renders the 3 cue rows inside the Cue Preview Modal
     function buildCueRowsHtml(suite) {
       var cueCount = 3;
       var cuesHtml = '';
@@ -1407,7 +1411,7 @@
       return cuesHtml;
     }
 
-    // Builds the suite row HTML
+    // Renders a single suite row inside the Category Modal
     function buildSuiteHtml(suite) {
       return (
         '<div class="suite" data-code="' + suite.code + '">' +
@@ -1435,7 +1439,7 @@
       );
     }
 
-    // Builds the compact category row (main page)
+    // Renders a top-level category row on the main storefront
     function buildCategoryRowHtml(category) {
       var folderCode = category.folder_code;
       var suites = SCORES.filter(function (s) { return s.cat === folderCode; });
@@ -1459,7 +1463,7 @@
 
     mount.innerHTML = '<div class="shelves" style="text-align:left;margin-top:20px;">' + categories.map(buildCategoryRowHtml).join('') + '</div>';
 
-    // ── CATEGORY MODAL LOGIC ──────────────────────────────────
+    // ── CATEGORY BROWSER, SEARCH & INSTRUMENT FILTERING ─────────
     function getUniqueInstruments(suites) {
       var all = [];
       suites.forEach(function(suite) {
@@ -1473,8 +1477,7 @@
 
     function filterSuites(suites) {
       var q = searchQuery.toLowerCase().trim();
-      var filtered = suites.filter(function(suite) {
-        // 1. Search Query Match (Title, Code, Instruments, Desc)
+      return suites.filter(function(suite) {
         var instString = buildMasterInstrumentList(suite.desc).toLowerCase();
         var descString = suite.desc.join(' ').toLowerCase();
         var textMatch = !q || 
@@ -1483,14 +1486,12 @@
                         instString.includes(q) ||
                         descString.includes(q);
 
-        // 2. Filter Chips Match (OR Logic - must have AT LEAST ONE active chip)
         var chipMatch = activeFilters.length === 0 || activeFilters.some(function(filter) {
           return instString.includes(filter.toLowerCase());
         });
 
         return textMatch && chipMatch;
       });
-      return filtered;
     }
 
     function renderCategoryResults() {
@@ -1506,7 +1507,6 @@
         return;
       }
 
-      // Handle Pagination Logic
       var totalItems = currentFilteredSuites.length;
       var totalPages = Math.ceil(totalItems / itemsPerPage);
       
@@ -1521,8 +1521,8 @@
       }
 
       catResults.innerHTML = paginatedSuites.map(buildSuiteHtml).join('');
+      if (window.syncMainPageButtons) window.syncMainPageButtons();
 
-      // Update Pagination Controls
       if (isLoadAll) {
         catPagination.style.display = 'none';
         catCollapseWrap.style.display = 'flex';
@@ -1541,12 +1541,7 @@
         catLoadAllBtn.innerText = 'Load All (' + totalItems + ')';
       }
 
-      // Toggle clear button visibility
-      if (searchQuery || activeFilters.length > 0) {
-        catClearBtn.style.display = 'inline-block';
-      } else {
-        catClearBtn.style.display = 'none';
-      }
+      catClearBtn.style.display = (searchQuery || activeFilters.length > 0) ? 'inline-block' : 'none';
     }
 
     function updateFilterUI() {
@@ -1585,8 +1580,6 @@
 
       catModalTitle.textContent = category.label;
       catSearch.value = '';
-      
-      // Reset filter dropdown state
       catFilterToggle.classList.remove('open');
       catFilterPanel.classList.remove('open');
 
@@ -1596,7 +1589,6 @@
       catModal.classList.add('open');
       catModal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('no-scroll');
-      
       catResults.scrollTop = 0;
     }
 
@@ -1604,9 +1596,7 @@
       catModal.classList.remove('open');
       catModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('no-scroll');
-      
       stopCue();
-      
       activeCategory = null;
     }
 
@@ -1623,25 +1613,17 @@
       renderCategoryResults();
     });
 
-    // Filter Dropdown Toggle
     catFilterToggle.addEventListener('click', function() {
       catFilterToggle.classList.toggle('open');
       catFilterPanel.classList.toggle('open');
     });
 
-    // Filter Chips Click
     catFilters.addEventListener('click', function(e) {
       var chip = e.target.closest('.cat-filter-chip');
       if (!chip) return;
       var inst = chip.getAttribute('data-inst');
-      
       var idx = activeFilters.indexOf(inst);
-      if (idx > -1) {
-        activeFilters.splice(idx, 1);
-      } else {
-        activeFilters.push(inst);
-      }
-      
+      if (idx > -1) { activeFilters.splice(idx, 1); } else { activeFilters.push(inst); }
       currentPage = 1;
       isLoadAll = false;
       buildFilterChips();
@@ -1658,45 +1640,23 @@
       renderCategoryResults();
     });
 
-    // Pagination Events
     catPrevBtn.addEventListener('click', function() {
-      if (currentPage > 1) {
-        currentPage--;
-        renderCategoryResults();
-        catResults.scrollTop = 0;
-      }
+      if (currentPage > 1) { currentPage--; renderCategoryResults(); catResults.scrollTop = 0; }
     });
 
     catNextBtn.addEventListener('click', function() {
-      if (currentPage < Math.ceil(currentFilteredSuites.length / itemsPerPage)) {
-        currentPage++;
-        renderCategoryResults();
-        catResults.scrollTop = 0;
-      }
+      if (currentPage < Math.ceil(currentFilteredSuites.length / itemsPerPage)) { currentPage++; renderCategoryResults(); catResults.scrollTop = 0; }
     });
 
-    catLoadAllBtn.addEventListener('click', function() {
-      isLoadAll = true;
-      renderCategoryResults();
-    });
+    catLoadAllBtn.addEventListener('click', function() { isLoadAll = true; renderCategoryResults(); });
+    catCollapseBtn.addEventListener('click', function() { isLoadAll = false; currentPage = 1; renderCategoryResults(); catResults.scrollTop = 0; });
 
-    catCollapseBtn.addEventListener('click', function() {
-      isLoadAll = false;
-      currentPage = 1;
-      renderCategoryResults();
-      catResults.scrollTop = 0;
-    });
-
-    // Main page shelf row click
     mount.addEventListener('click', function(e) {
       var shelfRow = e.target.closest('.shelf');
-      if (shelfRow) {
-        var catCode = shelfRow.getAttribute('data-cat');
-        openCategoryModal(catCode);
-      }
+      if (shelfRow) { openCategoryModal(shelfRow.getAttribute('data-cat')); }
     });
 
-    // ── OPEN / CLOSE CUE MODAL ─────────────────────────────────
+    // ── CUE PREVIEW MODAL & AUDIO PLAYBACK ENGINE ──────────────
     function openCueModal(code) {
       var suite = SCORES.find(function (s) { return s.code === code; });
       if (!suite) return;
@@ -1706,7 +1666,6 @@
       cueModalInstr.textContent = buildMasterInstrumentList(suite.desc);
       cueModalBody.innerHTML = buildCueRowsHtml(suite);
       
-      // Inject the Buy and Add to Cart buttons into the modal footer
       cueModalActions.innerHTML = 
         '<button type="button" class="action-buy" data-id="' + suite.code + '" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '" style="font-size: 0.75em;">' +
           '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
@@ -1717,23 +1676,20 @@
           'Add to Cart' +
         '</button>';
 
+      if (window.syncMainPageButtons) window.syncMainPageButtons();
+
       cueModal.classList.add('open');
       cueModal.setAttribute('aria-hidden', 'false');
-      // We don't add .no-scroll here because cat-modal is already open and managing it
 
-      // Auto-play first cue
       var firstCueBtn = cueModalBody.querySelector('.cue-play');
       if (firstCueBtn) {
-        var id = firstCueBtn.getAttribute('data-cue-id');
-        var url = firstCueBtn.getAttribute('data-url');
-        playCue(id, url);
+        playCue(firstCueBtn.getAttribute('data-cue-id'), firstCueBtn.getAttribute('data-url'));
       }
     }
 
     function closeCueModal() {
       cueModal.classList.remove('open');
       cueModal.setAttribute('aria-hidden', 'true');
-      // Don't remove .no-scroll if cat-modal is still open
       if (!catModal.classList.contains('open')) {
         document.body.classList.remove('no-scroll');
       }
@@ -1747,7 +1703,7 @@
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && cueModal.classList.contains('open')) {
         closeCueModal();
-        e.stopPropagation(); // Prevent closing category modal at the same time
+        e.stopPropagation();
       }
     });
 
@@ -1755,7 +1711,7 @@
       if (!currentCueId) return;
       var id = currentCueId;
       currentCueId = null;
-      pendingSeekTime = null;
+      pendingSeekFraction = null;
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + id + '"]');
       if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
@@ -1768,14 +1724,14 @@
         if (time) time.textContent = '0:00';
       }
 
-      if (audio) { audio.pause(); audio.src = ""; audio.load(); }
+      if (audio) { audio.pause(); audio.removeAttribute('src'); audio.load(); }
     }
 
     function playCue(cueId, url) {
       if (!audio) return;
       audio.pause();
       currentCueId = cueId;
-      pendingSeekTime = null; // Reset pending seek when loading a new track
+      pendingSeekFraction = null;
       audio.src = url;
       audio.load();
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
@@ -1784,19 +1740,14 @@
       if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
     }
 
-    // ── CLICK ROUTER (Category Modal Results) ───────────────────
     catResults.addEventListener('click', function(e) {
       var previewBtn = e.target.closest('.action-preview');
       if (previewBtn) {
         e.preventDefault();
-        var code = previewBtn.getAttribute('data-code');
-        openCueModal(code);
-        return;
+        openCueModal(previewBtn.getAttribute('data-code'));
       }
-      
     });
 
-    // ── CLICK ROUTER (Cue Modal) ─────────────────────────────
     function handleCueAreaClick(e) {
       var volIcon = e.target.closest('.volume-icon');
       if (volIcon) {
@@ -1841,36 +1792,39 @@
         }
 
         playCue(cueId, url);
-        return;
       }
     }
 
     cueModalBody.addEventListener('click', handleCueAreaClick);
 
     cueModalBody.addEventListener('input', function(e) {
-      if (e.target.classList.contains('volume-slider')) {
-        if (audio) {
-          audio.volume = e.target.value;
-        }
+      if (e.target.classList.contains('volume-slider') && audio) {
+        audio.volume = e.target.value;
       }
     });
 
-    if (audio) {
-      audio.addEventListener('loadedmetadata', function () {
-        if (pendingSeekTime !== null && audio.duration) {
-          audio.currentTime = pendingSeekTime;
-          pendingSeekTime = null;
-        }
-      });
+    // ── SCRUBBER / SEEKING LOGIC (FIXED) ───────────────────────
+    // Applies any pending 0..1 seek fraction once duration & byte ranges are ready
+    function applyPendingSeek() {
+      if (pendingSeekFraction !== null && audio.duration && isFinite(audio.duration)) {
+        audio.currentTime = pendingSeekFraction * audio.duration;
+        pendingSeekFraction = null;
+      }
+    }
 
+    if (audio) {
+      audio.addEventListener('loadedmetadata', applyPendingSeek);
+      audio.addEventListener('canplay', applyPendingSeek);
+
+      // Update progress bar & timer only when user is NOT actively dragging
       audio.addEventListener('timeupdate', function () {
-        if (!currentCueId) return;
+        if (!currentCueId || isDragging) return;
         var cue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
         if (!cue) return;
         var bar = cue.querySelector('.cue-progress-bar');
         var time = cue.querySelector('.cue-time');
 
-        if (audio.duration && !isNaN(audio.duration)) {
+        if (audio.duration && isFinite(audio.duration)) {
           var pct = (audio.currentTime / audio.duration) * 100;
           if (bar) bar.style.width = pct + '%';
           if (time) time.textContent = fmt(audio.duration - audio.currentTime);
@@ -1879,91 +1833,108 @@
 
       audio.addEventListener('ended', function () { stopCue(); });
 
-      var isDragging = false;
-      var activeWrap = null;
-
       function getCueIdFromWrap(wrap) {
         var cue = wrap.closest('.cue');
         return cue ? cue.getAttribute('data-cue-id') : null;
       }
 
+      // Calculates 0..1 fraction from pointer event, updates bar + timer immediately,
+      // and sets audio.currentTime (or queues pendingSeekFraction if still buffering)
       function seekToEvent(e, wrap) {
         var rect = wrap.getBoundingClientRect();
-        var clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        var clientX = (e.touches && e.touches.length) ? e.touches[0].clientX : e.clientX;
+        if (typeof clientX !== 'number' || !rect.width) return;
+
         var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-        
-        // Update visual bar immediately for responsiveness
+
         var bar = wrap.querySelector('.cue-progress-bar');
         if (bar) bar.style.width = (pct * 100) + '%';
 
-        if (audio.duration && !isNaN(audio.duration)) {
-          audio.currentTime = pct * audio.duration;
-          pendingSeekTime = null;
+        var cue = wrap.closest('.cue');
+        var time = cue ? cue.querySelector('.cue-time') : null;
+
+        if (audio.duration && isFinite(audio.duration) && audio.readyState >= 1) {
+          var targetSec = pct * audio.duration;
+          if (time) time.textContent = fmt(audio.duration - targetSec);
+          try {
+            audio.currentTime = targetSec;
+            pendingSeekFraction = null;
+          } catch (err) {
+            pendingSeekFraction = pct;
+          }
         } else {
-          pendingSeekTime = pct; 
+          pendingSeekFraction = pct;
         }
       }
 
       function handleSeekStart(e, wrap) {
         var wrapCueId = getCueIdFromWrap(wrap);
-        
-        if (wrapCueId && wrapCueId !== currentCueId) {
+        if (!wrapCueId) return;
+
+        isDragging = true;
+        activeWrap = wrap;
+
+        // If user clicked/dragged a different cue's bar, load & start it at that spot
+        if (wrapCueId !== currentCueId) {
           stopCue();
           var playBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
-          if (!playBtn) return;
+          if (!playBtn) { isDragging = false; activeWrap = null; return; }
+
           var url = playBtn.getAttribute('data-url');
           currentCueId = wrapCueId;
-          audio.src = url;
-          
           playBtn.innerHTML = '❚❚';
           playBtn.classList.add('playing');
 
-          pendingSeekTime = null;
-          var rect = wrap.getBoundingClientRect();
-          var clientX = e.touches ? e.touches[0].clientX : e.clientX;
-          var pct = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
-          
-          audio.addEventListener('loadedmetadata', function onMeta() {
-            audio.removeEventListener('loadedmetadata', onMeta);
-            audio.currentTime = pct * audio.duration;
-            audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
-          });
+          seekToEvent(e, wrap);
+          audio.src = url;
+          audio.load();
+          audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
           return;
         }
-        
-        isDragging = true;
-        activeWrap = wrap;
+
         seekToEvent(e, wrap);
+      }
+
+      function handleSeekEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+        activeWrap = null;
       }
 
       cueModalBody.addEventListener('mousedown', function (e) {
         var wrap = e.target.closest('.cue-progress');
         if (wrap) { handleSeekStart(e, wrap); e.preventDefault(); }
       });
-      document.addEventListener('mousemove', function (e) { if (isDragging && activeWrap) seekToEvent(e, activeWrap); });
-      document.addEventListener('mouseup', function () { isDragging = false; activeWrap = null; });
+      document.addEventListener('mousemove', function (e) {
+        if (isDragging && activeWrap) seekToEvent(e, activeWrap);
+      });
+      document.addEventListener('mouseup', handleSeekEnd);
 
       cueModalBody.addEventListener('touchstart', function (e) {
         var wrap = e.target.closest('.cue-progress');
         if (wrap) { handleSeekStart(e, wrap); }
       }, { passive: true });
-      document.addEventListener('touchmove', function (e) { if (isDragging && activeWrap) seekToEvent(e, activeWrap); }, { passive: true });
-      document.addEventListener('touchend', function () { isDragging = false; activeWrap = null; });
+      document.addEventListener('touchmove', function (e) {
+        if (isDragging && activeWrap) seekToEvent(e, activeWrap);
+      }, { passive: true });
+      document.addEventListener('touchend', handleSeekEnd);
+      document.addEventListener('touchcancel', handleSeekEnd);
     }
 
-    var STORAGE_KEY = "noelgrass_email";
-    var modal      = document.getElementById('checkoutModal');
-    var modalTitle = document.getElementById('checkoutTitle');
-    var modalPrice = document.getElementById('checkoutPrice');
-    var emailInput = document.getElementById('checkoutEmail');
-    var errorEl    = document.getElementById('checkoutError');
-    var submitBtn  = document.getElementById('checkoutSubmit');
-    var cancelBtn  = document.getElementById('checkoutCancel');
-    var closeBtn   = document.getElementById('checkoutClose');
+    // ── SINGLE-SUITE PAYSTACK CHECKOUT & ORDER RECOVERY ─────────
+    var STORAGE_KEY    = "noelgrass_email";
+    var modal          = document.getElementById('checkoutModal');
+    var modalTitle     = document.getElementById('checkoutTitle');
+    var modalPrice     = document.getElementById('checkoutPrice');
+    var emailInput     = document.getElementById('checkoutEmail');
+    var errorEl        = document.getElementById('checkoutError');
+    var submitBtn      = document.getElementById('checkoutSubmit');
+    var cancelBtn      = document.getElementById('checkoutCancel');
+    var closeBtn       = document.getElementById('checkoutClose');
     var successModal   = document.getElementById('successModal');
     var successDoneBtn = document.getElementById('successDone');
     var downloadBtn    = document.getElementById('downloadLinkBtn');
-    var pendingBtn = null;
+    var pendingBtn     = null;
 
     function showError(m) { if (errorEl) { errorEl.textContent = m; errorEl.classList.add('visible'); } }
     function clearError() { if (errorEl) { errorEl.textContent = ''; errorEl.classList.remove('visible'); } }
@@ -1987,8 +1958,6 @@
       document.body.style.overflow = ''; clearError();
     }
 
-    // Delegate globally so Buy buttons in category results and the dynamically-built
-    // cue modal footer always open the same checkout flow.
     document.addEventListener('click', function (e) {
       var buyBtn = e.target.closest('.action-buy');
       if (buyBtn) {
@@ -2056,6 +2025,7 @@
       }
     });
 
+    // Reference code auto-formatter & download link recovery
     var recBtn   = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
     var recError = document.getElementById('recoveryError');
@@ -2093,8 +2063,10 @@
   }
 </script>
 
+<!-- ==========================================================================
+     10. SCRIPT 3 — POST-PAYMENT REDIRECT HANDLER (?vault=1&ref=...)
+     ========================================================================== -->
 <script>
-  // Check if the user is returning from a successful payment
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('vault') === '1') {
     const ref = urlParams.get('ref');
@@ -2125,9 +2097,9 @@
   }
 </script>
 
-<!-- ═══════════════════════════════════════════════════════════════
-     🛒 SCRIPT 4 — CART SYSTEM
-     ═══════════════════════════════════════════════════════════════ -->
+<!-- ==========================================================================
+     11. SCRIPT 4 — MULTI-ITEM SHOPPING CART (LOCALSTORAGE + PAYSTACK CHECKOUT)
+     ========================================================================== -->
 <style>
   @keyframes cartGlow {
     0% { box-shadow: 0 10px 30px rgba(0,0,0,0.8), 0 0 15px 2px rgba(197,168,128,0.15); }
@@ -2177,7 +2149,6 @@
 
   .cart-total-row { display: flex; justify-content: space-between; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.2em; color: var(--gold-pale); margin-bottom: 30px; }
 
-  /* Main Page Quantity Controls */
   .main-qty-controls {
     display: inline-flex;
     align-items: center;
@@ -2238,7 +2209,6 @@
 <script>
   window.cartData = JSON.parse(localStorage.getItem('noelgrass_cart') || '[]');
 
-  // Function to sync the Main Page buttons with the Cart data
   window.syncMainPageButtons = function() {
     var buttons = document.querySelectorAll('.js-add-to-cart-btn');
     
@@ -2261,7 +2231,6 @@
     });
   };
 
-  // Function to update the Cart Modal UI
   window.updateCartUI = function() {
     var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
     var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
@@ -2294,7 +2263,6 @@
     window.syncMainPageButtons();
   };
 
-  // Master function to handle +/- from BOTH main page and modal
   window.handleMainQty = function(id, delta, event) {
     if(event) {
       event.preventDefault();
@@ -2305,69 +2273,21 @@
     
     if (itemIndex > -1) {
       window.cartData[itemIndex].qty += delta;
-      
       if (window.cartData[itemIndex].qty <= 0) {
         window.cartData.splice(itemIndex, 1);
       }
-      
       localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
-      
-      // Update the cart modal
-      var count = window.cartData.reduce(function(sum, item) { return sum + item.qty; }, 0);
-      var total = window.cartData.reduce(function(sum, item) { return sum + (item.amount * item.qty) / 100; }, 0);
-      document.getElementById('floatingCartCount').innerText = count;
-      document.getElementById('cartTotalPrice').innerText = total.toLocaleString();
-      
-      var btn = document.getElementById('floatingCartBtn');
-      if (count > 0) { btn.classList.add('show'); } else { btn.classList.remove('show'); }
-
-      var list = document.getElementById('cartItemsList');
-      if (count === 0) {
-        list.innerHTML = '<p style="font-family: \'Playfair Display\', serif; font-style: italic; color: var(--muted); text-align: center;">Your cart is empty.</p>';
-      } else {
-        list.innerHTML = window.cartData.map(function(item) {
-          return '<div class="cart-item-row">' +
-            '<div class="cart-item-info">' +
-              '<span class="cart-item-title">' + item.title + '</span>' +
-              '<span class="cart-item-price">KES ' + ((item.amount * item.qty) / 100).toLocaleString() + '</span>' +
-            '</div>' +
-            '<div class="cart-qty-controls">' +
-              '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', -1, event)">-</button>' +
-              '<span class="cart-qty-num">' + item.qty + '</span>' +
-              '<button class="cart-qty-btn" onclick="window.handleMainQty(\'' + item.id + '\', 1, event)">+</button>' +
-            '</div>' +
-          '</div>';
-        }).join('');
-      }
-      
-      // Update ONLY the button on the main page that was clicked
-      var buttons = document.querySelectorAll('.js-add-to-cart-btn');
-      buttons.forEach(function(btn) {
-        if (btn.getAttribute('data-id') === id) {
-          var updatedItem = window.cartData.find(function(i) { return i.id === id; });
-          
-          if (updatedItem) {
-            var qtySpan = btn.querySelector('.main-qty-num');
-            if (qtySpan) qtySpan.innerText = updatedItem.qty;
-          } else {
-            btn.innerHTML = 
-              '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>' +
-              'Add to Cart';
-          }
-        }
-      });
+      window.updateCartUI();
     }
   };
 
   window.addToCart = function(id, title, amount) {
     var existingItem = window.cartData.find(function(item) { return item.id === id; });
-    
     if (existingItem) {
       existingItem.qty += 1;
     } else {
       window.cartData.push({ id: id, title: title, amount: amount, qty: 1 });
     }
-    
     localStorage.setItem('noelgrass_cart', JSON.stringify(window.cartData));
     window.updateCartUI();
     
