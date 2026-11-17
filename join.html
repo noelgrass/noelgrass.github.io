@@ -238,11 +238,11 @@
     transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
     overflow-y: auto;
     overscroll-behavior: contain;
-    pointer-events: none; /* FIX: prevents blocking clicks when hidden */
+    pointer-events: none;
   }
   .eg-modal-overlay.open { 
     opacity: 1; 
-    pointer-events: auto; /* FIX: enables clicking when open */
+    pointer-events: auto;
   }
 
   .eg-modal-panel {
@@ -352,6 +352,25 @@
     animation: fadeUp 0.5s ease-out both;
   }
   .eg-confirm-line strong { color: var(--gold-pale); font-style: normal; font-weight: 600; }
+
+  /* =========================================
+     FIX: Guarantee form inputs are always clickable
+     ========================================= */
+  .custom-form,
+  .custom-input {
+    pointer-events: auto !important;
+    user-select: auto !important;
+    cursor: text !important;
+    position: relative;
+    z-index: 50;
+  }
+
+  .menu-backdrop {
+    pointer-events: none !important;
+  }
+  .menu-panel.open .menu-backdrop {
+    pointer-events: auto !important;
+  }
 </style>
 </head>
 <body>
@@ -469,6 +488,14 @@
 
 <script>
   (function () {
+    // =========================================
+    // 0. SAFEGUARD: Ensure page is not stuck in menu-open state
+    // =========================================
+    document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('menu-lock');
+    document.documentElement.style.removeProperty('--scrollbar-width');
+    document.body.style.paddingRight = '';
+
     // =========================================
     // 1. MENU LOGIC (Unchanged)
     // =========================================
