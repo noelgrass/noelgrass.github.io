@@ -238,8 +238,12 @@
     transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
     overflow-y: auto;
     overscroll-behavior: contain;
+    pointer-events: none; /* FIX: prevents blocking clicks when hidden */
   }
-  .eg-modal-overlay.open { opacity: 1; }
+  .eg-modal-overlay.open { 
+    opacity: 1; 
+    pointer-events: auto; /* FIX: enables clicking when open */
+  }
 
   .eg-modal-panel {
     position: relative;
