@@ -7,11 +7,11 @@
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
 
 <style>
   :root {
-    --bg: #030303; --surface: #0a0a0a; --gold: #C5A880; --gold-dim: #7a6b4f;
+    --bg: #030303; --surface: #0a0a0a; --gold: #C5A880; --gold-soft: #B9975C; --gold-pale: #E8D5B5; --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3; --muted: #5c5750; --rule: #1a1a1a;
     --scrollbar-width: 0px;
   }
@@ -54,7 +54,14 @@
   .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
   body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
 
-  /* Menu Panel */
+  /* =========================================
+     MENU PANEL (from join page)
+     ========================================= */
+  @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
+  @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+  @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+
   .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
   .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
@@ -99,15 +106,12 @@
   .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
   .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
-  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
+  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; pointer-events: none !important; }
+  .menu-panel.open .menu-backdrop { pointer-events: auto !important; }
 
   /* Animations */
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
-  @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
-  @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
-  @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
   @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
 
   /* Hero Section */
@@ -164,7 +168,7 @@
   .btn-ticket {
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.85em; letter-spacing: 0.3em; 
     text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(197,168,128,0.4); 
-    padding: 20px 50px; cursor: pointer; transition: all 0.4s ease;
+    padding: 20px 50px; cursor: pointer; transition: all 0.4s ease; text-decoration: none;
   }
   .tour-date:hover .btn-ticket {
     border-color: var(--gold); background: rgba(197,168,128,0.15); box-shadow: 0 0 40px rgba(197,168,128,0.3); color: #fff;
