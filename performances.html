@@ -66,6 +66,8 @@
   a:hover { color: #FCFCF7; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
   @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
@@ -74,14 +76,26 @@
   @keyframes tileHoverGlow { 0% { box-shadow: 0 0 35px 6px rgba(197,168,128,0.55), 0 0 80px 20px rgba(197,168,128,0.28), 0 0 130px 40px rgba(197,168,128,0.10); } 50% { box-shadow: 0 0 50px 12px rgba(197,168,128,0.75), 0 0 110px 35px rgba(197,168,128,0.40), 0 0 170px 60px rgba(197,168,128,0.16); } 100% { box-shadow: 0 0 35px 6px rgba(197,168,128,0.55), 0 0 80px 20px rgba(197,168,128,0.28), 0 0 130px 40px rgba(197,168,128,0.10); } }
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
-  .topnav { position: sticky; top: 0; z-index: 300; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); padding: 30px 50px; display: flex; align-items: center; justify-content: center; animation: fadeUp 0.8s ease-out both; contain: layout paint; border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; }
+  /* Navigation — matching join page */
+  .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
+  .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; text-decoration: none; }
   .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55), 0 0 40px rgba(197,168,128,0.25); }
+  .menu-toggle { background: transparent; border: 0; cursor: pointer; padding: 8px 4px; display: inline-flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); transition: color 0.3s ease; -webkit-tap-highlight-color: transparent; position: relative; }
+  .menu-toggle:hover { color: #FBFAFC; }
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; position: relative; }
+  .hamburger span { display: block; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transform-origin: center; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease, width 0.45s cubic-bezier(0.22,1,0.36,1); }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
+  .menu-toggle::after { content: ''; position: absolute; left: 34px; right: 4px; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; transition: transform 0.4s ease; }
+  .menu-toggle:hover::after { transform: scaleX(1); transform-origin: left center; }
   
   .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
   body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
 
-  /* Menu styles remain identical for consistency */
+  /* =========================================
+     MENU PANEL (from join page)
+     ========================================= */
   .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
   .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
@@ -114,14 +128,15 @@
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.82s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.94s forwards; }
-  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); text-decoration: none; padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
   .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
   .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
   .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
   .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
-  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
+  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; pointer-events: none !important; }
+  .menu-panel.open .menu-backdrop { pointer-events: auto !important; }
 
   /* Main Page Layout */
   .page { max-width: 1400px; margin: 0 auto; padding: 100px 40px 120px; text-align: center; }
@@ -216,10 +231,10 @@
   /* Footer CTA */
   .footer-cta { margin-top: 120px; padding-top: 80px; border-top: 1px solid rgba(255,255,255,0.08); text-align: center; animation: fadeUp 1s ease-out both; }
   .footer-cta .join-line { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.5em; color: var(--offwhite); margin: 0 0 20px; line-height: 1.75; }
-  .footer-cta .join-line a { border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 4px; transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
+  .footer-cta .join-line a { border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 4px; transition: transform 0.3s ease, border-color 0.3s ease, color 0.3s ease; text-decoration: none; }
   .footer-cta .join-line a:hover { transform: translateX(4px); border-bottom-color: var(--gold); color: #FCFCF7; }
   .footer-cta .secondary-line { font-family: 'Montserrat', sans-serif; font-size: 0.85em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin: 30px 0 0; line-height: 1.7; }
-  .footer-cta .secondary-line a { border-bottom: 1px solid rgba(197,168,128,0.35); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; }
+  .footer-cta .secondary-line a { border-bottom: 1px solid rgba(197,168,128,0.35); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; text-decoration: none; }
   .footer-cta .secondary-line a:hover { border-bottom-color: var(--gold); color: var(--gold-pale); }
 
   .signature { margin-top: 80px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 0.9s; }
@@ -248,14 +263,33 @@
     .coming-soon p { font-size: 1.3em; }
     .footer-cta .join-line { font-size: 1.2em; }
     .footer-cta .secondary-line { font-size: 0.75em; }
-  }
 
+    .topnav { padding: 18px 22px; }
+    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
+    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
+    .hamburger { width: 20px; height: 13px; }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
+    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
+    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
+    .menu-close .x { width: 15px; height: 15px; }
+    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
+    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
+    .menu-section { margin-bottom: 20px; }
+    .menu-links { gap: 16px; }
+    .menu-bottom { margin-top: 10px; }
+  }
 </style>
 </head>
 <body>
 
 <header class="topnav">
   <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span>Menu</span>
+  </button>
 </header>
 
 <nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
@@ -264,7 +298,8 @@
     <div class="menu-top">
       <span class="menu-heading">Menu</span>
       <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
-        Close <span class="x" aria-hidden="true"></span>
+        Close
+        <span class="x" aria-hidden="true"></span>
       </button>
     </div>
     <div class="menu-columns">
@@ -334,8 +369,13 @@
 </div>
 
 <script>
-  /* Menu Script */
+  /* Menu Script — matching join page */
   (function () {
+    document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('menu-lock');
+    document.documentElement.style.removeProperty('--scrollbar-width');
+    document.body.style.paddingRight = '';
+
     var toggle   = document.getElementById('menuToggle');
     var panel    = document.getElementById('menuPanel');
     var closeBtn = document.getElementById('menuClose');
@@ -344,7 +384,6 @@
     function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
     function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
     function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
-
     function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
     function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
 
