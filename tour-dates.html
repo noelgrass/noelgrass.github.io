@@ -268,7 +268,10 @@
     try {
       const statusRes = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
       const statusData = await statusRes.json();
-      const isActive = statusData && statusData.value === '1';
+      
+      // Handle array response from master-brain
+      const setting = Array.isArray(statusData) ? statusData[0] : statusData;
+      const isActive = setting && setting.value === '1';
 
       if (!isActive) {
         renderHiatus();
@@ -311,6 +314,7 @@
       titleEl.style.display = 'none'; labelEl.style.display = 'none'; divider.style.display = 'none';
       hero.style.minHeight = '30vh';
     } else {
+      titleEl.style.display = 'block'; labelEl.style.display = 'block'; divider.style.display = 'block';
       titleEl.textContent = firstDate.tour_title;
     }
   }
@@ -350,10 +354,13 @@
     try {
       const s = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
       const sd = await s.json();
-      const active = sd && sd.value === '1';
+      // Array check here too!
+      const setting = Array.isArray(sd) ? sd[0] : sd;
+      const active = setting && setting.value === '1';
+      
       document.getElementById('tourPageActive').checked = active;
       updateStatusBadge(active);
-    } catch(e){}
+    } catch(e){ console.error(e); }
 
     // 2. Load Table
     try {
@@ -373,24 +380,36 @@
         let badges = `<span class="badge ${pub?'badge-active':'badge-inactive'}">${pub?'Published':'Draft'}</span>`;
         if(so) badges += ` <span class="badge badge-inactive">Sold Out</span>`;
         
-        return `<tr><td style="font-family:'Cormorant Garamond',serif;font-size:1.1em">${dt}</td><td>${item.venue||'—'}</td><td>${item.city||'—'}</td><td>${badges}</td><td><button class="btn-admin" style="padding:6px 14px;font-size:0.6em" onclick="editDate('${item.id}')">Edit</button></td></tr>`;
+        return `<tr><td style="font-family:'Cormorant Garamond',serif;font-size:1.1em">${dt}</td><td>${item.venue||'—'}</td><td>${item.city||'—'}</td><td>${badges}</td><td><button class="btn-admin" style="padding:6px 14px;font-size:0.6em" onclick="openModal('${item.id}')">Edit</button></td></tr>`;
       }).join('');
     } catch(e){ console.error(e); }
   }
 
   async function toggleTourPageStatus() {
     const val = document.getElementById('tourPageActive').checked ? '1' : '0';
+    updateStatusBadge(val === '1');
+    
+    // We must use FormData for the admin-api worker!
+    const fd = new FormData();
+    fd.append('value', val);
+
     try {
-      // Send to ADMIN_API (which accepts POSTs)
-      await fetch(`${ADMIN_API}/toggle-page-status`, { 
+      const res = await fetch(`${ADMIN_API}/toggle-page-status`, { 
         method:'POST', 
-        headers:{'Content-Type':'application/json', 'Authorization': `Bearer ${token}`}, 
-        body:JSON.stringify({ value: val }) 
+        headers:{'Authorization': `Bearer ${token}`}, 
+        body: fd 
       });
-      updateStatusBadge(val==='1');
+      
+      if(!res.ok) throw new Error("Rejected");
+      
+      // If toggle was successful, update the public view automatically
+      initPublic();
+      
     } catch(e){ 
-      alert("Failed to update status"); 
-      document.getElementById('tourPageActive').checked = !document.getElementById('tourPageActive').checked; 
+      alert("Failed to update status."); 
+      const currentState = document.getElementById('tourPageActive').checked;
+      document.getElementById('tourPageActive').checked = !currentState; 
+      updateStatusBadge(!currentState);
     }
   }
 
@@ -430,11 +449,10 @@
   async function saveTourDate(e) {
     e.preventDefault();
     
-    // We must use FormData for the admin-api worker
     const fd = new FormData();
     fd.append('type', 'tour');
     fd.append('original_id', document.getElementById('td_id').value);
-    fd.append('id', document.getElementById('td_id').value); // Send both to be safe
+    fd.append('id', document.getElementById('td_id').value); 
     fd.append('tour_title', document.getElementById('td_tour_title').value.trim());
     fd.append('event_date', document.getElementById('td_event_date').value);
     fd.append('venue', document.getElementById('td_venue').value.trim());
@@ -455,11 +473,7 @@
       if(res.ok) {
         closeModal(); 
         loadAdminData();
-        // Refresh the public view in the background
-        document.getElementById('tourTitleMain').style.display = 'block';
-        document.getElementById('tourLabel').style.display = 'block';
-        document.getElementById('tourDivider').style.display = 'block';
-        initPublic();
+        initPublic(); // Refresh the public view with new data
       } else {
         alert("Failed to save date.");
       }
