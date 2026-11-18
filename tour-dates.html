@@ -125,8 +125,8 @@
     animation: fadeUp 1.2s ease-out 0.2s forwards;
   }
   .tour-title-main {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.5rem, 10vw, 9rem); 
-    line-height: 1.0; color: var(--offwhite); letter-spacing: 0.01em; margin-bottom: 40px;
+    font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(2.8rem, 5vw, 4.5rem); 
+    line-height: 1.1; color: var(--offwhite); letter-spacing: 0.08em; margin-bottom: 30px;
     opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
     text-shadow: 0 0 100px rgba(237,234,227,0.1);
   }
@@ -159,7 +159,7 @@
   .td-day { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 1.1em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-dim); transition: color 0.4s ease; }
   .tour-date:hover .td-day { color: var(--gold); }
   .td-info { display: flex; flex-direction: column; gap: 12px; }
-  .td-venue { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 3.2em; line-height: 1.1; color: var(--offwhite); transition: all 0.4s ease; }
+  .td-venue { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.4em; line-height: 1.2; color: var(--offwhite); transition: all 0.4s ease; }
   .tour-date:hover .td-venue { color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.3); }
   .td-location { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.85em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
 
@@ -193,7 +193,7 @@
   .hiatus-content { text-align: center; padding: 100px 40px; animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) both; }
   .hiatus-diamond { display: inline-block; width: 10px; height: 10px; background: var(--gold); transform: rotate(45deg); margin-bottom: 40px; opacity: 0.8; animation: pulse 3s infinite alternate; }
   .hiatus-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.85em; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 30px; }
-  .hiatus-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 300; color: var(--offwhite); margin-bottom: 20px; letter-spacing: 0.02em; }
+  .hiatus-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--offwhite); margin-bottom: 20px; letter-spacing: 0.05em; }
   .hiatus-text { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; line-height: 1.8; color: var(--muted); max-width: 600px; margin: 0 auto 50px; }
   .hiatus-btn { 
     display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.3em; 
@@ -241,7 +241,8 @@
   .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
 
   @media (max-width: 768px) {
-    .hero-cinematic { min-height: 60vh; padding: 80px 24px 40px; }
+    .hero-cinematic { min-height: 50vh; padding: 60px 24px 40px; }
+    .tour-title-main { font-size: 2.5rem; margin-bottom: 20px; }
     .tour-container { padding: 20px 24px 80px; }
     .tour-date { grid-template-columns: 1fr; gap: 20px; padding: 40px 20px; }
     .td-action { justify-content: flex-start; margin-top: 10px; }
