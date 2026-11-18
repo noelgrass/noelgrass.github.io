@@ -7,10 +7,9 @@
 
 <title>Noel Grass — Tour Dates | Live Performance Schedule</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
-<meta name="description" content="Tour dates and live performances of original works by Noel Grass, neoclassical pianist and contemporary classical composer from Kenya, touring across East Africa and internationally.">
+<meta name="description" content="Tour dates and live performances of original works by Noel Grass, neoclassical pianist and contemporary classical composer from Kenya.">
 <link rel="canonical" href="https://noelgrass.com/tour-dates">
 
 <meta property="og:type" content="website">
@@ -30,7 +29,7 @@
   "@id": "https://noelgrass.com/tour-dates#webpage",
   "url": "https://noelgrass.com/tour-dates",
   "name": "Tour Dates — Noel Grass",
-  "description": "Tour dates and live performances of original works by Noel Grass, neoclassical pianist and contemporary classical composer from Kenya.",
+  "description": "Tour dates and live performances of original works by Noel Grass.",
   "mainEntity": {
     "@type": "Person",
     "@id": "https://noelgrass.com/#person"
@@ -40,7 +39,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -51,7 +50,7 @@
     --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
     --muted: #9a958c;
-    --rule: #2a2a2a;
+    --rule: #1a1a1a;
     --scrollbar-width: 0px;
   }
 
@@ -63,47 +62,42 @@
   a { color: var(--gold); text-decoration: none; transition: color 0.25s ease; }
   a:hover { color: #FCFCF7; }
 
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+  
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
-  .topnav { position: sticky; top: 0; z-index: 300; background: var(--bg); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
-  .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; position: relative; padding-bottom: 2px; }
-  .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55), 0 0 40px rgba(197,168,128,0.25); }
-  .menu-toggle { background: transparent; border: 0; cursor: pointer; padding: 8px 4px; display: inline-flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); transition: color 0.3s ease; -webkit-tap-highlight-color: transparent; position: relative; }
+  /* Navigation */
+  .topnav { position: sticky; top: 0; z-index: 300; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); padding: 22px 40px; display: flex; align-items: center; justify-content: space-between; animation: fadeUp 0.8s ease-out both; contain: layout paint; }
+  .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); transition: color 0.3s ease, text-shadow 0.5s ease; }
+  .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55); }
+  
+  .menu-toggle { background: transparent; border: 0; cursor: pointer; padding: 8px 4px; display: inline-flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); transition: color 0.3s ease; -webkit-tap-highlight-color: transparent; }
   .menu-toggle:hover { color: #FBFAFC; }
-  .hamburger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; position: relative; }
-  .hamburger span { display: block; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transform-origin: center; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease, width 0.45s cubic-bezier(0.22,1,0.36,1); }
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; }
+  .hamburger span { display: block; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transform-origin: center; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease; }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
-  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; }
   .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
-  .menu-toggle::after { content: ''; position: absolute; left: 34px; right: 4px; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; transition: transform 0.4s ease; }
-  .menu-toggle:hover::after { transform: scaleX(1); transform-origin: left center; }
-  .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
-  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
 
-  .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
+  /* Menu Panel */
+  .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; }
   .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
   .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
-  .menu-top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+  .menu-top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex; align-items: center; justify-content: space-between; }
   .menu-heading { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: inline-flex; align-items: center; gap: 20px; opacity: 0; }
   .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s forwards; }
   .menu-heading::after { content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
   .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; }
-  .menu-close { background: transparent; border: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px; transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease; opacity: 0; -webkit-tap-highlight-color: transparent; }
+  .menu-close { background: transparent; border: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px; transition: color 0.4s ease; opacity: 0; }
   .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards; }
-  .menu-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197,168,128,0.7), 0 0 45px rgba(197,168,128,0.3); }
-  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; transition: transform 0.4s ease; }
-  .menu-close:hover .x { transform: rotate(90deg); }
-  .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
-  .menu-close .x::before { transform: rotate(45deg); }
-  .menu-close .x::after { transform: rotate(-45deg); }
+  .menu-close:hover { color: #FCFCF7; }
   .menu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; justify-content: center; align-items: start; text-align: center; max-width: 900px; width: 100%; }
   .menu-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
-  .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease; }
+  .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; }
   .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
   .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 0; }
@@ -120,8 +114,8 @@
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.06s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.18s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.30s forwards; }
-  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
-  .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
+  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55); }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
   .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
   .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
@@ -129,44 +123,143 @@
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
-  .page { max-width: 780px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.25em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
-  .hero-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 80px; line-height: 1.75; animation: fadeUp 1s ease-out both; animation-delay: 0.4s; }
+  .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
 
-  .coming-soon { margin: 60px auto 60px; max-width: 640px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 0.6s; }
-  .coming-soon .ornament { display: inline-block; width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); opacity: 0.85; margin-bottom: 40px; }
-  .coming-soon .label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 30px; }
-  .coming-soon p { font-family: 'Playfair Display', Georgia, serif; font-size: 1.05em; line-height: 1.85; color: var(--offwhite); margin: 0 auto 20px; max-width: 560px; }
-  .coming-soon p.italic { font-style: italic; color: var(--muted); font-size: 0.95em; margin-top: 30px; }
+  /* Cinematic Hero Section */
+  .hero-cinematic {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 40px;
+    background: radial-gradient(circle at center, rgba(20,20,20,0.4) 0%, #000000 100%);
+    overflow: hidden;
+  }
+  
+  /* Optional: Add a subtle noise texture or background image here if desired */
+  .hero-cinematic::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoiPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjAzIi8+PC9zdmc+');
+    opacity: 0.5;
+    pointer-events: none;
+  }
 
-  /* ===== TOUR DATE LAYOUT ===== */
-  .tour-list { text-align: left; max-width: 720px; margin: 0 auto 40px; }
+  .hero-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400;
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    margin-bottom: 24px;
+    animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) both;
+    text-shadow: 0 0 40px rgba(0,0,0,0.8);
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-subtitle {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.3em);
+    color: var(--gold-soft);
+    letter-spacing: 0.05em;
+    max-width: 600px;
+    line-height: 1.6;
+    animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* RY X Style Tour List */
+  .tour-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 80px 40px 100px;
+  }
+
+  .tour-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
   .tour-date {
     display: grid;
-    grid-template-columns: 130px 1fr auto;
-    gap: 30px;
-    align-items: center;
-    padding: 28px 0;
+    grid-template-columns: 140px 1fr auto;
+    gap: 40px;
+    align-items: baseline;
+    padding: 36px 0;
     border-bottom: 1px solid var(--rule);
-    transition: border-color 0.4s ease;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0;
+    transform: translateY(20px);
   }
-  .tour-date:last-of-type { border-bottom: none; }
-  .tour-date:hover { border-bottom-color: var(--gold-soft); }
-  
-  /* Date column */
-  .tour-date-when { display: flex; flex-direction: column; gap: 2px; }
-  .tour-date-day { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-soft); }
-  .tour-date-main-date { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.3em; color: var(--offwhite); line-height: 1.2; }
-  
-  /* Venue + City column */
-  .tour-date-what { display: flex; flex-direction: column; gap: 6px; }
-  .tour-date-venue { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; font-size: 1.4em; color: var(--offwhite); letter-spacing: 0.02em; line-height: 1.3; }
-  .tour-date:hover .tour-date-venue { color: #FCFCF7; }
-  .tour-date-location { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
-  .tour-date-time { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.72em; letter-spacing: 0.05em; color: var(--gold-pale); margin-top: 4px; }
 
-  /* Button column */
-  .tour-date-btn {
+  .tour-date.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .tour-date:last-child { border-bottom: none; }
+
+  /* Date Column */
+  .tour-date-day {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.75em;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    line-height: 1.4;
+  }
+
+  /* Venue & Location Column */
+  .tour-date-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tour-date-venue {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 500;
+    font-size: 1.6em;
+    color: var(--offwhite);
+    line-height: 1.2;
+    transition: color 0.4s ease, text-shadow 0.4s ease;
+  }
+
+  .tour-date:hover .tour-date-venue {
+    color: #FCFCF7;
+    text-shadow: 0 0 20px rgba(237, 234, 227, 0.15);
+  }
+
+  .tour-date-location {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.72em;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* Action Column */
+  .tour-date-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 140px;
+  }
+
+  .tour-btn {
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 0.68em;
@@ -174,63 +267,145 @@
     text-transform: uppercase;
     color: var(--gold-soft);
     background: transparent;
-    border: 1px solid rgba(185,151,92,0.45);
-    padding: 10px 22px;
+    border: 1px solid rgba(185,151,92,0.4);
+    padding: 12px 28px;
     cursor: pointer;
-    position: relative;
-    transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.5s ease, transform 0.35s ease;
-    -webkit-tap-highlight-color: transparent;
+    transition: all 0.35s ease;
     display: inline-block;
     text-align: center;
     white-space: nowrap;
   }
-  .tour-date-btn:hover { color: #FCFCF7; border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 18px rgba(197,168,128,0.28); transform: translateY(-1px); }
-  .tour-date-btn.sold-out { color: var(--muted); border-color: var(--rule); pointer-events: none; opacity: 0.6; }
-  .tour-date-btn.free { color: var(--gold-pale); border-color: var(--gold); }
 
-  @media (max-width: 700px) {
-    .page { padding: 60px 22px 60px; }
-    h1 { font-size: 1.9em; letter-spacing: 0.18em; margin-bottom: 24px; }
-    .hero-subhead { font-size: 1.05em; margin-bottom: 60px; }
-    .coming-soon { margin: 40px auto 40px; }
-    .coming-soon .ornament { margin-bottom: 32px; }
-    .coming-soon .label { font-size: 0.65em; letter-spacing: 0.28em; margin-bottom: 24px; }
-    .coming-soon p { font-size: 1em; }
-
-    .tour-date { grid-template-columns: 1fr; gap: 14px; padding: 24px 0; }
-    .tour-date-when { flex-direction: row; align-items: baseline; gap: 8px; }
-    .tour-date-main-date { font-size: 1.15em; }
-    .tour-date-venue { font-size: 1.25em; }
-    .tour-date-btn { justify-self: start; font-size: 0.65em; padding: 9px 18px; margin-top: 6px; }
-
-    .topnav { padding: 18px 22px; }
-    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
-    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
-    .hamburger { width: 20px; height: 13px; }
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
-    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
-    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
-    .menu-top { top: 22px; left: 24px; right: 24px; }
-    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
-    .menu-close .x { width: 15px; height: 15px; }
-    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
-    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
-    .menu-section { margin-bottom: 20px; }
-    .menu-links { gap: 16px; }
-    .menu-bottom { margin-top: 10px; }
-    .footer-cta { margin-top: 60px; padding-top: 40px; }
-    .footer-cta .join-line { font-size: 1em; }
-    .footer-cta .secondary-line { font-size: 0.88em; }
-    .signature { margin-top: 50px; }
-    .signature-logo { height: 55px; }
-    .footer-location { text-align: center; padding-right: 0; margin-top: 20px; }
+  .tour-btn:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    background: rgba(197,168,128,0.06);
+    box-shadow: 0 0 20px rgba(197,168,128,0.15);
   }
 
-  @media (max-width: 380px) {
-    .wordmark { font-size: 0.8em; letter-spacing: 0.22em; }
-    .menu-toggle { font-size: 0.65em; letter-spacing: 0.18em; }
-    .menu-toggle::after { left: 30px; }
-    .menu-link { font-size: 1.15em; letter-spacing: 0.18em; }
+  .tour-status-soldout {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.68em;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Coming Soon State */
+  .coming-soon {
+    text-align: center;
+    padding: 100px 40px;
+    animation: fadeUp 1s ease-out both;
+  }
+  .coming-soon .ornament {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    margin-bottom: 30px;
+    opacity: 0.8;
+  }
+  .coming-soon .label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.72em;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-pale);
+    display: block;
+    margin-bottom: 24px;
+  }
+  .coming-soon p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05em;
+    line-height: 1.8;
+    color: var(--offwhite);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  /* Footer CTA */
+  .footer-cta {
+    text-align: center;
+    padding: 60px 40px 40px;
+    border-top: 1px solid var(--rule);
+    margin-top: 40px;
+  }
+  .footer-cta .join-line {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05em;
+    color: var(--offwhite);
+    margin-bottom: 16px;
+  }
+  .footer-cta .secondary-line {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72em;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  /* Small Centered Footer Label */
+  .signature-footer {
+    text-align: center;
+    padding: 40px 0 60px;
+  }
+  .signature-label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.65em;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    display: inline-block;
+    position: relative;
+    padding-bottom: 8px;
+  }
+  .signature-label::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 1px;
+    background: var(--gold-dim);
+    opacity: 0.5;
+  }
+
+  .footer-location {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65em;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    padding-bottom: 40px;
+  }
+  .footer-sep { margin: 0 8px; opacity: 0.4; }
+
+  /* Responsive */
+  @media (max-width: 700px) {
+    .hero-cinematic { height: 60vh; min-height: 400px; padding: 0 24px; }
+    .hero-title { letter-spacing: 0.2em; }
+    
+    .tour-container { padding: 60px 24px 80px; }
+    .tour-date {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      padding: 32px 0;
+    }
+    .tour-date-day { font-size: 0.7em; }
+    .tour-date-venue { font-size: 1.4em; }
+    .tour-date-action { justify-content: flex-start; margin-top: 8px; }
+    .tour-btn, .tour-status-soldout { padding: 10px 20px; }
+    
+    .topnav { padding: 18px 24px; }
+    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
+    .menu-columns { grid-template-columns: 1fr; gap: 40px; }
   }
 </style>
 </head>
@@ -261,7 +436,7 @@
           <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
           <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
           <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
-          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link current" aria-current="page">Tour Dates</a></li>
           <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
           <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
         </ul>
@@ -280,11 +455,14 @@
 </nav>
 
 <div class="page-wrap" id="pageWrap">
-  <div class="page">
+  
+  <!-- Cinematic Hero -->
+  <section class="hero-cinematic">
+    <h1 class="hero-title">Tour Dates</h1>
+    <p class="hero-subtitle">Live performances of original works, shaped for the room.</p>
+  </section>
 
-    <h1>Tour Dates</h1>
-    <p class="hero-subhead">Live performance of original works, shaped for the room.</p>
-
+  <div class="tour-container">
     <div id="tourDatesMount"></div>
 
     <div class="footer-cta">
@@ -296,8 +474,9 @@
       </p>
     </div>
 
-    <div class="signature">
-      <img src="images/noel-grass-logo.png" alt="Noel Grass" class="signature-logo">
+    <!-- Small Centered Footer Label -->
+    <div class="signature-footer">
+      <span class="signature-label">Noel Grass</span>
     </div>
 
     <p class="footer-location">
@@ -329,49 +508,22 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
     panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
 
-    function normalizePath(path) {
-      path = path.split('?')[0].split('#')[0];
-      path = path.replace(/\.html?$/i, '');
-      if (path.length > 1 && path.endsWith('/')) { path = path.slice(0, -1); }
-      path = path.replace(/\/index$/i, '/');
-      if (!path.startsWith('/')) path = '/' + path;
-      return path;
-    }
-    var current = normalizePath(window.location.pathname);
-    var links = panel.querySelectorAll('a.menu-link');
-    var matched = null;
-    links.forEach(function (link) {
-      var href = link.getAttribute('href');
-      if (!href) return;
-      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
-      var linkPath = normalizePath(href);
-      if (linkPath === current) { matched = link; }
-    });
-    if (!matched && (current === '/' || current === '')) {
-      links.forEach(function (link) {
-        var href = link.getAttribute('href');
-        if (href === './' || href === '/' || href === 'index.html') { matched = link; }
-      });
-    }
-    if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
-
     var yearEl = document.getElementById('year');
     if (yearEl) yearEl.textContent = new Date().getFullYear();
   })();
-</script>
 
-<script>
   /* ═══════════════════════════════════════════════════════════════
-     📅 LIVE DATA FETCHING FROM API (DATABASE)
+     📅 CINEMATIC TOUR DATES RENDERER WITH FIXED SOLD OUT LOGIC
      ═══════════════════════════════════════════════════════════════ */
- fetch("https://master-brain.noelgrass.workers.dev/api/data?table=tour_dates&published=1")
+  fetch("https://master-brain.noelgrass.workers.dev/api/data?table=tour_dates&published=1")
     .then(res => res.json())
     .then(data => {
       renderTourDates(data);
+      initScrollAnimations();
     })
     .catch(err => {
       console.error("Failed to load tour dates:", err);
-      document.getElementById('tourDatesMount').innerHTML = '<p style="color:#aaa;">Failed to load tour dates. Please try again later.</p>';
+      document.getElementById('tourDatesMount').innerHTML = '<p style="color:#9a958c; text-align:center; padding:60px 0;">Unable to load tour dates. Please try again later.</p>';
     });
 
   function renderTourDates(TOUR_DATES) {
@@ -385,7 +537,6 @@
           '<span class="ornament" aria-hidden="true"></span>' +
           '<span class="label">Coming Soon</span>' +
           '<p>Tour dates are being confirmed. The next performances will be announced here first.</p>' +
-          '<p class="italic">For booking enquiries, please reach out directly.</p>' +
         '</div>';
       return;
     }
@@ -396,40 +547,59 @@
     });
 
     var listHtml = sorted.map(function (show) {
-      // Format the date for display (e.g., "Sat 14 June")
+      // Format the date for display (e.g., "SAT 14 JUN")
       let dateObj = new Date(show.event_date);
       let dateLabel = "";
       if (!isNaN(dateObj)) {
-        dateLabel = dateObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'long' });
+        dateLabel = dateObj.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }).toUpperCase();
       } else {
-        dateLabel = show.event_date; // fallback if formatting fails
+        dateLabel = show.event_date.toUpperCase();
       }
 
-      // Default to "available" unless ticket_url is missing (then "free" or "soldout" logic applies)
-      let status = "available"; 
-      if (!show.ticket_url) status = "soldout"; 
+      // ✅ FIXED: Check explicit sold_out flag from database
+      var isSoldOut = parseInt(show.sold_out) === 1;
+      var hasTicketUrl = show.ticket_url && show.ticket_url.trim() !== '' && show.ticket_url !== '#';
 
-      var btnClass = 'tour-date-btn' + (status === 'soldout' ? ' sold-out' : '') + (status === 'free' ? ' free' : '');
-      var btnLabel = status === 'soldout' ? 'Sold Out' : (status === 'free' ? 'Free Entry' : 'Buy Tickets');
-      var href = show.ticket_url || '#';
-      var target = (status !== 'soldout' && href !== '#') ? ' target="_blank" rel="noopener"' : '';
-      var urlPart = (status === 'soldout') ? '' : ' href="' + href + '"' + target;
+      var actionHtml = '';
+      
+      if (isSoldOut) {
+        // Render static "SOLD OUT" label
+        actionHtml = '<span class="tour-status-soldout">Sold Out</span>';
+      } else if (hasTicketUrl) {
+        // Render premium outlined "TICKETS" button
+        actionHtml = '<a href="' + show.ticket_url + '" target="_blank" rel="noopener" class="tour-btn">Tickets</a>';
+      }
+      // If not sold out AND no ticket URL → hide action area entirely (minimalist)
 
       return (
         '<div class="tour-date">' +
-          '<div class="tour-date-when">' +
-            '<span class="tour-date-day">' + dateLabel + '</span>' +
-          '</div>' +
-          '<div class="tour-date-what">' +
+          '<div class="tour-date-day">' + dateLabel + '</div>' +
+          '<div class="tour-date-info">' +
             '<span class="tour-date-venue">' + show.venue + '</span>' +
             '<span class="tour-date-location">' + show.city + (show.country ? ', ' + show.country : '') + '</span>' +
           '</div>' +
-          '<a class="' + btnClass + '"' + urlPart + '>' + btnLabel + '</a>' +
+          '<div class="tour-date-action">' + actionHtml + '</div>' +
         '</div>'
       );
     }).join('');
 
     mount.innerHTML = '<div class="tour-list">' + listHtml + '</div>';
+  }
+
+  // Scroll-triggered fade-in animation for tour dates
+  function initScrollAnimations() {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.tour-date').forEach(function(el) {
+      observer.observe(el);
+    });
   }
 </script>
 
