@@ -266,7 +266,8 @@
   // --- PUBLIC RENDER LOGIC (USES READ_API) ---
   async function initPublic() {
     try {
-      const statusRes = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
+      // ADD &t= to bypass Cloudflare Cache
+      const statusRes = await fetch(`${READ_API}?table=settings&key=tour_page_active&t=${Date.now()}`);
       const statusData = await statusRes.json();
       
       // Handle array response from master-brain
@@ -278,7 +279,8 @@
         return;
       }
 
-      const datesRes = await fetch(`${READ_API}?table=tour_dates&published=1`);
+      // ADD &t= to bypass Cloudflare Cache
+      const datesRes = await fetch(`${READ_API}?table=tour_dates&published=1&t=${Date.now()}`);
       const dates = await datesRes.json();
       
       if (!dates || !dates.length) { renderHiatus(); return; }
@@ -352,7 +354,7 @@
   async function loadAdminData() {
     // 1. Load Page Status
     try {
-      const s = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
+      const s = await fetch(`${READ_API}?table=settings&key=tour_page_active&t=${Date.now()}`);
       const sd = await s.json();
       // Array check here too!
       const setting = Array.isArray(sd) ? sd[0] : sd;
