@@ -11,31 +11,21 @@
 
 <style>
   :root {
-    --bg: #030303;
-    --surface: #0a0a0a;
-    --gold: #C5A880;
-    --gold-dim: #7a6b4f;
-    --offwhite: #EDEAE3;
-    --muted: #5c5750;
-    --rule: #1a1a1a;
+    --bg: #030303; --surface: #0a0a0a; --gold: #C5A880; --gold-dim: #7a6b4f;
+    --offwhite: #EDEAE3; --muted: #5c5750; --rule: #1a1a1a;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
   body { 
-    background: var(--bg); color: var(--offwhite); 
-    font-family: 'Playfair Display', Georgia, serif; 
-    -webkit-font-smoothing: antialiased; overflow-x: hidden;
-    position: relative;
+    background: var(--bg); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; 
+    -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
   }
 
-  /* Cinematic Film Grain Texture */
+  /* Cinematic Textures */
   body::before {
     content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
-
-  /* Atmospheric Vignette */
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
     background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
@@ -48,230 +38,392 @@
   .menu-toggle { background: none; border: none; color: var(--offwhite); cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; transition: opacity 0.3s; }
   .menu-toggle:hover { opacity: 1; }
 
-  /* Dynamic Hero Section */
+  /* Hero Section */
   .hero-cinematic {
-    min-height: 65vh; display: flex; flex-direction: column; 
-    align-items: center; justify-content: center; text-align: center; 
-    padding: 80px 40px 60px; position: relative;
-    transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+    min-height: 65vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    text-align: center; padding: 80px 40px 60px; position: relative; transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
   }
-
   .tour-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; 
-    letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold-dim); 
-    margin-bottom: 24px; opacity: 0; transform: translateY(10px);
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.45em; 
+    text-transform: uppercase; color: var(--gold-dim); margin-bottom: 24px; opacity: 0; transform: translateY(10px);
     animation: fadeUp 1s ease-out 0.2s forwards;
   }
-
   .tour-title-main {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300; 
-    font-size: clamp(2.8rem, 8vw, 6rem); line-height: 1.05; 
-    color: var(--offwhite); letter-spacing: 0.02em; margin-bottom: 30px;
-    opacity: 0; transform: translateY(20px);
-    animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.8rem, 8vw, 6rem); 
+    line-height: 1.05; color: var(--offwhite); letter-spacing: 0.02em; margin-bottom: 30px;
+    opacity: 0; transform: translateY(20px); animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
     text-shadow: 0 0 80px rgba(237,234,227,0.06);
   }
-
   .tour-divider {
-    width: 40px; height: 1px; background: var(--gold-dim); margin: 0 auto;
-    opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
+    width: 40px; height: 1px; background: var(--gold-dim); margin: 0 auto; opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
   }
 
-  /* RY X Style List with Spotlight Hover */
+  /* Tour List & Spotlight Effect */
   .tour-container { max-width: 850px; margin: 0 auto; padding: 40px 40px 120px; position: relative; z-index: 1; }
-  
   .tour-list { display: flex; flex-direction: column; position: relative; }
   
   .tour-date {
-    display: grid; grid-template-columns: 140px 1fr auto; gap: 40px; 
-    align-items: baseline; padding: 36px 20px; border-bottom: 1px solid var(--rule);
-    opacity: 0; transform: translateY(15px); transition: all 0.6s ease;
-    position: relative; z-index: 2;
+    display: grid; grid-template-columns: 140px 1fr auto; gap: 40px; align-items: baseline; 
+    padding: 36px 20px; border-bottom: 1px solid var(--rule); opacity: 0; transform: translateY(15px); 
+    transition: all 0.6s ease; position: relative; z-index: 2;
   }
   .tour-date.visible { opacity: 1; transform: translateY(0); }
   .tour-date:last-child { border-bottom: none; }
 
-  /* The Cinematic Spotlight Effect */
+  /* Spotlight Logic */
   .tour-list:hover .tour-date:not(:hover) { opacity: 0.35; filter: grayscale(0.4); }
   .tour-date:hover { 
-    opacity: 1 !important; filter: none !important; 
-    transform: translateX(8px); 
+    opacity: 1 !important; filter: none !important; transform: translateX(8px); 
     background: radial-gradient(circle at 30% 50%, rgba(197,168,128,0.06) 0%, transparent 60%);
     border-bottom-color: rgba(197,168,128,0.15);
   }
 
-  .td-day {
-    font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.7em; 
-    letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim);
-    transition: color 0.4s ease;
-  }
+  .td-day { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); transition: color 0.4s ease; }
   .tour-date:hover .td-day { color: var(--gold); }
-
   .td-info { display: flex; flex-direction: column; gap: 6px; }
-  .td-venue {
-    font-family: 'Cormorant Garamond', serif; font-weight: 500; 
-    font-size: 1.6em; color: var(--offwhite); transition: all 0.4s ease;
-  }
-  .tour-date:hover .td-venue { 
-    color: #fff; text-shadow: 0 0 25px rgba(255,255,255,0.12); 
-  }
-  
-  .td-location {
-    font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; 
-    letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
-  }
+  .td-venue { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.6em; color: var(--offwhite); transition: all 0.4s ease; }
+  .tour-date:hover .td-venue { color: #fff; text-shadow: 0 0 25px rgba(255,255,255,0.12); }
+  .td-location { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
 
-  /* Action Area */
+  /* Actions */
   .td-action { display: flex; align-items: center; justify-content: flex-end; min-width: 140px; }
-  
   .btn-ticket {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; 
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); 
-    background: transparent; border: 1px solid rgba(197,168,128,0.3); 
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.2em; 
+    text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(197,168,128,0.3); 
     padding: 12px 28px; cursor: pointer; transition: all 0.35s ease;
   }
   .tour-date:hover .btn-ticket {
-    border-color: var(--gold); background: rgba(197,168,128,0.08); 
-    box-shadow: 0 0 30px rgba(197,168,128,0.15); color: #fff;
+    border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 30px rgba(197,168,128,0.15); color: #fff;
   }
-
   .status-soldout {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; 
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.4;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.2em; 
+    text-transform: uppercase; color: var(--muted); opacity: 0.4;
   }
 
-  /* Footer Brand Label */
+  /* Footer Brand */
   .footer-brand { text-align: center; padding: 80px 0 40px; }
   .footer-brand span {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.6em; 
-    letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold-dim);
-    display: inline-block; position: relative; padding-bottom: 10px;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.6em; letter-spacing: 0.45em; 
+    text-transform: uppercase; color: var(--gold-dim); display: inline-block; position: relative; padding-bottom: 10px;
   }
   .footer-brand span::after {
     content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
     width: 24px; height: 1px; background: var(--gold-dim); opacity: 0.4;
   }
 
+  /* Admin Panel Styles (Embedded for single-file portability) */
+  .admin-wrapper { max-width: 900px; margin: 40px auto; padding: 0 40px; display: none; }
+  .admin-section { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 24px; margin-bottom: 30px; }
+  .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--rule); padding-bottom: 15px; }
+  .admin-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.4em; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; }
+  .btn-admin { font-family: 'Montserrat', sans-serif; font-size: 0.65em; letter-spacing: 0.2em; text-transform: uppercase; padding: 10px 20px; border-radius: 2px; cursor: pointer; border: 1px solid var(--gold); background: transparent; color: var(--gold); transition: all 0.3s; }
+  .btn-admin:hover { background: rgba(197,168,128,0.1); box-shadow: 0 0 15px rgba(197,168,128,0.15); }
+  .badge { font-size: 0.65em; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; display: inline-block; }
+  .badge-active { background: rgba(74,124,89,0.15); color: #6da37d; border: 1px solid rgba(74,124,89,0.3); }
+  .badge-inactive { background: rgba(140,74,74,0.15); color: #b36b6b; border: 1px solid rgba(140,74,74,0.3); }
+  
+  .data-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .data-table th { text-align: left; padding: 12px 16px; font-size: 0.6em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--rule); }
+  .data-table td { padding: 16px; border-bottom: 1px solid var(--rule); vertical-align: middle; font-size: 0.9em; }
+  .data-table tr:hover td { background: rgba(197,168,128,0.03); }
+  
+  .form-group { margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  label { display: block; font-size: 0.6em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  input[type="text"], input[type="date"], input[type="url"], input[type="number"] {
+    width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--rule); color: var(--offwhite);
+    padding: 10px 12px; font-family: 'Montserrat', sans-serif; font-size: 0.85em; border-radius: 2px;
+  }
+  input:focus { outline: none; border-color: var(--gold-dim); }
+  .checkbox-label { display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; }
+  .checkbox-label input { display: none; }
+  .checkmark { width: 16px; height: 16px; border: 1px solid var(--rule); border-radius: 2px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: all 0.2s; }
+  .checkbox-label input:checked + .checkmark { background: var(--gold); border-color: var(--gold); }
+  .checkbox-label input:checked + .checkmark::after { content: ''; width: 3px; height: 7px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); margin-bottom: 2px; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+  .modal-overlay.active { opacity: 1; pointer-events: auto; }
+  .modal-content { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; width: 100%; max-width: 500px; padding: 30px; transform: translateY(10px); transition: transform 0.3s; }
+  .modal-overlay.active .modal-content { transform: translateY(0); }
+  .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+  .modal-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3em; color: var(--gold); }
+  .close-btn { background: none; border: none; color: var(--muted); font-size: 1.5em; cursor: pointer; }
+  .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { to { opacity: 1; } }
-
   @media (max-width: 700px) {
     .hero-cinematic { min-height: 50vh; padding: 60px 24px 40px; }
     .tour-container { padding: 20px 24px 80px; }
     .tour-date { grid-template-columns: 1fr; gap: 12px; padding: 28px 20px; }
     .td-action { justify-content: flex-start; margin-top: 8px; }
-    .tour-date:hover { transform: translateX(0); } /* Disable shift on mobile for usability */
+    .tour-date:hover { transform: translateX(0); }
+    .admin-wrapper { padding: 0 20px; }
   }
 </style>
 </head>
 <body>
 
-<header class="topnav">
-  <a href="./" class="wordmark">Noel Grass</a>
-  <button class="menu-toggle" id="menuToggle">Menu</button>
-</header>
+<!-- PUBLIC VIEW -->
+<div id="publicView">
+  <header class="topnav">
+    <a href="./" class="wordmark">Noel Grass</a>
+    <button class="menu-toggle" onclick="toggleAdmin()">Admin</button>
+  </header>
 
-<div class="hero-cinematic" id="heroSection">
-  <div class="tour-label" id="tourLabel">Tour Dates</div>
-  <h1 class="tour-title-main" id="tourTitleMain"></h1>
-  <div class="tour-divider" id="tourDivider"></div>
+  <div class="hero-cinematic" id="heroSection">
+    <div class="tour-label" id="tourLabel">Tour Dates</div>
+    <h1 class="tour-title-main" id="tourTitleMain"></h1>
+    <div class="tour-divider" id="tourDivider"></div>
+  </div>
+
+  <div class="tour-container">
+    <div class="tour-list" id="tourListMount"></div>
+    <div class="footer-brand"><span>Noel Grass</span></div>
+  </div>
 </div>
 
-<div class="tour-container">
-  <div class="tour-list" id="tourListMount"></div>
-  
-  <div class="footer-brand">
-    <span>Noel Grass</span>
+<!-- ADMIN VIEW -->
+<div class="admin-wrapper" id="adminView">
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+    <h1 style="font-family:'Cormorant Garamond',serif; font-size:2em; color:var(--gold); letter-spacing:0.1em;">Tour Management</h1>
+    <button class="btn-admin" onclick="toggleAdmin()">Back to Site</button>
+  </div>
+
+  <!-- PAGE STATUS CONTROL -->
+  <div class="admin-section" style="border-color: var(--gold-dim);">
+    <div class="admin-header" style="border-bottom:none; margin-bottom:15px;">
+      <h2 style="font-size:1.1em;">Page Status</h2>
+      <span id="pageStatusBadge" class="badge badge-active">Active</span>
+    </div>
+    <label class="checkbox-label" style="margin-bottom:10px;">
+      <input type="checkbox" id="tourPageActive" checked onchange="toggleTourPageStatus()">
+      <span class="checkmark"></span>
+      <span style="font-family:'Montserrat',sans-serif; font-size:0.85em; color:var(--offwhite);">Show Tour Dates Publicly</span>
+    </label>
+    <p style="font-size:0.75em; color:var(--muted); line-height:1.5;">When unchecked, public page displays cinematic "Tour Hiatus" message regardless of database dates.</p>
+  </div>
+
+  <!-- DATES TABLE -->
+  <div class="admin-section">
+    <div class="admin-header">
+      <h2>Tour Dates</h2>
+      <button class="btn-admin" onclick="openModal()">+ Add Date</button>
+    </div>
+    <table class="data-table">
+      <thead><tr><th>Date</th><th>Venue</th><th>City</th><th>Status</th><th>Actions</th></tr></thead>
+      <tbody id="adminTableBody"><tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">Loading...</td></tr></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="tourModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modalTitle">Add Tour Date</h3>
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+    </div>
+    <form id="tourForm" onsubmit="saveTourDate(event)">
+      <input type="hidden" id="td_id">
+      <div class="form-group"><label>Tour Title</label><input type="text" id="td_tour_title" placeholder="e.g. The Stillness Tour"></div>
+      <div class="form-group"><label>Event Date *</label><input type="date" id="td_event_date" required></div>
+      <div class="form-row">
+        <div class="form-group"><label>Venue *</label><input type="text" id="td_venue" required></div>
+        <div class="form-group"><label>City / Country *</label><input type="text" id="td_city" required></div>
+      </div>
+      <div class="form-group"><label>Ticket Link</label><input type="url" id="td_ticket_url" placeholder="https://..."></div>
+      <div class="form-row">
+        <div class="form-group"><label>Sort Order</label><input type="number" id="td_sort_order" value="0"></div>
+        <div class="form-group" style="display:flex; align-items:flex-end; padding-bottom:4px;">
+          <label class="checkbox-label"><input type="checkbox" id="td_published" checked><span class="checkmark"></span>Publish</label>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group" style="display:flex; align-items:flex-end; padding-bottom:4px;">
+          <label class="checkbox-label"><input type="checkbox" id="td_hide_title"><span class="checkmark"></span>Hide Title</label>
+        </div>
+        <div class="form-group" style="display:flex; align-items:flex-end; padding-bottom:4px;">
+          <label class="checkbox-label"><input type="checkbox" id="td_sold_out"><span class="checkmark"></span>Sold Out</label>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-admin" style="border-color:var(--rule); color:var(--muted);" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn-admin">Save</button>
+      </div>
+    </form>
   </div>
 </div>
 
 <script>
-  const API_URL = "https://master-brain.noelgrass.workers.dev/api/data?table=tour_dates&published=1";
+  const API = "https://master-brain.noelgrass.workers.dev/api/data";
+  let isAdmin = false;
 
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(data => renderCinematicTour(data))
-    .catch(err => console.error("Tour load failed:", err));
+  // --- PUBLIC RENDER LOGIC ---
+  async function initPublic() {
+    try {
+      // Check Page Status First
+      const statusRes = await fetch(`${API}?table=settings&key=tour_page_active`);
+      const statusData = await statusRes.json();
+      const isActive = statusData && statusData.value === '1';
 
-  function renderCinematicTour(dates) {
-    const mount = document.getElementById('tourListMount');
-    const hero = document.getElementById('heroSection');
+      if (!isActive) {
+        renderHiatus();
+        return;
+      }
+
+      // Fetch Dates
+      const datesRes = await fetch(`${API}?table=tour_dates&published=1`);
+      const dates = await datesRes.json();
+      
+      if (!dates || !dates.length) { renderHiatus(); return; }
+      
+      const sorted = dates.sort((a,b) => (a.event_date||'').localeCompare(b.event_date||''));
+      renderHero(sorted[0]);
+      renderList(sorted);
+    } catch (err) { console.error("Init failed:", err); }
+  }
+
+  function renderHiatus() {
+    document.getElementById('tourLabel').style.display = 'none';
+    document.getElementById('tourTitleMain').style.display = 'none';
+    document.getElementById('tourDivider').style.display = 'none';
+    document.getElementById('heroSection').style.minHeight = '50vh';
+    
+    document.getElementById('tourListMount').innerHTML = `
+      <div style="text-align:center; padding:80px 40px; animation:fadeUp 1s ease-out both;">
+        <span style="display:inline-block; width:6px; height:6px; background:var(--gold); transform:rotate(45deg); margin-bottom:30px; opacity:0.8;"></span>
+        <span style="font-family:'Montserrat',sans-serif; font-weight:300; font-size:0.72em; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold-pale); display:block; margin-bottom:24px;">Tour Hiatus</span>
+        <p style="font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:1.1em; line-height:1.8; color:var(--offwhite); max-width:500px; margin:0 auto 30px;">Currently composing new works.<br>Live performances will resume shortly.</p>
+        <a href="join" style="font-family:'Montserrat',sans-serif; font-size:0.7em; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); border-bottom:1px solid rgba(197,168,128,0.3); padding-bottom:4px;">Join mailing list for first access →</a>
+      </div>`;
+  }
+
+  function renderHero(firstDate) {
     const titleEl = document.getElementById('tourTitleMain');
     const labelEl = document.getElementById('tourLabel');
     const divider = document.getElementById('tourDivider');
-
-    if (!dates || !dates.length) {
-      mount.innerHTML = '<p style="text-align:center; color:var(--muted); padding:60px 0; font-style:italic;">Dates are being confirmed.</p>';
-      return;
-    }
-
-    // Sort by date ascending
-    const sorted = dates.sort((a,b) => (a.event_date||'').localeCompare(b.event_date||''));
-
-    // 1. HANDLE TOUR TITLE VISIBILITY & DYNAMIC CONTENT
-    const firstDate = sorted[0];
-    const hasTitle = firstDate.tour_title && firstDate.tour_title.trim() !== '';
-    const isHidden = parseInt(firstDate.hide_title) === 1;
-
-    if (isHidden || !hasTitle) {
-      // Ultra-minimalist mode: Hide all hero text
-      titleEl.style.display = 'none';
-      labelEl.style.display = 'none';
-      divider.style.display = 'none';
-      hero.style.minHeight = '30vh'; 
+    const hero = document.getElementById('heroSection');
+    
+    if (parseInt(firstDate.hide_title) === 1 || !firstDate.tour_title) {
+      titleEl.style.display = 'none'; labelEl.style.display = 'none'; divider.style.display = 'none';
+      hero.style.minHeight = '30vh';
     } else {
       titleEl.textContent = firstDate.tour_title;
     }
+  }
 
-    // 2. RENDER LIST WITH SPOTLIGHT LOGIC
-    mount.innerHTML = sorted.map(show => {
-      const dateObj = new Date(show.event_date);
-      const dayStr = dateObj.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' }).toUpperCase();
-      
-      const isSoldOut = parseInt(show.sold_out) === 1;
+  function renderList(dates) {
+    const mount = document.getElementById('tourListMount');
+    mount.innerHTML = dates.map(show => {
+      const d = new Date(show.event_date).toLocaleDateString('en-GB', {weekday:'short', day:'numeric', month:'short'}).toUpperCase();
+      const soldOut = parseInt(show.sold_out) === 1;
       const hasTicket = show.ticket_url && show.ticket_url.trim() !== '';
+      
+      let action = '';
+      if (soldOut) action = '<span class="status-soldout">Sold Out</span>';
+      else if (hasTicket) action = `<a href="${show.ticket_url}" target="_blank" class="btn-ticket">Tickets</a>`;
 
-      let actionHtml = '';
-      if (isSoldOut) {
-        actionHtml = '<span class="status-soldout">Sold Out</span>';
-      } else if (hasTicket) {
-        actionHtml = `<a href="${show.ticket_url}" target="_blank" rel="noopener" class="btn-ticket">Tickets</a>`;
-      }
-
-      return `
-        <div class="tour-date">
-          <div class="td-day">${dayStr}</div>
-          <div class="td-info">
-            <span class="td-venue">${show.venue}</span>
-            <span class="td-location">${show.city}${show.country ? ', '+show.country : ''}</span>
-          </div>
-          <div class="td-action">${actionHtml}</div>
-        </div>
-      `;
+      return `<div class="tour-date">
+        <div class="td-day">${d}</div>
+        <div class="td-info"><span class="td-venue">${show.venue}</span><span class="td-location">${show.city}${show.country?', '+show.country:''}</span></div>
+        <div class="td-action">${action}</div>
+      </div>`;
     }).join('');
 
-    // 3. INIT SCROLL REVEAL ANIMATIONS
-    initScrollReveal();
+    // Scroll Reveal
+    const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); } }), {threshold:0.1});
+    document.querySelectorAll('.tour-date').forEach(el => obs.observe(el));
   }
 
-  function initScrollReveal() {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-
-    document.querySelectorAll('.tour-date').forEach(el => observer.observe(el));
+  // --- ADMIN LOGIC ---
+  function toggleAdmin() {
+    isAdmin = !isAdmin;
+    document.getElementById('publicView').style.display = isAdmin ? 'none' : 'block';
+    document.getElementById('adminView').style.display = isAdmin ? 'block' : 'none';
+    if(isAdmin) loadAdminData();
   }
 
-  // Placeholder Menu Toggle
-  document.getElementById('menuToggle')?.addEventListener('click', () => {
-    alert('Connect this to your existing navigation system');
-  });
+  async function loadAdminData() {
+    // Load Status
+    try {
+      const s = await fetch(`${API}?table=settings&key=tour_page_active`);
+      const sd = await s.json();
+      const active = sd && sd.value === '1';
+      document.getElementById('tourPageActive').checked = active;
+      updateStatusBadge(active);
+    } catch(e){}
+
+    // Load Table
+    try {
+      const r = await fetch(`${API}?table=tour_dates`);
+      const data = await r.json();
+      const tbody = document.getElementById('adminTableBody');
+      if(!data.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">No dates found.</td></tr>'; return; }
+      
+      tbody.innerHTML = data.sort((a,b)=>(b.event_date||'').localeCompare(a.event_date||'')).map(item => {
+        const pub = parseInt(item.published)===1;
+        const so = parseInt(item.sold_out)===1;
+        const dt = item.event_date ? new Date(item.event_date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
+        let badges = `<span class="badge ${pub?'badge-active':'badge-inactive'}">${pub?'Published':'Draft'}</span>`;
+        if(so) badges += ` <span class="badge badge-inactive">Sold Out</span>`;
+        
+        return `<tr><td style="font-family:'Cormorant Garamond',serif;font-size:1.1em">${dt}</td><td>${item.venue||'—'}</td><td>${item.city||'—'}</td><td>${badges}</td><td><button class="btn-admin" style="padding:6px 14px;font-size:0.6em" onclick="editDate('${item.id}')">Edit</button></td></tr>`;
+      }).join('');
+    } catch(e){ console.error(e); }
+  }
+
+  async function toggleTourPageStatus() {
+    const val = document.getElementById('tourPageActive').checked ? '1' : '0';
+    try {
+      await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({table:'settings', key:'tour_page_active', value:val}) });
+      updateStatusBadge(val==='1');
+    } catch(e){ alert("Failed to update status"); document.getElementById('tourPageActive').checked = !document.getElementById('tourPageActive').checked; }
+  }
+
+  function updateStatusBadge(active) {
+    const b = document.getElementById('pageStatusBadge');
+    b.textContent = active ? 'Active' : 'Hiatus Mode';
+    b.className = `badge ${active?'badge-active':'badge-inactive'}`;
+  }
+
+  // Modal Functions
+  function openModal(id=null) {
+    document.getElementById('tourForm').reset();
+    document.getElementById('td_id').value = '';
+    document.getElementById('td_published').checked = true;
+    document.getElementById('modalTitle').textContent = 'Add Tour Date';
+    if(id) {
+      // In real implementation, fetch specific row or use cached data
+      // For this demo, we assume edit populates from cache or re-fetch
+      alert("Edit functionality requires fetching specific row ID from API");
+    }
+    document.getElementById('tourModal').classList.add('active');
+  }
+  function closeModal() { document.getElementById('tourModal').classList.remove('active'); }
+  
+  async function saveTourDate(e) {
+    e.preventDefault();
+    const payload = {
+      table: 'tour_dates',
+      id: document.getElementById('td_id').value || crypto.randomUUID(),
+      tour_title: document.getElementById('td_tour_title').value.trim(),
+      event_date: document.getElementById('td_event_date').value,
+      venue: document.getElementById('td_venue').value.trim(),
+      city: document.getElementById('td_city').value.trim(),
+      ticket_url: document.getElementById('td_ticket_url').value.trim(),
+      sort_order: parseInt(document.getElementById('td_sort_order').value)||0,
+      published: document.getElementById('td_published').checked?1:0,
+      hide_title: document.getElementById('td_hide_title').checked?1:0,
+      sold_out: document.getElementById('td_sold_out').checked?1:0
+    };
+    try {
+      await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      closeModal(); loadAdminData();
+    } catch(err) { alert("Save failed: "+err.message); }
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', initPublic);
 </script>
-
 </body>
 </html>
