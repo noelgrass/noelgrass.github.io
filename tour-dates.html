@@ -111,7 +111,7 @@
     width: 24px; height: 1px; background: var(--gold-dim); opacity: 0.4;
   }
 
-  /* Admin Panel Styles (Embedded for single-file portability) */
+  /* Admin Panel Styles */
   .admin-wrapper { max-width: 900px; margin: 40px auto; padding: 0 40px; display: none; }
   .admin-section { background: var(--surface); border: 1px solid var(--rule); border-radius: 4px; padding: 24px; margin-bottom: 30px; }
   .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--rule); padding-bottom: 15px; }
@@ -255,14 +255,18 @@
 </div>
 
 <script>
-  const API = "https://master-brain.noelgrass.workers.dev/api/data";
+  // TWO DIFFERENT APIS:
+  const READ_API = "https://master-brain.noelgrass.workers.dev/api/data"; // Public Read-Only
+  const ADMIN_API = "https://admin-api.noelgrass.workers.dev";            // Secure Write API
+  
+  const token = localStorage.getItem('adminToken');
   let isAdmin = false;
+  let allDatesCache = [];
 
-  // --- PUBLIC RENDER LOGIC ---
+  // --- PUBLIC RENDER LOGIC (USES READ_API) ---
   async function initPublic() {
     try {
-      // Check Page Status First
-      const statusRes = await fetch(`${API}?table=settings&key=tour_page_active`);
+      const statusRes = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
       const statusData = await statusRes.json();
       const isActive = statusData && statusData.value === '1';
 
@@ -271,8 +275,7 @@
         return;
       }
 
-      // Fetch Dates
-      const datesRes = await fetch(`${API}?table=tour_dates&published=1`);
+      const datesRes = await fetch(`${READ_API}?table=tour_dates&published=1`);
       const dates = await datesRes.json();
       
       if (!dates || !dates.length) { renderHiatus(); return; }
@@ -330,12 +333,11 @@
       </div>`;
     }).join('');
 
-    // Scroll Reveal
     const obs = new IntersectionObserver(e => e.forEach(en => { if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target); } }), {threshold:0.1});
     document.querySelectorAll('.tour-date').forEach(el => obs.observe(el));
   }
 
-  // --- ADMIN LOGIC ---
+  // --- ADMIN LOGIC (USES ADMIN_API) ---
   function toggleAdmin() {
     isAdmin = !isAdmin;
     document.getElementById('publicView').style.display = isAdmin ? 'none' : 'block';
@@ -344,23 +346,27 @@
   }
 
   async function loadAdminData() {
-    // Load Status
+    // 1. Load Page Status
     try {
-      const s = await fetch(`${API}?table=settings&key=tour_page_active`);
+      const s = await fetch(`${READ_API}?table=settings&key=tour_page_active`);
       const sd = await s.json();
       const active = sd && sd.value === '1';
       document.getElementById('tourPageActive').checked = active;
       updateStatusBadge(active);
     } catch(e){}
 
-    // Load Table
+    // 2. Load Table
     try {
-      const r = await fetch(`${API}?table=tour_dates`);
-      const data = await r.json();
+      const r = await fetch(`${ADMIN_API}/list?table=tour_dates`, { headers: { 'Authorization': `Bearer ${token}` } });
+      allDatesCache = await r.json();
       const tbody = document.getElementById('adminTableBody');
-      if(!data.length) { tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">No dates found.</td></tr>'; return; }
       
-      tbody.innerHTML = data.sort((a,b)=>(b.event_date||'').localeCompare(a.event_date||'')).map(item => {
+      if(!allDatesCache.length) { 
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:var(--muted)">No dates found.</td></tr>'; 
+        return; 
+      }
+      
+      tbody.innerHTML = allDatesCache.sort((a,b)=>(b.event_date||'').localeCompare(a.event_date||'')).map(item => {
         const pub = parseInt(item.published)===1;
         const so = parseInt(item.sold_out)===1;
         const dt = item.event_date ? new Date(item.event_date).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'}) : '—';
@@ -375,9 +381,17 @@
   async function toggleTourPageStatus() {
     const val = document.getElementById('tourPageActive').checked ? '1' : '0';
     try {
-      await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({table:'settings', key:'tour_page_active', value:val}) });
+      // Send to ADMIN_API (which accepts POSTs)
+      await fetch(`${ADMIN_API}/toggle-page-status`, { 
+        method:'POST', 
+        headers:{'Content-Type':'application/json', 'Authorization': `Bearer ${token}`}, 
+        body:JSON.stringify({ value: val }) 
+      });
       updateStatusBadge(val==='1');
-    } catch(e){ alert("Failed to update status"); document.getElementById('tourPageActive').checked = !document.getElementById('tourPageActive').checked; }
+    } catch(e){ 
+      alert("Failed to update status"); 
+      document.getElementById('tourPageActive').checked = !document.getElementById('tourPageActive').checked; 
+    }
   }
 
   function updateStatusBadge(active) {
@@ -392,10 +406,22 @@
     document.getElementById('td_id').value = '';
     document.getElementById('td_published').checked = true;
     document.getElementById('modalTitle').textContent = 'Add Tour Date';
+    
     if(id) {
-      // In real implementation, fetch specific row or use cached data
-      // For this demo, we assume edit populates from cache or re-fetch
-      alert("Edit functionality requires fetching specific row ID from API");
+      const item = allDatesCache.find(i => i.id === id);
+      if(item) {
+        document.getElementById('td_id').value = item.id;
+        document.getElementById('td_tour_title').value = item.tour_title || '';
+        document.getElementById('td_event_date').value = item.event_date || '';
+        document.getElementById('td_venue').value = item.venue || '';
+        document.getElementById('td_city').value = item.city || '';
+        document.getElementById('td_ticket_url').value = item.ticket_url || '';
+        document.getElementById('td_sort_order').value = item.sort_order || 0;
+        document.getElementById('td_published').checked = parseInt(item.published) === 1;
+        document.getElementById('td_hide_title').checked = parseInt(item.hide_title) === 1;
+        document.getElementById('td_sold_out').checked = parseInt(item.sold_out) === 1;
+        document.getElementById('modalTitle').textContent = 'Edit Tour Date';
+      }
     }
     document.getElementById('tourModal').classList.add('active');
   }
@@ -403,23 +429,41 @@
   
   async function saveTourDate(e) {
     e.preventDefault();
-    const payload = {
-      table: 'tour_dates',
-      id: document.getElementById('td_id').value || crypto.randomUUID(),
-      tour_title: document.getElementById('td_tour_title').value.trim(),
-      event_date: document.getElementById('td_event_date').value,
-      venue: document.getElementById('td_venue').value.trim(),
-      city: document.getElementById('td_city').value.trim(),
-      ticket_url: document.getElementById('td_ticket_url').value.trim(),
-      sort_order: parseInt(document.getElementById('td_sort_order').value)||0,
-      published: document.getElementById('td_published').checked?1:0,
-      hide_title: document.getElementById('td_hide_title').checked?1:0,
-      sold_out: document.getElementById('td_sold_out').checked?1:0
-    };
+    
+    // We must use FormData for the admin-api worker
+    const fd = new FormData();
+    fd.append('type', 'tour');
+    fd.append('original_id', document.getElementById('td_id').value);
+    fd.append('id', document.getElementById('td_id').value); // Send both to be safe
+    fd.append('tour_title', document.getElementById('td_tour_title').value.trim());
+    fd.append('event_date', document.getElementById('td_event_date').value);
+    fd.append('venue', document.getElementById('td_venue').value.trim());
+    fd.append('city', document.getElementById('td_city').value.trim());
+    fd.append('ticket_url', document.getElementById('td_ticket_url').value.trim());
+    fd.append('sort_order', document.getElementById('td_sort_order').value);
+    fd.append('published', document.getElementById('td_published').checked ? '1' : '0');
+    fd.append('hide_title', document.getElementById('td_hide_title').checked ? '1' : '0');
+    fd.append('sold_out', document.getElementById('td_sold_out').checked ? '1' : '0');
+
     try {
-      await fetch(API, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-      closeModal(); loadAdminData();
-    } catch(err) { alert("Save failed: "+err.message); }
+      const res = await fetch(ADMIN_API, { 
+        method: 'POST', 
+        headers: { 'Authorization': `Bearer ${token}` }, 
+        body: fd 
+      });
+      
+      if(res.ok) {
+        closeModal(); 
+        loadAdminData();
+        // Refresh the public view in the background
+        document.getElementById('tourTitleMain').style.display = 'block';
+        document.getElementById('tourLabel').style.display = 'block';
+        document.getElementById('tourDivider').style.display = 'block';
+        initPublic();
+      } else {
+        alert("Failed to save date.");
+      }
+    } catch(err) { alert("Save error: "+err.message); }
   }
 
   // Init
