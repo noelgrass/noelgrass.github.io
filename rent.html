@@ -741,12 +741,12 @@
       { cat: "tension", label: "Tension & Suspense", count: "13 suites", link: "rent-scores", track: { code: "TN01", title: "Theme 1", desc: "Synth · Piano · Cello", duration: "Tension", file: "cue-1.mp3", folder: "tn/TN01", isSuite: true } }
     ];
 
-    var PREVIEW_BASE_JINGLES = "https://rent-jingles.noelgrass.workers.dev/preview";
-    var PREVIEW_BASE_SCORES  = "https://rent-scores.noelgrass.workers.dev/preview";
+    var PREVIEW_BASE_JINGLES = "https://master-brain.noelgrass.workers.dev/jingles";
+    var PREVIEW_BASE_SCORES  = "https://master-brain.noelgrass.workers.dev/scores";
 
     function buildPreviewUrl(t) {
       var base = t.isSuite ? PREVIEW_BASE_SCORES : PREVIEW_BASE_JINGLES;
-      return base + "?folder=" + encodeURIComponent(t.folder) + "&file=" + encodeURIComponent(t.file);
+      return base + "/" + t.folder + "/" + encodeURIComponent(t.file);
     }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -758,7 +758,7 @@
         var cuesHtml = '';
         for (var i = 1; i <= 3; i++) {
           var cueId = t.code + '-' + i;
-          var cueUrl = PREVIEW_BASE_SCORES + "?folder=" + encodeURIComponent(t.folder) + "&file=" + encodeURIComponent("cue-" + i + ".mp3");
+          var cueUrl = PREVIEW_BASE_SCORES + "/" + t.folder + "/cue-" + i + ".mp3";
           cuesHtml += '<div class="cue" data-cue-id="' + cueId + '">' +
               '<div class="cue-info">' +
                 '<span class="cue-title">Cue ' + i + '</span>' +
