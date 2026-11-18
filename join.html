@@ -42,7 +42,7 @@
 <!-- FONTS -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
   /* =========================================
@@ -65,9 +65,21 @@
   html { background: var(--bg); }
   html.menu-lock { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
   html, body { color: var(--offwhite); scroll-behavior: smooth; }
-  body { background: var(--bg); font-family: 'Playfair Display', Georgia, serif; font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body { background: var(--bg); font-family: 'Playfair Display', Georgia, serif; font-size: 17px; line-height: 1.75; -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative; }
   a { color: var(--gold); text-decoration: none; transition: color 0.25s ease; }
   a:hover { color: #FCFCF7; }
+
+  /* =========================================
+     CINEMATIC TEXTURES (matched to Tour page)
+     ========================================= */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 4; pointer-events: none;
+    background: radial-gradient(circle at center, transparent 35%, rgba(0,0,0,0.9) 100%);
+  }
 
   /* =========================================
      ANIMATIONS & MENU STYLES (Unchanged)
@@ -143,21 +155,63 @@
 
   .page { max-width: 720px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
 
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; color: var(--gold); font-size: 2.8em; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 30px; animation: fadeUp 1s ease-out both; animation-delay: 0.2s; }
+  /* =========================================
+     HERO TYPOGRAPHY (matched to Tour page)
+     ========================================= */
+  .join-label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.7em;
+    letter-spacing: 0.6em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(15px);
+    animation: fadeUp 1.2s ease-out 0.2s forwards;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 300;
+    color: var(--offwhite);
+    font-size: clamp(3.5rem, 10vw, 9rem);
+    line-height: 1.0;
+    letter-spacing: 0.01em;
+    text-transform: none;
+    margin-bottom: 40px;
+    text-shadow: 0 0 100px rgba(237,234,227,0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+  }
+
+  .join-divider {
+    width: 120px;
+    height: 1px;
+    background: var(--gold-dim);
+    margin: 0 auto 50px;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.8s forwards;
+  }
+
+  @keyframes fadeIn { to { opacity: 1; } }
 
   /* =========================================
      OPENING LETTER TYPOGRAPHY
+     (matched to Tour supporting copy)
      ========================================= */
   .opening-letter {
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.1em;
     line-height: 1.85;
     color: var(--offwhite);
-    max-width: 580px;
-    margin: 0 auto 60px;
-    text-align: left;
+    max-width: 600px;
+    margin: 0 auto 50px;
+    text-align: center;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 0.4s;
+    animation-delay: 1.0s;
   }
   .opening-letter p { margin-bottom: 24px; }
   .opening-letter p:last-child { margin-bottom: 0; }
@@ -165,23 +219,31 @@
   .opening-letter strong { color: var(--gold-pale); font-weight: 600; }
 
   /* =========================================
-     CUSTOM FORM STYLES (Replaced Kit)
-     This handles the look of the Name/Email inputs
+     CUSTOM FORM STYLES
+     (labels + inputs matched to Tour conventions)
      ========================================= */
-  .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
-  .custom-form { display: flex; flex-direction: column; gap: 16px; width: 100%; }
-  
-  /* The input boxes */
-  .custom-input { width: 100%; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; font-size: 1em; padding: 16px 18px; border-radius: 0; transition: border-color 0.3s ease, background 0.3s ease; outline: none; line-height: 1.5; }
+  .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 1.3s; }
+  .custom-form { display: flex; flex-direction: column; gap: 20px; width: 100%; }
+
+  .custom-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .custom-field label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    font-size: 0.62em;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .custom-input { width: 100%; background: transparent; border: 1px solid var(--rule); color: var(--offwhite); font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.9em; letter-spacing: 0.05em; padding: 16px 18px; border-radius: 0; transition: border-color 0.3s ease, background 0.3s ease; outline: none; line-height: 1.5; }
   .custom-input:focus { border-color: var(--gold-soft); background: rgba(197, 168, 128, 0.03); }
   .custom-input::placeholder { color: var(--muted); font-style: italic; opacity: 1; }
-  
-  /* The submit button */
-  .custom-submit { background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.8em; letter-spacing: 0.3em; text-transform: uppercase; padding: 18px 40px; cursor: pointer; border-radius: 0; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease; text-align: center; display: block; }
+
+  .custom-submit { background: transparent; border: 1px solid var(--gold-soft); color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.85em; letter-spacing: 0.3em; text-transform: uppercase; padding: 20px 50px; cursor: pointer; border-radius: 0; transition: color 0.35s ease, border-color 0.35s ease, background 0.35s ease, letter-spacing 0.4s ease; text-align: center; display: block; }
   .custom-submit:hover:not(:disabled) { color: #FCFCF7; border-color: var(--gold); background: rgba(197, 168, 128, 0.06); letter-spacing: 0.38em; }
   .custom-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.15s; }
+  .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.55s; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
 
   .footer-location { text-align: right; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0.6; margin-top: 24px; padding-right: 6px; transition: opacity 0.3s ease; }
@@ -191,10 +253,12 @@
 
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
-    h1 { font-size: 1.9em; letter-spacing: 0.2em; margin-bottom: 24px; }
+    h1 { font-size: clamp(2.5rem, 14vw, 4.5rem); margin-bottom: 30px; }
+    .join-label { letter-spacing: 0.45em; margin-bottom: 22px; }
+    .join-divider { width: 60px; margin-bottom: 36px; }
     .opening-letter { font-size: 1em; margin-bottom: 40px; }
-    .custom-input { font-size: 0.95em; padding: 14px 16px; }
-    .custom-submit { padding: 16px 32px; font-size: 0.75em; letter-spacing: 0.25em; }
+    .custom-input { font-size: 0.9em; padding: 14px 16px; }
+    .custom-submit { padding: 16px 32px; font-size: 0.78em; letter-spacing: 0.25em; }
     .topnav { padding: 18px 22px; }
     .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
     .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
@@ -224,7 +288,7 @@
 
   /* =========================================
      ADDED — ELEGANT CONFIRM MODAL
-     (original #confirmModal is hidden; this replaces it visually)
+     (untouched as requested)
      ========================================= */
   #confirmModal { display: none !important; }
 
@@ -427,7 +491,9 @@
 <div class="page-wrap" id="pageWrap">
   <div class="page">
 
+    <span class="join-label">Daydreamer</span>
     <h1>Join</h1>
+    <div class="join-divider"></div>
 
     <!-- THE OPENING LETTER -->
     <div class="opening-letter">
@@ -443,11 +509,17 @@
     <div class="custom-form-wrap">
       <form id="joinForm" class="custom-form">
         <!-- 1. Name Input -->
-        <input type="text" id="name" name="name" required placeholder="Your Name" class="custom-input">
-        
+        <div class="custom-field">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required placeholder="Your Name" class="custom-input">
+        </div>
+
         <!-- 2. Email Input -->
-        <input type="email" id="email" name="email" required placeholder="Your Email" class="custom-input">
-        
+        <div class="custom-field">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="Your Email" class="custom-input">
+        </div>
+
         <!-- 3. Submit Button -->
         <button type="submit" id="submitBtn" class="custom-submit">Join the Dream</button>
       </form>
@@ -471,6 +543,7 @@
 
 <!-- =========================================
      SUCCESS MODAL (Pops up when they join)
+     — UNTOUCHED —
      ========================================= -->
 <div id="confirmModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); z-index:9999; align-items:center; justify-content:center;">
   <div style="background:#000000; border:1px solid #B9975C; padding:40px; max-width:420px; text-align:center; margin:20px; box-shadow: 0 0 40px rgba(197,168,128,0.15);">
