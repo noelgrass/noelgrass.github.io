@@ -13,28 +13,102 @@
   :root {
     --bg: #030303; --surface: #0a0a0a; --gold: #C5A880; --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3; --muted: #5c5750; --rule: #1a1a1a;
+    --scrollbar-width: 0px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   
+  html { background: var(--bg); }
+  html.menu-lock { overflow: hidden; padding-right: var(--scrollbar-width, 0px); }
+  html, body { color: var(--offwhite); scroll-behavior: smooth; }
   body { 
-    background: var(--bg); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; 
+    background: var(--bg); font-family: 'Playfair Display', Georgia, serif; 
     -webkit-font-smoothing: antialiased; overflow-x: hidden; position: relative;
   }
 
   /* Cinematic Textures */
   body::before {
-    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.035;
+    content: ''; position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
   body::after {
-    content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+    content: ''; position: fixed; inset: 0; z-index: 4; pointer-events: none;
     background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.95) 100%);
   }
 
   /* Navigation */
-  .topnav { position: sticky; top: 0; z-index: 100; padding: 30px 50px; display: flex; justify-content: center; align-items: center; background: rgba(3,3,3,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: text-shadow 0.4s ease; }
-  .wordmark:hover { text-shadow: 0 0 20px rgba(197,168,128,0.5); }
+  .topnav { position: sticky; top: 0; z-index: 300; padding: 30px 50px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,3,3,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.15em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: color 0.3s ease, text-shadow 0.5s ease; }
+  .wordmark:hover { color: #FCFCF7; text-shadow: 0 0 18px rgba(197,168,128,0.55), 0 0 40px rgba(197,168,128,0.25); }
+  
+  /* Menu Button */
+  .menu-toggle { background: transparent; border: 0; cursor: pointer; padding: 8px 4px; display: inline-flex; align-items: center; gap: 12px; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold-pale); transition: color 0.3s ease; -webkit-tap-highlight-color: transparent; position: relative; }
+  .menu-toggle:hover { color: #FBFAFC; }
+  .hamburger { display: inline-flex; flex-direction: column; justify-content: space-between; width: 22px; height: 14px; position: relative; }
+  .hamburger span { display: block; width: 100%; height: 1.5px; background: currentColor; border-radius: 2px; transform-origin: center; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1), opacity 0.3s ease, width 0.45s cubic-bezier(0.22,1,0.36,1); }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(6.25px) rotate(45deg); }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(2) { opacity: 0; width: 0; }
+  .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-6.25px) rotate(-45deg); }
+  .menu-toggle::after { content: ''; position: absolute; left: 34px; right: 4px; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: right center; transition: transform 0.4s ease; }
+  .menu-toggle:hover::after { transform: scaleX(1); transform-origin: left center; }
+  
+  .page-wrap { transition: filter 0.6s cubic-bezier(0.16,1,0.3,1), opacity 0.6s cubic-bezier(0.16,1,0.3,1); }
+  body.menu-open .page-wrap { filter: blur(8px) brightness(0.4); opacity: 0.6; pointer-events: none; user-select: none; will-change: filter, opacity; }
+
+  /* Menu Panel */
+  .menu-panel { position: fixed; inset: 0; z-index: 400; background: #000000; background-image: radial-gradient(ellipse at 50% 50%, rgba(197,168,128,0.07) 0%, transparent 65%); opacity: 0; pointer-events: none; transform: scale(1.02); transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1); overflow-y: auto; overscroll-behavior: contain; }
+  .menu-panel.open { opacity: 1; transform: scale(1); pointer-events: auto; }
+  .menu-inner { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 60px; max-width: 1200px; margin: 0 auto; padding: 120px 40px 80px; min-height: 100vh; position: relative; }
+  .menu-top { position: absolute; top: 32px; left: 40px; right: 40px; display: flex; align-items: center; justify-content: space-between; z-index: 2; }
+  .menu-heading { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold-pale); display: inline-flex; align-items: center; gap: 20px; opacity: 0; }
+  .menu-panel.open .menu-heading { animation: menuHeadingIn 0.8s cubic-bezier(0.16,1,0.3,1) 0.1s forwards; }
+  .menu-heading::after { content: ''; display: inline-block; width: 60px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: left center; }
+  .menu-panel.open .menu-heading::after { animation: menuLineDraw 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards; }
+  .menu-close { background: transparent; border: 0; cursor: pointer; font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 1em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-pale); padding: 12px 8px; display: inline-flex; align-items: center; gap: 16px; transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease; opacity: 0; -webkit-tap-highlight-color: transparent; }
+  .menu-panel.open .menu-close { animation: menuFadeIn 0.8s ease-out 1.2s forwards; }
+  .menu-close:hover { color: #FCFCF7; letter-spacing: 0.45em; text-shadow: 0 0 20px rgba(197,168,128,0.7), 0 0 45px rgba(197,168,128,0.3); }
+  .menu-close .x { display: inline-block; width: 18px; height: 18px; position: relative; transition: transform 0.4s ease; }
+  .menu-close:hover .x { transform: rotate(90deg); }
+  .menu-close .x::before, .menu-close .x::after { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: currentColor; transform-origin: center; }
+  .menu-close .x::before { transform: rotate(45deg); }
+  .menu-close .x::after { transform: rotate(-45deg); }
+  .menu-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; justify-content: center; align-items: start; text-align: center; max-width: 900px; width: 100%; }
+  .menu-column { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .menu-section { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 28px; display: block; opacity: 0; text-align: center; transition: opacity 0.5s ease; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.5s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-section { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
+  .menu-links { list-style: none; display: flex; flex-direction: column; align-items: center; gap: 20px; text-align: center; padding: 0; }
+  .menu-item { position: relative; opacity: 0; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.6s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.72s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.84s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.96s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.08s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.20s forwards; }
+  .menu-panel.open .menu-column:nth-child(1) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.32s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(1) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.7s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(2) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.82s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(3) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.94s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(4) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.06s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(5) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.18s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.30s forwards; }
+  .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16,1,0.3,1) 1.42s forwards; }
+  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 1.5em; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16,1,0.3,1); }
+  .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197,168,128,0.75), 0 0 25px rgba(197,168,128,0.55), 0 0 55px rgba(197,168,128,0.30), 0 0 100px rgba(197,168,128,0.15); }
+  .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
+  .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
+  .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
+  .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
+  .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
+  .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
+
+  /* Animations */
+  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { to { opacity: 1; } }
+  @keyframes menuFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
+  @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
+  @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+  @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
 
   /* Hero Section */
   .hero-cinematic {
@@ -162,10 +236,6 @@
   .close-btn { background: none; border: none; color: var(--muted); font-size: 1.5em; cursor: pointer; }
   .modal-actions { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
 
-  @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-  @keyframes fadeIn { to { opacity: 1; } }
-  @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
-  
   @media (max-width: 768px) {
     .hero-cinematic { min-height: 60vh; padding: 80px 24px 40px; }
     .tour-container { padding: 20px 24px 80px; }
@@ -174,60 +244,117 @@
     .tour-date:hover { transform: translateX(0); padding-top: 40px; padding-bottom: 40px; }
     .admin-wrapper { padding: 0 20px; }
     .tour-divider { width: 60px; }
+    .topnav { padding: 18px 22px; }
+    .wordmark { font-size: 0.95em; letter-spacing: 0.28em; }
+    .menu-toggle { font-size: 0.7em; letter-spacing: 0.22em; gap: 10px; }
+    .hamburger { width: 20px; height: 13px; }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(1) { transform: translateY(5.75px) rotate(45deg); }
+    .menu-toggle[aria-expanded="true"] .hamburger span:nth-child(3) { transform: translateY(-5.75px) rotate(-45deg); }
+    .menu-inner { padding: 90px 24px 60px; gap: 40px; }
+    .menu-top { top: 22px; left: 24px; right: 24px; }
+    .menu-close { font-size: 0.85em; letter-spacing: 0.35em; gap: 12px; }
+    .menu-close .x { width: 15px; height: 15px; }
+    .menu-columns { grid-template-columns: 1fr; gap: 40px; max-width: 100%; }
+    .menu-column .menu-link { font-size: 1.3em; letter-spacing: 0.22em; }
+    .menu-section { margin-bottom: 20px; }
+    .menu-links { gap: 16px; }
+    .menu-bottom { margin-top: 10px; }
   }
 </style>
 </head>
 <body>
 
+<!-- NAVIGATION & MENU -->
+<header class="topnav">
+  <a href="./" class="wordmark" aria-label="Noel Grass — Home">Noel Grass</a>
+  <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="menuPanel" type="button">
+    <span class="hamburger" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span>Menu</span>
+  </button>
+</header>
+
+<nav class="menu-panel" id="menuPanel" aria-label="Primary" aria-hidden="true">
+  <div class="menu-backdrop" id="menuBackdrop"></div>
+  <div class="menu-inner">
+    <div class="menu-top">
+      <span class="menu-heading">Menu</span>
+      <button class="menu-close" id="menuClose" type="button" aria-label="Close menu">
+        Close
+        <span class="x" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="menu-columns">
+      <div class="menu-column">
+        <span class="menu-section">Music</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="artist" class="menu-link">Artist</a></li>
+          <li class="menu-item"><a href="discography" class="menu-link">Discography</a></li>
+          <li class="menu-item"><a href="performances" class="menu-link">Performances</a></li>
+          <li class="menu-item"><a href="tour-dates" class="menu-link">Tour Dates</a></li>
+          <li class="menu-item"><a href="store" class="menu-link">Store</a></li>
+          <li class="menu-item"><a href="join" class="menu-link">Join</a></li>
+        </ul>
+      </div>
+      <div class="menu-column">
+        <span class="menu-section">Elsewhere</span>
+        <ul class="menu-links">
+          <li class="menu-item"><a href="./" class="menu-link">Home</a></li>
+          <li class="menu-item"><a href="contact" class="menu-link">Contact</a></li>
+          <li class="menu-item"><a href="film-composer" class="menu-link">Film Composer</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="menu-bottom">Noel Grass · <span id="year"></span></div>
+  </div>
+</nav>
+
 <!-- PUBLIC VIEW -->
-<div id="publicView">
-  <header class="topnav">
-    <a href="./" class="wordmark">Noel Grass</a>
-  </header>
-
-  <div class="hero-cinematic" id="heroSection">
-    <div class="tour-label" id="tourLabel">Tour Dates</div>
-    <h1 class="tour-title-main" id="tourTitleMain"></h1>
-    <div class="tour-divider" id="tourDivider"></div>
-  </div>
-
-  <div class="tour-container">
-    <div class="tour-list" id="tourListMount"></div>
-    <div class="footer-brand"><span>Noel Grass</span></div>
-  </div>
-</div>
-
-<!-- ADMIN VIEW -->
-<div class="admin-wrapper" id="adminView">
-  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-    <h1 style="font-family:'Cormorant Garamond',serif; font-size:2em; color:var(--gold); letter-spacing:0.1em;">Tour Management</h1>
-    <button class="btn-admin" onclick="toggleAdmin()">Back to Site</button>
-  </div>
-
-  <!-- PAGE STATUS CONTROL -->
-  <div class="admin-section" style="border-color: var(--gold-dim);">
-    <div class="admin-header" style="border-bottom:none; margin-bottom:15px;">
-      <h2 style="font-size:1.1em;">Page Status</h2>
-      <span id="pageStatusBadge" class="badge badge-active">Active</span>
+<div class="page-wrap" id="pageWrap">
+  <div id="publicView">
+    <div class="hero-cinematic" id="heroSection">
+      <div class="tour-label" id="tourLabel">Tour Dates</div>
+      <h1 class="tour-title-main" id="tourTitleMain"></h1>
+      <div class="tour-divider" id="tourDivider"></div>
     </div>
-    <label class="checkbox-label" style="margin-bottom:10px;">
-      <input type="checkbox" id="tourPageActive" checked onchange="toggleTourPageStatus()">
-      <span class="checkmark"></span>
-      <span style="font-family:'Montserrat',sans-serif; font-size:0.85em; color:var(--offwhite);">Show Tour Dates Publicly</span>
-    </label>
-    <p style="font-size:0.75em; color:var(--muted); line-height:1.5;">When unchecked, public page displays cinematic "Tour Hiatus" message regardless of database dates.</p>
+
+    <div class="tour-container">
+      <div class="tour-list" id="tourListMount"></div>
+      <div class="footer-brand"><span>Noel Grass</span></div>
+    </div>
   </div>
 
-  <!-- DATES TABLE -->
-  <div class="admin-section">
-    <div class="admin-header">
-      <h2>Tour Dates</h2>
-      <button class="btn-admin" onclick="openModal()">+ Add Date</button>
+  <!-- ADMIN VIEW -->
+  <div class="admin-wrapper" id="adminView">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
+      <h1 style="font-family:'Cormorant Garamond',serif; font-size:2em; color:var(--gold); letter-spacing:0.1em;">Tour Management</h1>
+      <button class="btn-admin" onclick="toggleAdmin()">Back to Site</button>
     </div>
-    <table class="data-table">
-      <thead><tr><th>Date</th><th>Venue</th><th>City</th><th>Status</th><th>Actions</th></tr></thead>
-      <tbody id="adminTableBody"><tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">Loading...</td></tr></tbody>
-    </table>
+
+    <!-- PAGE STATUS CONTROL -->
+    <div class="admin-section" style="border-color: var(--gold-dim);">
+      <div class="admin-header" style="border-bottom:none; margin-bottom:15px;">
+        <h2 style="font-size:1.1em;">Page Status</h2>
+        <span id="pageStatusBadge" class="badge badge-active">Active</span>
+      </div>
+      <label class="checkbox-label" style="margin-bottom:10px;">
+        <input type="checkbox" id="tourPageActive" checked onchange="toggleTourPageStatus()">
+        <span class="checkmark"></span>
+        <span style="font-family:'Montserrat',sans-serif; font-size:0.85em; color:var(--offwhite);">Show Tour Dates Publicly</span>
+      </label>
+      <p style="font-size:0.75em; color:var(--muted); line-height:1.5;">When unchecked, public page displays cinematic "Tour Hiatus" message regardless of database dates.</p>
+    </div>
+
+    <!-- DATES TABLE -->
+    <div class="admin-section">
+      <div class="admin-header">
+        <h2>Tour Dates</h2>
+        <button class="btn-admin" onclick="openModal()">+ Add Date</button>
+      </div>
+      <table class="data-table">
+        <thead><tr><th>Date</th><th>Venue</th><th>City</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="adminTableBody"><tr><td colspan="5" style="text-align:center; padding:30px; color:var(--muted);">Loading...</td></tr></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -270,6 +397,64 @@
 </div>
 
 <script>
+  // =========================================
+  // 0. SAFEGUARD & MENU LOGIC
+  // =========================================
+  document.body.classList.remove('menu-open');
+  document.documentElement.classList.remove('menu-lock');
+  document.documentElement.style.removeProperty('--scrollbar-width');
+  document.body.style.paddingRight = '';
+
+  var toggle   = document.getElementById('menuToggle');
+  var panel    = document.getElementById('menuPanel');
+  var closeBtn = document.getElementById('menuClose');
+  var backdrop = document.getElementById('menuBackdrop');
+
+  function getScrollbarWidth() { return window.innerWidth - document.documentElement.clientWidth; }
+  function lockScroll() { var sw = getScrollbarWidth(); document.documentElement.style.setProperty('--scrollbar-width', sw + 'px'); document.documentElement.classList.add('menu-lock'); }
+  function unlockScroll() { document.documentElement.classList.remove('menu-lock'); document.documentElement.style.removeProperty('--scrollbar-width'); }
+  function openMenu() { panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); document.body.classList.add('menu-open'); lockScroll(); toggle.setAttribute('aria-expanded', 'true'); toggle.setAttribute('aria-label', 'Close menu'); }
+  function closeMenu() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('menu-open'); unlockScroll(); toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Open menu'); }
+
+  toggle.addEventListener('click', function (e) { e.stopPropagation(); if (panel.classList.contains('open')) { closeMenu(); } else { openMenu(); } });
+  closeBtn.addEventListener('click', closeMenu);
+  backdrop.addEventListener('click', closeMenu);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && panel.classList.contains('open')) { closeMenu(); } });
+  panel.querySelectorAll('a').forEach(function (link) { link.addEventListener('click', closeMenu); });
+
+  function normalizePath(path) {
+    path = path.split('?')[0].split('#')[0];
+    path = path.replace(/\.html?$/i, '');
+    if (path.length > 1 && path.endsWith('/')) { path = path.slice(0, -1); }
+    path = path.replace(/\/index$/i, '/');
+    if (!path.startsWith('/')) path = '/' + path;
+    return path;
+  }
+  var current = normalizePath(window.location.pathname);
+  var links = panel.querySelectorAll('a.menu-link');
+  var matched = null;
+  links.forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href) return;
+    if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+    var linkPath = normalizePath(href);
+    if (linkPath === current) { matched = link; }
+  });
+  if (!matched && (current === '/' || current === '')) {
+    links.forEach(function (link) {
+      var href = link.getAttribute('href');
+      if (href === './' || href === '/' || href === 'index.html') { matched = link; }
+    });
+  }
+  if (matched) { matched.classList.add('current'); matched.setAttribute('aria-current', 'page'); }
+
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+
+  // =========================================
+  // 1. TOUR DATES LOGIC
+  // =========================================
   const READ_API = "https://master-brain.noelgrass.workers.dev/api/data";
   const ADMIN_API = "https://admin-api.noelgrass.workers.dev";
   
