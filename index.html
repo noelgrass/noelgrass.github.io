@@ -224,6 +224,7 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+  @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -304,23 +305,51 @@
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
   .menu-backdrop { position: absolute; inset: 0; z-index: -1; cursor: pointer; }
 
-  .hero { position: relative; width: 100%; max-width: 1200px; margin: 0 auto; padding: 80px 40px 60px; text-align: center; overflow: hidden; isolation: isolate; }
+  /* ✨ UPDATED HERO STYLES (Cinematic Centering) */
+  .hero { 
+    position: relative; width: 100%; max-width: 1200px; margin: 0 auto; 
+    padding: 100px 40px; text-align: center; overflow: hidden; isolation: isolate; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 80vh;
+  }
   .hero-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
   .hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; filter: grayscale(100%) brightness(0.42) contrast(1.15); opacity: 0.85; }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, transparent 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.92) 95%), linear-gradient(180deg, rgba(0,0,0,0.4) 0%, transparent 30%, transparent 55%, var(--bg) 100%); z-index: 1; }
-  .hero-content { position: relative; z-index: 2; }
+  .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
+  
+  .hero-content::before {
+    content: ''; display: inline-block; width: 10px; height: 10px; 
+    background: var(--gold); transform: rotate(45deg); 
+    margin-bottom: 40px; opacity: 0.8; 
+    animation: pulse 3s infinite alternate;
+  }
+
   .eyebrow { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.72em; letter-spacing: 0.35em; text-transform: uppercase; color: #E8D5B5; margin-bottom: 30px; }
-  h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 400; color: var(--gold); font-size: 4.5em; line-height: 1.05; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 26px; display: inline-block; animation: fadeUp 1s ease both, nameGlow 6s ease-in-out infinite; }
+  
+  h1 { 
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 300; 
+    color: var(--offwhite); font-size: clamp(3.5rem, 8vw, 7rem); 
+    line-height: 1.0; letter-spacing: 0.01em; text-transform: none; 
+    margin-bottom: 30px; display: inline-block; 
+    animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) both, nameGlow 6s ease-in-out infinite; 
+  }
   .rule-small { width: 48px; height: 3px; border-top: 1px solid var(--gold-soft); border-bottom: 1px solid var(--gold-soft); margin: 0 auto; }
 
   .page { max-width: 1200px; margin: 0 auto; padding: 40px 40px 80px; text-align: center; position: relative; }
 
-  .editorial { display: grid; grid-template-columns: 340px 1fr; gap: 60px; align-items: start; text-align: left; margin: 60px auto 80px; max-width: 1100px; }
-  .portrait { position: sticky; top: 120px; animation: portraitIn 1.4s ease both; }
+  /* ✨ UPDATED EDITORIAL STYLES (Centered Stack) */
+  .editorial { 
+    display: flex; flex-direction: column; align-items: center; text-align: center; 
+    gap: 40px; margin: 80px auto; max-width: 800px; 
+  }
+  .portrait { position: relative; max-width: 340px; margin: 0 auto; animation: portraitIn 1.4s ease both; }
   .portrait img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--rule); filter: grayscale(100%) contrast(1.05) brightness(0.7); transition: filter 0.7s ease, transform 0.6s ease; animation: portraitGlow 6s ease-in-out infinite; }
   .portrait img:hover { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.015); }
   
-  .editorial-text { text-align: left; padding-top: 10px; }
+  .editorial-text { 
+    text-align: center; padding-top: 10px; 
+    font-family: 'Cormorant Garamond', serif; font-size: 1.5em; line-height: 1.8;
+  }
   .intro { font-style: italic; font-size: 1.2em; color: var(--offwhite); margin-bottom: 30px; }
   .intro-body { font-size: 1.05em; color: var(--offwhite); margin-bottom: 36px; }
   .bio-link a { border-bottom: 1px solid rgba(197, 168, 128, 0.5); padding-bottom: 2px; font-style: italic; }
@@ -384,7 +413,7 @@
   .video-close { position: absolute; top: -46px; right: 0; background: transparent; border: 0; color: var(--gold-pale); font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.25em; text-transform: uppercase; cursor: pointer; }
 
   @media (max-width: 900px) {
-    .editorial { grid-template-columns: 1fr; gap: 40px; text-align: center; margin-top: 50px; }
+    .editorial { flex-direction: column; gap: 40px; text-align: center; margin-top: 50px; }
     .portrait { position: static; max-width: 320px; margin: 0 auto; animation: none; transition: none; will-change: auto; }
     .editorial-text, .intro, .intro-body, .bio-link { text-align: center; }
     .portrait img { display: block; width: 100%; height: auto; aspect-ratio: auto; object-fit: fill; animation: none; transition: none; filter: brightness(0.75); box-shadow: none; border: 1px solid rgba(197, 168, 128, 0.35); transform: none; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
@@ -418,9 +447,9 @@
   }
 
   @media (max-width: 700px) {
-    h1 { font-size: 2.8em; letter-spacing: 0.08em; margin-bottom: 22px; text-shadow: 0 11px 15px rgba(0,0,0,0.27), 0 0 30px rgba(197, 168, 128, 0.35); }
+    h1 { font-size: clamp(2.5rem, 10vw, 3.5rem); letter-spacing: 0.05em; margin-bottom: 22px; text-shadow: 0 11px 15px rgba(0,0,0,0.27), 0 0 30px rgba(197, 168, 128, 0.35); }
     .page { padding: 30px 22px 50px; }
-    .hero { padding: 50px 22px 30px; }
+    .hero { padding: 80px 22px 40px; min-height: 60vh; }
     .eyebrow { font-size: 0.65em; margin-bottom: 24px; }
     .fork { margin: 60px auto 50px; }
     .fork-row { grid-template-columns: 1fr; gap: 24px; }
