@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="google-site-verification" content="JuTCKvWQJUv0mCfM69TcrIja7bt--m6m6s7ME3gVoqg" />
 <title>Noel Grass — Tour Dates</title>
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,34 +11,46 @@
 
 <style>
   :root {
-    --bg: #050505;
+    --bg: #030303;
     --surface: #0a0a0a;
     --gold: #C5A880;
     --gold-dim: #7a6b4f;
     --offwhite: #EDEAE3;
-    --muted: #6b655c;
+    --muted: #5c5750;
     --rule: #1a1a1a;
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { background: var(--bg); color: var(--offwhite); font-family: 'Playfair Display', Georgia, serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   
-  /* Cinematic Background Texture */
-  body::before {
-    content: ''; position: fixed; inset: 0; z-index: -1;
-    background: radial-gradient(circle at 50% 30%, rgba(20,20,20,0.8) 0%, #000000 70%);
-    pointer-events: none;
+  body { 
+    background: var(--bg); color: var(--offwhite); 
+    font-family: 'Playfair Display', Georgia, serif; 
+    -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    position: relative;
   }
 
-  /* Navigation (Simplified for focus) */
-  .topnav { position: sticky; top: 0; z-index: 100; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(5,5,5,0.8); backdrop-filter: blur(12px); }
-  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); text-decoration: none; }
-  .menu-toggle { background: none; border: none; color: var(--offwhite); cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; transition: opacity 0.3s; }
+  /* Cinematic Film Grain Texture */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+
+  /* Atmospheric Vignette */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+  }
+
+  /* Navigation */
+  .topnav { position: sticky; top: 0; z-index: 100; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,3,3,0.85); backdrop-filter: blur(12px); }
+  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: text-shadow 0.4s ease; }
+  .wordmark:hover { text-shadow: 0 0 15px rgba(197,168,128,0.4); }
+  .menu-toggle { background: none; border: none; color: var(--offwhite); cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; transition: opacity 0.3s; }
   .menu-toggle:hover { opacity: 1; }
 
-  /* Hero Section - Dynamic Hierarchy */
+  /* Dynamic Hero Section */
   .hero-cinematic {
-    min-height: 60vh; display: flex; flex-direction: column; 
+    min-height: 65vh; display: flex; flex-direction: column; 
     align-items: center; justify-content: center; text-align: center; 
     padding: 80px 40px 60px; position: relative;
     transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
@@ -47,18 +58,18 @@
 
   .tour-label {
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; 
-    letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); 
+    letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold-dim); 
     margin-bottom: 24px; opacity: 0; transform: translateY(10px);
     animation: fadeUp 1s ease-out 0.2s forwards;
   }
 
   .tour-title-main {
     font-family: 'Cormorant Garamond', serif; font-weight: 300; 
-    font-size: clamp(2.5rem, 7vw, 5.5rem); line-height: 1.1; 
+    font-size: clamp(2.8rem, 8vw, 6rem); line-height: 1.05; 
     color: var(--offwhite); letter-spacing: 0.02em; margin-bottom: 30px;
     opacity: 0; transform: translateY(20px);
     animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-    text-shadow: 0 0 60px rgba(237,234,227,0.05);
+    text-shadow: 0 0 80px rgba(237,234,227,0.06);
   }
 
   .tour-divider {
@@ -66,30 +77,44 @@
     opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
   }
 
-  /* RY X Style List Layout */
-  .tour-container { max-width: 850px; margin: 0 auto; padding: 40px 40px 120px; }
+  /* RY X Style List with Spotlight Hover */
+  .tour-container { max-width: 850px; margin: 0 auto; padding: 40px 40px 120px; position: relative; z-index: 1; }
   
-  .tour-list { display: flex; flex-direction: column; }
+  .tour-list { display: flex; flex-direction: column; position: relative; }
   
   .tour-date {
     display: grid; grid-template-columns: 140px 1fr auto; gap: 40px; 
-    align-items: baseline; padding: 32px 0; border-bottom: 1px solid var(--rule);
+    align-items: baseline; padding: 36px 20px; border-bottom: 1px solid var(--rule);
     opacity: 0; transform: translateY(15px); transition: all 0.6s ease;
+    position: relative; z-index: 2;
   }
   .tour-date.visible { opacity: 1; transform: translateY(0); }
   .tour-date:last-child { border-bottom: none; }
 
+  /* The Cinematic Spotlight Effect */
+  .tour-list:hover .tour-date:not(:hover) { opacity: 0.35; filter: grayscale(0.4); }
+  .tour-date:hover { 
+    opacity: 1 !important; filter: none !important; 
+    transform: translateX(8px); 
+    background: radial-gradient(circle at 30% 50%, rgba(197,168,128,0.06) 0%, transparent 60%);
+    border-bottom-color: rgba(197,168,128,0.15);
+  }
+
   .td-day {
     font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.7em; 
     letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim);
+    transition: color 0.4s ease;
   }
+  .tour-date:hover .td-day { color: var(--gold); }
 
   .td-info { display: flex; flex-direction: column; gap: 6px; }
   .td-venue {
     font-family: 'Cormorant Garamond', serif; font-weight: 500; 
-    font-size: 1.6em; color: var(--offwhite); transition: color 0.4s ease;
+    font-size: 1.6em; color: var(--offwhite); transition: all 0.4s ease;
   }
-  .tour-date:hover .td-venue { color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+  .tour-date:hover .td-venue { 
+    color: #fff; text-shadow: 0 0 25px rgba(255,255,255,0.12); 
+  }
   
   .td-location {
     font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; 
@@ -105,18 +130,18 @@
     background: transparent; border: 1px solid rgba(197,168,128,0.3); 
     padding: 12px 28px; cursor: pointer; transition: all 0.35s ease;
   }
-  .btn-ticket:hover {
-    border-color: var(--gold); background: rgba(197,168,128,0.05); 
-    box-shadow: 0 0 25px rgba(197,168,128,0.1); color: #fff;
+  .tour-date:hover .btn-ticket {
+    border-color: var(--gold); background: rgba(197,168,128,0.08); 
+    box-shadow: 0 0 30px rgba(197,168,128,0.15); color: #fff;
   }
 
   .status-soldout {
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; 
-    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.5;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.4;
   }
 
-  /* Footer Label (Small & Centered) */
-  .footer-brand { text-align: center; padding: 60px 0 40px; }
+  /* Footer Brand Label */
+  .footer-brand { text-align: center; padding: 80px 0 40px; }
   .footer-brand span {
     font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.6em; 
     letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold-dim);
@@ -133,9 +158,9 @@
   @media (max-width: 700px) {
     .hero-cinematic { min-height: 50vh; padding: 60px 24px 40px; }
     .tour-container { padding: 20px 24px 80px; }
-    .tour-date { grid-template-columns: 1fr; gap: 12px; padding: 28px 0; }
+    .tour-date { grid-template-columns: 1fr; gap: 12px; padding: 28px 20px; }
     .td-action { justify-content: flex-start; margin-top: 8px; }
-    .btn-ticket, .status-soldout { padding: 10px 20px; }
+    .tour-date:hover { transform: translateX(0); } /* Disable shift on mobile for usability */
   }
 </style>
 </head>
@@ -183,22 +208,22 @@
     // Sort by date ascending
     const sorted = dates.sort((a,b) => (a.event_date||'').localeCompare(b.event_date||''));
 
-    // 1. HANDLE TOUR TITLE VISIBILITY
+    // 1. HANDLE TOUR TITLE VISIBILITY & DYNAMIC CONTENT
     const firstDate = sorted[0];
     const hasTitle = firstDate.tour_title && firstDate.tour_title.trim() !== '';
     const isHidden = parseInt(firstDate.hide_title) === 1;
 
     if (isHidden || !hasTitle) {
-      // Hide entire hero text block for ultra-minimalist look
+      // Ultra-minimalist mode: Hide all hero text
       titleEl.style.display = 'none';
       labelEl.style.display = 'none';
       divider.style.display = 'none';
-      hero.style.minHeight = '30vh'; // Reduce hero height when no title
+      hero.style.minHeight = '30vh'; 
     } else {
       titleEl.textContent = firstDate.tour_title;
     }
 
-    // 2. RENDER LIST WITH NEW LOGIC
+    // 2. RENDER LIST WITH SPOTLIGHT LOGIC
     mount.innerHTML = sorted.map(show => {
       const dateObj = new Date(show.event_date);
       const dayStr = dateObj.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short' }).toUpperCase();
@@ -225,7 +250,7 @@
       `;
     }).join('');
 
-    // 3. INIT SCROLL ANIMATIONS
+    // 3. INIT SCROLL REVEAL ANIMATIONS
     initScrollReveal();
   }
 
@@ -242,9 +267,9 @@
     document.querySelectorAll('.tour-date').forEach(el => observer.observe(el));
   }
 
-  // Simple Menu Toggle Logic
+  // Placeholder Menu Toggle
   document.getElementById('menuToggle')?.addEventListener('click', () => {
-    alert('Menu integration placeholder - connect to your existing nav system');
+    alert('Connect this to your existing navigation system');
   });
 </script>
 
