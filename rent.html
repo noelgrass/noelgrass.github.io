@@ -746,7 +746,7 @@
 
     function buildPreviewUrl(t) {
       var base = t.isSuite ? PREVIEW_BASE_SCORES : PREVIEW_BASE_JINGLES;
-      return base + "/" + t.folder + "/" + encodeURIComponent(t.file);
+      return base + "/previews/" + t.folder + "/" + encodeURIComponent(t.file);
     }
     function fmt(sec) { if (isNaN(sec)) return "0:00"; var m = Math.floor(sec / 60), s = Math.floor(sec % 60); return m + ":" + (s < 10 ? "0" : "") + s; }
 
@@ -758,7 +758,7 @@
         var cuesHtml = '';
         for (var i = 1; i <= 3; i++) {
           var cueId = t.code + '-' + i;
-          var cueUrl = PREVIEW_BASE_SCORES + "/" + t.folder + "/cue-" + i + ".mp3";
+          var cueUrl = PREVIEW_BASE_SCORES + "/previews/" + t.folder + "/cue-" + i + ".mp3";
           cuesHtml += '<div class="cue" data-cue-id="' + cueId + '">' +
               '<div class="cue-info">' +
                 '<span class="cue-title">Cue ' + i + '</span>' +
