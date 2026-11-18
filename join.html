@@ -89,6 +89,7 @@
   @keyframes menuLineDraw { from { transform: scaleX(0); transform-origin: left center; } to { transform: scaleX(1); transform-origin: left center; } }
   @keyframes menuLinkIn { from { opacity: 0; transform: translate3d(-12px, 0, 0); } to { opacity: 1; transform: translate3d(0, 0, 0); } }
   @keyframes menuHeadingIn { from { opacity: 0; letter-spacing: 0.5em; } to { opacity: 1; letter-spacing: 0.35em; } }
+  @keyframes fadeIn { to { opacity: 1; } }
 
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
@@ -156,47 +157,21 @@
   .page { max-width: 720px; margin: 0 auto; padding: 100px 40px 80px; text-align: center; }
 
   /* =========================================
-     HERO TYPOGRAPHY (matched to Tour page)
+     HERO TYPOGRAPHY (Updated for faded vibe, original size)
      ========================================= */
-  .join-label {
-    display: block;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 400;
-    font-size: 0.7em;
-    letter-spacing: 0.6em;
-    text-transform: uppercase;
-    color: var(--gold-dim);
-    margin-bottom: 30px;
-    opacity: 0;
-    transform: translateY(15px);
-    animation: fadeUp 1.2s ease-out 0.2s forwards;
-  }
-
   h1 {
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 300;
+    font-weight: 300; /* Light weight for the faded look */
     color: var(--offwhite);
-    font-size: clamp(3.5rem, 10vw, 9rem);
-    line-height: 1.0;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    margin-bottom: 40px;
-    text-shadow: 0 0 100px rgba(237,234,227,0.1);
+    font-size: 2.8em; /* Original size kept */
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+    text-shadow: 0 0 100px rgba(237,234,227,0.1); /* The soft glow */
     opacity: 0;
     transform: translateY(30px);
-    animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.2s forwards; /* Slow, cinematic fade */
   }
-
-  .join-divider {
-    width: 120px;
-    height: 1px;
-    background: var(--gold-dim);
-    margin: 0 auto 50px;
-    opacity: 0;
-    animation: fadeIn 1.5s ease-out 0.8s forwards;
-  }
-
-  @keyframes fadeIn { to { opacity: 1; } }
 
   /* =========================================
      OPENING LETTER TYPOGRAPHY
@@ -211,7 +186,7 @@
     margin: 0 auto 50px;
     text-align: center;
     animation: fadeUp 1s ease-out both;
-    animation-delay: 1.0s;
+    animation-delay: 0.4s;
   }
   .opening-letter p { margin-bottom: 24px; }
   .opening-letter p:last-child { margin-bottom: 0; }
@@ -222,7 +197,7 @@
      CUSTOM FORM STYLES
      (labels + inputs matched to Tour conventions)
      ========================================= */
-  .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 1.3s; }
+  .custom-form-wrap { max-width: 520px; margin: 0 auto 20px; animation: fadeUp 1s ease-out both; animation-delay: 0.7s; }
   .custom-form { display: flex; flex-direction: column; gap: 20px; width: 100%; }
 
   .custom-field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
@@ -243,7 +218,7 @@
   .custom-submit:hover:not(:disabled) { color: #FCFCF7; border-color: var(--gold); background: rgba(197, 168, 128, 0.06); letter-spacing: 0.38em; }
   .custom-submit:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.55s; }
+  .signature { margin-top: 60px; text-align: center; animation: fadeUp 1s ease-out both; animation-delay: 1.15s; }
   .signature-logo { display: inline-block; height: 70px; width: auto; opacity: 0.95; }
 
   .footer-location { text-align: right; font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); opacity: 0.6; margin-top: 24px; padding-right: 6px; transition: opacity 0.3s ease; }
@@ -253,9 +228,7 @@
 
   @media (max-width: 700px) {
     .page { padding: 60px 22px 60px; }
-    h1 { font-size: clamp(2.5rem, 14vw, 4.5rem); margin-bottom: 30px; }
-    .join-label { letter-spacing: 0.45em; margin-bottom: 22px; }
-    .join-divider { width: 60px; margin-bottom: 36px; }
+    h1 { font-size: 1.9em; letter-spacing: 0.2em; margin-bottom: 24px; }
     .opening-letter { font-size: 1em; margin-bottom: 40px; }
     .custom-input { font-size: 0.9em; padding: 14px 16px; }
     .custom-submit { padding: 16px 32px; font-size: 0.78em; letter-spacing: 0.25em; }
@@ -491,9 +464,7 @@
 <div class="page-wrap" id="pageWrap">
   <div class="page">
 
-    <span class="join-label">Daydreamer</span>
     <h1>Join</h1>
-    <div class="join-divider"></div>
 
     <!-- THE OPENING LETTER -->
     <div class="opening-letter">
