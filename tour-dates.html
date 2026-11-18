@@ -28,88 +28,99 @@
   }
   body::after {
     content: ''; position: fixed; inset: 0; z-index: 9998; pointer-events: none;
-    background: radial-gradient(circle at center, transparent 40%, rgba(0,0,0,0.8) 100%);
+    background: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.95) 100%);
   }
 
   /* Navigation */
-  .topnav { position: sticky; top: 0; z-index: 100; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; background: rgba(3,3,3,0.85); backdrop-filter: blur(12px); }
-  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: text-shadow 0.4s ease; }
-  .wordmark:hover { text-shadow: 0 0 15px rgba(197,168,128,0.4); }
-  .menu-toggle { background: none; border: none; color: var(--offwhite); cursor: pointer; font-family: 'Montserrat', sans-serif; font-size: 0.7em; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.6; transition: opacity 0.3s; }
-  .menu-toggle:hover { opacity: 1; }
+  .topnav { position: sticky; top: 0; z-index: 100; padding: 30px 50px; display: flex; justify-content: center; align-items: center; background: rgba(3,3,3,0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .wordmark { font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: text-shadow 0.4s ease; }
+  .wordmark:hover { text-shadow: 0 0 20px rgba(197,168,128,0.5); }
 
   /* Hero Section */
   .hero-cinematic {
-    min-height: 65vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-    text-align: center; padding: 80px 40px 60px; position: relative; transition: all 0.8s cubic-bezier(0.16,1,0.3,1);
+    min-height: 75vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+    text-align: center; padding: 100px 40px 80px; position: relative; transition: all 1s cubic-bezier(0.16,1,0.3,1);
   }
   .tour-label {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.45em; 
-    text-transform: uppercase; color: var(--gold-dim); margin-bottom: 24px; opacity: 0; transform: translateY(10px);
-    animation: fadeUp 1s ease-out 0.2s forwards;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.7em; letter-spacing: 0.6em; 
+    text-transform: uppercase; color: var(--gold-dim); margin-bottom: 30px; opacity: 0; transform: translateY(15px);
+    animation: fadeUp 1.2s ease-out 0.2s forwards;
   }
   .tour-title-main {
-    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(2.8rem, 8vw, 6rem); 
-    line-height: 1.05; color: var(--offwhite); letter-spacing: 0.02em; margin-bottom: 30px;
-    opacity: 0; transform: translateY(20px); animation: fadeUp 1.2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
-    text-shadow: 0 0 80px rgba(237,234,227,0.06);
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.5rem, 10vw, 9rem); 
+    line-height: 1.0; color: var(--offwhite); letter-spacing: 0.01em; margin-bottom: 40px;
+    opacity: 0; transform: translateY(30px); animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    text-shadow: 0 0 100px rgba(237,234,227,0.1);
   }
   .tour-divider {
-    width: 40px; height: 1px; background: var(--gold-dim); margin: 0 auto; opacity: 0; animation: fadeIn 1s ease-out 0.8s forwards;
+    width: 120px; height: 1px; background: var(--gold-dim); margin: 0 auto; opacity: 0; animation: fadeIn 1.5s ease-out 0.8s forwards;
   }
 
   /* Tour List & Spotlight Effect */
-  .tour-container { max-width: 850px; margin: 0 auto; padding: 40px 40px 120px; position: relative; z-index: 1; }
+  .tour-container { max-width: 1200px; margin: 0 auto; padding: 20px 40px 160px; position: relative; z-index: 1; }
   .tour-list { display: flex; flex-direction: column; position: relative; }
   
   .tour-date {
-    display: grid; grid-template-columns: 140px 1fr auto; gap: 40px; align-items: baseline; 
-    padding: 36px 20px; border-bottom: 1px solid var(--rule); opacity: 0; transform: translateY(15px); 
-    transition: all 0.6s ease; position: relative; z-index: 2;
+    display: grid; grid-template-columns: 200px 1fr auto; gap: 60px; align-items: baseline; 
+    padding: 50px 20px; border-bottom: 1px solid rgba(255,255,255,0.08); opacity: 0; transform: translateY(20px); 
+    transition: all 0.6s cubic-bezier(0.16,1,0.3,1); position: relative; z-index: 2;
   }
   .tour-date.visible { opacity: 1; transform: translateY(0); }
   .tour-date:last-child { border-bottom: none; }
 
   /* Spotlight Logic */
-  .tour-list:hover .tour-date:not(:hover) { opacity: 0.35; filter: grayscale(0.4); }
+  .tour-list:hover .tour-date:not(:hover) { opacity: 0.2; filter: grayscale(1) blur(2px); }
   .tour-date:hover { 
-    opacity: 1 !important; filter: none !important; transform: translateX(8px); 
-    background: radial-gradient(circle at 30% 50%, rgba(197,168,128,0.06) 0%, transparent 60%);
-    border-bottom-color: rgba(197,168,128,0.15);
+    opacity: 1 !important; filter: none !important; transform: translateX(12px); 
+    background: radial-gradient(circle at 20% 50%, rgba(197,168,128,0.08) 0%, transparent 70%);
+    border-bottom-color: rgba(197,168,128,0.3);
   }
 
-  .td-day { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.7em; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold-dim); transition: color 0.4s ease; }
+  .td-day { font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 0.8em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-dim); transition: color 0.4s ease; }
   .tour-date:hover .td-day { color: var(--gold); }
-  .td-info { display: flex; flex-direction: column; gap: 6px; }
-  .td-venue { font-family: 'Cormorant Garamond', serif; font-weight: 500; font-size: 1.6em; color: var(--offwhite); transition: all 0.4s ease; }
-  .tour-date:hover .td-venue { color: #fff; text-shadow: 0 0 25px rgba(255,255,255,0.12); }
-  .td-location { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.68em; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .td-info { display: flex; flex-direction: column; gap: 10px; }
+  .td-venue { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 2.4em; color: var(--offwhite); transition: all 0.4s ease; }
+  .tour-date:hover .td-venue { color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.2); }
+  .td-location { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.75em; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); }
 
   /* Actions */
-  .td-action { display: flex; align-items: center; justify-content: flex-end; min-width: 140px; }
+  .td-action { display: flex; align-items: center; justify-content: flex-end; min-width: 180px; }
   .btn-ticket {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.2em; 
-    text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(197,168,128,0.3); 
-    padding: 12px 28px; cursor: pointer; transition: all 0.35s ease;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.25em; 
+    text-transform: uppercase; color: var(--gold); background: transparent; border: 1px solid rgba(197,168,128,0.4); 
+    padding: 18px 40px; cursor: pointer; transition: all 0.4s ease; position: relative; overflow: hidden;
   }
   .tour-date:hover .btn-ticket {
-    border-color: var(--gold); background: rgba(197,168,128,0.08); box-shadow: 0 0 30px rgba(197,168,128,0.15); color: #fff;
+    border-color: var(--gold); background: rgba(197,168,128,0.15); box-shadow: 0 0 40px rgba(197,168,128,0.2); color: #fff;
   }
   .status-soldout {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.2em; 
-    text-transform: uppercase; color: var(--muted); opacity: 0.4;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.75em; letter-spacing: 0.25em; 
+    text-transform: uppercase; color: var(--muted); opacity: 0.6;
   }
 
   /* Footer Brand */
-  .footer-brand { text-align: center; padding: 80px 0 40px; }
+  .footer-brand { text-align: center; padding: 100px 0 60px; }
   .footer-brand span {
-    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.6em; letter-spacing: 0.45em; 
-    text-transform: uppercase; color: var(--gold-dim); display: inline-block; position: relative; padding-bottom: 10px;
+    font-family: 'Montserrat', sans-serif; font-weight: 400; font-size: 0.65em; letter-spacing: 0.6em; 
+    text-transform: uppercase; color: var(--gold-dim); display: inline-block; position: relative; padding-bottom: 15px;
   }
   .footer-brand span::after {
     content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%);
-    width: 24px; height: 1px; background: var(--gold-dim); opacity: 0.4;
+    width: 40px; height: 1px; background: var(--gold-dim); opacity: 0.4;
   }
+
+  /* Hiatus Screen Styling */
+  .hiatus-content { text-align: center; padding: 100px 40px; animation: fadeUp 1.5s cubic-bezier(0.16,1,0.3,1) both; }
+  .hiatus-diamond { display: inline-block; width: 10px; height: 10px; background: var(--gold); transform: rotate(45deg); margin-bottom: 40px; opacity: 0.8; animation: pulse 3s infinite alternate; }
+  .hiatus-label { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.85em; letter-spacing: 0.6em; text-transform: uppercase; color: var(--gold-pale); display: block; margin-bottom: 30px; }
+  .hiatus-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 300; color: var(--offwhite); margin-bottom: 20px; letter-spacing: 0.02em; }
+  .hiatus-text { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.3em; line-height: 1.8; color: var(--muted); max-width: 600px; margin: 0 auto 50px; }
+  .hiatus-btn { 
+    display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.3em; 
+    text-transform: uppercase; color: var(--gold); text-decoration: none; padding: 18px 40px; 
+    border: 1px solid rgba(197,168,128,0.4); transition: all 0.4s ease;
+  }
+  .hiatus-btn:hover { border-color: var(--gold); background: rgba(197,168,128,0.1); box-shadow: 0 0 30px rgba(197,168,128,0.2); color: #fff; }
 
   /* Admin Panel Styles */
   .admin-wrapper { max-width: 900px; margin: 40px auto; padding: 0 40px; display: none; }
@@ -151,13 +162,16 @@
 
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   @keyframes fadeIn { to { opacity: 1; } }
-  @media (max-width: 700px) {
-    .hero-cinematic { min-height: 50vh; padding: 60px 24px 40px; }
+  @keyframes pulse { from { opacity: 0.4; box-shadow: 0 0 10px transparent; } to { opacity: 1; box-shadow: 0 0 20px var(--gold); } }
+  
+  @media (max-width: 768px) {
+    .hero-cinematic { min-height: 60vh; padding: 80px 24px 40px; }
     .tour-container { padding: 20px 24px 80px; }
-    .tour-date { grid-template-columns: 1fr; gap: 12px; padding: 28px 20px; }
-    .td-action { justify-content: flex-start; margin-top: 8px; }
+    .tour-date { grid-template-columns: 1fr; gap: 20px; padding: 40px 20px; }
+    .td-action { justify-content: flex-start; margin-top: 10px; }
     .tour-date:hover { transform: translateX(0); }
     .admin-wrapper { padding: 0 20px; }
+    .tour-divider { width: 60px; }
   }
 </style>
 </head>
@@ -167,7 +181,6 @@
 <div id="publicView">
   <header class="topnav">
     <a href="./" class="wordmark">Noel Grass</a>
-   
   </header>
 
   <div class="hero-cinematic" id="heroSection">
@@ -255,22 +268,18 @@
 </div>
 
 <script>
-  // TWO DIFFERENT APIS:
-  const READ_API = "https://master-brain.noelgrass.workers.dev/api/data"; // Public Read-Only
-  const ADMIN_API = "https://admin-api.noelgrass.workers.dev";            // Secure Write API
+  const READ_API = "https://master-brain.noelgrass.workers.dev/api/data";
+  const ADMIN_API = "https://admin-api.noelgrass.workers.dev";
   
   const token = localStorage.getItem('adminToken');
   let isAdmin = false;
   let allDatesCache = [];
 
-  // --- PUBLIC RENDER LOGIC (USES READ_API) ---
   async function initPublic() {
     try {
-      // ADD &t= to bypass Cloudflare Cache
       const statusRes = await fetch(`${READ_API}?table=settings&key=tour_page_active&t=${Date.now()}`);
       const statusData = await statusRes.json();
       
-      // Handle array response from master-brain
       const setting = Array.isArray(statusData) ? statusData[0] : statusData;
       const isActive = setting && setting.value === '1';
 
@@ -279,7 +288,6 @@
         return;
       }
 
-      // ADD &t= to bypass Cloudflare Cache
       const datesRes = await fetch(`${READ_API}?table=tour_dates&published=1&t=${Date.now()}`);
       const dates = await datesRes.json();
       
@@ -295,14 +303,15 @@
     document.getElementById('tourLabel').style.display = 'none';
     document.getElementById('tourTitleMain').style.display = 'none';
     document.getElementById('tourDivider').style.display = 'none';
-    document.getElementById('heroSection').style.minHeight = '50vh';
+    document.getElementById('heroSection').style.minHeight = '40vh';
     
     document.getElementById('tourListMount').innerHTML = `
-      <div style="text-align:center; padding:80px 40px; animation:fadeUp 1s ease-out both;">
-        <span style="display:inline-block; width:6px; height:6px; background:var(--gold); transform:rotate(45deg); margin-bottom:30px; opacity:0.8;"></span>
-        <span style="font-family:'Montserrat',sans-serif; font-weight:300; font-size:0.72em; letter-spacing:0.35em; text-transform:uppercase; color:var(--gold-pale); display:block; margin-bottom:24px;">Tour Hiatus</span>
-        <p style="font-family:'Playfair Display',Georgia,serif; font-style:italic; font-size:1.1em; line-height:1.8; color:var(--offwhite); max-width:500px; margin:0 auto 30px;">Currently composing new works.<br>Live performances will resume shortly.</p>
-        <a href="join" style="font-family:'Montserrat',sans-serif; font-size:0.7em; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); border-bottom:1px solid rgba(197,168,128,0.3); padding-bottom:4px;">Join mailing list for first access →</a>
+      <div class="hiatus-content">
+        <span class="hiatus-diamond"></span>
+        <span class="hiatus-label">Tour Hiatus</span>
+        <h1 class="hiatus-title">Currently composing new works.</h1>
+        <p class="hiatus-text">Live performances will resume shortly.</p>
+        <a href="join" class="hiatus-btn">Join mailing list for first access →</a>
       </div>`;
   }
 
@@ -314,7 +323,7 @@
     
     if (parseInt(firstDate.hide_title) === 1 || !firstDate.tour_title) {
       titleEl.style.display = 'none'; labelEl.style.display = 'none'; divider.style.display = 'none';
-      hero.style.minHeight = '30vh';
+      hero.style.minHeight = '40vh';
     } else {
       titleEl.style.display = 'block'; labelEl.style.display = 'block'; divider.style.display = 'block';
       titleEl.textContent = firstDate.tour_title;
@@ -343,7 +352,7 @@
     document.querySelectorAll('.tour-date').forEach(el => obs.observe(el));
   }
 
-  // --- ADMIN LOGIC (USES ADMIN_API) ---
+  // --- ADMIN LOGIC ---
   function toggleAdmin() {
     isAdmin = !isAdmin;
     document.getElementById('publicView').style.display = isAdmin ? 'none' : 'block';
@@ -352,11 +361,9 @@
   }
 
   async function loadAdminData() {
-    // 1. Load Page Status
     try {
       const s = await fetch(`${READ_API}?table=settings&key=tour_page_active&t=${Date.now()}`);
       const sd = await s.json();
-      // Array check here too!
       const setting = Array.isArray(sd) ? sd[0] : sd;
       const active = setting && setting.value === '1';
       
@@ -364,7 +371,6 @@
       updateStatusBadge(active);
     } catch(e){ console.error(e); }
 
-    // 2. Load Table
     try {
       const r = await fetch(`${ADMIN_API}/list?table=tour_dates`, { headers: { 'Authorization': `Bearer ${token}` } });
       allDatesCache = await r.json();
@@ -391,7 +397,6 @@
     const val = document.getElementById('tourPageActive').checked ? '1' : '0';
     updateStatusBadge(val === '1');
     
-    // We must use FormData for the admin-api worker!
     const fd = new FormData();
     fd.append('value', val);
 
@@ -403,8 +408,6 @@
       });
       
       if(!res.ok) throw new Error("Rejected");
-      
-      // If toggle was successful, update the public view automatically
       initPublic();
       
     } catch(e){ 
@@ -421,7 +424,6 @@
     b.className = `badge ${active?'badge-active':'badge-inactive'}`;
   }
 
-  // Modal Functions
   function openModal(id=null) {
     document.getElementById('tourForm').reset();
     document.getElementById('td_id').value = '';
@@ -475,14 +477,13 @@
       if(res.ok) {
         closeModal(); 
         loadAdminData();
-        initPublic(); // Refresh the public view with new data
+        initPublic();
       } else {
         alert("Failed to save date.");
       }
     } catch(err) { alert("Save error: "+err.message); }
   }
 
-  // Init
   document.addEventListener('DOMContentLoaded', initPublic);
 </script>
 </body>
