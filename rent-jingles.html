@@ -1782,16 +1782,27 @@
   }
 });
 
-    if (cancelBtn) cancelBtn.addEventListener('click', closeCheckout);
+   if (cancelBtn) cancelBtn.addEventListener('click', closeCheckout);
     if (closeBtn) closeBtn.addEventListener('click', closeCheckout);
-   if (modal) modal.addEventListener('click', function (e) { if (e.target === modal && !submitBtn.disabled) closeCheckout(); });
+    if (modal) modal.addEventListener('click', function (e) { if (e.target === modal && !submitBtn.disabled) closeCheckout(); });
 
-    if (successDoneBtn) successDoneBtn.addEventListener('click', function () {
-      successModal.classList.remove('open'); 
+    function closeSuccessModal() {
+      successModal.classList.remove('open');
       successModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('no-scroll');
+      if (downloadBtn) {
+        downloadBtn.innerText = "Generating link...";
+        downloadBtn.style.opacity = "0.5";
+        downloadBtn.style.pointerEvents = "none";
+        downloadBtn.removeAttribute('href');
+        downloadBtn.onclick = null;
+      }
+    }
+
+    if (successDoneBtn) successDoneBtn.addEventListener('click', closeSuccessModal);
+    if (successModal) successModal.addEventListener('click', function (e) {
+      if (e.target === successModal) closeSuccessModal();
     });
-    if (successModal) successModal.addEventListener('click', function (e) { if (e.target === successModal) successModal.classList.remove('open'); });
 
     var recBtn = document.getElementById('recoveryBtn');
     var recInput = document.getElementById('recoveryRef');
@@ -1832,10 +1843,12 @@
         }
 
         if (downloadBtn) {
-          downloadBtn.innerText = "Downloading...";
-          downloadBtn.style.opacity = "0.5"; 
-          downloadBtn.style.pointerEvents = "none";
-        }
+  downloadBtn.innerText = "Generating link...";
+  downloadBtn.style.opacity = "0.5";
+  downloadBtn.style.pointerEvents = "none";
+  downloadBtn.removeAttribute('href');
+  downloadBtn.onclick = null;
+}
         successModal.classList.add('open');
         successModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
