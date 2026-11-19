@@ -293,12 +293,12 @@
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(6) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.30s forwards; }
   .menu-panel.open .menu-column:nth-child(2) .menu-item:nth-child(7) { animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.42s forwards; }
 
-  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 500; font-size: 2.0em; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+  .menu-link { display: inline-block; position: relative; white-space: nowrap; font-family: 'Playfair Display', Georgia, serif; font-weight: 400; font-style: normal; font-size: 2.15em; letter-spacing: 0.06em; text-transform: none; color: var(--gold-pale); padding: 6px 0 6px 0; transition: color 0.6s ease, opacity 0.5s ease, text-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
   .menu-link:hover { color: #FCFCF7; text-shadow: 0 0 10px rgba(197, 168, 128, 0.75), 0 0 25px rgba(197, 168, 128, 0.55), 0 0 55px rgba(197, 168, 128, 0.30), 0 0 100px rgba(197, 168, 128, 0.15); }
   .menu-link.current { color: var(--gold-dim); pointer-events: none; cursor: default; }
 
   .menu-columns:has(.menu-link:hover) .menu-link:not(:hover) { opacity: 0.25; }
-  .menu-columns:has(.menu-link:hover) .menu-section { opacity: 0.15; }
+  .menu-columns:has(:hover) .menu-section { opacity: 0.15; }
 
   .menu-bottom { font-family: 'Montserrat', sans-serif; font-weight: 300; font-size: 0.62em; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold-dim); opacity: 0; margin-top: 20px; }
   .menu-panel.open .menu-bottom { animation: menuFadeIn 1s ease-out 1.6s forwards; }
@@ -411,7 +411,7 @@
     .menu-panel.open .menu-item:nth-child(5) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.08s forwards !important; }
     .menu-panel.open .menu-item:nth-child(6) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.20s forwards !important; }
     .menu-panel.open .menu-item:nth-child(7) { opacity: 0; animation: menuLinkIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.32s forwards !important; }
-    .menu-link { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
+     { transition: color 0.15s ease, opacity 0.5s ease, text-shadow 0.15s ease !important; }
     .menu-close { transition: color 0.4s ease, letter-spacing 0.5s ease, text-shadow 0.5s ease !important; }
     .menu-close .x { transition: transform 0.4s ease !important; }
     .menu-section { transition: opacity 0.5s ease !important; }
