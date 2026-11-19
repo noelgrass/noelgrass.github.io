@@ -996,15 +996,20 @@
         let apiUrl = `https://admin-api.noelgrass.workers.dev/check-blocked-page?path=${window.location.pathname}`;
         if (bypassKey) apiUrl += `&key=${bypassKey}`;
 
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 2500);
+
         try {
-            const res = await fetch(apiUrl);
+            const res = await fetch(apiUrl, { signal: controller.signal });
+            clearTimeout(timeoutId);
             const data = await res.json();
             
             if (data.blocked) {
                 window.location.replace('/maintenance.html');
             }
-        } catch (e) { 
-            console.log("Could not check page status."); 
+        } catch (e) {
+            clearTimeout(timeoutId);
+            console.log("Could not check page status.");
         }
     }
     checkPageBlock();
@@ -1066,25 +1071,25 @@
     <h1>Cinematic Film Scores — Kenya &amp; Africa</h1>
     <p class="hero-subhead">Pre-cleared film score suites for Kenyan film production companies and independent filmmakers across Africa. No subscription. License per suite.</p>
 
-    <p class="section-banner">Browse → Preview → License · Pre-cleared film score suites · Ksh 8,000 per suite · No subscription</p>
+    <p class="section-banner">Browse  Preview  License · Pre-cleared film score suites · Ksh 8,000 per suite · No subscription</p>
 
     <div class="info-box">
-      <p style="font-style: normal;"><strong>What you get:</strong> Every score is licensed as a suite — three pre-cleared cues for one mood, ready to drop into your edit. Your purchase includes the high-quality master files and a written commercial license for film, TV, online, and broadcast use. Ideal for Kenyan film production companies and independent filmmakers. <a href="license">Read the full terms →</a></p>
-      <p><em>Need something custom? <a href="commission">Commission a score →</a></em></p>
+      <p style="font-style: normal;"><strong>What you get:</strong> Every score is licensed as a suite — three pre-cleared cues for one mood, ready to drop into your edit. Your purchase includes the high-quality master files and a written commercial license for film, TV, online, and broadcast use. Ideal for Kenyan film production companies and independent filmmakers. <a href="license">Read the full terms </a></p>
+      <p><em>Need something custom? <a href="commission">Commission a score </a></em></p>
     </div>
 
-    <a href="rent" class="back-link">← Back to Rent</a>
-    <a href="license" class="license-link">What you own when you rent →</a>
+    <a href="rent" class="back-link"> Back to Rent</a>
+    <a href="license" class="license-link">What you own when you rent </a>
 
     <br style="display: block; margin: 20px 0; content: '';">
 
-    <a href="#recoveryBox" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download →</a>
+    <a href="#recoveryBox" id="heroTopLink" style="margin-bottom: 40px; font-family: 'Montserrat', sans-serif; font-size: 0.75em; letter-spacing: 0.1em; color: var(--gold-soft); display: inline-block;">Already purchased? Retrieve your download </a>
 
     <!-- Dynamic Category Shelves Injected Here by JavaScript -->
     <div id="shelvesMount"></div>
 
     <div class="custom-link">
-      Need something custom-made for your film? <a href="commission">Commission a Score →</a>
+      Need something custom-made for your film? <a href="commission">Commission a Score </a>
     </div>
 
     <!-- Order Recovery Section (Paystack Reference Lookup) -->
@@ -1113,7 +1118,7 @@
       </details>
       <details>
         <summary><span class="faq-indicator"></span>What if I need something custom for my film?</summary>
-        <p class="faq-answer">If none of the suites fit, Noel Grass accepts commissions for original scores written to picture. <a href="commission">Commission a score →</a></p>
+        <p class="faq-answer">If none of the suites fit, Noel Grass accepts commissions for original scores written to picture. <a href="commission">Commission a score </a></p>
       </details>
     </div>
 
@@ -1140,7 +1145,7 @@
 <!-- Single-Suite Checkout Modal -->
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
-    <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">✕</button>
+    <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close"></button>
     <span class="checkout-label">Checkout</span>
     <p class="checkout-title" id="checkoutTitle">Score</p>
     <p class="checkout-price" id="checkoutPrice">KES 0</p>
@@ -1148,7 +1153,7 @@
     <label for="checkoutEmail" class="checkout-field-label">Email — for your receipt</label>
     <input type="email" id="checkoutEmail" class="checkout-input" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
     <div class="checkout-error" id="checkoutError"></div>
-    <button type="button" class="checkout-submit" id="checkoutSubmit">Continue to payment →</button>
+    <button type="button" class="checkout-submit" id="checkoutSubmit">Continue to payment </button>
     <button type="button" class="checkout-cancel" id="checkoutCancel">Cancel</button>
   </div>
 </div>
@@ -1156,7 +1161,7 @@
 <!-- Post-Payment Download & Confirmation Modal -->
 <div class="success-modal" id="successModal" aria-hidden="true" role="dialog" aria-label="Payment successful">
   <div class="success-inner">
-    <div class="success-mark" aria-hidden="true">✓</div>
+    <div class="success-mark" aria-hidden="true"></div>
     <span class="checkout-label" style="text-align:center;">Confirmed</span>
     <p class="success-title">Payment received</p>
     <p class="success-body">Thank you! Your files are ready.</p>
@@ -1179,14 +1184,14 @@
 <!-- Category Browser Modal (Search, Instrument Filters, Pagination) -->
 <div class="cat-modal" id="catModal" aria-hidden="true" role="dialog" aria-label="Browse Category">
   <div class="cat-modal-inner">
-    <button type="button" class="cat-modal-close" id="catModalClose" aria-label="Close">✕</button>
+    <button type="button" class="cat-modal-close" id="catModalClose" aria-label="Close"></button>
     <span class="cat-modal-label">Browse Category</span>
     <p class="cat-modal-title" id="catModalTitle">—</p>
     
     <div class="cat-controls">
       <p class="cat-explainer">Search by theme number, title, or instrument (e.g., "Theme 4", "Piano", or "Strings").</p>
       <div class="cat-search-wrap">
-        <span class="cat-search-icon">🔍</span>
+        <span class="cat-search-icon"></span>
         <input type="text" id="catSearch" class="cat-search-input" placeholder="Search themes or instruments..." autocomplete="off">
       </div>
       
@@ -1208,16 +1213,16 @@
     <div class="cat-results" id="catResults"></div>
 
     <div class="cat-pagination" id="catPagination">
-      <button type="button" class="cat-page-btn" id="catPrevBtn">← Previous 10</button>
+      <button type="button" class="cat-page-btn" id="catPrevBtn"> Previous 10</button>
       <div class="cat-page-info">
         <span id="catPageInfo">Page 1 of 1</span>
         <button type="button" class="cat-load-all" id="catLoadAllBtn">Load All</button>
       </div>
-      <button type="button" class="cat-page-btn" id="catNextBtn">Next 10 →</button>
+      <button type="button" class="cat-page-btn" id="catNextBtn">Next 10 </button>
     </div>
 
     <div class="cat-collapse-wrap" id="catCollapseWrap">
-      <button type="button" class="cat-collapse-btn" id="catCollapseBtn">← Collapse List</button>
+      <button type="button" class="cat-collapse-btn" id="catCollapseBtn"> Collapse List</button>
     </div>
   </div>
 </div>
@@ -1225,7 +1230,7 @@
 <!-- Cue Preview Player Modal (3 Cues per Suite with Scrubber & Volume) -->
 <div class="cue-modal" id="cueModal" aria-hidden="true" role="dialog" aria-label="Preview cues">
   <div class="cue-modal-inner">
-    <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close">✕</button>
+    <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close"></button>
     <span class="cue-modal-label" id="cueModalLabel">Suite</span>
     <p class="cue-modal-title" id="cueModalTitle">—</p>
     <div class="cue-modal-instruments" id="cueModalInstruments"></div>
@@ -1316,8 +1321,8 @@
     // Audio player & scrubber state
     var audio = document.getElementById('mainAudio');
     var currentCueId = null;
-    var pendingSeekFraction = null; // Stores 0..1 seek ratio while audio buffers
-    var isDragging = false;          // True while user holds mouse/finger on scrubber
+    var pendingSeekFraction = null;
+    var isDragging = false;
     var activeWrap = null;
 
     // Category Modal DOM references
@@ -1358,14 +1363,12 @@
     var cueModalBody    = document.getElementById('cueModalBody');
     var cueModalActions = document.getElementById('cueModalActions');
 
-    // Formats seconds into M:SS countdown display
     function fmt(sec) {
       if (isNaN(sec) || sec < 0) return "0:00";
       var m = Math.floor(sec / 60), s = Math.floor(sec % 60);
       return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
-    // Deduplicates instrument tags across all 3 cues in a suite
     function buildMasterInstrumentList(descArray) {
       if (!descArray || !Array.isArray(descArray)) return '';
       var all = [];
@@ -1381,7 +1384,6 @@
       return all.join(' · ');
     }
 
-    // Renders the 3 cue rows inside the Cue Preview Modal
     function buildCueRowsHtml(suite) {
       var cueCount = 3;
       var cuesHtml = '';
@@ -1405,13 +1407,12 @@
                 '</div>' +
               '</div>' +
             '</div>' +
-            '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '">▶</button>' +
+            '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '"></button>' +
           '</div>';
       }
       return cuesHtml;
     }
 
-    // Renders a single suite row inside the Category Modal
     function buildSuiteHtml(suite) {
       return (
         '<div class="suite" data-code="' + suite.code + '">' +
@@ -1424,7 +1425,7 @@
               '</div>' +
             '</div>' +
             '<div class="suite-actions">' +
-              '<button type="button" class="action-preview" data-code="' + suite.code + '" aria-label="Preview cues">▶</button>' +
+              '<button type="button" class="action-preview" data-code="' + suite.code + '" aria-label="Preview cues"></button>' +
               '<button type="button" class="action-buy" data-id="' + suite.code + '" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '">' +
                 '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
                 'Buy' +
@@ -1439,7 +1440,6 @@
       );
     }
 
-    // Renders a top-level category row on the main storefront
     function buildCategoryRowHtml(category) {
       var folderCode = category.folder_code;
       var suites = SCORES.filter(function (s) { return s.cat === folderCode; });
@@ -1463,7 +1463,7 @@
 
     mount.innerHTML = '<div class="shelves" style="text-align:left;margin-top:20px;">' + categories.map(buildCategoryRowHtml).join('') + '</div>';
 
-    // ── CATEGORY BROWSER, SEARCH & INSTRUMENT FILTERING ─────────
+    // CATEGORY BROWSER, SEARCH & INSTRUMENT FILTERING
     function getUniqueInstruments(suites) {
       var all = [];
       suites.forEach(function(suite) {
@@ -1561,7 +1561,7 @@
       catFilters.innerHTML = instruments.map(function(inst) {
         var isActive = activeFilters.indexOf(inst) > -1;
         return '<button type="button" class="cat-filter-chip ' + (isActive ? 'active' : '') + '" data-inst="' + inst + '">' + 
-               inst + (isActive ? ' <span class="chip-x">✕</span>' : '') + 
+               inst + (isActive ? ' <span class="chip-x"></span>' : '') + 
                '</button>';
       }).join('');
       
@@ -1656,7 +1656,7 @@
       if (shelfRow) { openCategoryModal(shelfRow.getAttribute('data-cat')); }
     });
 
-    // ── CUE PREVIEW MODAL & AUDIO PLAYBACK ENGINE ──────────────
+    // CUE PREVIEW MODAL & AUDIO PLAYBACK ENGINE
     function openCueModal(code) {
       var suite = SCORES.find(function (s) { return s.code === code; });
       if (!suite) return;
@@ -1714,7 +1714,7 @@
       pendingSeekFraction = null;
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + id + '"]');
-      if (btn) { btn.innerHTML = '▶'; btn.classList.remove('playing'); }
+      if (btn) { btn.innerHTML = ''; btn.classList.remove('playing'); }
 
       var cue = cueModalBody.querySelector('.cue[data-cue-id="' + id + '"]');
       if (cue) {
@@ -1737,7 +1737,7 @@
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
-      if (btn) { btn.innerHTML = '❚❚'; btn.classList.add('playing'); }
+      if (btn) { btn.innerHTML = ''; btn.classList.add('playing'); }
     }
 
     catResults.addEventListener('click', function(e) {
@@ -1769,11 +1769,11 @@
         if (currentCueId === cueId) {
           if (audio.paused) {
             audio.play();
-            cueBtn.innerHTML = '❚❚';
+            cueBtn.innerHTML = '';
             cueBtn.classList.add('playing');
           } else {
             audio.pause();
-            cueBtn.innerHTML = '▶';
+            cueBtn.innerHTML = '';
             cueBtn.classList.remove('playing');
           }
           return;
@@ -1781,7 +1781,7 @@
 
         if (currentCueId) {
           var oldBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
-          if (oldBtn) { oldBtn.innerHTML = '▶'; oldBtn.classList.remove('playing'); }
+          if (oldBtn) { oldBtn.innerHTML = ''; oldBtn.classList.remove('playing'); }
           var oldCue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
           if (oldCue) {
             var oldBar = oldCue.querySelector('.cue-progress-bar');
@@ -1803,8 +1803,7 @@
       }
     });
 
-    // ── SCRUBBER / SEEKING LOGIC (FIXED) ───────────────────────
-    // Applies any pending 0..1 seek fraction once duration & byte ranges are ready
+    // SCRUBBER / SEEKING LOGIC
     function applyPendingSeek() {
       if (pendingSeekFraction !== null && audio.duration && isFinite(audio.duration)) {
         audio.currentTime = pendingSeekFraction * audio.duration;
@@ -1816,7 +1815,6 @@
       audio.addEventListener('loadedmetadata', applyPendingSeek);
       audio.addEventListener('canplay', applyPendingSeek);
 
-      // Update progress bar & timer only when user is NOT actively dragging
       audio.addEventListener('timeupdate', function () {
         if (!currentCueId || isDragging) return;
         var cue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
@@ -1838,8 +1836,6 @@
         return cue ? cue.getAttribute('data-cue-id') : null;
       }
 
-      // Calculates 0..1 fraction from pointer event, updates bar + timer immediately,
-      // and sets audio.currentTime (or queues pendingSeekFraction if still buffering)
       function seekToEvent(e, wrap) {
         var rect = wrap.getBoundingClientRect();
         var clientX = (e.touches && e.touches.length) ? e.touches[0].clientX : e.clientX;
@@ -1874,7 +1870,6 @@
         isDragging = true;
         activeWrap = wrap;
 
-        // If user clicked/dragged a different cue's bar, load & start it at that spot
         if (wrapCueId !== currentCueId) {
           stopCue();
           var playBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + wrapCueId + '"]');
@@ -1882,7 +1877,7 @@
 
           var url = playBtn.getAttribute('data-url');
           currentCueId = wrapCueId;
-          playBtn.innerHTML = '❚❚';
+          playBtn.innerHTML = '';
           playBtn.classList.add('playing');
 
           seekToEvent(e, wrap);
@@ -1921,7 +1916,7 @@
       document.addEventListener('touchcancel', handleSeekEnd);
     }
 
-    // ── SINGLE-SUITE PAYSTACK CHECKOUT & ORDER RECOVERY ─────────
+    // SINGLE-SUITE PAYSTACK CHECKOUT & ORDER RECOVERY
     var STORAGE_KEY    = "noelgrass_email";
     var modal          = document.getElementById('checkoutModal');
     var modalTitle     = document.getElementById('checkoutTitle');
@@ -1999,13 +1994,13 @@
           window.location.href = data.auth_url;
         } else {
           alert("Payment error: " + (data.error || "Could not initialize payment."));
-          submitBtn.innerText = "Continue to payment →";
+          submitBtn.innerText = "Continue to payment ";
           submitBtn.disabled = false;
         }
       } catch (err) {
         console.error(err);
         alert("Network error. Please try again.");
-        submitBtn.innerText = "Continue to payment →";
+        submitBtn.innerText = "Continue to payment ";
         submitBtn.disabled = false;
       }
     });
@@ -2016,11 +2011,14 @@
 
     if (successDoneBtn) successDoneBtn.addEventListener('click', function () {
       successModal.classList.remove('open'); successModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
       document.body.style.overflow = '';
     });
     if (successModal) successModal.addEventListener('click', function (e) {
       if (e.target === successModal) {
         successModal.classList.remove('open');
+        successModal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('no-scroll');
         document.body.style.overflow = '';
       }
     });
@@ -2055,9 +2053,9 @@
       document.body.classList.add('no-scroll');
 
       setTimeout(function() {
-        window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         recBtn.innerText = "Generate Fresh Link";
         recBtn.disabled = false;
+        window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
       }, 1500);
     });
   }
@@ -2067,6 +2065,11 @@
      10. SCRIPT 3 — POST-PAYMENT REDIRECT HANDLER (?vault=1&ref=...)
      ========================================================================== -->
 <script>
+  window.addEventListener('pageshow', function () {
+    document.body.classList.remove('no-scroll');
+    document.body.style.overflow = '';
+  });
+
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('vault') === '1') {
     const ref = urlParams.get('ref');
@@ -2079,16 +2082,17 @@
       document.body.classList.add('no-scroll');
       
       if (downloadBtn && ref) {
+        const recoverUrl = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
         downloadBtn.innerText = "Download Your Files";
         downloadBtn.style.opacity = "1"; 
         downloadBtn.style.pointerEvents = "auto";
-        downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+        downloadBtn.href = recoverUrl;
         
         downloadBtn.onclick = function(e) {
           e.preventDefault();
-          downloadBtn.innerText = "Downloading...";
-          downloadBtn.style.opacity = "0.7";
-          window.open("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), "_blank");
+          downloadBtn.innerText = "Download Started";
+          downloadBtn.style.opacity = "1";
+          window.open(recoverUrl, "_blank", "noopener");
         };
       }
       
@@ -2187,7 +2191,7 @@
 
 <div id="cartModal">
   <div class="cart-inner">
-    <button type="button" onclick="closeCartModal()" style="position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; cursor: pointer;">✕</button>
+    <button type="button" onclick="closeCartModal()" style="position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; cursor: pointer;"></button>
     <span class="checkout-label">Your Selection</span>
     <p class="checkout-title" style="margin-bottom: 24px;">Shopping Cart</p>
     
@@ -2202,7 +2206,7 @@
     <input type="email" id="cartEmail" class="checkout-input" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
     <div class="checkout-error" id="cartError"></div>
     
-    <button type="button" class="checkout-submit" id="cartCheckoutBtn">Checkout Cart →</button>
+    <button type="button" class="checkout-submit" id="cartCheckoutBtn">Checkout Cart </button>
   </div>
 </div>
 
@@ -2330,13 +2334,13 @@
       } else {
         errorEl.innerText = data.error || "Checkout failed";
         errorEl.classList.add('visible');
-        this.innerText = "Checkout Cart →";
+        this.innerText = "Checkout Cart ";
         this.disabled = false;
       }
     } catch(e) {
       errorEl.innerText = "Network error. Please try again.";
       errorEl.classList.add('visible');
-      this.innerText = "Checkout Cart →";
+      this.innerText = "Checkout Cart ";
       this.disabled = false;
     }
   };
