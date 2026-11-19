@@ -869,6 +869,34 @@
   6. E-Commerce & Checkout Flow: Integrates Paystack checkout initialization, 
      modal-based single item purchasing, a persistent shopping cart system, 
      and digital delivery recovery via purchase reference numbers.
+
+  ═══════════════════════════════════════════════════════════════
+  🔧 RECENT FIXES (4 problems resolved):
+
+  FIX #1 — CHECKOUT MODAL NO LONGER CLOSES EARLY
+     Before: closeCheckout() was called immediately on clicking "Continue to
+     payment", leaving a visible gap before Paystack loaded.
+     After: The modal stays open with the button showing "Connecting..."
+     until the server returns a `auth_url` (or an error). Errors are now
+     displayed inside the modal via showError() instead of via alert().
+
+  FIX #2 — DOWNLOAD BUTTON RESETS AFTER DOWNLOAD STARTS
+     Before: Once the download was triggered, the button stayed stuck on
+     "Downloading..." forever if navigation was interrupted.
+     After: A 4-second setTimeout restores the button to "Download Your
+     Files" after the download has been triggered. Same fix applied to
+     both the recovery flow and the ?vault=1 path.
+
+  FIX #3 — PAGE NO LONGER FROZEN AFTER DOWNLOAD
+     Before: If the page was restored from browser Back/Forward cache
+     (BFCache) with a modal open or `no-scroll` class applied, the page
+     appeared frozen (no scrolling, no clicks).
+     After: A `pageshow` listener resets `no-scroll` and force-closes any
+     lingering modals when the page is restored from cache.
+
+  FIX #4 — DOWNLOAD BUTTON RESETS ON THE ?vault=1 PATH TOO
+     Same timeout-based reset applied to the alternate return-from-Paystack
+     flow that uses window.open() instead of window.location.href.
   ═══════════════════════════════════════════════════════════════
 -->
 
@@ -1738,6 +1766,11 @@
       if (buyBtn) { e.preventDefault(); openCheckout(buyBtn); }
     });
 
+    // ═════════════════════════════════════════════════════════════
+    // FIX #1: Checkout modal now stays open until redirect happens.
+    // On error, the modal remains open and the error is shown IN the
+    // modal via showError() instead of using alert().
+    // ═════════════════════════════════════════════════════════════
     if (submitBtn) submitBtn.addEventListener('click', async function () {
       if (!pendingBtn) return;
       var email = (emailInput.value || '').trim();
@@ -1751,7 +1784,7 @@
 
       submitBtn.innerText = "Connecting...";
       submitBtn.disabled = true;
-      closeCheckout();
+      // Modal intentionally stays open until redirect completes.
 
       try {
         const response = await fetch("https://master-brain.noelgrass.workers.dev/create-checkout", {
@@ -1767,15 +1800,17 @@
         const data = await response.json();
 
         if (data.auth_url) {
+          // Leave the modal showing "Connecting..." until the browser navigates.
           window.location.href = data.auth_url;
         } else {
-          alert("Payment error: " + (data.error || "Could not initialize payment."));
+          // Show error inside the modal instead of using alert()
+          showError(data.error || "Could not initialize payment.");
           submitBtn.innerText = "Continue to payment →";
           submitBtn.disabled = false;
         }
       } catch (err) {
         console.error(err);
-        alert("Network error. Please try again.");
+        showError("Network error. Please try again.");
         submitBtn.innerText = "Continue to payment →";
         submitBtn.disabled = false;
       }
@@ -1803,6 +1838,11 @@
       this.value = formatted;
     });
 
+    // ═════════════════════════════════════════════════════════════
+    // FIX #2: Download button label now resets to "Download Your Files"
+    // 4 seconds after the download has been triggered (instead of
+    // staying stuck on "Downloading..." forever).
+    // ═════════════════════════════════════════════════════════════
     if (recBtn) recBtn.addEventListener('click', async function () {
       var ref = recInput.value.trim();
       if (!ref) {
@@ -1838,17 +1878,30 @@
         successModal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('no-scroll');
 
+        // Trigger the download
+        window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+
+        // Restore button labels once the download has had time to start
         setTimeout(function() {
-          window.location.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+          if (downloadBtn) {
+            downloadBtn.innerText = "Download Your Files";
+            downloadBtn.style.opacity = "1";
+            downloadBtn.style.pointerEvents = "auto";
+          }
           recBtn.innerText = "Generate Fresh Link";
           recBtn.disabled = false;
-        }, 1500);
+        }, 4000);
 
       } catch (err) {
         recError.innerText = "Network error. Please try again.";
         recError.style.display = "block";
         recBtn.innerText = "Generate Fresh Link";
         recBtn.disabled = false;
+        if (downloadBtn) {
+          downloadBtn.innerText = "Download Your Files";
+          downloadBtn.style.opacity = "1";
+          downloadBtn.style.pointerEvents = "auto";
+        }
       }
     });
 
@@ -1856,35 +1909,71 @@
   });
 </script>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     FIX #4: The ?vault=1 path also now resets the download button
+     after triggering the download in a new tab.
+     ═══════════════════════════════════════════════════════════════ -->
 <script>
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('vault') === '1') {
-    const ref = urlParams.get('ref');
-    const successModal = document.getElementById('successModal');
-    const downloadBtn  = document.getElementById('downloadLinkBtn');
-    
-    if (successModal) {
-      successModal.classList.add('open');
-      successModal.setAttribute('aria-hidden', 'false');
-      document.body.classList.add('no-scroll');
-      
-      if (downloadBtn && ref) {
-        downloadBtn.innerText = "Download Your Files";
-        downloadBtn.style.opacity = "1"; 
-        downloadBtn.style.pointerEvents = "auto";
-        downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
-        
-        downloadBtn.onclick = function(e) {
-          e.preventDefault();
-          downloadBtn.innerText = "Downloading...";
-          downloadBtn.style.opacity = "0.7";
-          window.open("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), "_blank");
-        };
+  (function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('vault') === '1') {
+      const ref = urlParams.get('ref');
+      const successModal = document.getElementById('successModal');
+      const downloadBtn  = document.getElementById('downloadLinkBtn');
+
+      if (successModal) {
+        successModal.classList.add('open');
+        successModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('no-scroll');
+
+        if (downloadBtn && ref) {
+          downloadBtn.innerText = "Download Your Files";
+          downloadBtn.style.opacity = "1";
+          downloadBtn.style.pointerEvents = "auto";
+          downloadBtn.href = "https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref);
+
+          downloadBtn.onclick = function(e) {
+            e.preventDefault();
+            downloadBtn.innerText = "Downloading...";
+            downloadBtn.style.opacity = "0.7";
+            window.open("https://master-brain.noelgrass.workers.dev/recover?ref=" + encodeURIComponent(ref), "_blank");
+
+            // Restore the label after the download has had time to start
+            setTimeout(function () {
+              downloadBtn.innerText = "Download Your Files";
+              downloadBtn.style.opacity = "1";
+            }, 4000);
+          };
+        }
+
+        window.history.replaceState({}, document.title, window.location.pathname);
       }
-      
-      window.history.replaceState({}, document.title, window.location.pathname);
     }
-  }
+  })();
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FIX #3: Unfreeze the page if it was restored from the browser's
+     Back/Forward cache (BFCache) with a stale modal open or the
+     `no-scroll` class still applied. This prevents the "page frozen
+     after download" symptom.
+     ═══════════════════════════════════════════════════════════════ -->
+<script>
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      document.body.classList.remove('no-scroll');
+      ['checkoutModal','successModal','cartModal','catModal'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.classList.remove('open'); el.setAttribute('aria-hidden','true'); }
+      });
+      var db = document.getElementById('downloadLinkBtn');
+      if (db) {
+        db.innerText = "Download Your Files";
+        db.style.opacity = "1";
+        db.style.pointerEvents = "auto";
+      }
+    }
+  });
 </script>
 
 <!-- ═══════════════════════════════════════════════════════════════
