@@ -7,7 +7,7 @@
 
 <title>Noel Grass — Gallery | Film, Documentary &amp; Media Scores</title>
 
-   <!-- 👇 PASTE THE FAVICON CODE HERE 👇 -->
+   <!--  PASTE THE FAVICON CODE HERE  -->
 <link rel="icon" type="image/png" href="https://noelgrass.com/images/favicon.png">
 
 <meta name="description" content="Film composer in Kenya crafting cinematic scores and soundtracks worldwide. Explore feature film, documentary, and media work by Noel Grass in Nairobi.">
@@ -190,7 +190,7 @@
   .gallery-item .poster { position: relative; width: 100%; aspect-ratio: 1 / 1; background: #1a1a1a; overflow: visible; display: flex; align-items: center; justify-content: center; border: 1px solid #1f1f1f; transition: border-color 0.4s ease; animation: tileRestGlow 7s ease-in-out infinite; animation-delay: 1.4s; cursor: pointer; }
   .gallery-item .poster img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.72) contrast(1.05); transition: filter 0.4s ease, transform 0.4s ease; pointer-events: none; will-change: transform, filter; }
 
-  /* ── Store-style hover for Film Tiles ── */
+  /*  Store-style hover for Film Tiles  */
   .gallery-item:hover .poster,
   .gallery-item:has(.action-link:hover) .poster {
     border-color: var(--gold-soft);
@@ -362,6 +362,31 @@
   }
 
   .clients-caption { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; line-height: 1.8; color: var(--muted); max-width: 800px; margin: 0 auto; text-align: center; }
+
+  /* Collapsible row-2+ toggle */
+  .row-collapsed { display: none !important; }
+  .row-toggle-wrap { display: none; justify-content: center; margin: 16px auto 36px; }
+  .row-toggle-wrap.visible { display: flex; }
+  .row-toggle-btn {
+    background: transparent;
+    border: 1px solid rgba(197,168,128,0.35);
+    color: var(--gold-pale);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 400;
+    font-size: 0.65em;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .row-toggle-btn:hover {
+    color: #FCFCF7;
+    border-color: var(--gold);
+    box-shadow: 0 0 20px rgba(197,168,128,0.25);
+    transform: translateY(-1px);
+  }
 
   .commission-line { margin-top: 90px; padding-top: 50px; border-top: 1px solid var(--rule); font-style: italic; font-size: 1em; text-align: center; }
   .commission-line a { border-bottom: 1px solid rgba(197,168,128,0.5); padding-bottom: 2px; transition: border-color 0.3s ease, color 0.3s ease; }
@@ -586,12 +611,18 @@
 
     <div class="gallery-section" id="gallery-section">
       <div class="gallery" id="filmsGrid"></div>
+      <div class="row-toggle-wrap" id="filmsToggleWrap">
+        <button type="button" class="row-toggle-btn" id="filmsToggleBtn" aria-expanded="false">Show More</button>
+      </div>
     </div>
 
     <div class="clients-block">
       <h2 class="clients-subhead">Documentaries, Organizations &amp; Media</h2>
       <p class="clients-note">Clients whose films, campaigns, and jingles I have scored.</p>
       <div class="clients" id="clientsGrid"></div>
+      <div class="row-toggle-wrap" id="clientsToggleWrap">
+        <button type="button" class="row-toggle-btn" id="clientsToggleBtn" aria-expanded="false">Show More</button>
+      </div>
       <p class="clients-caption">Clients include IFC / World Bank Group, HELB, GAA, SOMINVEST, Camera Africa Consultants, Heritage Institute, Profiles, Engage, and AMREF.</p>
     </div>
 
@@ -762,9 +793,9 @@
 </script>
 
 <script>
-  /* ═══════════════════════════════════════════════════════════════
-     🎬 LIVE DATA FETCHING FROM API (DATABASE + R2)
-     ═══════════════════════════════════════════════════════════════ */
+  /* ¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T
+      LIVE DATA FETCHING FROM API (DATABASE + R2)
+     ¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T¨T */
   let GALLERY = { films: [], clients: [] };
 
     Promise.all([
@@ -786,8 +817,8 @@
       let file = client.audio_file || "";
 
       // NEW ROUTE only if audio_file is a full path (contains a "/").
-      // OLD CLIENTS: audio_file = "MC03.mp3" → no slash → use old rent-jingles route.
-      // NEW CLIENTS: audio_file = "clients/previews/xyz.mp3" → has slash → use new master-brain route.
+      // OLD CLIENTS: audio_file = "MC03.mp3"  no slash  use old rent-jingles route.
+      // NEW CLIENTS: audio_file = "clients/previews/xyz.mp3"  has slash  use new master-brain route.
       let useNewRoute = file.includes('/');
 
       return {
@@ -804,6 +835,60 @@
   }).catch(err => {
     console.error("Failed to load gallery data:", err);
   });
+
+  function getRowOneCount() {
+    if (window.innerWidth <= 700) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function setupRowCollapse(gridId, itemSelector, toggleWrapId, toggleBtnId) {
+    var grid = document.getElementById(gridId);
+    var wrap = document.getElementById(toggleWrapId);
+    var btn = document.getElementById(toggleBtnId);
+    if (!grid || !wrap || !btn) return;
+
+    var expanded = false;
+
+    function applyState() {
+      var items = Array.prototype.slice.call(grid.querySelectorAll(itemSelector));
+      var rowOneCount = getRowOneCount();
+      var hasExtraRows = items.length > rowOneCount;
+
+      if (!hasExtraRows) {
+        wrap.classList.remove('visible');
+        items.forEach(function(item) { item.classList.remove('row-collapsed'); });
+        return;
+      }
+
+      wrap.classList.add('visible');
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.textContent = expanded ? 'Show Less' : 'Show More';
+
+      items.forEach(function(item, idx) {
+        if (!expanded && idx >= rowOneCount) {
+          item.classList.add('row-collapsed');
+        } else {
+          item.classList.remove('row-collapsed');
+          if (window.tileObserver && !item.classList.contains('lit')) {
+            window.tileObserver.observe(item);
+          }
+        }
+      });
+    }
+
+    btn.onclick = function() {
+      expanded = !expanded;
+      applyState();
+    };
+
+    if (!grid.dataset.rowResizeBound) {
+      grid.dataset.rowResizeBound = '1';
+      window.addEventListener('resize', applyState);
+    }
+
+    applyState();
+  }
 
   function renderGallery() {
     var filmsGrid = document.getElementById('filmsGrid');
@@ -1014,6 +1099,9 @@
     } else {
       filmTiles.forEach(function(el) { el.classList.add('lit'); });
     }
+
+    setupRowCollapse('filmsGrid', '.gallery-item', 'filmsToggleWrap', 'filmsToggleBtn');
+    setupRowCollapse('clientsGrid', '.client-item', 'clientsToggleWrap', 'clientsToggleBtn');
   }
 </script>
 
