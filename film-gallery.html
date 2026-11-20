@@ -110,6 +110,11 @@
     50% { box-shadow: 0 0 40px 8px rgba(197,168,128,0.60), 0 0 80px 20px rgba(197,168,128,0.30); } 
     100% { box-shadow: 0 0 30px 5px rgba(197,168,128,0.40), 0 0 60px 15px rgba(197,168,128,0.20); } 
   }
+
+  @keyframes toggleRestGlow {
+    0%, 100% { text-shadow: 0 0 12px rgba(197,168,128,0.25), 0 0 28px rgba(197,168,128,0.10); }
+    50% { text-shadow: 0 0 18px rgba(197,168,128,0.48), 0 0 42px rgba(197,168,128,0.20); }
+  }
   
   @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
@@ -363,44 +368,62 @@
 
   .clients-caption { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; line-height: 1.8; color: var(--muted); max-width: 800px; margin: 0 auto; text-align: center; }
 
-  /* Collapsible row-2+ glowing typographic trigger */
+  /* Collapsible row-2+ glowing hairline trigger */
   .row-collapsed { display: none !important; }
-  .row-toggle-wrap { display: none; justify-content: center; margin: 12px auto 32px; }
+  .row-toggle-wrap { display: none; justify-content: center; margin: 22px auto 40px; width: 100%; }
   .row-toggle-wrap.visible { display: flex; }
   .row-toggle-btn {
     background: transparent;
     border: none;
-    color: var(--gold);
+    color: var(--gold-pale);
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
-    font-size: 0.65em;
-    letter-spacing: 0.28em;
+    font-size: 0.78em;
+    letter-spacing: 0.34em;
     text-transform: uppercase;
-    padding: 10px 16px;
+    padding: 14px 20px;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    text-shadow: 0 0 12px rgba(197,168,128,0.28);
-    transition: color 0.35s ease, text-shadow 0.4s ease, transform 0.35s ease;
+    gap: 18px;
+    position: relative;
+    animation: toggleRestGlow 6s ease-in-out infinite;
+    transition: color 0.35s ease, letter-spacing 0.4s ease, text-shadow 0.4s ease, transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
+  }
+  .row-toggle-btn::before,
+  .row-toggle-btn::after {
+    content: '';
+    width: 44px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(197,168,128,0.65));
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, box-shadow 0.4s ease;
+  }
+  .row-toggle-btn::after {
+    background: linear-gradient(90deg, rgba(197,168,128,0.65), transparent);
   }
   .row-toggle-btn:hover {
     color: #FCFCF7;
-    text-shadow: 0 0 12px rgba(197,168,128,0.8), 0 0 28px rgba(197,168,128,0.45), 0 0 48px rgba(197,168,128,0.2);
-    transform: translateY(-1px);
+    letter-spacing: 0.38em;
+    text-shadow: 0 0 14px rgba(197,168,128,0.85), 0 0 32px rgba(197,168,128,0.5), 0 0 60px rgba(197,168,128,0.22);
+    transform: translateY(-2px);
   }
-  .row-toggle-arrow {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: 1.25em;
-    line-height: 1;
-    transition: transform 0.35s ease;
+  .row-toggle-btn:hover::before,
+  .row-toggle-btn:hover::after {
+    width: 68px;
+    box-shadow: 0 0 12px rgba(197,168,128,0.45);
   }
-  .row-toggle-btn:hover .row-toggle-arrow {
-    transform: translateY(1px);
+  .row-toggle-chevron {
+    display: inline-block;
+    width: 9px;
+    height: 9px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .row-toggle-btn[aria-expanded="true"]:hover .row-toggle-arrow {
-    transform: translateY(-1px);
+  .row-toggle-btn[aria-expanded="true"] .row-toggle-chevron {
+    transform: translateY(2px) rotate(-135deg);
   }
 
   .commission-line { margin-top: 90px; padding-top: 50px; border-top: 1px solid var(--rule); font-style: italic; font-size: 1em; text-align: center; }
@@ -549,6 +572,11 @@
     .client-item img { max-height: 130px; }
     .client-item .item-actions { margin-top: 32px; }
     .clients-caption { font-size: 0.85em; }
+    .row-toggle-btn { font-size: 0.72em; letter-spacing: 0.26em; gap: 14px; }
+    .row-toggle-btn::before,
+    .row-toggle-btn::after { width: 28px; }
+    .row-toggle-btn:hover::before,
+    .row-toggle-btn:hover::after { width: 42px; }
     .commission-line { margin-top: 60px; padding-top: 35px; font-size: 0.95em; }
     .cross-link { font-size: 0.95em; }
     .signature { margin-top: 50px; }
@@ -629,7 +657,7 @@
       <div class="row-toggle-wrap" id="filmsToggleWrap">
         <button type="button" class="row-toggle-btn" id="filmsToggleBtn" aria-expanded="false">
           <span class="row-toggle-label">Show More</span>
-          <span class="row-toggle-arrow" aria-hidden="true">↓</span>
+          <span class="row-toggle-chevron" aria-hidden="true"></span>
         </button>
       </div>
     </div>
@@ -641,7 +669,7 @@
       <div class="row-toggle-wrap" id="clientsToggleWrap">
         <button type="button" class="row-toggle-btn" id="clientsToggleBtn" aria-expanded="false">
           <span class="row-toggle-label">Show More</span>
-          <span class="row-toggle-arrow" aria-hidden="true">↓</span>
+          <span class="row-toggle-chevron" aria-hidden="true"></span>
         </button>
       </div>
       <p class="clients-caption">Clients include IFC / World Bank Group, HELB, GAA, SOMINVEST, Camera Africa Consultants, Heritage Institute, Profiles, Engage, and AMREF.</p>
@@ -871,7 +899,6 @@
     if (!grid || !wrap || !btn) return;
 
     var labelEl = btn.querySelector('.row-toggle-label');
-    var arrowEl = btn.querySelector('.row-toggle-arrow');
     var expanded = false;
 
     function applyState() {
@@ -888,7 +915,6 @@
       wrap.classList.add('visible');
       btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
       if (labelEl) labelEl.textContent = expanded ? 'Show Less' : 'Show More';
-      if (arrowEl) arrowEl.textContent = expanded ? '↑' : '↓';
 
       items.forEach(function(item, idx) {
         if (!expanded && idx >= rowOneCount) {
@@ -1137,3 +1163,4 @@
 
 </body>
 </html>
+```[cite: 1]
