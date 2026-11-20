@@ -1145,7 +1145,7 @@
 <!-- Single-Suite Checkout Modal -->
 <div class="checkout-modal" id="checkoutModal" aria-hidden="true" role="dialog" aria-label="Checkout">
   <div class="checkout-inner">
-    <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close"></button>
+   <button type="button" class="checkout-close" id="checkoutClose" aria-label="Close">&times;</button>
     <span class="checkout-label">Checkout</span>
     <p class="checkout-title" id="checkoutTitle">Score</p>
     <p class="checkout-price" id="checkoutPrice">KES 0</p>
@@ -1184,7 +1184,7 @@
 <!-- Category Browser Modal (Search, Instrument Filters, Pagination) -->
 <div class="cat-modal" id="catModal" aria-hidden="true" role="dialog" aria-label="Browse Category">
   <div class="cat-modal-inner">
-    <button type="button" class="cat-modal-close" id="catModalClose" aria-label="Close"></button>
+    <button type="button" class="cat-modal-close" id="catModalClose" aria-label="Close">&times;</button>
     <span class="cat-modal-label">Browse Category</span>
     <p class="cat-modal-title" id="catModalTitle">—</p>
     
@@ -1230,7 +1230,7 @@
 <!-- Cue Preview Player Modal (3 Cues per Suite with Scrubber & Volume) -->
 <div class="cue-modal" id="cueModal" aria-hidden="true" role="dialog" aria-label="Preview cues">
   <div class="cue-modal-inner">
-    <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close"></button>
+    <button type="button" class="cue-modal-close" id="cueModalClose" aria-label="Close">&times;</button>
     <span class="cue-modal-label" id="cueModalLabel">Suite</span>
     <p class="cue-modal-title" id="cueModalTitle">—</p>
     <div class="cue-modal-instruments" id="cueModalInstruments"></div>
@@ -2191,7 +2191,7 @@
 
 <div id="cartModal">
   <div class="cart-inner">
-    <button type="button" onclick="closeCartModal()" style="position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; cursor: pointer;"></button>
+    <button type="button" onclick="closeCartModal()" aria-label="Close" style="position: absolute; top: 12px; right: 14px; background: transparent; border: 0; color: var(--muted); font-size: 1.1em; cursor: pointer;">&times;</button>
     <span class="checkout-label">Your Selection</span>
     <p class="checkout-title" style="margin-bottom: 24px;">Shopping Cart</p>
     
