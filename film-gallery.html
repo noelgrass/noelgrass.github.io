@@ -179,7 +179,7 @@
   h2, .subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; font-weight: 400; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 50px 0 24px; display: block; }
   p { font-size: 1.05em; line-height: 1.85; margin: 0 0 22px; max-width: 780px; margin-left: auto; margin-right: auto; }
   .intro-text { animation: fadeUp 1s ease-out both; animation-delay: 0.55s; }
-  .films-block { margin-top: 70px; }
+  .films-block { margin-top: 70px; scroll-margin-top: 100px; }
   .films-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 0 0 20px; display: block; }
   .films-note { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); max-width: 640px; margin: 0 auto 60px; text-align: center; }
 
@@ -307,7 +307,7 @@
   /* =========================================================
      ORGANIZATIONS GRID
      ========================================================= */
-  .clients-block { margin-top: 130px; }
+  .clients-block { margin-top: 130px; scroll-margin-top: 100px; }
   .clients-subhead { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1.25em; color: var(--gold-pale); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; margin: 0 0 20px; display: block; }
   .clients-note { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 1em; line-height: 1.75; color: var(--muted); max-width: 640px; margin: 0 auto 60px; text-align: center; }
 
@@ -363,28 +363,43 @@
 
   .clients-caption { font-family: 'Playfair Display', Georgia, serif; font-style: italic; font-size: 0.9em; line-height: 1.8; color: var(--muted); max-width: 800px; margin: 0 auto; text-align: center; }
 
-  /* Collapsible row-2+ toggle */
+  /* Collapsible row-2+ glowing typographic trigger */
   .row-collapsed { display: none !important; }
-  .row-toggle-wrap { display: none; justify-content: center; margin: 16px auto 36px; }
+  .row-toggle-wrap { display: none; justify-content: center; margin: 12px auto 32px; }
   .row-toggle-wrap.visible { display: flex; }
   .row-toggle-btn {
     background: transparent;
-    border: 1px solid rgba(197,168,128,0.35);
-    color: var(--gold-pale);
+    border: none;
+    color: var(--gold);
     font-family: 'Montserrat', sans-serif;
     font-weight: 400;
     font-size: 0.65em;
-    letter-spacing: 0.25em;
+    letter-spacing: 0.28em;
     text-transform: uppercase;
-    padding: 10px 22px;
+    padding: 10px 16px;
     cursor: pointer;
-    transition: color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-shadow: 0 0 12px rgba(197,168,128,0.28);
+    transition: color 0.35s ease, text-shadow 0.4s ease, transform 0.35s ease;
     -webkit-tap-highlight-color: transparent;
   }
   .row-toggle-btn:hover {
     color: #FCFCF7;
-    border-color: var(--gold);
-    box-shadow: 0 0 20px rgba(197,168,128,0.25);
+    text-shadow: 0 0 12px rgba(197,168,128,0.8), 0 0 28px rgba(197,168,128,0.45), 0 0 48px rgba(197,168,128,0.2);
+    transform: translateY(-1px);
+  }
+  .row-toggle-arrow {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.25em;
+    line-height: 1;
+    transition: transform 0.35s ease;
+  }
+  .row-toggle-btn:hover .row-toggle-arrow {
+    transform: translateY(1px);
+  }
+  .row-toggle-btn[aria-expanded="true"]:hover .row-toggle-arrow {
     transform: translateY(-1px);
   }
 
@@ -604,7 +619,7 @@
 </div>
 
 
-    <div class="films-block">
+    <div class="films-block" id="filmsBlock">
       <h2 class="films-subhead">Films</h2>
       <p class="films-note">Original scores for film and screen.</p>
     </div>
@@ -612,16 +627,22 @@
     <div class="gallery-section" id="gallery-section">
       <div class="gallery" id="filmsGrid"></div>
       <div class="row-toggle-wrap" id="filmsToggleWrap">
-        <button type="button" class="row-toggle-btn" id="filmsToggleBtn" aria-expanded="false">Show More</button>
+        <button type="button" class="row-toggle-btn" id="filmsToggleBtn" aria-expanded="false">
+          <span class="row-toggle-label">Show More</span>
+          <span class="row-toggle-arrow" aria-hidden="true">↓</span>
+        </button>
       </div>
     </div>
 
-    <div class="clients-block">
+    <div class="clients-block" id="clientsBlock">
       <h2 class="clients-subhead">Documentaries, Organizations &amp; Media</h2>
       <p class="clients-note">Clients whose films, campaigns, and jingles I have scored.</p>
       <div class="clients" id="clientsGrid"></div>
       <div class="row-toggle-wrap" id="clientsToggleWrap">
-        <button type="button" class="row-toggle-btn" id="clientsToggleBtn" aria-expanded="false">Show More</button>
+        <button type="button" class="row-toggle-btn" id="clientsToggleBtn" aria-expanded="false">
+          <span class="row-toggle-label">Show More</span>
+          <span class="row-toggle-arrow" aria-hidden="true">↓</span>
+        </button>
       </div>
       <p class="clients-caption">Clients include IFC / World Bank Group, HELB, GAA, SOMINVEST, Camera Africa Consultants, Heritage Institute, Profiles, Engage, and AMREF.</p>
     </div>
@@ -842,12 +863,15 @@
     return 3;
   }
 
-  function setupRowCollapse(gridId, itemSelector, toggleWrapId, toggleBtnId) {
+  function setupRowCollapse(gridId, itemSelector, toggleWrapId, toggleBtnId, anchorId) {
     var grid = document.getElementById(gridId);
     var wrap = document.getElementById(toggleWrapId);
     var btn = document.getElementById(toggleBtnId);
+    var anchor = document.getElementById(anchorId);
     if (!grid || !wrap || !btn) return;
 
+    var labelEl = btn.querySelector('.row-toggle-label');
+    var arrowEl = btn.querySelector('.row-toggle-arrow');
     var expanded = false;
 
     function applyState() {
@@ -863,7 +887,8 @@
 
       wrap.classList.add('visible');
       btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      btn.textContent = expanded ? 'Show Less' : 'Show More';
+      if (labelEl) labelEl.textContent = expanded ? 'Show Less' : 'Show More';
+      if (arrowEl) arrowEl.textContent = expanded ? '↑' : '↓';
 
       items.forEach(function(item, idx) {
         if (!expanded && idx >= rowOneCount) {
@@ -878,8 +903,13 @@
     }
 
     btn.onclick = function() {
+      var wasExpanded = expanded;
       expanded = !expanded;
       applyState();
+
+      if (wasExpanded && !expanded && anchor) {
+        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
     };
 
     if (!grid.dataset.rowResizeBound) {
@@ -1100,8 +1130,8 @@
       filmTiles.forEach(function(el) { el.classList.add('lit'); });
     }
 
-    setupRowCollapse('filmsGrid', '.gallery-item', 'filmsToggleWrap', 'filmsToggleBtn');
-    setupRowCollapse('clientsGrid', '.client-item', 'clientsToggleWrap', 'clientsToggleBtn');
+    setupRowCollapse('filmsGrid', '.gallery-item', 'filmsToggleWrap', 'filmsToggleBtn', 'filmsBlock');
+    setupRowCollapse('clientsGrid', '.client-item', 'clientsToggleWrap', 'clientsToggleBtn', 'clientsBlock');
   }
 </script>
 
