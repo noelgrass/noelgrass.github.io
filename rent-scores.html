@@ -1407,7 +1407,7 @@
                 '</div>' +
               '</div>' +
             '</div>' +
-            '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '"></button>' +
+            '<button type="button" class="cue-play" data-cue-id="' + cueId + '" data-url="' + url + '">&#9654;</button>' +
           '</div>';
       }
       return cuesHtml;
@@ -1425,7 +1425,7 @@
               '</div>' +
             '</div>' +
             '<div class="suite-actions">' +
-              '<button type="button" class="action-preview" data-code="' + suite.code + '" aria-label="Preview cues"></button>' +
+              '<button type="button" class="action-preview" data-code="' + suite.code + '" aria-label="Preview cues">&#9654;</button>' +
               '<button type="button" class="action-buy" data-id="' + suite.code + '" data-code="' + suite.code + '" data-title="' + suite.title + '" data-amount="' + suite.amount + '">' +
                 '<svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>' +
                 'Buy' +
@@ -1714,7 +1714,7 @@
       pendingSeekFraction = null;
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + id + '"]');
-      if (btn) { btn.innerHTML = ''; btn.classList.remove('playing'); }
+      if (btn) { btn.innerHTML = '&#9654;'; btn.classList.remove('playing'); }
 
       var cue = cueModalBody.querySelector('.cue[data-cue-id="' + id + '"]');
       if (cue) {
@@ -1737,7 +1737,7 @@
       audio.play().catch(function (err) { console.warn("Playback blocked:", err); });
 
       var btn = cueModalBody.querySelector('.cue-play[data-cue-id="' + cueId + '"]');
-      if (btn) { btn.innerHTML = ''; btn.classList.add('playing'); }
+     if (btn) { btn.innerHTML = '&#10074;&#10074;'; btn.classList.add('playing'); }
     }
 
     catResults.addEventListener('click', function(e) {
@@ -1769,11 +1769,11 @@
         if (currentCueId === cueId) {
           if (audio.paused) {
             audio.play();
-            cueBtn.innerHTML = '';
+            cueBtn.innerHTML = '&#10074;&#10074;';
             cueBtn.classList.add('playing');
           } else {
             audio.pause();
-            cueBtn.innerHTML = '';
+            cueBtn.innerHTML = '&#9654;';
             cueBtn.classList.remove('playing');
           }
           return;
@@ -1781,7 +1781,7 @@
 
         if (currentCueId) {
           var oldBtn = cueModalBody.querySelector('.cue-play[data-cue-id="' + currentCueId + '"]');
-          if (oldBtn) { oldBtn.innerHTML = ''; oldBtn.classList.remove('playing'); }
+          if (oldBtn) { oldBtn.innerHTML = '&#9654;'; oldBtn.classList.remove('playing'); }
           var oldCue = cueModalBody.querySelector('.cue[data-cue-id="' + currentCueId + '"]');
           if (oldCue) {
             var oldBar = oldCue.querySelector('.cue-progress-bar');
@@ -1877,7 +1877,7 @@
 
           var url = playBtn.getAttribute('data-url');
           currentCueId = wrapCueId;
-          playBtn.innerHTML = '';
+          playBtn.innerHTML = '&#10074;&#10074;';
           playBtn.classList.add('playing');
 
           seekToEvent(e, wrap);
